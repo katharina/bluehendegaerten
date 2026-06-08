@@ -2,10 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Aquilegia — SVG test</title>
+  <title>Beton Beete</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #fff; font-family: system-ui, sans-serif; overflow: hidden; height: 100vh; }
+
+    #wordmark {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #222;
+      z-index: 10;
+      pointer-events: none;
+    }
 
     #canvas-wrap { position: absolute; inset: 0; z-index: 0; }
     #canvas-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
@@ -50,13 +62,9 @@
       top: 16px;
       right: 16px;
       display: flex;
-      flex-direction: column;
       gap: 6px;
-      align-items: flex-end;
       z-index: 10;
     }
-
-    .view-row { display: flex; gap: 6px; }
 
     .view-btn {
       padding: 5px 12px;
@@ -70,33 +78,20 @@
     }
     .view-btn:hover { border-color: #888; color: #222; }
     .view-btn.active { background: #222; color: #fff; border-color: #222; }
-
-    #export-btn {
-      padding: 5px 14px;
-      border: 1px solid #222;
-      border-radius: 20px;
-      background: #fff;
-      font-size: 11px;
-      cursor: pointer;
-      color: #222;
-      transition: all 0.15s;
-    }
-    #export-btn:hover { background: #222; color: #fff; }
   </style>
 </head>
 <body>
   <div id="canvas-wrap"><canvas id="c"></canvas></div>
 
+  <div id="wordmark">BETON BEETE</div>
+
   <div id="hint">orbit to view in 3D</div>
 
   <div id="view-ui">
-    <div class="view-row">
-      <button class="view-btn active" data-view="3d">3D</button>
-      <button class="view-btn" data-view="plan">Plan</button>
-      <button class="view-btn" data-view="n-elev">N Elev</button>
-      <button class="view-btn" data-view="e-elev">E Elev</button>
-    </div>
-    <button id="export-btn">Export SVG</button>
+    <button class="view-btn active" data-view="3d">3D</button>
+    <button class="view-btn" data-view="plan">Plan</button>
+    <button class="view-btn" data-view="n-elev">N Elev</button>
+    <button class="view-btn" data-view="e-elev">E Elev</button>
   </div>
 
   <div id="ui">
