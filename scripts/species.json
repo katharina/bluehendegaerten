@@ -1,0 +1,137 @@
+[
+  {
+    "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "height_cm": 80,
+    "width_cm": 40,
+    "density": 1.5,
+    "scatter_seed": 42,
+    "stages": [
+      {
+        "id": "sprout",
+        "months": ["march", "april"],
+        "description": "small clump of dark green basal rosette leaves just emerging from soil, 10-15cm tall, no stems or flowers"
+      },
+      {
+        "id": "foliage",
+        "months": ["may", "june"],
+        "description": "upright plant 40-50cm, rough dark green leaves on stems, flower buds just beginning to form at tips"
+      },
+      {
+        "id": "bloom",
+        "months": ["july"],
+        "description": "in full bloom, wide-spreading pink ray petals, prominent domed orange-brown central cone, tall upright stem with rough dark green leaves"
+      },
+      {
+        "id": "seed",
+        "months": ["august", "september"],
+        "description": "petals fallen, large dark spiky seed cones on tall stems, some side branches with spent flowers"
+      }
+    ]
+  },
+  {
+    "slug": "poppy",
+    "name": "Papaver orientale",
+    "height_cm": 70,
+    "width_cm": 55,
+    "density": 1.0,
+    "scatter_seed": 77,
+    "stages": [
+      {
+        "id": "foliage",
+        "months": ["march", "april"],
+        "description": "low clump of deeply cut hairy blue-green basal leaves, 20-30cm tall, no stems or flowers yet"
+      },
+      {
+        "id": "bloom",
+        "months": ["may", "june"],
+        "description": "in full bloom, large bowl-shaped crinkled scarlet-orange petals with black basal blotches, prominent dark stamens, tall hairy stem with deeply cut leaves"
+      },
+      {
+        "id": "seed",
+        "months": ["july"],
+        "description": "large ornamental grey-green pepper-pot seed pods on upright stems, basal foliage yellowing and dying back"
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "height_cm": 180,
+    "width_cm": 45,
+    "density": 0.4,
+    "scatter_seed": 113,
+    "stages": [
+      {
+        "id": "sprout",
+        "months": ["april", "may"],
+        "description": "young seedling 15-20cm tall, pair of large rounded cotyledons with first rough true leaves emerging"
+      },
+      {
+        "id": "foliage",
+        "months": ["june"],
+        "description": "tall plant 80-100cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top"
+      },
+      {
+        "id": "bloom",
+        "months": ["july", "august"],
+        "description": "in full bloom, large circular flowerhead with bright yellow ray petals surrounding dark brown centre disc, tall stout stem with large rough heart-shaped leaves"
+      },
+      {
+        "id": "seed",
+        "months": ["september"],
+        "description": "dried mature flowerhead full of seeds, outer petals gone, leaves yellowed and drooping, stem browning"
+      }
+    ]
+  },
+  {
+    "slug": "salvia",
+    "name": "Salvia nemorosa",
+    "height_cm": 55,
+    "width_cm": 30,
+    "density": 4.0,
+    "scatter_seed": 198,
+    "stages": [
+      {
+        "id": "foliage",
+        "months": ["march", "april"],
+        "description": "low dense clump of grey-green aromatic textured leaves, 15-20cm, no flower spikes yet"
+      },
+      {
+        "id": "bloom",
+        "months": ["may", "june", "july", "august"],
+        "description": "tall upright branching spikes densely packed with small violet-blue flowers with purple bracts, grey-green aromatic basal foliage"
+      },
+      {
+        "id": "seed",
+        "months": ["september"],
+        "description": "spent flower spikes with tiny dark seeds, purple bracts faded, grey-green foliage still present below"
+      }
+    ]
+  },
+  {
+    "slug": "alchemilla",
+    "name": "Alchemilla mollis",
+    "height_cm": 35,
+    "width_cm": 55,
+    "density": 2.0,
+    "scatter_seed": 256,
+    "stages": [
+      {
+        "id": "foliage",
+        "months": ["march", "april"],
+        "description": "low mounding clump of large pleated pale green velvety leaves just unfurling, catching dewdrops, no flowers yet"
+      },
+      {
+        "id": "bloom",
+        "months": ["may", "june", "july"],
+        "description": "low mounding plant, frothy sprays of tiny lime-chartreuse flowers on branching stems above large scalloped velvety pale green leaves"
+      },
+      {
+        "id": "late",
+        "months": ["august", "september"],
+        "description": "large scalloped leaves still lush, some browning at edges, spent flower stems fading to straw colour"
+      }
+    ]
+  }
+]

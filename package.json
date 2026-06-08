@@ -1,0 +1,21 @@
+{
+  "name": "bluehendegaerten",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate": "node scripts/generate.js"
+  },
+  "devDependencies": {
+    "vite": "^8.0.12"
+  },
+  "dependencies": {
+    "@imgly/background-removal-node": "^1.4.5",
+    "openai": "^6.42.0",
+    "sharp": "^0.34.5",
+    "three": "^0.184.0"
+  }
+}
