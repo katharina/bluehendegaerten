@@ -26,35 +26,33 @@ controls.update();
 
 // ── Orthographic cameras ───────────────────────────────────────────────────────
 // Garden footprint: X ±4.5 m (east-west), Z ±8.25 m (north-south), Y 0 → −4 m
+// Isometric target: centre of the garden mass
+const ISO_TARGET = new THREE.Vector3(0, -2, -3);
+const ISO_DIST   = 20;
+const D          = ISO_DIST / Math.sqrt(3); // ≈ 11.55 — equal offset on each axis
 
-// Plan — looking straight down, north (−Z) at top of screen
-const planCam = new THREE.OrthographicCamera(-5.5, 5.5, 9.5, -9.5, 0.1, 30);
-planCam.position.set(0, 20, 0);
-planCam.up.set(0, 0, -1);
-planCam.lookAt(0, 0, 0);
+function makeIsoCam(dx, dz) {
+  const cam = new THREE.OrthographicCamera(-12, 12, 8, -8, 0.1, 80);
+  cam.position.set(ISO_TARGET.x + dx, ISO_TARGET.y + D, ISO_TARGET.z + dz);
+  cam.lookAt(ISO_TARGET);
+  return cam;
+}
 
-// North elevation — looking south (+Z), east at screen-left
-const northElevCam = new THREE.OrthographicCamera(-5.5, 5.5, 2.5, -2.5, 0.1, 45);
-northElevCam.position.set(0, -1.5, -20);
-northElevCam.lookAt(0, -1.5, 0);
-
-// East elevation — looking west (−X), north at screen-right
-const eastElevCam = new THREE.OrthographicCamera(-9.5, 9.5, 2.5, -3, 0.1, 45);
-eastElevCam.position.set(20, -2, 0);
-eastElevCam.lookAt(0, -2, 0);
+const isoCams = {
+  'iso-se': makeIsoCam( D,  D),
+  'iso-sw': makeIsoCam(-D,  D),
+  'iso-ne': makeIsoCam( D, -D),
+  'iso-nw': makeIsoCam(-D, -D),
+};
 
 let activeCamera = camera;
 
-const hintEl = document.getElementById('hint');
-
 function setView(name) {
-  const map = { '3d': camera, plan: planCam, 'n-elev': northElevCam, 'e-elev': eastElevCam };
+  const map = { '3d': camera, ...isoCams };
   activeCamera = map[name] ?? camera;
   controls.enabled = name === '3d';
   document.querySelectorAll('.view-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.view === name));
-  const labels = { '3d': 'orbit to view in 3D', plan: 'plan view — north at top', 'n-elev': 'north elevation — looking south', 'e-elev': 'east elevation — looking west' };
-  hintEl.textContent = labels[name] ?? '';
 }
 
 async function exportSVG() {
@@ -96,6 +94,7 @@ async function exportSVG() {
 
 document.querySelectorAll('.view-btn').forEach(btn =>
   btn.addEventListener('click', () => setView(btn.dataset.view)));
+setView('iso-se');
 document.getElementById('export-btn')?.addEventListener('click', exportSVG);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.75));

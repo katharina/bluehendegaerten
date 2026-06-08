@@ -46,6 +46,28 @@
     .month-btn:hover { border-color: #888; color: #222; }
     .month-btn.active { background: #222; color: #fff; border-color: #222; }
 
+    #view-ui {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .view-btn {
+      padding: 5px 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 11px;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.15s;
+    }
+    .view-btn:hover { border-color: #888; color: #222; }
+    .view-btn.active { background: #222; color: #fff; border-color: #222; }
+
     #hint {
       position: absolute;
       top: 16px;
@@ -84,6 +106,14 @@
   <div id="canvas-wrap"><canvas id="c"></canvas></div>
 
   <div id="wordmark">BETON BEETE</div>
+
+  <div id="view-ui">
+    <button class="view-btn active" data-view="iso-se">SE</button>
+    <button class="view-btn" data-view="iso-sw">SW</button>
+    <button class="view-btn" data-view="iso-ne">NE</button>
+    <button class="view-btn" data-view="iso-nw">NW</button>
+    <button class="view-btn" data-view="3d">3D</button>
+  </div>
 
   <div id="ui">
     <button class="month-btn" data-month="february">Feb</button>
