@@ -363,7 +363,7 @@ function showMonth(key) {
 }
 
 async function init() {
-  const manifest = await fetch('/plants/manifest.json').then(r => r.json());
+  const manifest = await fetch(`${import.meta.env.BASE_URL}plants/manifest.json`).then(r => r.json());
 
   // precompute scatter positions per unique seed
   const posBySeed = {};
@@ -379,7 +379,7 @@ async function init() {
   await Promise.all(manifest.map(async entry => {
     const key = `${entry.slug}_${entry.stage}`;
     try {
-      const tex = await loader.loadAsync(`/plants/${entry.slug}_${entry.stage}.png`);
+      const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${entry.slug}_${entry.stage}.png`);
       tex.colorSpace = THREE.SRGBColorSpace;
       textures[key]  = tex;
     } catch { /* image not generated yet */ }
