@@ -115,7 +115,7 @@ async function exportSVG() {
 
 document.querySelectorAll('.view-btn').forEach(btn =>
   btn.addEventListener('click', () => setView(btn.dataset.view)));
-setView('3d');
+setView('iso-se');
 document.getElementById('export-btn')?.addEventListener('click', exportSVG);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.75));
