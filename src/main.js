@@ -35,6 +35,7 @@ function makeIsoCam(dx, dz) {
   const cam = new THREE.OrthographicCamera(-12, 12, 8, -8, 0.1, 80);
   cam.position.set(ISO_TARGET.x + dx, ISO_TARGET.y + D, ISO_TARGET.z + dz);
   cam.lookAt(ISO_TARGET);
+  cam.userData.home = cam.position.clone();
   return cam;
 }
 
@@ -52,6 +53,11 @@ const ORBIT_TARGET = new THREE.Vector3(0, -2.5, -6);
 function setView(name) {
   const isIso = name.startsWith('iso-');
   activeCamera = isIso ? isoCams[name] : camera;
+  if (isIso) {
+    activeCamera.position.copy(activeCamera.userData.home);
+    activeCamera.zoom = 1;
+    activeCamera.updateProjectionMatrix();
+  }
   controls.object = activeCamera;
   controls.enableRotate = !isIso;
   controls.target.copy(isIso ? ISO_TARGET : ORBIT_TARGET);
