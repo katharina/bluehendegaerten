@@ -48,20 +48,30 @@ const isoCams = {
 
 let activeCamera = camera;
 
+// Dedicated controls for iso views — created with an ortho camera so zoom works correctly
+const isoControls = new OrbitControls(isoCams['iso-se'], canvas);
+isoControls.enableRotate = false;
+isoControls.enableDamping = true;
+isoControls.dampingFactor = 0.08;
+isoControls.target.copy(ISO_TARGET);
+isoControls.enabled = false;
+isoControls.update();
+
 const ORBIT_TARGET = new THREE.Vector3(0, -2.5, -6);
 
 function setView(name) {
   const isIso = name.startsWith('iso-');
   activeCamera = isIso ? isoCams[name] : camera;
+  controls.enabled    = !isIso;
+  isoControls.enabled =  isIso;
   if (isIso) {
+    isoControls.object = activeCamera;
     activeCamera.position.copy(activeCamera.userData.home);
     activeCamera.zoom = 1;
     activeCamera.updateProjectionMatrix();
+    isoControls.target.copy(ISO_TARGET);
+    isoControls.update();
   }
-  controls.object = activeCamera;
-  controls.enableRotate = !isIso;
-  controls.target.copy(isIso ? ISO_TARGET : ORBIT_TARGET);
-  controls.update();
   document.querySelectorAll('.view-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.view === name));
 }
@@ -430,5 +440,6 @@ resize();
   const t = performance.now() * 0.001;
   for (const m of swayMaterials) m.uniforms.time.value = t;
   controls.update();
+  isoControls.update();
   renderer.render(scene, activeCamera);
 })();
