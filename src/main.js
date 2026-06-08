@@ -27,7 +27,7 @@ controls.update();
 // ── Orthographic cameras ───────────────────────────────────────────────────────
 // Garden footprint: X ±4.5 m (east-west), Z ±8.25 m (north-south), Y 0 → −4 m
 // Isometric target: centre of the garden mass
-const ISO_TARGET = new THREE.Vector3(0, -2, -3);
+const ISO_TARGET = new THREE.Vector3(0, -0.8, 0);
 const ISO_DIST   = 20;
 const D          = ISO_DIST / Math.sqrt(3); // ≈ 11.55 — equal offset on each axis
 
