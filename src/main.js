@@ -47,10 +47,15 @@ const isoCams = {
 
 let activeCamera = camera;
 
+const ORBIT_TARGET = new THREE.Vector3(0, -2.5, -6);
+
 function setView(name) {
-  const map = { '3d': camera, ...isoCams };
-  activeCamera = map[name] ?? camera;
-  controls.enabled = name === '3d';
+  const isIso = name.startsWith('iso-');
+  activeCamera = isIso ? isoCams[name] : camera;
+  controls.object = activeCamera;
+  controls.enableRotate = !isIso;
+  controls.target.copy(isIso ? ISO_TARGET : ORBIT_TARGET);
+  controls.update();
   document.querySelectorAll('.view-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.view === name));
 }
@@ -94,7 +99,7 @@ async function exportSVG() {
 
 document.querySelectorAll('.view-btn').forEach(btn =>
   btn.addEventListener('click', () => setView(btn.dataset.view)));
-setView('iso-se');
+setView('3d');
 document.getElementById('export-btn')?.addEventListener('click', exportSVG);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.75));
