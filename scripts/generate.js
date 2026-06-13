@@ -29,7 +29,7 @@ const STYLE = [
 ].join(', ');
 
 function buildPrompt(plant, stage) {
-  return `${STYLE}. ${plant.name}. ${stage.description}.`;
+  return stage.prompt ?? `${STYLE}. ${plant.name}. ${stage.description}.`;
 }
 
 function imageSize(height_cm, width_cm) {
@@ -38,13 +38,14 @@ function imageSize(height_cm, width_cm) {
   return '1024x1024';
 }
 
+const MAX_PLANT_CM = 250; // tallest possible plant — sets pixel scale
+const MAX_PX       = 1000;
+
 function canvasSize(height_cm, width_cm) {
-  const MAX = 1000;
-  if (height_cm >= width_cm) {
-    return { canvasH: MAX, canvasW: Math.round(MAX * width_cm / height_cm) };
-  } else {
-    return { canvasW: MAX, canvasH: Math.round(MAX * height_cm / width_cm) };
-  }
+  return {
+    canvasH: Math.round(height_cm / MAX_PLANT_CM * MAX_PX),
+    canvasW: Math.round(width_cm  / MAX_PLANT_CM * MAX_PX),
+  };
 }
 
 async function removeBg(pngBuffer) {
@@ -115,15 +116,20 @@ function writeManifest() {
     const worldW = plant.width_cm  / 100;
     const worldH = plant.height_cm / 100;
     for (const stage of plant.stages) {
-      entries.push({
+      const entry = {
         slug:    plant.slug,
+        name:    plant.name,
+        name_de: plant.name_de ?? null,
         stage:   stage.id,
         months:  stage.months,
         worldW,
         worldH,
         density: plant.density,
         seed:    plant.scatter_seed,
-      });
+      };
+      if (plant.beds)  entry.beds  = plant.beds;
+      if (plant.color) entry.color = plant.color;
+      entries.push(entry);
     }
   }
   const outPath = join(OUT_DIR, 'manifest.json');

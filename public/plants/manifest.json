@@ -1,6 +1,9 @@
 [
   {
     "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "name_de": "Purpursonnenhut",
+    "color": "#e06090",
     "stage": "sprout",
     "months": [
       "march",
@@ -13,6 +16,9 @@
   },
   {
     "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "name_de": "Purpursonnenhut",
+    "color": "#e06090",
     "stage": "foliage",
     "months": [
       "may",
@@ -25,6 +31,9 @@
   },
   {
     "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "name_de": "Purpursonnenhut",
+    "color": "#e06090",
     "stage": "bloom",
     "months": [
       "july"
@@ -36,6 +45,9 @@
   },
   {
     "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "name_de": "Purpursonnenhut",
+    "color": "#e06090",
     "stage": "seed",
     "months": [
       "august",
@@ -47,10 +59,45 @@
     "seed": 42
   },
   {
+    "slug": "echinacea",
+    "name": "Echinacea purpurea",
+    "name_de": "Purpursonnenhut",
+    "color": "#e06090",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.4,
+    "worldH": 0.8,
+    "density": 1.5,
+    "seed": 42
+  },
+  {
     "slug": "poppy",
+    "name": "Papaver orientale",
+    "name_de": "Orientalischer Mohn",
+    "color": "#e03020",
+    "stage": "sprout",
+    "months": [
+      "february",
+      "march"
+    ],
+    "worldW": 0.55,
+    "worldH": 0.7,
+    "density": 1,
+    "seed": 77
+  },
+  {
+    "slug": "poppy",
+    "name": "Papaver orientale",
+    "name_de": "Orientalischer Mohn",
+    "color": "#e03020",
     "stage": "foliage",
     "months": [
-      "march",
       "april"
     ],
     "worldW": 0.55,
@@ -60,6 +107,9 @@
   },
   {
     "slug": "poppy",
+    "name": "Papaver orientale",
+    "name_de": "Orientalischer Mohn",
+    "color": "#e03020",
     "stage": "bloom",
     "months": [
       "may",
@@ -72,6 +122,9 @@
   },
   {
     "slug": "poppy",
+    "name": "Papaver orientale",
+    "name_de": "Orientalischer Mohn",
+    "color": "#e03020",
     "stage": "seed",
     "months": [
       "july"
@@ -82,7 +135,29 @@
     "seed": 77
   },
   {
+    "slug": "poppy",
+    "name": "Papaver orientale",
+    "name_de": "Orientalischer Mohn",
+    "color": "#e03020",
+    "stage": "dried",
+    "months": [
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.55,
+    "worldH": 0.7,
+    "density": 1,
+    "seed": 77
+  },
+  {
     "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "name_de": "Sonnenblume",
+    "color": "#f5c010",
     "stage": "sprout",
     "months": [
       "april",
@@ -91,10 +166,16 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113
+    "seed": 113,
+    "beds": [
+      0
+    ]
   },
   {
     "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "name_de": "Sonnenblume",
+    "color": "#f5c010",
     "stage": "foliage",
     "months": [
       "june"
@@ -102,10 +183,16 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113
+    "seed": 113,
+    "beds": [
+      0
+    ]
   },
   {
     "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "name_de": "Sonnenblume",
+    "color": "#f5c010",
     "stage": "bloom",
     "months": [
       "july",
@@ -114,10 +201,16 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113
+    "seed": 113,
+    "beds": [
+      0
+    ]
   },
   {
     "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "name_de": "Sonnenblume",
+    "color": "#f5c010",
     "stage": "seed",
     "months": [
       "september"
@@ -125,10 +218,34 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113
+    "seed": 113,
+    "beds": [
+      0
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "name": "Helianthus annuus",
+    "name_de": "Sonnenblume",
+    "color": "#f5c010",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.8,
+    "density": 0.4,
+    "seed": 113,
+    "beds": [
+      0
+    ]
   },
   {
     "slug": "salvia",
+    "name": "Salvia nemorosa",
+    "name_de": "Steppensalbei",
+    "color": "#6050c0",
     "stage": "foliage",
     "months": [
       "march",
@@ -141,6 +258,9 @@
   },
   {
     "slug": "salvia",
+    "name": "Salvia nemorosa",
+    "name_de": "Steppensalbei",
+    "color": "#6050c0",
     "stage": "bloom",
     "months": [
       "may",
@@ -155,6 +275,9 @@
   },
   {
     "slug": "salvia",
+    "name": "Salvia nemorosa",
+    "name_de": "Steppensalbei",
+    "color": "#6050c0",
     "stage": "seed",
     "months": [
       "september"
@@ -166,6 +289,9 @@
   },
   {
     "slug": "alchemilla",
+    "name": "Alchemilla mollis",
+    "name_de": "Frauenmantel",
+    "color": "#a8c830",
     "stage": "foliage",
     "months": [
       "march",
@@ -178,6 +304,9 @@
   },
   {
     "slug": "alchemilla",
+    "name": "Alchemilla mollis",
+    "name_de": "Frauenmantel",
+    "color": "#a8c830",
     "stage": "bloom",
     "months": [
       "may",
@@ -191,6 +320,9 @@
   },
   {
     "slug": "alchemilla",
+    "name": "Alchemilla mollis",
+    "name_de": "Frauenmantel",
+    "color": "#a8c830",
     "stage": "late",
     "months": [
       "august",
@@ -200,5 +332,1756 @@
     "worldH": 0.35,
     "density": 2,
     "seed": 256
+  },
+  {
+    "slug": "sage",
+    "name": "Salvia officinalis",
+    "name_de": "Echter Salbei",
+    "color": "#7060b0",
+    "stage": "sprout",
+    "months": [
+      "march"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.6,
+    "density": 1,
+    "seed": 421
+  },
+  {
+    "slug": "sage",
+    "name": "Salvia officinalis",
+    "name_de": "Echter Salbei",
+    "color": "#7060b0",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.6,
+    "density": 1,
+    "seed": 421
+  },
+  {
+    "slug": "sage",
+    "name": "Salvia officinalis",
+    "name_de": "Echter Salbei",
+    "color": "#7060b0",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.6,
+    "density": 1,
+    "seed": 421
+  },
+  {
+    "slug": "sage",
+    "name": "Salvia officinalis",
+    "name_de": "Echter Salbei",
+    "color": "#7060b0",
+    "stage": "seed",
+    "months": [
+      "august",
+      "september"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.6,
+    "density": 1,
+    "seed": 421
+  },
+  {
+    "slug": "sage",
+    "name": "Salvia officinalis",
+    "name_de": "Echter Salbei",
+    "color": "#7060b0",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.6,
+    "density": 1,
+    "seed": 421
+  },
+  {
+    "slug": "bunias",
+    "name": "Bunias orientalis",
+    "name_de": "Zackenschötchen",
+    "color": "#e8d020",
+    "stage": "sprout",
+    "months": [
+      "february",
+      "march"
+    ],
+    "worldW": 0.5,
+    "worldH": 1,
+    "density": 1,
+    "seed": 317
+  },
+  {
+    "slug": "bunias",
+    "name": "Bunias orientalis",
+    "name_de": "Zackenschötchen",
+    "color": "#e8d020",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.5,
+    "worldH": 1,
+    "density": 1,
+    "seed": 317
+  },
+  {
+    "slug": "bunias",
+    "name": "Bunias orientalis",
+    "name_de": "Zackenschötchen",
+    "color": "#e8d020",
+    "stage": "bloom",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.5,
+    "worldH": 1,
+    "density": 1,
+    "seed": 317
+  },
+  {
+    "slug": "bunias",
+    "name": "Bunias orientalis",
+    "name_de": "Zackenschötchen",
+    "color": "#e8d020",
+    "stage": "seed",
+    "months": [
+      "july",
+      "august"
+    ],
+    "worldW": 0.5,
+    "worldH": 1,
+    "density": 1,
+    "seed": 317
+  },
+  {
+    "slug": "bunias",
+    "name": "Bunias orientalis",
+    "name_de": "Zackenschötchen",
+    "color": "#e8d020",
+    "stage": "dried",
+    "months": [
+      "september",
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.5,
+    "worldH": 1,
+    "density": 1,
+    "seed": 317
+  },
+  {
+    "slug": "aquilegia",
+    "name": "Aquilegia vulgaris",
+    "name_de": "Akelei",
+    "color": "#5040a0",
+    "stage": "sprout",
+    "months": [
+      "february",
+      "march"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.7,
+    "density": 1.5,
+    "seed": 1373
+  },
+  {
+    "slug": "aquilegia",
+    "name": "Aquilegia vulgaris",
+    "name_de": "Akelei",
+    "color": "#5040a0",
+    "stage": "foliage",
+    "months": [
+      "april"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.7,
+    "density": 1.5,
+    "seed": 1373
+  },
+  {
+    "slug": "aquilegia",
+    "name": "Aquilegia vulgaris",
+    "name_de": "Akelei",
+    "color": "#5040a0",
+    "stage": "bloom",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.7,
+    "density": 1.5,
+    "seed": 1373
+  },
+  {
+    "slug": "aquilegia",
+    "name": "Aquilegia vulgaris",
+    "name_de": "Akelei",
+    "color": "#5040a0",
+    "stage": "seed",
+    "months": [
+      "july"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.7,
+    "density": 1.5,
+    "seed": 1373
+  },
+  {
+    "slug": "aquilegia",
+    "name": "Aquilegia vulgaris",
+    "name_de": "Akelei",
+    "color": "#5040a0",
+    "stage": "dried",
+    "months": [
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.7,
+    "density": 1.5,
+    "seed": 1373
+  },
+  {
+    "slug": "primula",
+    "name": "Primula veris",
+    "name_de": "Schlüsselblume",
+    "color": "#e8c020",
+    "stage": "sprout",
+    "months": [
+      "february"
+    ],
+    "worldW": 0.25,
+    "worldH": 0.25,
+    "density": 3,
+    "seed": 1231
+  },
+  {
+    "slug": "primula",
+    "name": "Primula veris",
+    "name_de": "Schlüsselblume",
+    "color": "#e8c020",
+    "stage": "foliage",
+    "months": [
+      "march"
+    ],
+    "worldW": 0.25,
+    "worldH": 0.25,
+    "density": 3,
+    "seed": 1231
+  },
+  {
+    "slug": "primula",
+    "name": "Primula veris",
+    "name_de": "Schlüsselblume",
+    "color": "#e8c020",
+    "stage": "bloom",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.25,
+    "worldH": 0.25,
+    "density": 3,
+    "seed": 1231
+  },
+  {
+    "slug": "primula",
+    "name": "Primula veris",
+    "name_de": "Schlüsselblume",
+    "color": "#e8c020",
+    "stage": "seed",
+    "months": [
+      "june",
+      "july"
+    ],
+    "worldW": 0.25,
+    "worldH": 0.25,
+    "density": 3,
+    "seed": 1231
+  },
+  {
+    "slug": "primula",
+    "name": "Primula veris",
+    "name_de": "Schlüsselblume",
+    "color": "#e8c020",
+    "stage": "dried",
+    "months": [
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.25,
+    "worldH": 0.25,
+    "density": 3,
+    "seed": 1231
+  },
+  {
+    "slug": "phacelia",
+    "name": "Phacelia tanacetifolia",
+    "name_de": "Bienenfreund",
+    "color": "#7080d8",
+    "stage": "sprout",
+    "months": [
+      "april"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 2.5,
+    "seed": 1087
+  },
+  {
+    "slug": "phacelia",
+    "name": "Phacelia tanacetifolia",
+    "name_de": "Bienenfreund",
+    "color": "#7080d8",
+    "stage": "foliage",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 2.5,
+    "seed": 1087
+  },
+  {
+    "slug": "phacelia",
+    "name": "Phacelia tanacetifolia",
+    "name_de": "Bienenfreund",
+    "color": "#7080d8",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 2.5,
+    "seed": 1087
+  },
+  {
+    "slug": "phacelia",
+    "name": "Phacelia tanacetifolia",
+    "name_de": "Bienenfreund",
+    "color": "#7080d8",
+    "stage": "seed",
+    "months": [
+      "august"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 2.5,
+    "seed": 1087
+  },
+  {
+    "slug": "phacelia",
+    "name": "Phacelia tanacetifolia",
+    "name_de": "Bienenfreund",
+    "color": "#7080d8",
+    "stage": "dried",
+    "months": [
+      "september",
+      "october"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 2.5,
+    "seed": 1087
+  },
+  {
+    "slug": "calendula",
+    "name": "Calendula officinalis",
+    "name_de": "Ringelblume",
+    "color": "#f07010",
+    "stage": "sprout",
+    "months": [
+      "april"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 967
+  },
+  {
+    "slug": "calendula",
+    "name": "Calendula officinalis",
+    "name_de": "Ringelblume",
+    "color": "#f07010",
+    "stage": "foliage",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 967
+  },
+  {
+    "slug": "calendula",
+    "name": "Calendula officinalis",
+    "name_de": "Ringelblume",
+    "color": "#f07010",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 967
+  },
+  {
+    "slug": "calendula",
+    "name": "Calendula officinalis",
+    "name_de": "Ringelblume",
+    "color": "#f07010",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 967
+  },
+  {
+    "slug": "calendula",
+    "name": "Calendula officinalis",
+    "name_de": "Ringelblume",
+    "color": "#f07010",
+    "stage": "dried",
+    "months": [
+      "november"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 967
+  },
+  {
+    "slug": "anthemis",
+    "name": "Anthemis tinctoria",
+    "name_de": "Färberkamille",
+    "color": "#f0c820",
+    "stage": "sprout",
+    "months": [
+      "march"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 853
+  },
+  {
+    "slug": "anthemis",
+    "name": "Anthemis tinctoria",
+    "name_de": "Färberkamille",
+    "color": "#f0c820",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 853
+  },
+  {
+    "slug": "anthemis",
+    "name": "Anthemis tinctoria",
+    "name_de": "Färberkamille",
+    "color": "#f0c820",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 853
+  },
+  {
+    "slug": "anthemis",
+    "name": "Anthemis tinctoria",
+    "name_de": "Färberkamille",
+    "color": "#f0c820",
+    "stage": "seed",
+    "months": [
+      "september"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 853
+  },
+  {
+    "slug": "anthemis",
+    "name": "Anthemis tinctoria",
+    "name_de": "Färberkamille",
+    "color": "#f0c820",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 853
+  },
+  {
+    "slug": "tithonia",
+    "name": "Tithonia rotundifolia",
+    "name_de": "Mexikanische Sonnenblume",
+    "color": "#f04810",
+    "stage": "sprout",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.7,
+    "worldH": 1.3,
+    "density": 0.8,
+    "seed": 719
+  },
+  {
+    "slug": "tithonia",
+    "name": "Tithonia rotundifolia",
+    "name_de": "Mexikanische Sonnenblume",
+    "color": "#f04810",
+    "stage": "foliage",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.7,
+    "worldH": 1.3,
+    "density": 0.8,
+    "seed": 719
+  },
+  {
+    "slug": "tithonia",
+    "name": "Tithonia rotundifolia",
+    "name_de": "Mexikanische Sonnenblume",
+    "color": "#f04810",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.7,
+    "worldH": 1.3,
+    "density": 0.8,
+    "seed": 719
+  },
+  {
+    "slug": "tithonia",
+    "name": "Tithonia rotundifolia",
+    "name_de": "Mexikanische Sonnenblume",
+    "color": "#f04810",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.7,
+    "worldH": 1.3,
+    "density": 0.8,
+    "seed": 719
+  },
+  {
+    "slug": "tithonia",
+    "name": "Tithonia rotundifolia",
+    "name_de": "Mexikanische Sonnenblume",
+    "color": "#f04810",
+    "stage": "dried",
+    "months": [
+      "november"
+    ],
+    "worldW": 0.7,
+    "worldH": 1.3,
+    "density": 0.8,
+    "seed": 719
+  },
+  {
+    "slug": "artichoke",
+    "name": "Cynara scolymus",
+    "name_de": "Artischocke",
+    "color": "#7878b8",
+    "stage": "sprout",
+    "months": [
+      "february",
+      "march"
+    ],
+    "worldW": 0.9,
+    "worldH": 1.6,
+    "density": 0.5,
+    "seed": 643
+  },
+  {
+    "slug": "artichoke",
+    "name": "Cynara scolymus",
+    "name_de": "Artischocke",
+    "color": "#7878b8",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.9,
+    "worldH": 1.6,
+    "density": 0.5,
+    "seed": 643
+  },
+  {
+    "slug": "artichoke",
+    "name": "Cynara scolymus",
+    "name_de": "Artischocke",
+    "color": "#7878b8",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july"
+    ],
+    "worldW": 0.9,
+    "worldH": 1.6,
+    "density": 0.5,
+    "seed": 643
+  },
+  {
+    "slug": "artichoke",
+    "name": "Cynara scolymus",
+    "name_de": "Artischocke",
+    "color": "#7878b8",
+    "stage": "seed",
+    "months": [
+      "august",
+      "september"
+    ],
+    "worldW": 0.9,
+    "worldH": 1.6,
+    "density": 0.5,
+    "seed": 643
+  },
+  {
+    "slug": "artichoke",
+    "name": "Cynara scolymus",
+    "name_de": "Artischocke",
+    "color": "#7878b8",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.9,
+    "worldH": 1.6,
+    "density": 0.5,
+    "seed": 643
+  },
+  {
+    "slug": "achillea",
+    "name": "Achillea filipendulina",
+    "name_de": "Goldgarbe",
+    "color": "#f0d010",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.6,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 2847
+  },
+  {
+    "slug": "achillea",
+    "name": "Achillea filipendulina",
+    "name_de": "Goldgarbe",
+    "color": "#f0d010",
+    "stage": "foliage",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.6,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 2847
+  },
+  {
+    "slug": "achillea",
+    "name": "Achillea filipendulina",
+    "name_de": "Goldgarbe",
+    "color": "#f0d010",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august"
+    ],
+    "worldW": 0.6,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 2847
+  },
+  {
+    "slug": "achillea",
+    "name": "Achillea filipendulina",
+    "name_de": "Goldgarbe",
+    "color": "#f0d010",
+    "stage": "seed",
+    "months": [
+      "september"
+    ],
+    "worldW": 0.6,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 2847
+  },
+  {
+    "slug": "achillea",
+    "name": "Achillea filipendulina",
+    "name_de": "Goldgarbe",
+    "color": "#f0d010",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.6,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 2847
+  },
+  {
+    "slug": "cosmea",
+    "name": "Cosmos bipinnatus",
+    "name_de": "Schmuckkörbchen",
+    "color": "#d860a0",
+    "stage": "sprout",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 537
+  },
+  {
+    "slug": "cosmea",
+    "name": "Cosmos bipinnatus",
+    "name_de": "Schmuckkörbchen",
+    "color": "#d860a0",
+    "stage": "foliage",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.45,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 537
+  },
+  {
+    "slug": "cosmea",
+    "name": "Cosmos bipinnatus",
+    "name_de": "Schmuckkörbchen",
+    "color": "#d860a0",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.45,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 537
+  },
+  {
+    "slug": "cosmea",
+    "name": "Cosmos bipinnatus",
+    "name_de": "Schmuckkörbchen",
+    "color": "#d860a0",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.45,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 537
+  },
+  {
+    "slug": "cosmea",
+    "name": "Cosmos bipinnatus",
+    "name_de": "Schmuckkörbchen",
+    "color": "#d860a0",
+    "stage": "dried",
+    "months": [
+      "november"
+    ],
+    "worldW": 0.45,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 537
+  },
+  {
+    "slug": "paeonia",
+    "name": "Paeonia lactiflora",
+    "name_de": "Pfingstrose",
+    "color": "#d04070",
+    "stage": "sprout",
+    "months": [
+      "march"
+    ],
+    "worldW": 0.9,
+    "worldH": 0.8,
+    "density": 1,
+    "seed": 8834
+  },
+  {
+    "slug": "paeonia",
+    "name": "Paeonia lactiflora",
+    "name_de": "Pfingstrose",
+    "color": "#d04070",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.9,
+    "worldH": 0.8,
+    "density": 1,
+    "seed": 8834
+  },
+  {
+    "slug": "paeonia",
+    "name": "Paeonia lactiflora",
+    "name_de": "Pfingstrose",
+    "color": "#d04070",
+    "stage": "bloom",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.9,
+    "worldH": 0.8,
+    "density": 1,
+    "seed": 8834
+  },
+  {
+    "slug": "paeonia",
+    "name": "Paeonia lactiflora",
+    "name_de": "Pfingstrose",
+    "color": "#d04070",
+    "stage": "seed",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.9,
+    "worldH": 0.8,
+    "density": 1,
+    "seed": 8834
+  },
+  {
+    "slug": "paeonia",
+    "name": "Paeonia lactiflora",
+    "name_de": "Pfingstrose",
+    "color": "#d04070",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.9,
+    "worldH": 0.8,
+    "density": 1,
+    "seed": 8834
+  },
+  {
+    "slug": "artemisia",
+    "name": "Artemisia absinthium",
+    "name_de": "Wermut",
+    "color": "#a0a870",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 7531
+  },
+  {
+    "slug": "artemisia",
+    "name": "Artemisia absinthium",
+    "name_de": "Wermut",
+    "color": "#a0a870",
+    "stage": "foliage",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 7531
+  },
+  {
+    "slug": "artemisia",
+    "name": "Artemisia absinthium",
+    "name_de": "Wermut",
+    "color": "#a0a870",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 7531
+  },
+  {
+    "slug": "artemisia",
+    "name": "Artemisia absinthium",
+    "name_de": "Wermut",
+    "color": "#a0a870",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 7531
+  },
+  {
+    "slug": "artemisia",
+    "name": "Artemisia absinthium",
+    "name_de": "Wermut",
+    "color": "#a0a870",
+    "stage": "dried",
+    "months": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 7531
+  },
+  {
+    "slug": "lactuca",
+    "name": "Lactuca serriola",
+    "name_de": "Kompasslattich",
+    "color": "#d0c840",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.35,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 6234
+  },
+  {
+    "slug": "lactuca",
+    "name": "Lactuca serriola",
+    "name_de": "Kompasslattich",
+    "color": "#d0c840",
+    "stage": "foliage",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.35,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 6234
+  },
+  {
+    "slug": "lactuca",
+    "name": "Lactuca serriola",
+    "name_de": "Kompasslattich",
+    "color": "#d0c840",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august"
+    ],
+    "worldW": 0.35,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 6234
+  },
+  {
+    "slug": "lactuca",
+    "name": "Lactuca serriola",
+    "name_de": "Kompasslattich",
+    "color": "#d0c840",
+    "stage": "seed",
+    "months": [
+      "september"
+    ],
+    "worldW": 0.35,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 6234
+  },
+  {
+    "slug": "lactuca",
+    "name": "Lactuca serriola",
+    "name_de": "Kompasslattich",
+    "color": "#d0c840",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.35,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 6234
+  },
+  {
+    "slug": "nasturtium",
+    "name": "Tropaeolum majus",
+    "name_de": "Kapuzinerkresse",
+    "color": "#f06010",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 5823
+  },
+  {
+    "slug": "nasturtium",
+    "name": "Tropaeolum majus",
+    "name_de": "Kapuzinerkresse",
+    "color": "#f06010",
+    "stage": "foliage",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 5823
+  },
+  {
+    "slug": "nasturtium",
+    "name": "Tropaeolum majus",
+    "name_de": "Kapuzinerkresse",
+    "color": "#f06010",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 5823
+  },
+  {
+    "slug": "nasturtium",
+    "name": "Tropaeolum majus",
+    "name_de": "Kapuzinerkresse",
+    "color": "#f06010",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 5823
+  },
+  {
+    "slug": "nasturtium",
+    "name": "Tropaeolum majus",
+    "name_de": "Kapuzinerkresse",
+    "color": "#f06010",
+    "stage": "dried",
+    "months": [
+      "november"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.5,
+    "density": 2,
+    "seed": 5823
+  },
+  {
+    "slug": "nicotiana",
+    "name": "Nicotiana plumbaginifolia",
+    "name_de": "Ziertabak",
+    "color": "#d8d8e8",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.4,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 4521
+  },
+  {
+    "slug": "nicotiana",
+    "name": "Nicotiana plumbaginifolia",
+    "name_de": "Ziertabak",
+    "color": "#d8d8e8",
+    "stage": "foliage",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.4,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 4521
+  },
+  {
+    "slug": "nicotiana",
+    "name": "Nicotiana plumbaginifolia",
+    "name_de": "Ziertabak",
+    "color": "#d8d8e8",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.4,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 4521
+  },
+  {
+    "slug": "nicotiana",
+    "name": "Nicotiana plumbaginifolia",
+    "name_de": "Ziertabak",
+    "color": "#d8d8e8",
+    "stage": "seed",
+    "months": [
+      "october"
+    ],
+    "worldW": 0.4,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 4521
+  },
+  {
+    "slug": "nicotiana",
+    "name": "Nicotiana plumbaginifolia",
+    "name_de": "Ziertabak",
+    "color": "#d8d8e8",
+    "stage": "dried",
+    "months": [
+      "november",
+      "december"
+    ],
+    "worldW": 0.4,
+    "worldH": 1,
+    "density": 1.5,
+    "seed": 4521
+  },
+  {
+    "slug": "atriplex",
+    "name": "Atriplex hortensis var. rubra",
+    "name_de": "Rote Gartenmelde",
+    "color": "#901830",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.3,
+    "density": 1.5,
+    "seed": 3291
+  },
+  {
+    "slug": "atriplex",
+    "name": "Atriplex hortensis var. rubra",
+    "name_de": "Rote Gartenmelde",
+    "color": "#901830",
+    "stage": "foliage",
+    "months": [
+      "june"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.3,
+    "density": 1.5,
+    "seed": 3291
+  },
+  {
+    "slug": "atriplex",
+    "name": "Atriplex hortensis var. rubra",
+    "name_de": "Rote Gartenmelde",
+    "color": "#901830",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.3,
+    "density": 1.5,
+    "seed": 3291
+  },
+  {
+    "slug": "atriplex",
+    "name": "Atriplex hortensis var. rubra",
+    "name_de": "Rote Gartenmelde",
+    "color": "#901830",
+    "stage": "seed",
+    "months": [
+      "september"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.3,
+    "density": 1.5,
+    "seed": 3291
+  },
+  {
+    "slug": "atriplex",
+    "name": "Atriplex hortensis var. rubra",
+    "name_de": "Rote Gartenmelde",
+    "color": "#901830",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.3,
+    "density": 1.5,
+    "seed": 3291
+  },
+  {
+    "slug": "borago",
+    "name": "Borago officinalis",
+    "name_de": "Borretsch",
+    "color": "#3060e0",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 6284
+  },
+  {
+    "slug": "borago",
+    "name": "Borago officinalis",
+    "name_de": "Borretsch",
+    "color": "#3060e0",
+    "stage": "foliage",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 6284
+  },
+  {
+    "slug": "borago",
+    "name": "Borago officinalis",
+    "name_de": "Borretsch",
+    "color": "#3060e0",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 6284
+  },
+  {
+    "slug": "borago",
+    "name": "Borago officinalis",
+    "name_de": "Borretsch",
+    "color": "#3060e0",
+    "stage": "seed",
+    "months": [
+      "september"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 6284
+  },
+  {
+    "slug": "borago",
+    "name": "Borago officinalis",
+    "name_de": "Borretsch",
+    "color": "#3060e0",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.45,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 6284
+  },
+  {
+    "slug": "symphytum",
+    "name": "Symphytum officinale",
+    "name_de": "Beinwell",
+    "color": "#a080c0",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 5017
+  },
+  {
+    "slug": "symphytum",
+    "name": "Symphytum officinale",
+    "name_de": "Beinwell",
+    "color": "#a080c0",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 5017
+  },
+  {
+    "slug": "symphytum",
+    "name": "Symphytum officinale",
+    "name_de": "Beinwell",
+    "color": "#a080c0",
+    "stage": "bloom",
+    "months": [
+      "may",
+      "june",
+      "july"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 5017
+  },
+  {
+    "slug": "symphytum",
+    "name": "Symphytum officinale",
+    "name_de": "Beinwell",
+    "color": "#a080c0",
+    "stage": "seed",
+    "months": [
+      "august",
+      "september"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 5017
+  },
+  {
+    "slug": "symphytum",
+    "name": "Symphytum officinale",
+    "name_de": "Beinwell",
+    "color": "#a080c0",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.7,
+    "worldH": 0.9,
+    "density": 1.5,
+    "seed": 5017
+  },
+  {
+    "slug": "diplotaxis",
+    "name": "Diplotaxis muralis",
+    "name_de": "Mauerrauke",
+    "color": "#f0d010",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.3,
+    "worldH": 0.45,
+    "density": 2,
+    "seed": 4193
+  },
+  {
+    "slug": "diplotaxis",
+    "name": "Diplotaxis muralis",
+    "name_de": "Mauerrauke",
+    "color": "#f0d010",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.3,
+    "worldH": 0.45,
+    "density": 2,
+    "seed": 4193
+  },
+  {
+    "slug": "diplotaxis",
+    "name": "Diplotaxis muralis",
+    "name_de": "Mauerrauke",
+    "color": "#f0d010",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.3,
+    "worldH": 0.45,
+    "density": 2,
+    "seed": 4193
+  },
+  {
+    "slug": "diplotaxis",
+    "name": "Diplotaxis muralis",
+    "name_de": "Mauerrauke",
+    "color": "#f0d010",
+    "stage": "seed",
+    "months": [
+      "september",
+      "october"
+    ],
+    "worldW": 0.3,
+    "worldH": 0.45,
+    "density": 2,
+    "seed": 4193
+  },
+  {
+    "slug": "diplotaxis",
+    "name": "Diplotaxis muralis",
+    "name_de": "Mauerrauke",
+    "color": "#f0d010",
+    "stage": "dried",
+    "months": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.3,
+    "worldH": 0.45,
+    "density": 2,
+    "seed": 4193
+  },
+  {
+    "slug": "beta",
+    "name": "Beta vulgaris vulgaris",
+    "name_de": "Rote Rübe",
+    "color": "#506830",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.6,
+    "density": 1.5,
+    "seed": 2156
+  },
+  {
+    "slug": "beta",
+    "name": "Beta vulgaris vulgaris",
+    "name_de": "Rote Rübe",
+    "color": "#506830",
+    "stage": "foliage",
+    "months": [
+      "june",
+      "july",
+      "august"
+    ],
+    "worldW": 0.6,
+    "worldH": 0.6,
+    "density": 1.5,
+    "seed": 2156
+  },
+  {
+    "slug": "verbascum",
+    "name": "Verbascum nigrum",
+    "name_de": "Schwarze Königskerze",
+    "color": "#f0d820",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 3847
+  },
+  {
+    "slug": "verbascum",
+    "name": "Verbascum nigrum",
+    "name_de": "Schwarze Königskerze",
+    "color": "#f0d820",
+    "stage": "foliage",
+    "months": [
+      "may"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 3847
+  },
+  {
+    "slug": "verbascum",
+    "name": "Verbascum nigrum",
+    "name_de": "Schwarze Königskerze",
+    "color": "#f0d820",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 3847
+  },
+  {
+    "slug": "verbascum",
+    "name": "Verbascum nigrum",
+    "name_de": "Schwarze Königskerze",
+    "color": "#f0d820",
+    "stage": "seed",
+    "months": [
+      "august",
+      "september"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 3847
+  },
+  {
+    "slug": "verbascum",
+    "name": "Verbascum nigrum",
+    "name_de": "Schwarze Königskerze",
+    "color": "#f0d820",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.45,
+    "worldH": 1.2,
+    "density": 1.5,
+    "seed": 3847
+  },
+  {
+    "slug": "fennel",
+    "name": "Foeniculum vulgare",
+    "name_de": "Fenchel",
+    "color": "#c0d020",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.6,
+    "worldH": 1.8,
+    "density": 1.2,
+    "seed": 1847
+  },
+  {
+    "slug": "fennel",
+    "name": "Foeniculum vulgare",
+    "name_de": "Fenchel",
+    "color": "#c0d020",
+    "stage": "foliage",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.6,
+    "worldH": 1.8,
+    "density": 1.2,
+    "seed": 1847
+  },
+  {
+    "slug": "fennel",
+    "name": "Foeniculum vulgare",
+    "name_de": "Fenchel",
+    "color": "#c0d020",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august"
+    ],
+    "worldW": 0.6,
+    "worldH": 1.8,
+    "density": 1.2,
+    "seed": 1847
+  },
+  {
+    "slug": "fennel",
+    "name": "Foeniculum vulgare",
+    "name_de": "Fenchel",
+    "color": "#c0d020",
+    "stage": "seed",
+    "months": [
+      "september",
+      "october"
+    ],
+    "worldW": 0.6,
+    "worldH": 1.8,
+    "density": 1.2,
+    "seed": 1847
+  },
+  {
+    "slug": "fennel",
+    "name": "Foeniculum vulgare",
+    "name_de": "Fenchel",
+    "color": "#c0d020",
+    "stage": "dried",
+    "months": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "worldW": 0.6,
+    "worldH": 1.8,
+    "density": 1.2,
+    "seed": 1847
+  },
+  {
+    "slug": "fagopyrum",
+    "name": "Fagopyrum esculentum",
+    "name_de": "Buchweizen",
+    "color": "#f5e8e0",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 4,
+    "seed": 2391
+  },
+  {
+    "slug": "fagopyrum",
+    "name": "Fagopyrum esculentum",
+    "name_de": "Buchweizen",
+    "color": "#f5e8e0",
+    "stage": "foliage",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 4,
+    "seed": 2391
+  },
+  {
+    "slug": "fagopyrum",
+    "name": "Fagopyrum esculentum",
+    "name_de": "Buchweizen",
+    "color": "#f5e8e0",
+    "stage": "bloom",
+    "months": [
+      "june",
+      "july",
+      "august"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 4,
+    "seed": 2391
+  },
+  {
+    "slug": "fagopyrum",
+    "name": "Fagopyrum esculentum",
+    "name_de": "Buchweizen",
+    "color": "#f5e8e0",
+    "stage": "seed",
+    "months": [
+      "august",
+      "september"
+    ],
+    "worldW": 0.35,
+    "worldH": 0.7,
+    "density": 4,
+    "seed": 2391
   }
 ]

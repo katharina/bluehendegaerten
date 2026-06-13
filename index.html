@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Beton Beete</title>
+  <title>Bluehende Gaerten</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #fff; font-family: system-ui, sans-serif; overflow: hidden; height: 100vh; }
@@ -15,8 +15,145 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       color: #222;
-      z-index: 10;
+      z-index: 20;
       pointer-events: none;
+    }
+
+    #version-bar {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      z-index: 20;
+    }
+
+    #version-select {
+      font-size: 11px;
+      font-family: system-ui, sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 4px 10px;
+      background: #fff;
+      color: #666;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      min-width: 90px;
+      transition: all 0.15s;
+    }
+    #version-select:hover { border-color: #888; color: #222; }
+
+    .version-icon-btn {
+      width: 22px;
+      height: 22px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      background: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      padding: 0;
+      line-height: 1;
+    }
+    .version-icon-btn:hover:not(:disabled) { border-color: #888; color: #222; }
+    .version-icon-btn:disabled { opacity: 0.3; cursor: default; }
+
+    #mode-bar {
+      position: absolute;
+      top: 68px;
+      left: 20px;
+      display: flex;
+      gap: 4px;
+      z-index: 20;
+    }
+    .mode-btn {
+      padding: 4px 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 11px;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.15s;
+    }
+    .mode-btn:hover { border-color: #888; color: #222; }
+    .mode-btn.active { background: #222; color: #fff; border-color: #222; }
+
+    #plant-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 290px;
+      background: rgba(255,255,255,0.97);
+      border-right: 1px solid #e8e8e8;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.22s ease;
+    }
+    #plant-panel.open { transform: translateX(0); }
+
+    .panel-header {
+      padding: 100px 16px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #aaa;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+
+    #plant-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 4px 0;
+    }
+
+    .plant-row {
+      padding: 9px 16px;
+      border-bottom: 1px solid #f2f2f2;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .plant-row:hover { background: #f5f5f5; }
+    .plant-row.selected { background: #222; }
+    .plant-row.selected .plant-name { color: #fff; }
+
+    #plant-search-wrap {
+      padding: 6px 12px 6px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+    #plant-search {
+      width: 100%;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-family: system-ui, sans-serif;
+      color: #444;
+      outline: none;
+      background: #fafafa;
+      transition: border-color 0.15s;
+    }
+    #plant-search:focus { border-color: #aaa; background: #fff; }
+
+    .plant-name {
+      font-size: 11px;
+      font-style: italic;
+      color: #444;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     #canvas-wrap { position: absolute; inset: 0; z-index: 0; }
@@ -79,33 +216,67 @@
       z-index: 10;
     }
 
-    #view-ui {
+    #info-panel {
       position: absolute;
-      top: 16px;
+      top: 60px;
       right: 16px;
-      display: flex;
-      gap: 6px;
+      width: 200px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
       z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.18s, transform 0.18s;
     }
+    #info-panel.visible { opacity: 1; transform: translateY(0); }
+    #info-content { padding: 12px 14px; }
 
-    .view-btn {
-      padding: 5px 12px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      background: #fff;
-      font-size: 11px;
-      cursor: pointer;
-      color: #666;
-      transition: all 0.15s;
+    .info-img {
+      display: block;
+      width: 100%;
+      height: 140px;
+      object-fit: contain;
+      background: #f5f5f3;
+      margin: -12px -14px 10px;
+      width: calc(100% + 28px);
     }
-    .view-btn:hover { border-color: #888; color: #222; }
-    .view-btn.active { background: #222; color: #fff; border-color: #222; }
+    .info-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
+    .info-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+    .info-name-de { font-size: 12px; font-weight: 600; color: #222; line-height: 1.3; }
+    .info-plant-name { font-size: 10px; font-style: italic; color: #999; line-height: 1.3; }
+    .info-dims { font-size: 10px; color: #bbb; margin-bottom: 10px; padding-left: 18px; }
+    .info-stage-row { margin-bottom: 5px; }
+    .stage-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; color: #aaa; text-transform: uppercase; }
+    .stage-months-text { font-size: 10px; color: #555; margin-top: 1px; }
+
   </style>
 </head>
 <body>
   <div id="canvas-wrap"><canvas id="c"></canvas></div>
 
-  <div id="wordmark">BETON BEETE</div>
+  <div id="wordmark">BLUEHENDE GAERTEN</div>
+
+  <div id="version-bar">
+    <select id="version-select"></select>
+    <button class="version-icon-btn" id="version-new" title="New version">+</button>
+    <button class="version-icon-btn" id="version-delete" title="Delete version">×</button>
+  </div>
+
+  <div id="mode-bar">
+    <button class="mode-btn" id="btn-edit">Edit</button>
+    <button class="mode-btn active" id="btn-view">Ansehen</button>
+  </div>
+
+  <div id="plant-panel">
+    <div class="panel-header">PFLANZEN</div>
+    <div id="plant-search-wrap">
+      <input id="plant-search" type="text" placeholder="Suchen…" autocomplete="off" spellcheck="false">
+    </div>
+    <div id="plant-list"></div>
+  </div>
 
   <div id="view-ui">
     <button class="view-btn active" data-view="iso-se">SE</button>
@@ -116,6 +287,7 @@
   </div>
 
   <div id="ui">
+    <button class="month-btn" data-month="january">Jan</button>
     <button class="month-btn" data-month="february">Feb</button>
     <button class="month-btn" data-month="march">Mar</button>
     <button class="month-btn" data-month="april">Apr</button>
@@ -124,7 +296,12 @@
     <button class="month-btn" data-month="july">Jul</button>
     <button class="month-btn" data-month="august">Aug</button>
     <button class="month-btn" data-month="september">Sep</button>
+    <button class="month-btn" data-month="october">Oct</button>
+    <button class="month-btn" data-month="november">Nov</button>
+    <button class="month-btn" data-month="december">Dec</button>
   </div>
+
+  <div id="info-panel"><div id="info-content"></div></div>
 
   <script type="module" src="/src/main.js"></script>
 </body>
