@@ -56,15 +56,20 @@ function writeManifest() {
     const worldW = plant.width_cm  / 100;
     const worldH = plant.height_cm / 100;
     for (const stage of plant.stages) {
-      entries.push({
+      const entry = {
         slug:    plant.slug,
+        name:    plant.name,
+        name_de: plant.name_de ?? null,
+        color:   plant.color ?? null,
         stage:   stage.id,
         months:  stage.months,
         worldW,
         worldH,
         density: plant.density,
         seed:    plant.scatter_seed,
-      });
+      };
+      if (plant.beds) entry.beds = plant.beds;
+      entries.push(entry);
     }
   }
   const outPath = join(OUT_DIR, 'manifest.json');
