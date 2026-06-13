@@ -2024,6 +2024,70 @@
     "seed": 1847
   },
   {
+    "slug": "calendula_arvensis",
+    "name": "Calendula arvensis",
+    "name_de": "Acker-Ringelblume",
+    "color": "#e89010",
+    "stage": "sprout",
+    "months": [
+      "march",
+      "april"
+    ],
+    "worldW": 0.2,
+    "worldH": 0.3,
+    "density": 3,
+    "seed": 3104
+  },
+  {
+    "slug": "calendula_arvensis",
+    "name": "Calendula arvensis",
+    "name_de": "Acker-Ringelblume",
+    "color": "#e89010",
+    "stage": "foliage",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.2,
+    "worldH": 0.3,
+    "density": 3,
+    "seed": 3104
+  },
+  {
+    "slug": "calendula_arvensis",
+    "name": "Calendula arvensis",
+    "name_de": "Acker-Ringelblume",
+    "color": "#e89010",
+    "stage": "bloom",
+    "months": [
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october"
+    ],
+    "worldW": 0.2,
+    "worldH": 0.3,
+    "density": 3,
+    "seed": 3104
+  },
+  {
+    "slug": "calendula_arvensis",
+    "name": "Calendula arvensis",
+    "name_de": "Acker-Ringelblume",
+    "color": "#e89010",
+    "stage": "seed",
+    "months": [
+      "october",
+      "november"
+    ],
+    "worldW": 0.2,
+    "worldH": 0.3,
+    "density": 3,
+    "seed": 3104
+  },
+  {
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",

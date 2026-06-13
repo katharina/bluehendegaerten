@@ -3,7 +3,7 @@
 
 import sharp from 'sharp';
 import { removeBackground } from '@imgly/background-removal-node';
-import { readFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { writeManifest } from './manifest.js';

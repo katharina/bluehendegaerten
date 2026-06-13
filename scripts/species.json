@@ -1546,6 +1546,42 @@
     "name_de": "Fenchel"
   },
   {
+    "slug": "calendula_arvensis",
+    "name": "Calendula arvensis",
+    "name_de": "Acker-Ringelblume",
+    "height_cm": 30,
+    "width_cm": 20,
+    "density": 3,
+    "scatter_seed": 3104,
+    "color": "#e89010",
+    "stages": [
+      {
+        "id": "sprout",
+        "months": ["march", "april"],
+        "description": "small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet",
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet"
+      },
+      {
+        "id": "foliage",
+        "months": ["april", "may"],
+        "description": "spreading low plant 15–20 cm tall, pale green aromatic leaves on branching stems, small buds beginning to form",
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — spreading low plant 15–20 cm tall, pale green slightly sticky aromatic leaves on branching stems, small buds beginning to form"
+      },
+      {
+        "id": "bloom",
+        "months": ["may", "june", "july", "august", "september", "october"],
+        "description": "low spreading plant covered in many small bright orange-yellow daisy-like flowers, petals narrower than garden marigold, pale green aromatic leaves",
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low spreading plant 25–30 cm tall covered in many small bright orange-yellow daisy-like flowers with narrower petals than garden marigold, pale green aromatic leaves, natural wildflower habitus"
+      },
+      {
+        "id": "seed",
+        "months": ["october", "november"],
+        "description": "spreading stems with small curved claw-like seed clusters, foliage yellowing and sparse",
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — spreading stems with small curved claw-like seed clusters where flowers were, foliage yellowing and sparse, natural end-of-season habitus"
+      }
+    ]
+  },
+  {
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",
