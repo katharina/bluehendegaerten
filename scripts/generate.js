@@ -9,6 +9,7 @@ import { removeBackground } from '@imgly/background-removal-node';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { writeManifest } from './manifest.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR   = join(__dirname, '..', 'public', 'plants');
@@ -110,32 +111,7 @@ async function generate(plant, stage) {
 }
 
 // always write full manifest from species.json (cheap, no API calls)
-function writeManifest() {
-  const entries = [];
-  for (const plant of species) {
-    const worldW = plant.width_cm  / 100;
-    const worldH = plant.height_cm / 100;
-    for (const stage of plant.stages) {
-      const entry = {
-        slug:    plant.slug,
-        name:    plant.name,
-        name_de: plant.name_de ?? null,
-        stage:   stage.id,
-        months:  stage.months,
-        worldW,
-        worldH,
-        density: plant.density,
-        seed:    plant.scatter_seed,
-      };
-      if (plant.beds)  entry.beds  = plant.beds;
-      if (plant.color) entry.color = plant.color;
-      entries.push(entry);
-    }
-  }
-  const outPath = join(OUT_DIR, 'manifest.json');
-  writeFileSync(outPath, JSON.stringify(entries, null, 2));
-  console.log(`  manifest → ${entries.length} entries`);
-}
+function _writeManifest() { writeManifest(species, OUT_DIR); }
 
 const filterSlug = process.argv[2];
 const targets = filterSlug
@@ -153,5 +129,5 @@ for (const plant of targets) {
     await generate(plant, stage);
   }
 }
-writeManifest();
+_writeManifest();
 console.log('done.');
