@@ -2024,6 +2024,70 @@
     "seed": 1847
   },
   {
+    "slug": "mentha",
+    "name": "Mentha spicata",
+    "name_de": "Grüne Minze",
+    "color": "#b890d0",
+    "stage": "sprout",
+    "months": [
+      "april"
+    ],
+    "worldW": 0.4,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 4712
+  },
+  {
+    "slug": "mentha",
+    "name": "Mentha spicata",
+    "name_de": "Grüne Minze",
+    "color": "#b890d0",
+    "stage": "foliage",
+    "months": [
+      "may",
+      "june"
+    ],
+    "worldW": 0.4,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 4712
+  },
+  {
+    "slug": "mentha",
+    "name": "Mentha spicata",
+    "name_de": "Grüne Minze",
+    "color": "#b890d0",
+    "stage": "bloom",
+    "months": [
+      "july",
+      "august",
+      "september"
+    ],
+    "worldW": 0.4,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 4712
+  },
+  {
+    "slug": "mentha",
+    "name": "Mentha spicata",
+    "name_de": "Grüne Minze",
+    "color": "#b890d0",
+    "stage": "dried",
+    "months": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "worldW": 0.4,
+    "worldH": 0.6,
+    "density": 2,
+    "seed": 4712
+  },
+  {
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",

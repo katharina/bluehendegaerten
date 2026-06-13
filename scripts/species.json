@@ -1546,6 +1546,42 @@
     "name_de": "Fenchel"
   },
   {
+    "slug": "mentha",
+    "name": "Mentha spicata",
+    "name_de": "Grüne Minze",
+    "height_cm": 60,
+    "width_cm": 40,
+    "density": 2,
+    "scatter_seed": 4712,
+    "color": "#b890d0",
+    "stages": [
+      {
+        "id": "sprout",
+        "months": ["april"],
+        "description": "fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled leaves in pairs, strongly aromatic",
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled aromatic leaves in opposite pairs, vigorous new growth"
+      },
+      {
+        "id": "foliage",
+        "months": ["may", "june"],
+        "description": "lush upright stems 30–50 cm, bright green lance-shaped crinkled leaves in pairs, no flower spikes yet, strongly aromatic",
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush clump of upright stems 30–50 cm tall, bright green lance-shaped crinkled aromatic leaves in opposite pairs, no flower spikes yet"
+      },
+      {
+        "id": "bloom",
+        "months": ["july", "august", "september"],
+        "description": "60 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled leaves below",
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump 55–65 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled aromatic leaves, full bloom"
+      },
+      {
+        "id": "dried",
+        "months": ["october", "november", "december", "january", "february", "march"],
+        "description": "dried upright stems with spent brown flower spikes, leaves gone, skeletal winter structure",
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — dried upright stems with spent brown whorled flower spikes, no leaves remaining, skeletal winter structure"
+      }
+    ]
+  },
+  {
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",

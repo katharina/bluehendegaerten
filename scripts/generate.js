@@ -55,19 +55,46 @@ async function removeBg(pngBuffer) {
   return Buffer.from(await result.arrayBuffer());
 }
 
-async function normalizeCanvas(rgbaBuffer, canvasW, canvasH) {
-  const trimmed  = await sharp(rgbaBuffer).trim({ threshold: 10 }).toBuffer();
-  const { width, height } = await sharp(trimmed).metadata();
+async function alphaTrim(rgbaBuffer) {
+  const { data, info } = await sharp(rgbaBuffer)
+    .ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  let top = height, bottom = 0, left = width, right = 0;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const a = data[(y * width + x) * channels + 3];
+      if (a > 40) {
+        if (y < top)    top    = y;
+        if (y > bottom) bottom = y;
+        if (x < left)   left   = x;
+        if (x > right)  right  = x;
+      }
+    }
+  }
+  if (top > bottom) return { buffer: rgbaBuffer, w: width, h: height };
+  return {
+    buffer: await sharp(rgbaBuffer)
+      .extract({ left, top, width: right - left + 1, height: bottom - top + 1 })
+      .toBuffer(),
+    w: right - left + 1,
+    h: bottom - top + 1,
+  };
+}
+
+// Scales to fill canvasH (height is authoritative for worldH accuracy).
+// Canvas width expands to fit the actual plant content so nothing is clipped.
+async function normalizeCanvas(rgbaBuffer, canvasH) {
+  const { buffer: trimmed, w, h } = await alphaTrim(rgbaBuffer);
 
   const padding = 24;
-  const scale   = Math.min((canvasW - padding * 2) / width, (canvasH - padding * 2) / height);
-  const fitW    = Math.round(width  * scale);
-  const fitH    = Math.round(height * scale);
+  const scale   = (canvasH - padding * 2) / h;
+  const fitH    = Math.round(h * scale);
+  const fitW    = Math.round(w * scale);
+  const canvasW = fitW + padding * 2;
 
   const resized = await sharp(trimmed).resize(fitW, fitH).toBuffer();
 
-  // anchor bottom-center so billboard pivot-at-base aligns correctly
-  const left = Math.round((canvasW - fitW) / 2);
+  const left = padding;
   const top  = canvasH - fitH - padding;
 
   return sharp({
@@ -100,14 +127,14 @@ async function generate(plant, stage) {
     quality: 'medium',
   });
 
-  const { canvasW, canvasH } = canvasSize(plant.height_cm, plant.width_cm);
+  const canvasH = Math.round(plant.height_cm / MAX_PLANT_CM * MAX_PX);
 
-  const raw        = Buffer.from(response.data[0].b64_json, 'base64');
-  const noBg       = await removeBg(raw);
-  const normalized = await normalizeCanvas(noBg, canvasW, canvasH);
+  const raw  = Buffer.from(response.data[0].b64_json, 'base64');
+  const noBg = await removeBg(raw);
+  const img  = await normalizeCanvas(noBg, canvasH);
 
-  writeFileSync(outPath, normalized);
-  console.log(`  saved ${filename}  (${canvasW}×${canvasH})`);
+  writeFileSync(outPath, img);
+  console.log(`  saved ${filename}  (dynamic×${canvasH})`);
 }
 
 // always write full manifest from species.json (cheap, no API calls)
