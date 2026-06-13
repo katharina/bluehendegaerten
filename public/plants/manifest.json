@@ -1,9 +1,6 @@
 [
   {
     "slug": "echinacea",
-    "name": "Echinacea purpurea",
-    "name_de": "Purpursonnenhut",
-    "color": "#e06090",
     "stage": "sprout",
     "months": [
       "march",
@@ -16,9 +13,6 @@
   },
   {
     "slug": "echinacea",
-    "name": "Echinacea purpurea",
-    "name_de": "Purpursonnenhut",
-    "color": "#e06090",
     "stage": "foliage",
     "months": [
       "may",
@@ -31,9 +25,6 @@
   },
   {
     "slug": "echinacea",
-    "name": "Echinacea purpurea",
-    "name_de": "Purpursonnenhut",
-    "color": "#e06090",
     "stage": "bloom",
     "months": [
       "july"
@@ -45,9 +36,6 @@
   },
   {
     "slug": "echinacea",
-    "name": "Echinacea purpurea",
-    "name_de": "Purpursonnenhut",
-    "color": "#e06090",
     "stage": "seed",
     "months": [
       "august",
@@ -60,9 +48,6 @@
   },
   {
     "slug": "echinacea",
-    "name": "Echinacea purpurea",
-    "name_de": "Purpursonnenhut",
-    "color": "#e06090",
     "stage": "dried",
     "months": [
       "october",
@@ -78,9 +63,6 @@
   },
   {
     "slug": "poppy",
-    "name": "Papaver orientale",
-    "name_de": "Orientalischer Mohn",
-    "color": "#e03020",
     "stage": "sprout",
     "months": [
       "february",
@@ -93,9 +75,6 @@
   },
   {
     "slug": "poppy",
-    "name": "Papaver orientale",
-    "name_de": "Orientalischer Mohn",
-    "color": "#e03020",
     "stage": "foliage",
     "months": [
       "april"
@@ -107,9 +86,6 @@
   },
   {
     "slug": "poppy",
-    "name": "Papaver orientale",
-    "name_de": "Orientalischer Mohn",
-    "color": "#e03020",
     "stage": "bloom",
     "months": [
       "may",
@@ -122,9 +98,6 @@
   },
   {
     "slug": "poppy",
-    "name": "Papaver orientale",
-    "name_de": "Orientalischer Mohn",
-    "color": "#e03020",
     "stage": "seed",
     "months": [
       "july"
@@ -136,9 +109,6 @@
   },
   {
     "slug": "poppy",
-    "name": "Papaver orientale",
-    "name_de": "Orientalischer Mohn",
-    "color": "#e03020",
     "stage": "dried",
     "months": [
       "august",
@@ -155,9 +125,6 @@
   },
   {
     "slug": "sunflower",
-    "name": "Helianthus annuus",
-    "name_de": "Sonnenblume",
-    "color": "#f5c010",
     "stage": "sprout",
     "months": [
       "april",
@@ -166,16 +133,10 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113,
-    "beds": [
-      0
-    ]
+    "seed": 113
   },
   {
     "slug": "sunflower",
-    "name": "Helianthus annuus",
-    "name_de": "Sonnenblume",
-    "color": "#f5c010",
     "stage": "foliage",
     "months": [
       "june"
@@ -183,16 +144,10 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113,
-    "beds": [
-      0
-    ]
+    "seed": 113
   },
   {
     "slug": "sunflower",
-    "name": "Helianthus annuus",
-    "name_de": "Sonnenblume",
-    "color": "#f5c010",
     "stage": "bloom",
     "months": [
       "july",
@@ -201,16 +156,10 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113,
-    "beds": [
-      0
-    ]
+    "seed": 113
   },
   {
     "slug": "sunflower",
-    "name": "Helianthus annuus",
-    "name_de": "Sonnenblume",
-    "color": "#f5c010",
     "stage": "seed",
     "months": [
       "september"
@@ -218,16 +167,10 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113,
-    "beds": [
-      0
-    ]
+    "seed": 113
   },
   {
     "slug": "sunflower",
-    "name": "Helianthus annuus",
-    "name_de": "Sonnenblume",
-    "color": "#f5c010",
     "stage": "dried",
     "months": [
       "october",
@@ -236,16 +179,10 @@
     "worldW": 0.45,
     "worldH": 1.8,
     "density": 0.4,
-    "seed": 113,
-    "beds": [
-      0
-    ]
+    "seed": 113
   },
   {
     "slug": "salvia",
-    "name": "Salvia nemorosa",
-    "name_de": "Steppensalbei",
-    "color": "#6050c0",
     "stage": "foliage",
     "months": [
       "march",
@@ -258,9 +195,6 @@
   },
   {
     "slug": "salvia",
-    "name": "Salvia nemorosa",
-    "name_de": "Steppensalbei",
-    "color": "#6050c0",
     "stage": "bloom",
     "months": [
       "may",
@@ -275,9 +209,6 @@
   },
   {
     "slug": "salvia",
-    "name": "Salvia nemorosa",
-    "name_de": "Steppensalbei",
-    "color": "#6050c0",
     "stage": "seed",
     "months": [
       "september"
@@ -289,9 +220,6 @@
   },
   {
     "slug": "alchemilla",
-    "name": "Alchemilla mollis",
-    "name_de": "Frauenmantel",
-    "color": "#a8c830",
     "stage": "foliage",
     "months": [
       "march",
@@ -304,9 +232,6 @@
   },
   {
     "slug": "alchemilla",
-    "name": "Alchemilla mollis",
-    "name_de": "Frauenmantel",
-    "color": "#a8c830",
     "stage": "bloom",
     "months": [
       "may",
@@ -320,9 +245,6 @@
   },
   {
     "slug": "alchemilla",
-    "name": "Alchemilla mollis",
-    "name_de": "Frauenmantel",
-    "color": "#a8c830",
     "stage": "late",
     "months": [
       "august",
@@ -335,9 +257,6 @@
   },
   {
     "slug": "sage",
-    "name": "Salvia officinalis",
-    "name_de": "Echter Salbei",
-    "color": "#7060b0",
     "stage": "sprout",
     "months": [
       "march"
@@ -349,9 +268,6 @@
   },
   {
     "slug": "sage",
-    "name": "Salvia officinalis",
-    "name_de": "Echter Salbei",
-    "color": "#7060b0",
     "stage": "foliage",
     "months": [
       "april",
@@ -364,9 +280,6 @@
   },
   {
     "slug": "sage",
-    "name": "Salvia officinalis",
-    "name_de": "Echter Salbei",
-    "color": "#7060b0",
     "stage": "bloom",
     "months": [
       "june",
@@ -379,9 +292,6 @@
   },
   {
     "slug": "sage",
-    "name": "Salvia officinalis",
-    "name_de": "Echter Salbei",
-    "color": "#7060b0",
     "stage": "seed",
     "months": [
       "august",
@@ -394,9 +304,6 @@
   },
   {
     "slug": "sage",
-    "name": "Salvia officinalis",
-    "name_de": "Echter Salbei",
-    "color": "#7060b0",
     "stage": "dried",
     "months": [
       "october",
@@ -412,9 +319,6 @@
   },
   {
     "slug": "bunias",
-    "name": "Bunias orientalis",
-    "name_de": "Zackenschötchen",
-    "color": "#e8d020",
     "stage": "sprout",
     "months": [
       "february",
@@ -427,9 +331,6 @@
   },
   {
     "slug": "bunias",
-    "name": "Bunias orientalis",
-    "name_de": "Zackenschötchen",
-    "color": "#e8d020",
     "stage": "foliage",
     "months": [
       "april",
@@ -442,9 +343,6 @@
   },
   {
     "slug": "bunias",
-    "name": "Bunias orientalis",
-    "name_de": "Zackenschötchen",
-    "color": "#e8d020",
     "stage": "bloom",
     "months": [
       "june"
@@ -456,9 +354,6 @@
   },
   {
     "slug": "bunias",
-    "name": "Bunias orientalis",
-    "name_de": "Zackenschötchen",
-    "color": "#e8d020",
     "stage": "seed",
     "months": [
       "july",
@@ -471,9 +366,6 @@
   },
   {
     "slug": "bunias",
-    "name": "Bunias orientalis",
-    "name_de": "Zackenschötchen",
-    "color": "#e8d020",
     "stage": "dried",
     "months": [
       "september",
@@ -489,9 +381,6 @@
   },
   {
     "slug": "aquilegia",
-    "name": "Aquilegia vulgaris",
-    "name_de": "Akelei",
-    "color": "#5040a0",
     "stage": "sprout",
     "months": [
       "february",
@@ -504,9 +393,6 @@
   },
   {
     "slug": "aquilegia",
-    "name": "Aquilegia vulgaris",
-    "name_de": "Akelei",
-    "color": "#5040a0",
     "stage": "foliage",
     "months": [
       "april"
@@ -518,9 +404,6 @@
   },
   {
     "slug": "aquilegia",
-    "name": "Aquilegia vulgaris",
-    "name_de": "Akelei",
-    "color": "#5040a0",
     "stage": "bloom",
     "months": [
       "may",
@@ -533,9 +416,6 @@
   },
   {
     "slug": "aquilegia",
-    "name": "Aquilegia vulgaris",
-    "name_de": "Akelei",
-    "color": "#5040a0",
     "stage": "seed",
     "months": [
       "july"
@@ -547,9 +427,6 @@
   },
   {
     "slug": "aquilegia",
-    "name": "Aquilegia vulgaris",
-    "name_de": "Akelei",
-    "color": "#5040a0",
     "stage": "dried",
     "months": [
       "august",
@@ -566,9 +443,6 @@
   },
   {
     "slug": "primula",
-    "name": "Primula veris",
-    "name_de": "Schlüsselblume",
-    "color": "#e8c020",
     "stage": "sprout",
     "months": [
       "february"
@@ -580,9 +454,6 @@
   },
   {
     "slug": "primula",
-    "name": "Primula veris",
-    "name_de": "Schlüsselblume",
-    "color": "#e8c020",
     "stage": "foliage",
     "months": [
       "march"
@@ -594,9 +465,6 @@
   },
   {
     "slug": "primula",
-    "name": "Primula veris",
-    "name_de": "Schlüsselblume",
-    "color": "#e8c020",
     "stage": "bloom",
     "months": [
       "april",
@@ -609,9 +477,6 @@
   },
   {
     "slug": "primula",
-    "name": "Primula veris",
-    "name_de": "Schlüsselblume",
-    "color": "#e8c020",
     "stage": "seed",
     "months": [
       "june",
@@ -624,9 +489,6 @@
   },
   {
     "slug": "primula",
-    "name": "Primula veris",
-    "name_de": "Schlüsselblume",
-    "color": "#e8c020",
     "stage": "dried",
     "months": [
       "august",
@@ -643,9 +505,6 @@
   },
   {
     "slug": "phacelia",
-    "name": "Phacelia tanacetifolia",
-    "name_de": "Bienenfreund",
-    "color": "#7080d8",
     "stage": "sprout",
     "months": [
       "april"
@@ -657,9 +516,6 @@
   },
   {
     "slug": "phacelia",
-    "name": "Phacelia tanacetifolia",
-    "name_de": "Bienenfreund",
-    "color": "#7080d8",
     "stage": "foliage",
     "months": [
       "may"
@@ -671,9 +527,6 @@
   },
   {
     "slug": "phacelia",
-    "name": "Phacelia tanacetifolia",
-    "name_de": "Bienenfreund",
-    "color": "#7080d8",
     "stage": "bloom",
     "months": [
       "june",
@@ -686,9 +539,6 @@
   },
   {
     "slug": "phacelia",
-    "name": "Phacelia tanacetifolia",
-    "name_de": "Bienenfreund",
-    "color": "#7080d8",
     "stage": "seed",
     "months": [
       "august"
@@ -700,9 +550,6 @@
   },
   {
     "slug": "phacelia",
-    "name": "Phacelia tanacetifolia",
-    "name_de": "Bienenfreund",
-    "color": "#7080d8",
     "stage": "dried",
     "months": [
       "september",
@@ -715,9 +562,6 @@
   },
   {
     "slug": "calendula",
-    "name": "Calendula officinalis",
-    "name_de": "Ringelblume",
-    "color": "#f07010",
     "stage": "sprout",
     "months": [
       "april"
@@ -729,9 +573,6 @@
   },
   {
     "slug": "calendula",
-    "name": "Calendula officinalis",
-    "name_de": "Ringelblume",
-    "color": "#f07010",
     "stage": "foliage",
     "months": [
       "may"
@@ -743,9 +584,6 @@
   },
   {
     "slug": "calendula",
-    "name": "Calendula officinalis",
-    "name_de": "Ringelblume",
-    "color": "#f07010",
     "stage": "bloom",
     "months": [
       "june",
@@ -760,9 +598,6 @@
   },
   {
     "slug": "calendula",
-    "name": "Calendula officinalis",
-    "name_de": "Ringelblume",
-    "color": "#f07010",
     "stage": "seed",
     "months": [
       "october"
@@ -774,9 +609,6 @@
   },
   {
     "slug": "calendula",
-    "name": "Calendula officinalis",
-    "name_de": "Ringelblume",
-    "color": "#f07010",
     "stage": "dried",
     "months": [
       "november"
@@ -788,9 +620,6 @@
   },
   {
     "slug": "anthemis",
-    "name": "Anthemis tinctoria",
-    "name_de": "Färberkamille",
-    "color": "#f0c820",
     "stage": "sprout",
     "months": [
       "march"
@@ -802,9 +631,6 @@
   },
   {
     "slug": "anthemis",
-    "name": "Anthemis tinctoria",
-    "name_de": "Färberkamille",
-    "color": "#f0c820",
     "stage": "foliage",
     "months": [
       "april",
@@ -817,9 +643,6 @@
   },
   {
     "slug": "anthemis",
-    "name": "Anthemis tinctoria",
-    "name_de": "Färberkamille",
-    "color": "#f0c820",
     "stage": "bloom",
     "months": [
       "june",
@@ -833,9 +656,6 @@
   },
   {
     "slug": "anthemis",
-    "name": "Anthemis tinctoria",
-    "name_de": "Färberkamille",
-    "color": "#f0c820",
     "stage": "seed",
     "months": [
       "september"
@@ -847,9 +667,6 @@
   },
   {
     "slug": "anthemis",
-    "name": "Anthemis tinctoria",
-    "name_de": "Färberkamille",
-    "color": "#f0c820",
     "stage": "dried",
     "months": [
       "october",
@@ -862,9 +679,6 @@
   },
   {
     "slug": "tithonia",
-    "name": "Tithonia rotundifolia",
-    "name_de": "Mexikanische Sonnenblume",
-    "color": "#f04810",
     "stage": "sprout",
     "months": [
       "may"
@@ -876,9 +690,6 @@
   },
   {
     "slug": "tithonia",
-    "name": "Tithonia rotundifolia",
-    "name_de": "Mexikanische Sonnenblume",
-    "color": "#f04810",
     "stage": "foliage",
     "months": [
       "june"
@@ -890,9 +701,6 @@
   },
   {
     "slug": "tithonia",
-    "name": "Tithonia rotundifolia",
-    "name_de": "Mexikanische Sonnenblume",
-    "color": "#f04810",
     "stage": "bloom",
     "months": [
       "july",
@@ -906,9 +714,6 @@
   },
   {
     "slug": "tithonia",
-    "name": "Tithonia rotundifolia",
-    "name_de": "Mexikanische Sonnenblume",
-    "color": "#f04810",
     "stage": "seed",
     "months": [
       "october"
@@ -920,9 +725,6 @@
   },
   {
     "slug": "tithonia",
-    "name": "Tithonia rotundifolia",
-    "name_de": "Mexikanische Sonnenblume",
-    "color": "#f04810",
     "stage": "dried",
     "months": [
       "november"
@@ -934,9 +736,6 @@
   },
   {
     "slug": "artichoke",
-    "name": "Cynara scolymus",
-    "name_de": "Artischocke",
-    "color": "#7878b8",
     "stage": "sprout",
     "months": [
       "february",
@@ -949,9 +748,6 @@
   },
   {
     "slug": "artichoke",
-    "name": "Cynara scolymus",
-    "name_de": "Artischocke",
-    "color": "#7878b8",
     "stage": "foliage",
     "months": [
       "april",
@@ -964,9 +760,6 @@
   },
   {
     "slug": "artichoke",
-    "name": "Cynara scolymus",
-    "name_de": "Artischocke",
-    "color": "#7878b8",
     "stage": "bloom",
     "months": [
       "june",
@@ -979,9 +772,6 @@
   },
   {
     "slug": "artichoke",
-    "name": "Cynara scolymus",
-    "name_de": "Artischocke",
-    "color": "#7878b8",
     "stage": "seed",
     "months": [
       "august",
@@ -994,9 +784,6 @@
   },
   {
     "slug": "artichoke",
-    "name": "Cynara scolymus",
-    "name_de": "Artischocke",
-    "color": "#7878b8",
     "stage": "dried",
     "months": [
       "october",
@@ -1011,9 +798,6 @@
   },
   {
     "slug": "achillea",
-    "name": "Achillea filipendulina",
-    "name_de": "Goldgarbe",
-    "color": "#f0d010",
     "stage": "sprout",
     "months": [
       "march",
@@ -1026,9 +810,6 @@
   },
   {
     "slug": "achillea",
-    "name": "Achillea filipendulina",
-    "name_de": "Goldgarbe",
-    "color": "#f0d010",
     "stage": "foliage",
     "months": [
       "may"
@@ -1040,9 +821,6 @@
   },
   {
     "slug": "achillea",
-    "name": "Achillea filipendulina",
-    "name_de": "Goldgarbe",
-    "color": "#f0d010",
     "stage": "bloom",
     "months": [
       "june",
@@ -1056,9 +834,6 @@
   },
   {
     "slug": "achillea",
-    "name": "Achillea filipendulina",
-    "name_de": "Goldgarbe",
-    "color": "#f0d010",
     "stage": "seed",
     "months": [
       "september"
@@ -1070,9 +845,6 @@
   },
   {
     "slug": "achillea",
-    "name": "Achillea filipendulina",
-    "name_de": "Goldgarbe",
-    "color": "#f0d010",
     "stage": "dried",
     "months": [
       "october",
@@ -1088,9 +860,6 @@
   },
   {
     "slug": "cosmea",
-    "name": "Cosmos bipinnatus",
-    "name_de": "Schmuckkörbchen",
-    "color": "#d860a0",
     "stage": "sprout",
     "months": [
       "may"
@@ -1102,9 +871,6 @@
   },
   {
     "slug": "cosmea",
-    "name": "Cosmos bipinnatus",
-    "name_de": "Schmuckkörbchen",
-    "color": "#d860a0",
     "stage": "foliage",
     "months": [
       "june"
@@ -1116,9 +882,6 @@
   },
   {
     "slug": "cosmea",
-    "name": "Cosmos bipinnatus",
-    "name_de": "Schmuckkörbchen",
-    "color": "#d860a0",
     "stage": "bloom",
     "months": [
       "july",
@@ -1132,9 +895,6 @@
   },
   {
     "slug": "cosmea",
-    "name": "Cosmos bipinnatus",
-    "name_de": "Schmuckkörbchen",
-    "color": "#d860a0",
     "stage": "seed",
     "months": [
       "october"
@@ -1146,9 +906,6 @@
   },
   {
     "slug": "cosmea",
-    "name": "Cosmos bipinnatus",
-    "name_de": "Schmuckkörbchen",
-    "color": "#d860a0",
     "stage": "dried",
     "months": [
       "november"
@@ -1160,9 +917,6 @@
   },
   {
     "slug": "paeonia",
-    "name": "Paeonia lactiflora",
-    "name_de": "Pfingstrose",
-    "color": "#d04070",
     "stage": "sprout",
     "months": [
       "march"
@@ -1174,9 +928,6 @@
   },
   {
     "slug": "paeonia",
-    "name": "Paeonia lactiflora",
-    "name_de": "Pfingstrose",
-    "color": "#d04070",
     "stage": "foliage",
     "months": [
       "april",
@@ -1189,9 +940,6 @@
   },
   {
     "slug": "paeonia",
-    "name": "Paeonia lactiflora",
-    "name_de": "Pfingstrose",
-    "color": "#d04070",
     "stage": "bloom",
     "months": [
       "june"
@@ -1203,9 +951,6 @@
   },
   {
     "slug": "paeonia",
-    "name": "Paeonia lactiflora",
-    "name_de": "Pfingstrose",
-    "color": "#d04070",
     "stage": "seed",
     "months": [
       "july",
@@ -1219,9 +964,6 @@
   },
   {
     "slug": "paeonia",
-    "name": "Paeonia lactiflora",
-    "name_de": "Pfingstrose",
-    "color": "#d04070",
     "stage": "dried",
     "months": [
       "october",
@@ -1237,9 +979,6 @@
   },
   {
     "slug": "artemisia",
-    "name": "Artemisia absinthium",
-    "name_de": "Wermut",
-    "color": "#a0a870",
     "stage": "sprout",
     "months": [
       "march",
@@ -1252,9 +991,6 @@
   },
   {
     "slug": "artemisia",
-    "name": "Artemisia absinthium",
-    "name_de": "Wermut",
-    "color": "#a0a870",
     "stage": "foliage",
     "months": [
       "may",
@@ -1267,9 +1003,6 @@
   },
   {
     "slug": "artemisia",
-    "name": "Artemisia absinthium",
-    "name_de": "Wermut",
-    "color": "#a0a870",
     "stage": "bloom",
     "months": [
       "july",
@@ -1283,9 +1016,6 @@
   },
   {
     "slug": "artemisia",
-    "name": "Artemisia absinthium",
-    "name_de": "Wermut",
-    "color": "#a0a870",
     "stage": "seed",
     "months": [
       "october"
@@ -1297,9 +1027,6 @@
   },
   {
     "slug": "artemisia",
-    "name": "Artemisia absinthium",
-    "name_de": "Wermut",
-    "color": "#a0a870",
     "stage": "dried",
     "months": [
       "november",
@@ -1314,9 +1041,6 @@
   },
   {
     "slug": "lactuca",
-    "name": "Lactuca serriola",
-    "name_de": "Kompasslattich",
-    "color": "#d0c840",
     "stage": "sprout",
     "months": [
       "march",
@@ -1329,9 +1053,6 @@
   },
   {
     "slug": "lactuca",
-    "name": "Lactuca serriola",
-    "name_de": "Kompasslattich",
-    "color": "#d0c840",
     "stage": "foliage",
     "months": [
       "may",
@@ -1344,9 +1065,6 @@
   },
   {
     "slug": "lactuca",
-    "name": "Lactuca serriola",
-    "name_de": "Kompasslattich",
-    "color": "#d0c840",
     "stage": "bloom",
     "months": [
       "july",
@@ -1359,9 +1077,6 @@
   },
   {
     "slug": "lactuca",
-    "name": "Lactuca serriola",
-    "name_de": "Kompasslattich",
-    "color": "#d0c840",
     "stage": "seed",
     "months": [
       "september"
@@ -1373,9 +1088,6 @@
   },
   {
     "slug": "lactuca",
-    "name": "Lactuca serriola",
-    "name_de": "Kompasslattich",
-    "color": "#d0c840",
     "stage": "dried",
     "months": [
       "october",
@@ -1388,9 +1100,6 @@
   },
   {
     "slug": "nasturtium",
-    "name": "Tropaeolum majus",
-    "name_de": "Kapuzinerkresse",
-    "color": "#f06010",
     "stage": "sprout",
     "months": [
       "april",
@@ -1403,9 +1112,6 @@
   },
   {
     "slug": "nasturtium",
-    "name": "Tropaeolum majus",
-    "name_de": "Kapuzinerkresse",
-    "color": "#f06010",
     "stage": "foliage",
     "months": [
       "june"
@@ -1417,9 +1123,6 @@
   },
   {
     "slug": "nasturtium",
-    "name": "Tropaeolum majus",
-    "name_de": "Kapuzinerkresse",
-    "color": "#f06010",
     "stage": "bloom",
     "months": [
       "july",
@@ -1433,9 +1136,6 @@
   },
   {
     "slug": "nasturtium",
-    "name": "Tropaeolum majus",
-    "name_de": "Kapuzinerkresse",
-    "color": "#f06010",
     "stage": "seed",
     "months": [
       "october"
@@ -1447,9 +1147,6 @@
   },
   {
     "slug": "nasturtium",
-    "name": "Tropaeolum majus",
-    "name_de": "Kapuzinerkresse",
-    "color": "#f06010",
     "stage": "dried",
     "months": [
       "november"
@@ -1461,9 +1158,6 @@
   },
   {
     "slug": "nicotiana",
-    "name": "Nicotiana plumbaginifolia",
-    "name_de": "Ziertabak",
-    "color": "#d8d8e8",
     "stage": "sprout",
     "months": [
       "april",
@@ -1476,9 +1170,6 @@
   },
   {
     "slug": "nicotiana",
-    "name": "Nicotiana plumbaginifolia",
-    "name_de": "Ziertabak",
-    "color": "#d8d8e8",
     "stage": "foliage",
     "months": [
       "june"
@@ -1490,9 +1181,6 @@
   },
   {
     "slug": "nicotiana",
-    "name": "Nicotiana plumbaginifolia",
-    "name_de": "Ziertabak",
-    "color": "#d8d8e8",
     "stage": "bloom",
     "months": [
       "july",
@@ -1506,9 +1194,6 @@
   },
   {
     "slug": "nicotiana",
-    "name": "Nicotiana plumbaginifolia",
-    "name_de": "Ziertabak",
-    "color": "#d8d8e8",
     "stage": "seed",
     "months": [
       "october"
@@ -1520,9 +1205,6 @@
   },
   {
     "slug": "nicotiana",
-    "name": "Nicotiana plumbaginifolia",
-    "name_de": "Ziertabak",
-    "color": "#d8d8e8",
     "stage": "dried",
     "months": [
       "november",
@@ -1535,9 +1217,6 @@
   },
   {
     "slug": "atriplex",
-    "name": "Atriplex hortensis var. rubra",
-    "name_de": "Rote Gartenmelde",
-    "color": "#901830",
     "stage": "sprout",
     "months": [
       "april",
@@ -1550,9 +1229,6 @@
   },
   {
     "slug": "atriplex",
-    "name": "Atriplex hortensis var. rubra",
-    "name_de": "Rote Gartenmelde",
-    "color": "#901830",
     "stage": "foliage",
     "months": [
       "june"
@@ -1564,9 +1240,6 @@
   },
   {
     "slug": "atriplex",
-    "name": "Atriplex hortensis var. rubra",
-    "name_de": "Rote Gartenmelde",
-    "color": "#901830",
     "stage": "bloom",
     "months": [
       "july",
@@ -1579,9 +1252,6 @@
   },
   {
     "slug": "atriplex",
-    "name": "Atriplex hortensis var. rubra",
-    "name_de": "Rote Gartenmelde",
-    "color": "#901830",
     "stage": "seed",
     "months": [
       "september"
@@ -1593,9 +1263,6 @@
   },
   {
     "slug": "atriplex",
-    "name": "Atriplex hortensis var. rubra",
-    "name_de": "Rote Gartenmelde",
-    "color": "#901830",
     "stage": "dried",
     "months": [
       "october",
@@ -1608,9 +1275,6 @@
   },
   {
     "slug": "borago",
-    "name": "Borago officinalis",
-    "name_de": "Borretsch",
-    "color": "#3060e0",
     "stage": "sprout",
     "months": [
       "april",
@@ -1623,9 +1287,6 @@
   },
   {
     "slug": "borago",
-    "name": "Borago officinalis",
-    "name_de": "Borretsch",
-    "color": "#3060e0",
     "stage": "foliage",
     "months": [
       "may"
@@ -1637,9 +1298,6 @@
   },
   {
     "slug": "borago",
-    "name": "Borago officinalis",
-    "name_de": "Borretsch",
-    "color": "#3060e0",
     "stage": "bloom",
     "months": [
       "june",
@@ -1653,9 +1311,6 @@
   },
   {
     "slug": "borago",
-    "name": "Borago officinalis",
-    "name_de": "Borretsch",
-    "color": "#3060e0",
     "stage": "seed",
     "months": [
       "september"
@@ -1667,9 +1322,6 @@
   },
   {
     "slug": "borago",
-    "name": "Borago officinalis",
-    "name_de": "Borretsch",
-    "color": "#3060e0",
     "stage": "dried",
     "months": [
       "october",
@@ -1682,9 +1334,6 @@
   },
   {
     "slug": "symphytum",
-    "name": "Symphytum officinale",
-    "name_de": "Beinwell",
-    "color": "#a080c0",
     "stage": "sprout",
     "months": [
       "march",
@@ -1697,9 +1346,6 @@
   },
   {
     "slug": "symphytum",
-    "name": "Symphytum officinale",
-    "name_de": "Beinwell",
-    "color": "#a080c0",
     "stage": "foliage",
     "months": [
       "april",
@@ -1712,9 +1358,6 @@
   },
   {
     "slug": "symphytum",
-    "name": "Symphytum officinale",
-    "name_de": "Beinwell",
-    "color": "#a080c0",
     "stage": "bloom",
     "months": [
       "may",
@@ -1728,9 +1371,6 @@
   },
   {
     "slug": "symphytum",
-    "name": "Symphytum officinale",
-    "name_de": "Beinwell",
-    "color": "#a080c0",
     "stage": "seed",
     "months": [
       "august",
@@ -1743,9 +1383,6 @@
   },
   {
     "slug": "symphytum",
-    "name": "Symphytum officinale",
-    "name_de": "Beinwell",
-    "color": "#a080c0",
     "stage": "dried",
     "months": [
       "october",
@@ -1761,9 +1398,6 @@
   },
   {
     "slug": "diplotaxis",
-    "name": "Diplotaxis muralis",
-    "name_de": "Mauerrauke",
-    "color": "#f0d010",
     "stage": "sprout",
     "months": [
       "march",
@@ -1776,9 +1410,6 @@
   },
   {
     "slug": "diplotaxis",
-    "name": "Diplotaxis muralis",
-    "name_de": "Mauerrauke",
-    "color": "#f0d010",
     "stage": "foliage",
     "months": [
       "april",
@@ -1791,9 +1422,6 @@
   },
   {
     "slug": "diplotaxis",
-    "name": "Diplotaxis muralis",
-    "name_de": "Mauerrauke",
-    "color": "#f0d010",
     "stage": "bloom",
     "months": [
       "june",
@@ -1808,9 +1436,6 @@
   },
   {
     "slug": "diplotaxis",
-    "name": "Diplotaxis muralis",
-    "name_de": "Mauerrauke",
-    "color": "#f0d010",
     "stage": "seed",
     "months": [
       "september",
@@ -1823,9 +1448,6 @@
   },
   {
     "slug": "diplotaxis",
-    "name": "Diplotaxis muralis",
-    "name_de": "Mauerrauke",
-    "color": "#f0d010",
     "stage": "dried",
     "months": [
       "november",
@@ -1840,9 +1462,6 @@
   },
   {
     "slug": "beta",
-    "name": "Beta vulgaris vulgaris",
-    "name_de": "Rote Rübe",
-    "color": "#506830",
     "stage": "sprout",
     "months": [
       "april",
@@ -1855,9 +1474,6 @@
   },
   {
     "slug": "beta",
-    "name": "Beta vulgaris vulgaris",
-    "name_de": "Rote Rübe",
-    "color": "#506830",
     "stage": "foliage",
     "months": [
       "june",
@@ -1871,9 +1487,6 @@
   },
   {
     "slug": "verbascum",
-    "name": "Verbascum nigrum",
-    "name_de": "Schwarze Königskerze",
-    "color": "#f0d820",
     "stage": "sprout",
     "months": [
       "march",
@@ -1886,9 +1499,6 @@
   },
   {
     "slug": "verbascum",
-    "name": "Verbascum nigrum",
-    "name_de": "Schwarze Königskerze",
-    "color": "#f0d820",
     "stage": "foliage",
     "months": [
       "may"
@@ -1900,9 +1510,6 @@
   },
   {
     "slug": "verbascum",
-    "name": "Verbascum nigrum",
-    "name_de": "Schwarze Königskerze",
-    "color": "#f0d820",
     "stage": "bloom",
     "months": [
       "june",
@@ -1915,9 +1522,6 @@
   },
   {
     "slug": "verbascum",
-    "name": "Verbascum nigrum",
-    "name_de": "Schwarze Königskerze",
-    "color": "#f0d820",
     "stage": "seed",
     "months": [
       "august",
@@ -1930,9 +1534,6 @@
   },
   {
     "slug": "verbascum",
-    "name": "Verbascum nigrum",
-    "name_de": "Schwarze Königskerze",
-    "color": "#f0d820",
     "stage": "dried",
     "months": [
       "october",
@@ -1948,9 +1549,6 @@
   },
   {
     "slug": "fennel",
-    "name": "Foeniculum vulgare",
-    "name_de": "Fenchel",
-    "color": "#c0d020",
     "stage": "sprout",
     "months": [
       "march",
@@ -1963,9 +1561,6 @@
   },
   {
     "slug": "fennel",
-    "name": "Foeniculum vulgare",
-    "name_de": "Fenchel",
-    "color": "#c0d020",
     "stage": "foliage",
     "months": [
       "may",
@@ -1978,9 +1573,6 @@
   },
   {
     "slug": "fennel",
-    "name": "Foeniculum vulgare",
-    "name_de": "Fenchel",
-    "color": "#c0d020",
     "stage": "bloom",
     "months": [
       "july",
@@ -1993,9 +1585,6 @@
   },
   {
     "slug": "fennel",
-    "name": "Foeniculum vulgare",
-    "name_de": "Fenchel",
-    "color": "#c0d020",
     "stage": "seed",
     "months": [
       "september",
@@ -2008,9 +1597,6 @@
   },
   {
     "slug": "fennel",
-    "name": "Foeniculum vulgare",
-    "name_de": "Fenchel",
-    "color": "#c0d020",
     "stage": "dried",
     "months": [
       "november",
@@ -2025,9 +1611,6 @@
   },
   {
     "slug": "fagopyrum",
-    "name": "Fagopyrum esculentum",
-    "name_de": "Buchweizen",
-    "color": "#f5e8e0",
     "stage": "sprout",
     "months": [
       "april",
@@ -2040,9 +1623,6 @@
   },
   {
     "slug": "fagopyrum",
-    "name": "Fagopyrum esculentum",
-    "name_de": "Buchweizen",
-    "color": "#f5e8e0",
     "stage": "foliage",
     "months": [
       "may",
@@ -2055,9 +1635,6 @@
   },
   {
     "slug": "fagopyrum",
-    "name": "Fagopyrum esculentum",
-    "name_de": "Buchweizen",
-    "color": "#f5e8e0",
     "stage": "bloom",
     "months": [
       "june",
@@ -2071,9 +1648,6 @@
   },
   {
     "slug": "fagopyrum",
-    "name": "Fagopyrum esculentum",
-    "name_de": "Buchweizen",
-    "color": "#f5e8e0",
     "stage": "seed",
     "months": [
       "august",
