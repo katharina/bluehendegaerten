@@ -538,7 +538,7 @@ function makeBillboardMesh(texture, positions, { orient = 'vertical', worldW = 0
   const count = positions.length;
   const horiz = orient === 'horizontal';
   const geo   = new THREE.PlaneGeometry(worldW, worldH);
-  if (!horiz) geo.translate(0, worldH / 2, 0); // vertical: pivot at base
+  if (!horiz) geo.translate(0, worldH / 2 - 0.06, 0); // vertical: pivot at base, -0.06 corrects for 24px bottom canvas padding
 
   const posArr   = new Float32Array(count * 3);
   const scaleArr = new Float32Array(count);

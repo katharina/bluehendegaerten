@@ -14,7 +14,7 @@
           "april"
         ],
         "description": "small clump of dark green basal rosette leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small natural clump of dark green basal rosette leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small natural clump of dark green basal rosette leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -23,7 +23,7 @@
           "june"
         ],
         "description": "upright plant 40-50cm, rough dark green leaves on stems, flower buds just beginning to form at tips",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump of several upright stems 40–50 cm tall, rough dark green leaves, flower buds just beginning to form at tips, natural garden habitus"
+        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several upright stems 40–50 cm tall, rough dark green leaves, flower buds just beginning to form at tips, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -31,7 +31,7 @@
           "july"
         ],
         "description": "in full bloom, wide-spreading pink ray petals, prominent domed orange-brown central cone, tall upright stem with rough dark green leaves",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump with upright stems bearing wide-spreading pink ray petals and domed orange-brown central cone, dark green leaves along stems, natural garden habitus"
+        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with upright stems bearing wide-spreading pink ray petals and domed orange-brown central cone, dark green leaves along stems, natural garden habitus"
       },
       {
         "id": "seed",
@@ -40,7 +40,7 @@
           "september"
         ],
         "description": "petals fallen, large dark spiky seed cones on tall stems, some side branches with spent flowers",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump of several upright stems, petals fallen, large dark spiky seed cones at tips and side branches, natural garden habitus"
+        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several upright stems, petals fallen, large dark spiky seed cones at tips and side branches, natural garden habitus"
       },
       {
         "id": "dried",
@@ -52,7 +52,7 @@
           "february"
         ],
         "description": "fully dried upright stems with empty dark seed cones, no foliage remaining, standing skeletal structure",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump of several fully dried upright stems with empty dark seed cones, no foliage remaining, standing skeletal structure, natural winter habitus"
+        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several fully dried upright stems with empty dark seed cones, no foliage remaining, standing skeletal structure, natural winter habitus"
       }
     ],
     "color": "#e06090",
@@ -73,7 +73,7 @@
           "march"
         ],
         "description": "small clump of deeply cut hairy grey-green basal leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of deeply cut hairy grey-green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deeply cut hairy grey-green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -81,7 +81,7 @@
           "april"
         ],
         "description": "low clump of deeply cut hairy blue-green basal leaves, 20-30cm tall, no stems or flowers yet",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low clump of deeply cut hairy blue-green basal leaves, 20–30 cm tall, no stems or flowers yet, natural garden habitus"
+        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low clump of deeply cut hairy blue-green basal leaves, 20–30 cm tall, no stems or flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -90,7 +90,7 @@
           "june"
         ],
         "description": "in full bloom, large bowl-shaped crinkled scarlet-orange petals with black basal blotches, prominent dark stamens, tall hairy stem with deeply cut leaves",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall hairy stems bearing large crinkled scarlet-orange petals with black basal blotches, dark stamens, deeply cut leaves, natural garden habitus"
+        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall hairy stems bearing large crinkled scarlet-orange petals with black basal blotches, dark stamens, deeply cut leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -98,7 +98,7 @@
           "july"
         ],
         "description": "large ornamental grey-green pepper-pot seed pods on upright stems, basal foliage yellowing and dying back",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems topped with ornamental grey-green pepper-pot seed pods, basal foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems topped with ornamental grey-green pepper-pot seed pods, basal foliage yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -111,7 +111,7 @@
           "january"
         ],
         "description": "dried upright stems with empty grey-brown pepper-pot seed pods, no foliage remaining, summer dormancy",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — several dried upright stems with empty grey-brown pepper-pot seed pods, no foliage remaining, natural summer dormancy habitus"
+        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — several dried upright stems with empty grey-brown pepper-pot seed pods, no foliage remaining, natural summer dormancy habitus"
       }
     ],
     "color": "#e03020",
@@ -135,7 +135,7 @@
           "may"
         ],
         "description": "young seedling 15-20cm tall, pair of large rounded cotyledons with first rough true leaves emerging",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — young seedling 15–20 cm tall, pair of large rounded cotyledons with first rough true leaves emerging"
+        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 15–20 cm tall, pair of large rounded cotyledons with first rough true leaves emerging"
       },
       {
         "id": "foliage",
@@ -143,7 +143,7 @@
           "june"
         ],
         "description": "tall plant 80-100cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall plant 80–100 cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top, natural garden habitus"
+        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall plant 80–100 cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -152,7 +152,7 @@
           "august"
         ],
         "description": "in full bloom, large circular flowerhead with bright yellow ray petals surrounding dark brown centre disc, tall stout stem with large rough heart-shaped leaves",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stout stem with large circular flowerhead, bright yellow ray petals surrounding dark brown centre disc, large rough heart-shaped leaves, natural garden habitus"
+        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stout stem with large circular flowerhead, bright yellow ray petals surrounding dark brown centre disc, large rough heart-shaped leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -160,7 +160,7 @@
           "september"
         ],
         "description": "dried mature flowerhead full of seeds, outer petals gone, leaves yellowed and drooping, stem browning",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stem with dried mature flowerhead full of seeds, petals gone, leaves yellowed and drooping, stem browning, natural garden habitus"
+        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stem with dried mature flowerhead full of seeds, petals gone, leaves yellowed and drooping, stem browning, natural garden habitus"
       },
       {
         "id": "dried",
@@ -169,7 +169,7 @@
           "november"
         ],
         "description": "fully dried brown brittle stem, empty ragged seed head, no leaves remaining",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried brown brittle stem, empty ragged seed head, no leaves remaining, natural winter habitus"
+        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried brown brittle stem, empty ragged seed head, no leaves remaining, natural winter habitus"
       }
     ],
     "color": "#f5c010",
@@ -263,7 +263,7 @@
           "march"
         ],
         "description": "low woody-based mound of soft grey-green velvety leaves just emerging from gnarled base, 15-20cm tall, no flower spikes",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low woody-based mound of soft grey-green velvety leaves just emerging from gnarled base, 15–20 cm tall, no flower spikes yet"
+        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody-based mound of soft grey-green velvety leaves just emerging from gnarled base, 15–20 cm tall, no flower spikes yet"
       },
       {
         "id": "foliage",
@@ -272,7 +272,7 @@
           "may"
         ],
         "description": "bushy mound of soft grey-green aromatic velvety leaves on woody stems, 40-50cm, no flower spikes yet",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy mound of soft grey-green aromatic velvety leaves on woody stems, 40–50 cm, no flower spikes yet, natural garden habitus"
+        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of soft grey-green aromatic velvety leaves on woody stems, 40–50 cm, no flower spikes yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -281,7 +281,7 @@
           "july"
         ],
         "description": "bushy mound with upright spikes bearing whorls of violet-blue flowers, soft grey-green aromatic velvety leaves",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy mound with upright spikes bearing whorls of violet-blue flowers, soft grey-green aromatic velvety leaves, natural garden habitus"
+        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound with upright spikes bearing whorls of violet-blue flowers, soft grey-green aromatic velvety leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -290,7 +290,7 @@
           "september"
         ],
         "description": "bushy woody mound with spent flower spikes, soft grey-green velvety foliage still present",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy woody mound with spent flower spikes, soft grey-green velvety foliage still present, natural garden habitus"
+        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy woody mound with spent flower spikes, soft grey-green velvety foliage still present, natural garden habitus"
       },
       {
         "id": "dried",
@@ -302,7 +302,7 @@
           "february"
         ],
         "description": "low woody mound with reduced persistent grey-green leaves on gnarled stems, sparse winter foliage",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low woody mound with reduced persistent grey-green leaves on gnarled stems, sparse winter foliage, natural winter habitus"
+        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody mound with reduced persistent grey-green leaves on gnarled stems, sparse winter foliage, natural winter habitus"
       }
     ],
     "color": "#7060b0",
@@ -323,7 +323,7 @@
           "march"
         ],
         "description": "small clump of deeply lobed rough dark green basal leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of deeply lobed rough dark green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deeply lobed rough dark green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -332,7 +332,7 @@
           "may"
         ],
         "description": "large rosette of deeply lobed rough dark green leaves, upright branching stems 40-50cm tall just forming",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — large rosette of deeply lobed rough dark green leaves, upright branching stems 40–50 cm tall just forming, natural garden habitus"
+        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large rosette of deeply lobed rough dark green leaves, upright branching stems 40–50 cm tall just forming, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -340,7 +340,7 @@
           "june"
         ],
         "description": "upright branching stems densely covered in small bright yellow cross-shaped flowers, large deeply lobed rough basal leaves",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems densely covered in small bright yellow cross-shaped flowers, large deeply lobed rough basal leaves, natural garden habitus"
+        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems densely covered in small bright yellow cross-shaped flowers, large deeply lobed rough basal leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -349,7 +349,7 @@
           "august"
         ],
         "description": "upright branching stems bearing distinctive warty knobby greenish-brown seed pods, basal foliage yellowing",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems bearing distinctive warty knobby greenish-brown seed pods, basal foliage yellowing, natural garden habitus"
+        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems bearing distinctive warty knobby greenish-brown seed pods, basal foliage yellowing, natural garden habitus"
       },
       {
         "id": "dried",
@@ -361,7 +361,7 @@
           "january"
         ],
         "description": "fully dried upright branching stems with persistent warty seed pods, no foliage remaining",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — several fully dried upright branching stems with persistent warty seed pods, no foliage remaining, natural winter habitus"
+        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — several fully dried upright branching stems with persistent warty seed pods, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#e8d020",
@@ -382,7 +382,7 @@
           "march"
         ],
         "description": "small clump of delicate blue-green compound leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of delicate blue-green compound leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate blue-green compound leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -390,7 +390,7 @@
           "april"
         ],
         "description": "lush mound of delicate lobed blue-green compound leaves, 30-40cm tall, no flower stems yet",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush mound of delicate lobed blue-green compound leaves, 30–40 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush mound of delicate lobed blue-green compound leaves, 30–40 cm tall, no flower stems yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -399,7 +399,7 @@
           "june"
         ],
         "description": "tall branching stems bearing nodding spurred flowers in deep violet-blue, delicate blue-green compound foliage",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall branching stems bearing nodding spurred flowers in deep violet-blue, delicate blue-green compound foliage, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stems bearing nodding spurred flowers in deep violet-blue, delicate blue-green compound foliage, natural garden habitus"
       },
       {
         "id": "seed",
@@ -407,7 +407,7 @@
           "july"
         ],
         "description": "upright stems with clusters of erect slender seed pods, blue-green foliage yellowing and dying back",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with clusters of erect slender seed pods, blue-green foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with clusters of erect slender seed pods, blue-green foliage yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -420,7 +420,7 @@
           "january"
         ],
         "description": "fully dried upright stems with open empty seed pods, no foliage remaining",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright stems with open empty seed pods, no foliage remaining, natural summer dormancy habitus"
+        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with open empty seed pods, no foliage remaining, natural summer dormancy habitus"
       }
     ],
     "color": "#5040a0",
@@ -440,7 +440,7 @@
           "february"
         ],
         "description": "small rosette of wrinkled oval pale green leaves just emerging from soil, 5-10cm tall, no flower stems yet",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small rosette of wrinkled oval pale green leaves just emerging from soil, 5–10 cm tall, no flower stems yet"
+        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of wrinkled oval pale green leaves just emerging from soil, 5–10 cm tall, no flower stems yet"
       },
       {
         "id": "foliage",
@@ -448,7 +448,7 @@
           "march"
         ],
         "description": "full basal rosette of wrinkled oval pale green leaves, 15-20cm tall, flower stems just beginning to emerge",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — full basal rosette of wrinkled oval pale green leaves, 15–20 cm tall, flower stems just beginning to emerge, natural garden habitus"
+        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full basal rosette of wrinkled oval pale green leaves, 15–20 cm tall, flower stems just beginning to emerge, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -457,7 +457,7 @@
           "may"
         ],
         "description": "upright stem bearing nodding clusters of small fragrant yellow tubular flowers, wrinkled pale green basal rosette",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stem bearing nodding clusters of small fragrant yellow tubular flowers, wrinkled pale green basal rosette, natural garden habitus"
+        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stem bearing nodding clusters of small fragrant yellow tubular flowers, wrinkled pale green basal rosette, natural garden habitus"
       },
       {
         "id": "seed",
@@ -466,7 +466,7 @@
           "july"
         ],
         "description": "upright stems with small oval seed capsules, basal rosette yellowing and dying back",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with small oval seed capsules, basal rosette yellowing and dying back, natural garden habitus"
+        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small oval seed capsules, basal rosette yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -479,7 +479,7 @@
           "january"
         ],
         "description": "fully dormant, only a tiny resting bud visible at soil level, no above-ground foliage",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dormant, only a tiny resting bud visible at soil level, no above-ground foliage, natural summer dormancy habitus"
+        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dormant, only a tiny resting bud visible at soil level, no above-ground foliage, natural summer dormancy habitus"
       }
     ],
     "color": "#e8c020",
@@ -499,7 +499,7 @@
           "april"
         ],
         "description": "small clump of feathery deeply divided bright green leaves, 10-15cm tall, no stems or flowers",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of feathery deeply divided bright green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of feathery deeply divided bright green leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -507,7 +507,7 @@
           "may"
         ],
         "description": "bushy clump of feathery deeply divided bright green leaves, 30-40cm tall, curling flower buds just forming",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy clump of feathery deeply divided bright green leaves, 30–40 cm tall, curling flower buds just forming, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of feathery deeply divided bright green leaves, 30–40 cm tall, curling flower buds just forming, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -516,7 +516,7 @@
           "july"
         ],
         "description": "upright stems with distinctive curling scorpioid cymes of lavender-blue flowers, feathery divided leaves",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with distinctive curling scorpioid cymes of lavender-blue flowers, feathery divided leaves, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with distinctive curling scorpioid cymes of lavender-blue flowers, feathery divided leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -524,7 +524,7 @@
           "august"
         ],
         "description": "upright stems with spent curled seed clusters, small dark seeds visible, foliage yellowing and wilting",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with spent curled seed clusters, small dark seeds visible, foliage yellowing and wilting, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with spent curled seed clusters, small dark seeds visible, foliage yellowing and wilting, natural garden habitus"
       },
       {
         "id": "dried",
@@ -533,7 +533,7 @@
           "october"
         ],
         "description": "fully dried upright stems with empty curled seed clusters, no foliage remaining",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright stems with empty curled seed clusters, no foliage remaining, natural winter habitus"
+        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with empty curled seed clusters, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#7080d8",
@@ -553,7 +553,7 @@
           "april"
         ],
         "description": "young seedling 10-15cm tall, pale green slightly sticky aromatic leaves, no stems or buds yet",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — young seedling 10–15 cm tall, pale green slightly sticky aromatic leaves, no stems or buds yet"
+        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 10–15 cm tall, pale green slightly sticky aromatic leaves, no stems or buds yet"
       },
       {
         "id": "foliage",
@@ -561,7 +561,7 @@
           "may"
         ],
         "description": "bushy clump of pale green slightly sticky aromatic leaves, 20-30cm tall, flower buds just beginning to form",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy clump of pale green slightly sticky aromatic leaves, 20–30 cm tall, flower buds just beginning to form, natural garden habitus"
+        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of pale green slightly sticky aromatic leaves, 20–30 cm tall, flower buds just beginning to form, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -572,7 +572,7 @@
           "september"
         ],
         "description": "bushy plant with upright stems bearing large bright orange daisy-like flowers, pale green aromatic leaves",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy plant with upright stems bearing large bright orange daisy-like flowers, pale green aromatic leaves, natural garden habitus"
+        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy plant with upright stems bearing large bright orange daisy-like flowers, pale green aromatic leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -580,7 +580,7 @@
           "october"
         ],
         "description": "upright stems with distinctive curved claw-like seed rings, pale green foliage yellowing",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with distinctive curved claw-like seed rings where flowers were, pale green foliage yellowing, natural garden habitus"
+        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with distinctive curved claw-like seed rings where flowers were, pale green foliage yellowing, natural garden habitus"
       },
       {
         "id": "dried",
@@ -588,7 +588,7 @@
           "november"
         ],
         "description": "fully dried upright stems with empty spent seed heads, no foliage remaining",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright stems with empty spent seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with empty spent seed heads, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#f07010",
@@ -608,7 +608,7 @@
           "march"
         ],
         "description": "low clump of feathery deeply divided grey-green aromatic leaves just emerging, 10-15cm tall, no stems or flowers",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low clump of feathery deeply divided grey-green aromatic leaves just emerging, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low clump of feathery deeply divided grey-green aromatic leaves just emerging, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -617,7 +617,7 @@
           "may"
         ],
         "description": "bushy mound of feathery deeply divided grey-green aromatic leaves, 25-35cm tall, no flower stems yet",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy mound of feathery deeply divided grey-green aromatic leaves, 25–35 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of feathery deeply divided grey-green aromatic leaves, 25–35 cm tall, no flower stems yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -627,7 +627,7 @@
           "august"
         ],
         "description": "bushy plant with many upright stems each bearing bright yellow daisy-like flowers, feathery grey-green foliage",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy plant with many upright stems each bearing bright yellow daisy-like flowers, feathery grey-green foliage, natural garden habitus"
+        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy plant with many upright stems each bearing bright yellow daisy-like flowers, feathery grey-green foliage, natural garden habitus"
       },
       {
         "id": "seed",
@@ -635,7 +635,7 @@
           "september"
         ],
         "description": "upright stems with spent button-like seed heads, petals gone, feathery grey-green foliage still present",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with spent button-like seed heads, petals gone, feathery grey-green foliage still present, natural garden habitus"
+        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with spent button-like seed heads, petals gone, feathery grey-green foliage still present, natural garden habitus"
       },
       {
         "id": "dried",
@@ -644,7 +644,7 @@
           "november"
         ],
         "description": "fully dried upright stems with small empty seed heads, no foliage remaining",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright stems with small empty seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with small empty seed heads, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#f0c820",
@@ -664,7 +664,7 @@
           "may"
         ],
         "description": "young seedling 15-20cm tall, broad rough dark green leaves on upright stem, no buds yet",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — young seedling 15–20 cm tall, broad rough dark green leaves on upright stem, no buds yet"
+        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 15–20 cm tall, broad rough dark green leaves on upright stem, no buds yet"
       },
       {
         "id": "foliage",
@@ -672,7 +672,7 @@
           "june"
         ],
         "description": "bushy upright plant 60-80cm, branching stems with large rough dark green leaves, flower buds forming at tips",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy upright plant 60–80 cm, branching stems with large rough dark green leaves, flower buds forming at tips, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy upright plant 60–80 cm, branching stems with large rough dark green leaves, flower buds forming at tips, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -682,7 +682,7 @@
           "september"
         ],
         "description": "tall bushy plant with large vivid orange daisy-like flowers, yellow centre disc, large rough dark green leaves",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall bushy plant with large vivid orange daisy-like flowers, yellow centre disc, large rough dark green leaves, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall bushy plant with large vivid orange daisy-like flowers, yellow centre disc, large rough dark green leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -690,7 +690,7 @@
           "october"
         ],
         "description": "upright branching stems with spent flowerheads forming seed cones, leaves yellowing and wilting",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems with spent flowerheads forming seed cones, leaves yellowing and wilting, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems with spent flowerheads forming seed cones, leaves yellowing and wilting, natural garden habitus"
       },
       {
         "id": "dried",
@@ -698,7 +698,7 @@
           "november"
         ],
         "description": "fully dried upright branching stems with empty seed cones, no foliage remaining",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright branching stems with empty seed cones, no foliage remaining, natural winter habitus"
+        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright branching stems with empty seed cones, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#f04810",
@@ -719,7 +719,7 @@
           "march"
         ],
         "description": "low rosette of large deeply divided silvery-grey leaves just emerging from soil, 20-30cm tall, no stems or buds",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low rosette of large deeply divided silvery-grey leaves just emerging from soil, 20–30 cm tall, no stems or buds yet"
+        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low rosette of large deeply divided silvery-grey leaves just emerging from soil, 20–30 cm tall, no stems or buds yet"
       },
       {
         "id": "foliage",
@@ -728,7 +728,7 @@
           "may"
         ],
         "description": "large bold rosette of deeply divided silvery-grey leaves, 60-80cm tall, no flower stems yet",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — large bold rosette of deeply divided silvery-grey leaves, 60–80 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large bold rosette of deeply divided silvery-grey leaves, 60–80 cm tall, no flower stems yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -737,7 +737,7 @@
           "july"
         ],
         "description": "tall upright stems bearing large rounded artichoke buds with overlapping grey-green bracts, large silvery-grey leaves below",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall upright stems bearing large rounded artichoke buds with overlapping grey-green bracts, large silvery-grey leaves below, natural garden habitus"
+        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems bearing large rounded artichoke buds with overlapping grey-green bracts, large silvery-grey leaves below, natural garden habitus"
       },
       {
         "id": "seed",
@@ -746,7 +746,7 @@
           "september"
         ],
         "description": "tall stems with large open thistle flowerheads, silvery-purple fluffy seed heads, large grey-green leaves below",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stems with large open thistle flowerheads, silvery-purple fluffy seed heads, large grey-green leaves below, natural garden habitus"
+        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with large open thistle flowerheads, silvery-purple fluffy seed heads, large grey-green leaves below, natural garden habitus"
       },
       {
         "id": "dried",
@@ -757,7 +757,7 @@
           "january"
         ],
         "description": "fully dried tall stems with large spiky dried thistle heads, no foliage remaining",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried tall stems with large spiky dried thistle heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried tall stems with large spiky dried thistle heads, no foliage remaining, architectural winter habitus"
       }
     ],
     "color": "#7878b8",
@@ -778,7 +778,7 @@
           "april"
         ],
         "description": "small rosette of feathery aromatic grey-green leaves just emerging, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small rosette of feathery aromatic grey-green leaves just emerging, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of feathery aromatic grey-green leaves just emerging, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -786,7 +786,7 @@
           "may"
         ],
         "description": "lush clump of ferny aromatic grey-green foliage on upright stems 40–60 cm tall, no flower heads yet",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush clump of ferny aromatic grey-green foliage on upright stems 40–60 cm tall, no flower heads yet, natural garden habitus"
+        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush clump of ferny aromatic grey-green foliage on upright stems 40–60 cm tall, no flower heads yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -796,7 +796,7 @@
           "august"
         ],
         "description": "tall upright stems topped with flat bright yellow flower clusters, ferny grey-green foliage below",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall upright stems topped with flat bright yellow flower clusters, ferny grey-green foliage below, natural garden habitus"
+        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems topped with flat bright yellow flower clusters, ferny grey-green foliage below, natural garden habitus"
       },
       {
         "id": "seed",
@@ -804,7 +804,7 @@
           "september"
         ],
         "description": "tall stems with flat-topped seed heads fading to buff, ferny foliage yellowing and dying back",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stems with flat-topped seed heads fading to buff, ferny foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with flat-topped seed heads fading to buff, ferny foliage yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -816,7 +816,7 @@
           "february"
         ],
         "description": "fully dried upright stems with papery flat seed heads, no foliage remaining",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright stems with papery flat seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with papery flat seed heads, no foliage remaining, architectural winter habitus"
       }
     ],
     "color": "#f0d010",
@@ -836,7 +836,7 @@
           "may"
         ],
         "description": "small clump of delicate feathery bright green seedling leaves, 10-15cm tall, no stems or flowers",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of delicate feathery bright green seedling leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate feathery bright green seedling leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -844,7 +844,7 @@
           "june"
         ],
         "description": "bushy clump of airy feathery bright green foliage on upright stems 40-60cm tall, flower buds just beginning to form",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy clump of airy feathery bright green foliage on upright stems 40–60 cm tall, flower buds just beginning to form, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of airy feathery bright green foliage on upright stems 40–60 cm tall, flower buds just beginning to form, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -854,7 +854,7 @@
           "september"
         ],
         "description": "tall airy stems bearing large daisy-like flowers with pink ray petals and yellow centre disc, feathery bright green foliage",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall airy stems bearing large daisy-like flowers with pink ray petals and yellow centre disc, feathery bright green foliage, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall airy stems bearing large daisy-like flowers with pink ray petals and yellow centre disc, feathery bright green foliage, natural garden habitus"
       },
       {
         "id": "seed",
@@ -862,7 +862,7 @@
           "october"
         ],
         "description": "tall airy stems with spent flowerheads bearing slender radiating seed needles, feathery foliage yellowing",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall airy stems with spent flowerheads bearing slender radiating seed needles, feathery foliage yellowing, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall airy stems with spent flowerheads bearing slender radiating seed needles, feathery foliage yellowing, natural garden habitus"
       },
       {
         "id": "dried",
@@ -870,7 +870,7 @@
           "november"
         ],
         "description": "fully dried airy skeletal stems with empty seed heads, no foliage remaining",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried airy skeletal stems with empty seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried airy skeletal stems with empty seed heads, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#d860a0",
@@ -890,7 +890,7 @@
           "march"
         ],
         "description": "dramatic burgundy-red shoots emerging from soil, 15–20 cm tall, no leaves fully open yet",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — dramatic burgundy-red shoots emerging from soil, 15–20 cm tall, no leaves fully open yet"
+        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dramatic burgundy-red shoots emerging from soil, 15–20 cm tall, no leaves fully open yet"
       },
       {
         "id": "foliage",
@@ -899,7 +899,7 @@
           "may"
         ],
         "description": "lush bushy mound of glossy deep green compound leaves, 50–70 cm tall, large round flower buds on stems, no open flowers yet",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush bushy mound of glossy deep green compound leaves, 50–70 cm tall, large round flower buds on stems, no open flowers yet, natural garden habitus"
+        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush bushy mound of glossy deep green compound leaves, 50–70 cm tall, large round flower buds on stems, no open flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -907,7 +907,7 @@
           "june"
         ],
         "description": "lush bushy green foliage with large spectacular multi-petalled deep pink flowers fully open",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush bushy green foliage with large spectacular multi-petalled deep pink flowers fully open, natural garden habitus"
+        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush bushy green foliage with large spectacular multi-petalled deep pink flowers fully open, natural garden habitus"
       },
       {
         "id": "seed",
@@ -917,7 +917,7 @@
           "september"
         ],
         "description": "lush green compound foliage with large star-shaped seed pods beginning to split open",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush green compound foliage with large star-shaped seed pods beginning to split open, natural garden habitus"
+        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush green compound foliage with large star-shaped seed pods beginning to split open, natural garden habitus"
       },
       {
         "id": "dried",
@@ -929,7 +929,7 @@
           "february"
         ],
         "description": "dried brown stems with open star-shaped seed pods revealing dark seeds, no foliage remaining",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — dried brown stems with open star-shaped seed pods revealing dark seeds, no foliage remaining, natural autumn habitus"
+        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dried brown stems with open star-shaped seed pods revealing dark seeds, no foliage remaining, natural autumn habitus"
       }
     ],
     "color": "#d04070",
@@ -950,7 +950,7 @@
           "april"
         ],
         "description": "small clump of silky silvery-grey feathery aromatic leaves emerging from soil, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of silky silvery-grey feathery aromatic leaves emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of silky silvery-grey feathery aromatic leaves emerging from soil, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -959,7 +959,7 @@
           "june"
         ],
         "description": "bushy mound of deeply divided silky silvery-grey aromatic foliage, 40–60 cm tall, no flower stems yet",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy mound of deeply divided silky silvery-grey aromatic foliage, 40–60 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of deeply divided silky silvery-grey aromatic foliage, 40–60 cm tall, no flower stems yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -969,7 +969,7 @@
           "september"
         ],
         "description": "upright stems with silky silvery-grey foliage and drooping sprays of tiny yellow button flowers",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with silky silvery-grey foliage and drooping sprays of tiny yellow button flowers, natural garden habitus"
+        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with silky silvery-grey foliage and drooping sprays of tiny yellow button flowers, natural garden habitus"
       },
       {
         "id": "seed",
@@ -977,7 +977,7 @@
           "october"
         ],
         "description": "upright stems with small dried seed clusters, silvery-grey foliage fading and yellowing",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with small dried seed clusters, silvery-grey foliage fading and yellowing, natural garden habitus"
+        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small dried seed clusters, silvery-grey foliage fading and yellowing, natural garden habitus"
       },
       {
         "id": "dried",
@@ -988,7 +988,7 @@
           "february"
         ],
         "description": "low woody mound with sparse persistent silvery-grey leaves on gnarled stems, skeletal winter structure",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low woody mound with sparse persistent silvery-grey leaves on gnarled stems, skeletal winter structure"
+        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody mound with sparse persistent silvery-grey leaves on gnarled stems, skeletal winter structure"
       }
     ],
     "color": "#a0a870",
@@ -1009,7 +1009,7 @@
           "april"
         ],
         "description": "small rosette of deeply lobed spiny-edged blue-green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small rosette of deeply lobed spiny-edged blue-green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of deeply lobed spiny-edged blue-green leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1018,7 +1018,7 @@
           "june"
         ],
         "description": "upright stem with deeply lobed spiny blue-green leaves arranged vertically on stem, 40–70 cm tall, no flowers yet",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stem with deeply lobed spiny blue-green leaves arranged vertically on stem, 40–70 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stem with deeply lobed spiny blue-green leaves arranged vertically on stem, 40–70 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1027,7 +1027,7 @@
           "august"
         ],
         "description": "tall branching stem with many small pale yellow dandelion-like flower heads, deeply lobed blue-green leaves",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall branching stem with many small pale yellow dandelion-like flower heads, deeply lobed blue-green leaves, natural garden habitus"
+        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stem with many small pale yellow dandelion-like flower heads, deeply lobed blue-green leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1035,7 +1035,7 @@
           "september"
         ],
         "description": "tall branching stem with fluffy white dandelion seed heads, leaves dying back",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall branching stem with fluffy white dandelion seed heads, leaves dying back, natural garden habitus"
+        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stem with fluffy white dandelion seed heads, leaves dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1044,7 +1044,7 @@
           "november"
         ],
         "description": "fully dried tall branching skeletal stem with dried seed heads, no foliage remaining",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried tall branching skeletal stem with dried seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried tall branching skeletal stem with dried seed heads, no foliage remaining, architectural winter habitus"
       }
     ],
     "color": "#d0c840",
@@ -1065,7 +1065,7 @@
           "may"
         ],
         "description": "small clump of round bright green shield-shaped seedling leaves on short stems, 10–15 cm tall, no flowers yet",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of round bright green shield-shaped seedling leaves on short stems, 10–15 cm tall, no flowers yet"
+        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of round bright green shield-shaped seedling leaves on short stems, 10–15 cm tall, no flowers yet"
       },
       {
         "id": "foliage",
@@ -1073,7 +1073,7 @@
           "june"
         ],
         "description": "mounding clump of large round bright green peltate leaves on trailing stems, 30–40 cm tall, no flowers yet",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — mounding clump of large round bright green peltate leaves on trailing stems, 30–40 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — mounding clump of large round bright green peltate leaves on trailing stems, 30–40 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1083,7 +1083,7 @@
           "september"
         ],
         "description": "trailing stems with large round bright green leaves and bright orange funnel-shaped spurred flowers",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — trailing stems with large round bright green leaves and bright orange funnel-shaped spurred flowers, natural garden habitus"
+        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — trailing stems with large round bright green leaves and bright orange funnel-shaped spurred flowers, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1091,7 +1091,7 @@
           "october"
         ],
         "description": "trailing stems with large round leaves yellowing and round bumpy green seed pods",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — trailing stems with large round leaves yellowing and round bumpy green seed pods, natural garden habitus"
+        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — trailing stems with large round leaves yellowing and round bumpy green seed pods, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1099,7 +1099,7 @@
           "november"
         ],
         "description": "fully dried trailing stems with dried seed pods, no foliage remaining",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried trailing stems with dried seed pods, no foliage remaining, natural autumn habitus"
+        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried trailing stems with dried seed pods, no foliage remaining, natural autumn habitus"
       }
     ],
     "color": "#f06010",
@@ -1120,7 +1120,7 @@
           "may"
         ],
         "description": "small rosette of large soft sticky pale green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small rosette of large soft sticky pale green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of large soft sticky pale green leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1128,7 +1128,7 @@
           "june"
         ],
         "description": "rosette of large soft velvety pale green leaves on short stems, 30–40 cm tall, no flower stems yet",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — rosette of large soft velvety pale green leaves on short stems, 30–40 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — rosette of large soft velvety pale green leaves on short stems, 30–40 cm tall, no flower stems yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1138,7 +1138,7 @@
           "september"
         ],
         "description": "tall branching sticky stems bearing loose clusters of small white tubular flowers, large pale green basal leaves",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall branching sticky stems bearing loose clusters of small white tubular flowers, large pale green basal leaves, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching sticky stems bearing loose clusters of small white tubular flowers, large pale green basal leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1146,7 +1146,7 @@
           "october"
         ],
         "description": "tall branching stems with small oval seed capsules, large basal leaves yellowing",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall branching stems with small oval seed capsules, large basal leaves yellowing, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stems with small oval seed capsules, large basal leaves yellowing, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1155,7 +1155,7 @@
           "december"
         ],
         "description": "fully dried branching stems with small dried seed capsules, no foliage remaining",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried branching stems with small dried seed capsules, no foliage remaining, natural autumn habitus"
+        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried branching stems with small dried seed capsules, no foliage remaining, natural autumn habitus"
       }
     ],
     "color": "#d8d8e8",
@@ -1176,7 +1176,7 @@
           "may"
         ],
         "description": "small clump of deep burgundy-red arrow-shaped seedling leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of deep burgundy-red arrow-shaped seedling leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deep burgundy-red arrow-shaped seedling leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1184,7 +1184,7 @@
           "june"
         ],
         "description": "bushy upright stems with striking deep burgundy-red arrow-shaped leaves, 40–60 cm tall, no flowers yet",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy upright stems with striking deep burgundy-red arrow-shaped leaves, 40–60 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy upright stems with striking deep burgundy-red arrow-shaped leaves, 40–60 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1193,7 +1193,7 @@
           "august"
         ],
         "description": "tall upright stems bearing slender reddish flower spikes among deep burgundy-red arrow-shaped foliage",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall upright stems bearing slender reddish flower spikes among deep burgundy-red arrow-shaped foliage, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems bearing slender reddish flower spikes among deep burgundy-red arrow-shaped foliage, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1201,7 +1201,7 @@
           "september"
         ],
         "description": "tall stems densely covered in papery reddish seed bracts, deep red foliage fading",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stems densely covered in papery reddish seed bracts, deep red foliage fading, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems densely covered in papery reddish seed bracts, deep red foliage fading, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1210,7 +1210,7 @@
           "november"
         ],
         "description": "fully dried reddish-brown skeletal stems with papery seed clusters, no foliage remaining",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried reddish-brown skeletal stems with papery seed clusters, no foliage remaining, natural autumn habitus"
+        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried reddish-brown skeletal stems with papery seed clusters, no foliage remaining, natural autumn habitus"
       }
     ],
     "color": "#901830",
@@ -1231,7 +1231,7 @@
           "may"
         ],
         "description": "small clump of large oval rough bristly grey-green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of large oval rough bristly grey-green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of large oval rough bristly grey-green leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1239,7 +1239,7 @@
           "may"
         ],
         "description": "bushy clump of large oval rough bristly grey-green leaves, branching stems 25–35 cm tall, flower buds just forming",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy clump of large oval rough bristly grey-green leaves, branching stems 25–35 cm tall, flower buds just forming, natural garden habitus"
+        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of large oval rough bristly grey-green leaves, branching stems 25–35 cm tall, flower buds just forming, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1249,7 +1249,7 @@
           "august"
         ],
         "description": "bushy branching plant with nodding clusters of vivid star-shaped bright blue flowers with prominent black anthers, large rough bristly grey-green leaves",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bushy branching plant with nodding clusters of vivid star-shaped bright blue flowers with prominent black anthers, large rough bristly grey-green leaves, natural garden habitus"
+        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy branching plant with nodding clusters of vivid star-shaped bright blue flowers with prominent black anthers, large rough bristly grey-green leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1257,7 +1257,7 @@
           "september"
         ],
         "description": "branching stems with small brown nutlets in star-shaped calyces, large bristly leaves yellowing and wilting",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — branching stems with small brown nutlets in star-shaped calyces, large bristly leaves yellowing and wilting, natural garden habitus"
+        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — branching stems with small brown nutlets in star-shaped calyces, large bristly leaves yellowing and wilting, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1266,7 +1266,7 @@
           "november"
         ],
         "description": "fully dried brittle branching stems with empty star-shaped calyces, no foliage remaining",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried brittle branching stems with empty star-shaped calyces, no foliage remaining, natural autumn habitus"
+        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried brittle branching stems with empty star-shaped calyces, no foliage remaining, natural autumn habitus"
       }
     ],
     "color": "#3060e0",
@@ -1287,7 +1287,7 @@
           "april"
         ],
         "description": "large clump of broad rough dark green hairy leaves just emerging from soil, 15–20 cm tall, no stems or flowers yet",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — large clump of broad rough dark green hairy leaves just emerging from soil, 15–20 cm tall, no stems or flowers yet"
+        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large clump of broad rough dark green hairy leaves just emerging from soil, 15–20 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1296,7 +1296,7 @@
           "may"
         ],
         "description": "bold clump of large broad rough dark green hairy leaves on winged stems, 40–60 cm tall, no flowers yet",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — bold clump of large broad rough dark green hairy leaves on winged stems, 40–60 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bold clump of large broad rough dark green hairy leaves on winged stems, 40–60 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1306,7 +1306,7 @@
           "july"
         ],
         "description": "upright branching stems with nodding scorpioid cymes of tubular creamy-white to pale purple bell-shaped flowers, large rough dark green hairy leaves",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems with nodding curled cymes of tubular pale purple bell-shaped flowers, large rough dark green hairy leaves, natural garden habitus"
+        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems with nodding curled cymes of tubular pale purple bell-shaped flowers, large rough dark green hairy leaves, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1315,7 +1315,7 @@
           "september"
         ],
         "description": "upright stems with small black nutlets in persistent calyces, large hairy leaves yellowing and flopping",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright stems with small black nutlets in persistent calyces, large hairy leaves yellowing and flopping, natural garden habitus"
+        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small black nutlets in persistent calyces, large hairy leaves yellowing and flopping, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1327,7 +1327,7 @@
           "february"
         ],
         "description": "fully died back, no above-ground growth, bare soil with a few dried stem bases",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully died back, bare soil with only a few dried broken stem bases at ground level, no above-ground growth, natural winter dormancy"
+        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully died back, bare soil with only a few dried broken stem bases at ground level, no above-ground growth, natural winter dormancy"
       }
     ],
     "color": "#a080c0",
@@ -1348,7 +1348,7 @@
           "april"
         ],
         "description": "small rosette of pinnately lobed dark green leaves, 5–10 cm tall, no stems or flowers yet",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small rosette of pinnately lobed dark green leaves, 5–10 cm tall, no stems or flowers yet"
+        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of pinnately lobed dark green leaves, 5–10 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1357,7 +1357,7 @@
           "may"
         ],
         "description": "fuller rosette of pinnately lobed dark green leaves, upright slender stems just beginning to rise, 15–20 cm tall, no flowers yet",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fuller rosette of pinnately lobed dark green leaves, upright slender stems just beginning to rise, 15–20 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fuller rosette of pinnately lobed dark green leaves, upright slender stems just beginning to rise, 15–20 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1368,7 +1368,7 @@
           "september"
         ],
         "description": "upright branching stems with small bright yellow 4-petalled cross-shaped flowers at tips, long narrow silique pods forming below, pinnately lobed basal rosette",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems bearing small bright yellow 4-petalled cross-shaped flowers at tips, long narrow silique seed pods forming below, pinnately lobed basal rosette, natural garden habitus"
+        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems bearing small bright yellow 4-petalled cross-shaped flowers at tips, long narrow silique seed pods forming below, pinnately lobed basal rosette, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1377,7 +1377,7 @@
           "october"
         ],
         "description": "upright branching stems densely lined with long narrow silique seed pods, basal leaves yellowing and dying back",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — upright branching stems densely lined with long narrow silique seed pods, basal leaves yellowing and dying back, natural garden habitus"
+        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems densely lined with long narrow silique seed pods, basal leaves yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1388,7 +1388,7 @@
           "february"
         ],
         "description": "fully dried slender skeletal stems with split empty silique pods, no foliage remaining",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried slender skeletal stems with split empty silique pods, no foliage remaining, natural winter habitus"
+        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried slender skeletal stems with split empty silique pods, no foliage remaining, natural winter habitus"
       }
     ],
     "color": "#f0d010",
@@ -1409,7 +1409,7 @@
           "may"
         ],
         "description": "small seedling with oval cotyledons and first glossy crinkled dark green leaves, 10–15 cm tall, no stems yet",
-        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small seedling with oval cotyledons and first glossy crinkled dark green leaves, 10–15 cm tall, no stems yet"
+        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling with oval cotyledons and first glossy crinkled dark green leaves, 10–15 cm tall, no stems yet"
       },
       {
         "id": "foliage",
@@ -1419,7 +1419,7 @@
           "august"
         ],
         "description": "full leafy rosette of large glossy crinkled dark green leaves with prominent white midribs and stems, 40–60 cm tall, no flower spike yet",
-        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — full leafy rosette of large glossy crinkled dark green leaves with prominent white midribs and stems, 40–60 cm tall, no flower spike yet, natural garden habitus"
+        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full leafy rosette of large glossy crinkled dark green leaves with prominent white midribs and stems, 40–60 cm tall, no flower spike yet, natural garden habitus"
       }
     ],
     "color": "#506830",
@@ -1440,7 +1440,7 @@
           "april"
         ],
         "description": "low rosette of large dark green softly hairy leaves just emerging from soil, 15–25 cm tall, no flower spike yet",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low rosette of large dark green softly hairy leaves just emerging from soil, 15–25 cm tall, no flower spike yet"
+        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low rosette of large dark green softly hairy leaves just emerging from soil, 15–25 cm tall, no flower spike yet"
       },
       {
         "id": "foliage",
@@ -1448,7 +1448,7 @@
           "may"
         ],
         "description": "full basal rosette of large dark green softly hairy leaves with pale woolly undersides, 30–40 cm tall, no flower spike yet",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — full basal rosette of large dark green softly hairy leaves with pale woolly undersides, 30–40 cm tall, no flower spike yet, natural garden habitus"
+        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full basal rosette of large dark green softly hairy leaves with pale woolly undersides, 30–40 cm tall, no flower spike yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1457,7 +1457,7 @@
           "july"
         ],
         "description": "tall slender upright spike 80–120 cm with dense rows of small yellow flowers with purple-hairy stamens, large dark green basal rosette",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall slender upright spike bearing dense rows of small yellow flowers with distinctive purple-hairy stamens, large dark green basal rosette below, natural garden habitus"
+        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall slender upright spike bearing dense rows of small yellow flowers with distinctive purple-hairy stamens, large dark green basal rosette below, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1466,7 +1466,7 @@
           "september"
         ],
         "description": "tall upright spike with small round seed capsules, basal rosette yellowing and declining",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall upright spike studded with small round seed capsules, basal rosette yellowing and declining, natural garden habitus"
+        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright spike studded with small round seed capsules, basal rosette yellowing and declining, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1478,7 +1478,7 @@
           "february"
         ],
         "description": "fully dried upright spike with persistent small seed capsules on stiff stem, no foliage remaining",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fully dried upright spike with persistent small seed capsules on stiff stem, no foliage remaining, architectural winter habitus"
+        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright spike with persistent small seed capsules on stiff stem, no foliage remaining, architectural winter habitus"
       }
     ],
     "color": "#f0d820",
@@ -1501,7 +1501,7 @@
           "april"
         ],
         "description": "small clump of delicate feathery thread-like bright green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small clump of delicate feathery thread-like bright green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate feathery thread-like bright green leaves, 10–15 cm tall, no stems or flowers yet"
       },
       {
         "id": "foliage",
@@ -1510,7 +1510,7 @@
           "june"
         ],
         "description": "tall upright hollow stems with masses of feathery thread-like bright green foliage, 80–120 cm tall, no flowers yet",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall upright hollow stems with masses of feathery thread-like bright green foliage, 80–120 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright hollow stems with masses of feathery thread-like bright green foliage, 80–120 cm tall, no flowers yet, natural garden habitus"
       },
       {
         "id": "bloom",
@@ -1519,7 +1519,7 @@
           "august"
         ],
         "description": "very tall hollow stems with flat-topped bright yellow umbel flowerheads, feathery thread-like bright green foliage below",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — very tall hollow stems with flat-topped bright yellow umbel flowerheads, feathery thread-like bright green foliage below, natural garden habitus"
+        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — very tall hollow stems with flat-topped bright yellow umbel flowerheads, feathery thread-like bright green foliage below, natural garden habitus"
       },
       {
         "id": "seed",
@@ -1528,7 +1528,7 @@
           "october"
         ],
         "description": "tall stems with flat-topped green-brown seed umbels, feathery foliage yellowing and dying back",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall stems with flat-topped green-brown seed umbels, feathery foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with flat-topped green-brown seed umbels, feathery foliage yellowing and dying back, natural garden habitus"
       },
       {
         "id": "dried",
@@ -1539,7 +1539,7 @@
           "february"
         ],
         "description": "tall dried skeletal hollow stems with flat dried seed heads, no foliage remaining",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — tall dried skeletal hollow stems with flat dried seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall dried skeletal hollow stems with flat dried seed heads, no foliage remaining, architectural winter habitus"
       }
     ],
     "color": "#c0d020",
@@ -1559,25 +1559,31 @@
         "id": "sprout",
         "months": ["april"],
         "description": "fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled leaves in pairs, strongly aromatic",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled aromatic leaves in opposite pairs, vigorous new growth"
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled aromatic leaves in opposite pairs, vigorous new growth"
       },
       {
         "id": "foliage",
         "months": ["may", "june"],
         "description": "lush upright stems 30–50 cm, bright green lance-shaped crinkled leaves in pairs, no flower spikes yet, strongly aromatic",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — lush clump of upright stems 30–50 cm tall, bright green lance-shaped crinkled aromatic leaves in opposite pairs, no flower spikes yet"
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush clump of upright stems 30–50 cm tall, bright green lance-shaped crinkled aromatic leaves in opposite pairs, no flower spikes yet"
       },
       {
         "id": "bloom",
         "months": ["july", "august", "september"],
         "description": "60 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled leaves below",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump 55–65 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled aromatic leaves, full bloom"
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump 55–65 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled aromatic leaves, full bloom"
+      },
+      {
+        "id": "seed",
+        "months": ["october"],
+        "description": "upright stems with spent whorled flower spikes turning brown, tiny seed clusters visible along spikes, leaves yellowing and wilting",
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with upright stems, spent whorled flower spikes turning brown with tiny seed clusters, leaves yellowing and wilting, end-of-season habitus"
       },
       {
         "id": "dried",
-        "months": ["october", "november", "december", "january", "february", "march"],
+        "months": ["november", "december", "january", "february", "march"],
         "description": "dried upright stems with spent brown flower spikes, leaves gone, skeletal winter structure",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — dried upright stems with spent brown whorled flower spikes, no leaves remaining, skeletal winter structure"
+        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dried upright stems with spent brown whorled flower spikes, no leaves remaining, skeletal winter structure"
       }
     ]
   },
@@ -1595,25 +1601,25 @@
         "id": "sprout",
         "months": ["march", "april"],
         "description": "small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet"
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet"
       },
       {
         "id": "foliage",
         "months": ["april", "may"],
         "description": "spreading low plant 15–20 cm tall, pale green aromatic leaves on branching stems, small buds beginning to form",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — spreading low plant 15–20 cm tall, pale green slightly sticky aromatic leaves on branching stems, small buds beginning to form"
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — spreading low plant 15–20 cm tall, pale green slightly sticky aromatic leaves on branching stems, small buds beginning to form"
       },
       {
         "id": "bloom",
         "months": ["may", "june", "july", "august", "september", "october"],
         "description": "low spreading plant covered in many small bright orange-yellow daisy-like flowers, petals narrower than garden marigold, pale green aromatic leaves",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — low spreading plant 25–30 cm tall covered in many small bright orange-yellow daisy-like flowers with narrower petals than garden marigold, pale green aromatic leaves, natural wildflower habitus"
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low spreading plant 25–30 cm tall covered in many small bright orange-yellow daisy-like flowers with narrower petals than garden marigold, pale green aromatic leaves, natural wildflower habitus"
       },
       {
         "id": "seed",
         "months": ["october", "november"],
         "description": "spreading stems with small curved claw-like seed clusters, foliage yellowing and sparse",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — spreading stems with small curved claw-like seed clusters where flowers were, foliage yellowing and sparse, natural end-of-season habitus"
+        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — spreading stems with small curved claw-like seed clusters where flowers were, foliage yellowing and sparse, natural end-of-season habitus"
       }
     ]
   },
@@ -1631,25 +1637,25 @@
         "id": "sprout",
         "months": ["april", "may"],
         "description": "small seedlings with rounded cotyledons and first heart-shaped true leaves, 5–10 cm tall, bright fresh green",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — small dense cluster of seedlings with rounded cotyledons and first heart-shaped true leaves, 5–10 cm tall, fresh bright green"
+        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small dense cluster of seedlings with rounded cotyledons and first heart-shaped true leaves, 5–10 cm tall, fresh bright green"
       },
       {
         "id": "foliage",
         "months": ["may", "june"],
         "description": "upright branching stems 30–50 cm tall, heart-shaped mid-green leaves on reddish stems, no flowers yet",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump of upright branching stems 30–50 cm tall, heart-shaped mid-green leaves on reddish stems, no flowers yet"
+        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of upright branching stems 30–50 cm tall, heart-shaped mid-green leaves on reddish stems, no flowers yet"
       },
       {
         "id": "bloom",
         "months": ["june", "july", "august"],
         "description": "60–70 cm tall, covered in dense clusters of tiny white to blush-pink five-petalled flowers at stem tips, bees foraging",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump 60–70 cm tall covered in dense clusters of tiny white to soft blush-pink five-petalled flowers at every stem tip, reddish stems, heart-shaped leaves, full bloom"
+        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump 60–70 cm tall covered in dense clusters of tiny white to soft blush-pink five-petalled flowers at every stem tip, reddish stems, heart-shaped leaves, full bloom"
       },
       {
         "id": "seed",
         "months": ["august", "september"],
         "description": "stems drying to brown, triangular dark brown buckwheat seeds visible in clusters where flowers were",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, not from above, telephoto lens, plant fills the frame vertically, straight-on front view, soft even daylight, photorealistic nursery catalogue style, no shadow, no pot, with small soil base — natural clump with stems turning brown, dense clusters of triangular dark brown buckwheat achenes where flowers were, some leaves yellowing"
+        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with stems turning brown, dense clusters of triangular dark brown buckwheat achenes where flowers were, some leaves yellowing"
       }
     ]
   }
