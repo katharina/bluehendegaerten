@@ -2,8 +2,7 @@
 // Usage: node scripts/process-existing.js <slug>
 
 import sharp from 'sharp';
-import { removeBackground } from '@imgly/background-removal-node';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { writeManifest } from './manifest.js';
@@ -15,10 +14,33 @@ const species   = JSON.parse(readFileSync(join(__dirname, 'species.json'), 'utf8
 const MAX_PLANT_CM = 250;
 const MAX_PX       = 1000;
 
-async function removeBg(pngBuffer) {
-  const blob   = new Blob([pngBuffer], { type: 'image/png' });
-  const result = await removeBackground(blob);
-  return Buffer.from(await result.arrayBuffer());
+// Removes a white/near-white background by color. Reliable for nursery-catalog
+// style source images. Preserves saturated colours (green leaves, coloured petals).
+async function removeWhiteBg(pngBuffer) {
+  const { data, info } = await sharp(pngBuffer)
+    .ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height } = info;
+  const out = Buffer.from(data);
+
+  const THRESHOLD = 230; // pixels with all channels >= this AND low saturation → transparent
+  const FEATHER   = 25;  // transition zone below threshold
+
+  for (let i = 0; i < width * height; i++) {
+    const r = data[i * 4];
+    const g = data[i * 4 + 1];
+    const b = data[i * 4 + 2];
+    const minC = Math.min(r, g, b);
+    const sat  = Math.max(r, g, b) - minC; // 0 = grey/white, high = colourful
+
+    if (minC >= THRESHOLD && sat < 25) {
+      out[i * 4 + 3] = 0;
+    } else if (minC >= THRESHOLD - FEATHER && sat < 40) {
+      const t = (minC - (THRESHOLD - FEATHER)) / FEATHER;
+      out[i * 4 + 3] = Math.round((1 - t) * 255);
+    }
+  }
+
+  return sharp(out, { raw: { width, height, channels: 4 } }).png().toBuffer();
 }
 
 async function alphaTrim(rgbaBuffer) {
@@ -74,8 +96,10 @@ async function normalizeCanvas(rgbaBuffer, canvasH) {
   return { buffer, canvasW, canvasH };
 }
 
-const filterSlug = process.argv[2];
-if (!filterSlug) { console.error('Usage: node scripts/process-existing.js <slug>'); process.exit(1); }
+const args        = process.argv.slice(2).filter(a => !a.startsWith('--'));
+const force       = process.argv.includes('--force');
+const filterSlug  = args[0];
+if (!filterSlug) { console.error('Usage: node scripts/process-existing.js <slug> [--force]'); process.exit(1); }
 
 const plant = species.find(p => p.slug === filterSlug);
 if (!plant) { console.error(`No species with slug "${filterSlug}"`); process.exit(1); }
@@ -84,24 +108,34 @@ mkdirSync(OUT_DIR, { recursive: true });
 
 const canvasH = Math.round(plant.height_cm / MAX_PLANT_CM * MAX_PX);
 
-for (const stage of plant.stages) {
-  const jpegPath = join(OUT_DIR, `${plant.slug}_${stage.id}.jpeg`);
-  const pngPath  = join(OUT_DIR, `${plant.slug}_${stage.id}.png`);
-
+async function processOne(jpegPath, pngPath, label) {
   if (!existsSync(jpegPath)) {
-    console.log(`  missing  ${plant.slug}_${stage.id}.jpeg — skipping`);
-    continue;
+    console.log(`  missing  ${label}.jpeg — skipping`);
+    return;
   }
-
-  console.log(`  process  ${plant.slug}_${stage.id}`);
-
+  if (!force && existsSync(pngPath)) {
+    console.log(`  skip     ${label}.png — already exists (use --force to overwrite)`);
+    return;
+  }
+  console.log(`  process  ${label}`);
   const jpegBuf = readFileSync(jpegPath);
   const pngBuf  = await sharp(jpegBuf).png().toBuffer();
-  const noBg    = await removeBg(pngBuf);
+  const noBg    = await removeWhiteBg(pngBuf);
   const { buffer, canvasW } = await normalizeCanvas(noBg, canvasH);
-
   writeFileSync(pngPath, buffer);
-  console.log(`  saved    ${plant.slug}_${stage.id}.png  (${canvasW}×${canvasH})`);
+  console.log(`  saved    ${label}.png  (${canvasW}×${canvasH})`);
+}
+
+for (const stage of plant.stages) {
+  const base = `${plant.slug}_${stage.id}`;
+  await processOne(join(OUT_DIR, `${base}.jpeg`), join(OUT_DIR, `${base}.png`), base);
+
+  // Process numbered variants: {slug}_{stage}_2.jpeg, _3.jpeg, etc.
+  for (let v = 2; v <= 10; v++) {
+    const varBase = `${base}_${v}`;
+    if (!existsSync(join(OUT_DIR, `${varBase}.jpeg`))) break;
+    await processOne(join(OUT_DIR, `${varBase}.jpeg`), join(OUT_DIR, `${varBase}.png`), varBase);
+  }
 }
 
 writeManifest(species, OUT_DIR);

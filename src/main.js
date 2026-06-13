@@ -11,6 +11,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0xffffff);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.localClippingEnabled = true;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
@@ -433,15 +434,12 @@ for (const bed of beds) {
   border.position.set(0, bed.y + 0.002, bed.z);
   scene.add(border);
 
-  // low retaining wall around bed perimeter
   const wallY = bed.y + WALL_H / 2;
   const walls = [
-    // north & south — full width including corner overlap
     { geo: new THREE.BoxGeometry(BED_L + WALL_T * 2, WALL_H, WALL_T),
       pos: [0, wallY, bed.z - bed.w / 2 - WALL_T / 2] },
     { geo: new THREE.BoxGeometry(BED_L + WALL_T * 2, WALL_H, WALL_T),
       pos: [0, wallY, bed.z + bed.w / 2 + WALL_T / 2] },
-    // east & west — just the gap between the north/south walls
     { geo: new THREE.BoxGeometry(WALL_T, WALL_H, bed.w),
       pos: [-BED_L / 2 - WALL_T / 2, wallY, bed.z] },
     { geo: new THREE.BoxGeometry(WALL_T, WALL_H, bed.w),
@@ -469,10 +467,12 @@ function rng(seed) {
 }
 
 const FRAG = `
+#include <clipping_planes_pars_fragment>
 uniform sampler2D map;
 varying vec2 vUv;
 varying vec3 vColor;
 void main() {
+  #include <clipping_planes_fragment>
   vec4 c = texture2D(map, vUv);
   if (c.a < 0.5) discard;
   gl_FragColor = vec4(c.rgb * vColor, 1.0);
@@ -480,6 +480,7 @@ void main() {
 
 // Vertical: cylindrical billboard, pivot at base, always faces camera around Y
 const VERT_VERTICAL = `
+#include <clipping_planes_pars_vertex>
 uniform float time;
 attribute vec3 iPos;
 attribute float iScale;
@@ -498,7 +499,9 @@ void main() {
   vec3 world = iPos
     + right               * (position.x * iScale + sway)
     + vec3(0.0, 1.0, 0.0) *  position.y * iScale;
-  gl_Position = projectionMatrix * viewMatrix * vec4(world, 1.0);
+  vec4 mvPosition = viewMatrix * vec4(world, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  #include <clipping_planes_vertex>
   // per-instance depth nudge — prevents Z-fighting between coplanar billboards
   float h = fract(sin(dot(iPos.xz, vec2(12.9898, 78.233))) * 43758.5453);
   gl_Position.z -= h * 0.0002 * gl_Position.w;
@@ -506,6 +509,7 @@ void main() {
 
 // Horizontal: lies near-flat on ground with a gentle tilt, random Y rotation per instance
 const VERT_HORIZONTAL = `
+#include <clipping_planes_pars_vertex>
 uniform float tilt;
 attribute vec3 iPos;
 attribute float iScale;
@@ -526,7 +530,9 @@ void main() {
     iPos.y  +  position.y * st * iScale,
     iPos.z  + (position.x * s + position.y * ct * c) * iScale
   );
-  gl_Position = projectionMatrix * viewMatrix * vec4(world, 1.0);
+  vec4 mvPosition = viewMatrix * vec4(world, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  #include <clipping_planes_vertex>
 }`;
 
 const swayByMonth = {};
@@ -642,6 +648,31 @@ function scaleForPos(x, z) {
   return 0.8 + v * 0.4;
 }
 
+// Clip planes that confine billboard geometry to the inner soil area of a bed.
+// Plants near walls protrude geometrically (cylindrical billboard extends in camera-right),
+// so we clip at the soil boundary — the wall covers the rest.
+function bedClipPlanes(bed) {
+  return [
+    new THREE.Plane(new THREE.Vector3(0, 0, -1),  bed.z + bed.w / 2),     // south
+    new THREE.Plane(new THREE.Vector3(0, 0,  1), -(bed.z - bed.w / 2)),   // north
+    new THREE.Plane(new THREE.Vector3(-1, 0, 0),  BED_L / 2),             // east
+    new THREE.Plane(new THREE.Vector3( 1, 0, 0),  BED_L / 2),             // west
+  ];
+}
+
+function addVariantMeshes(g, mats, tex, allPositions, variants, tkey, textures, opts, clips = null) {
+  for (let v = 0; v < variants; v++) {
+    const vkey = v === 0 ? tkey : `${tkey}_${v + 1}`;
+    const t    = textures[vkey] ?? tex;
+    const positions = allPositions.filter((_, i) => i % variants === v);
+    if (!positions.length) continue;
+    const mesh = makeBillboardMesh(t, positions, opts);
+    if (clips) mesh.material.clippingPlanes = clips;
+    g.add(mesh);
+    mats.push(mesh.material);
+  }
+}
+
 function buildMonth(key) {
   if (gardens[key]) return;
   const g   = new THREE.Group();
@@ -659,27 +690,42 @@ function buildMonth(key) {
       if (!entry) continue;
       const tkey = `${slug}_${entry.stage}`;
       if (!_textures[tkey]) continue;
-      const positions = list.map(p => ({
-        x: p.x, y: yAtPosition(p.x, p.z), z: p.z, scale: scaleForPos(p.x, p.z),
-      }));
-      const mesh = makeBillboardMesh(_textures[tkey], positions, {
-        orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH,
-      });
-      g.add(mesh);
-      mats.push(mesh.material);
+      const variants = entry.variants ?? 1;
+      const opts = { orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH };
+
+      // Group placements by bed so we can apply per-bed clip planes
+      for (let bi = 0; bi < beds.length; bi++) {
+        const bed = beds[bi];
+        const bedList = list.filter(p =>
+          p.z >= bed.z - bed.w / 2 && p.z <= bed.z + bed.w / 2 && Math.abs(p.x) <= BED_L / 2);
+        if (!bedList.length) continue;
+        const allPositions = bedList.map(p => ({
+          x: p.x, y: yAtPosition(p.x, p.z), z: p.z, scale: scaleForPos(p.x, p.z),
+        }));
+        const clips = bedClipPlanes(bed);
+        addVariantMeshes(g, mats, _textures[tkey], allPositions, variants, tkey, _textures, opts, clips);
+      }
     }
   } else {
-    // ── scatter mode (Garten 1) ───────────────────────────────────────────────
+    // ── scatter mode ─────────────────────────────────────────────────────────
     for (const entry of _manifest) {
       if (!entry.months.includes(key)) continue;
       if (EXPLICIT_BEDS_MODE && !entry.beds) continue;
       const tkey = `${entry.slug}_${entry.stage}`;
       if (!_textures[tkey]) continue;
-      const mesh = makeBillboardMesh(_textures[tkey], _posBySeed[entry.seed], {
-        orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH,
-      });
-      g.add(mesh);
-      mats.push(mesh.material);
+      const allPositions = _posBySeed[entry.seed];
+      const variants = entry.variants ?? 1;
+      const opts = { orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH };
+
+      // Split by bed for per-bed clip planes
+      for (let bi = 0; bi < beds.length; bi++) {
+        if (entry.beds && !entry.beds.includes(bi)) continue;
+        const bed = beds[bi];
+        const bedPositions = allPositions.filter(p =>
+          p.z >= bed.z - bed.w / 2 - 0.01 && p.z <= bed.z + bed.w / 2 + 0.01);
+        if (!bedPositions.length) continue;
+        addVariantMeshes(g, mats, _textures[tkey], bedPositions, variants, tkey, _textures, opts, bedClipPlanes(bed));
+      }
     }
   }
 
@@ -715,10 +761,17 @@ async function init() {
   await Promise.all(_manifest.map(async entry => {
     const key = `${entry.slug}_${entry.stage}`;
     try {
-      const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${entry.slug}_${entry.stage}.png`);
+      const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}.png`);
       tex.colorSpace = THREE.SRGBColorSpace;
       _textures[key] = tex;
     } catch { /* image not generated yet */ }
+    for (let v = 2; v <= (entry.variants ?? 1); v++) {
+      try {
+        const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}_${v}.png`);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        _textures[`${key}_${v}`] = tex;
+      } catch { }
+    }
   }));
 
   const seen = new Set();

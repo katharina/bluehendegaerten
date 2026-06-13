@@ -118,7 +118,8 @@
     "worldW": 0.55,
     "worldH": 0.7,
     "density": 1,
-    "seed": 77
+    "seed": 77,
+    "variants": 3
   },
   {
     "slug": "poppy",
@@ -2224,5 +2225,56 @@
     "worldH": 0.7,
     "density": 4,
     "seed": 2391
+  },
+  {
+    "slug": "brassica_sabellica",
+    "name": "Brassica oleracea var. sabellica",
+    "name_de": "Grünkohl",
+    "color": "#4a7c3f",
+    "stage": "sprout",
+    "months": [
+      "april",
+      "may"
+    ],
+    "worldW": 0.55,
+    "worldH": 0.75,
+    "density": 1.2,
+    "seed": 9173
+  },
+  {
+    "slug": "brassica_sabellica",
+    "name": "Brassica oleracea var. sabellica",
+    "name_de": "Grünkohl",
+    "color": "#4a7c3f",
+    "stage": "foliage",
+    "months": [
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+      "january"
+    ],
+    "worldW": 0.55,
+    "worldH": 0.75,
+    "density": 1.2,
+    "seed": 9173
+  },
+  {
+    "slug": "brassica_sabellica",
+    "name": "Brassica oleracea var. sabellica",
+    "name_de": "Grünkohl",
+    "color": "#4a7c3f",
+    "stage": "bloom",
+    "months": [
+      "february",
+      "march"
+    ],
+    "worldW": 0.55,
+    "worldH": 0.75,
+    "density": 1.2,
+    "seed": 9173
   }
 ]

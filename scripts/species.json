@@ -1658,5 +1658,35 @@
         "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with stems turning brown, dense clusters of triangular dark brown buckwheat achenes where flowers were, some leaves yellowing"
       }
     ]
+  },
+  {
+    "slug": "brassica_sabellica",
+    "name": "Brassica oleracea var. sabellica",
+    "name_de": "Grünkohl",
+    "height_cm": 75,
+    "width_cm": 55,
+    "density": 1.2,
+    "scatter_seed": 9173,
+    "color": "#4a7c3f",
+    "stages": [
+      {
+        "id": "sprout",
+        "months": ["april", "may"],
+        "description": "small seedling with rounded blue-green cotyledons and first crinkled true leaves, 8–12 cm tall, growing from bare soil",
+        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling with rounded blue-green cotyledons and first crinkled true leaves, 8–12 cm tall, fresh young growth"
+      },
+      {
+        "id": "foliage",
+        "months": ["june", "july", "august", "september", "october", "november", "december", "january"],
+        "description": "mature plant with a thick central stem, large deeply crinkled blue-green to dark green leaves fanning outward, 60–75 cm tall, robust garden habitus",
+        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — mature kale plant with thick central stem, large deeply crinkled and curled blue-green leaves fanning outward, 60–75 cm tall, robust garden habitus, no flowers"
+      },
+      {
+        "id": "bloom",
+        "months": ["february", "march"],
+        "description": "bolting second-year plant, tall branching stems 90–100 cm, clusters of bright yellow four-petalled flowers at tips, lower leaves yellowing",
+        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bolting kale, tall branching stems 90–100 cm, clusters of bright yellow four-petalled crucifer flowers at branch tips, a few remaining blue-green lower leaves, natural spring bolting habitus"
+      }
+    ]
   }
 ]
