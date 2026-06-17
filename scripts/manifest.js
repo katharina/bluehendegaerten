@@ -20,8 +20,8 @@ export function writeManifest(species, outDir) {
   const entries = [];
   for (const plant of species) {
     const worldW = plant.width_cm / 100;
-    const worldH = plant.height_cm / 100;
     for (const stage of plant.stages) {
+      const worldH = (stage.height_cm ?? plant.height_cm) / 100;
       const variants = countVariants(outDir, plant.slug, stage.id);
       const entry = {
         slug:    plant.slug,
@@ -31,12 +31,13 @@ export function writeManifest(species, outDir) {
         stage:   stage.id,
         months:  stage.months,
         worldW,
-        worldH,
+        worldH: Math.round(worldH * 1000) / 1000,
         density: plant.density,
         seed:    plant.scatter_seed,
       };
       if (variants > 1) entry.variants = variants;
       if (plant.beds) entry.beds = plant.beds;
+      if (plant.placement_type) entry.placementType = plant.placement_type;
       entries.push(entry);
     }
   }

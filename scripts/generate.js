@@ -86,16 +86,17 @@ async function alphaTrim(rgbaBuffer) {
 async function normalizeCanvas(rgbaBuffer, canvasH) {
   const { buffer: trimmed, w, h } = await alphaTrim(rgbaBuffer);
 
-  const padding = 24;
-  const scale   = (canvasH - padding * 2) / h;
+  const sidePad = 24;
+  const topPad  = 16;
+  const scale   = (canvasH - topPad) / h;
   const fitH    = Math.round(h * scale);
   const fitW    = Math.round(w * scale);
-  const canvasW = fitW + padding * 2;
+  const canvasW = fitW + sidePad * 2;
 
   const resized = await sharp(trimmed).resize(fitW, fitH).toBuffer();
 
-  const left = padding;
-  const top  = canvasH - fitH - padding;
+  const left = sidePad;
+  const top  = canvasH - fitH;
 
   return sharp({
     create: { width: canvasW, height: canvasH, channels: 4,

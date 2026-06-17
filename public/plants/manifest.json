@@ -10,9 +10,10 @@
       "april"
     ],
     "worldW": 0.4,
-    "worldH": 0.8,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 42
+    "seed": 42,
+    "placementType": "point"
   },
   {
     "slug": "echinacea",
@@ -25,9 +26,10 @@
       "june"
     ],
     "worldW": 0.4,
-    "worldH": 0.8,
+    "worldH": 0.45,
     "density": 1.5,
-    "seed": 42
+    "seed": 42,
+    "placementType": "point"
   },
   {
     "slug": "echinacea",
@@ -41,7 +43,9 @@
     "worldW": 0.4,
     "worldH": 0.8,
     "density": 1.5,
-    "seed": 42
+    "seed": 42,
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "echinacea",
@@ -54,9 +58,10 @@
       "september"
     ],
     "worldW": 0.4,
-    "worldH": 0.8,
+    "worldH": 0.75,
     "density": 1.5,
-    "seed": 42
+    "seed": 42,
+    "placementType": "point"
   },
   {
     "slug": "echinacea",
@@ -72,9 +77,10 @@
       "february"
     ],
     "worldW": 0.4,
-    "worldH": 0.8,
+    "worldH": 0.75,
     "density": 1.5,
-    "seed": 42
+    "seed": 42,
+    "placementType": "point"
   },
   {
     "slug": "poppy",
@@ -87,9 +93,10 @@
       "march"
     ],
     "worldW": 0.55,
-    "worldH": 0.7,
+    "worldH": 0.12,
     "density": 1,
-    "seed": 77
+    "seed": 77,
+    "placementType": "point"
   },
   {
     "slug": "poppy",
@@ -101,9 +108,10 @@
       "april"
     ],
     "worldW": 0.55,
-    "worldH": 0.7,
+    "worldH": 0.25,
     "density": 1,
-    "seed": 77
+    "seed": 77,
+    "placementType": "point"
   },
   {
     "slug": "poppy",
@@ -119,7 +127,8 @@
     "worldH": 0.7,
     "density": 1,
     "seed": 77,
-    "variants": 3
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "poppy",
@@ -131,9 +140,10 @@
       "july"
     ],
     "worldW": 0.55,
-    "worldH": 0.7,
+    "worldH": 0.65,
     "density": 1,
-    "seed": 77
+    "seed": 77,
+    "placementType": "point"
   },
   {
     "slug": "poppy",
@@ -150,9 +160,10 @@
       "january"
     ],
     "worldW": 0.55,
-    "worldH": 0.7,
+    "worldH": 0.6,
     "density": 1,
-    "seed": 77
+    "seed": 77,
+    "placementType": "point"
   },
   {
     "slug": "sunflower",
@@ -165,12 +176,13 @@
       "may"
     ],
     "worldW": 0.45,
-    "worldH": 1.8,
+    "worldH": 0.17,
     "density": 0.4,
     "seed": 113,
     "beds": [
       0
-    ]
+    ],
+    "placementType": "grid"
   },
   {
     "slug": "sunflower",
@@ -182,12 +194,13 @@
       "june"
     ],
     "worldW": 0.45,
-    "worldH": 1.8,
+    "worldH": 0.9,
     "density": 0.4,
     "seed": 113,
     "beds": [
       0
-    ]
+    ],
+    "placementType": "grid"
   },
   {
     "slug": "sunflower",
@@ -203,9 +216,11 @@
     "worldH": 1.8,
     "density": 0.4,
     "seed": 113,
+    "variants": 3,
     "beds": [
       0
-    ]
+    ],
+    "placementType": "grid"
   },
   {
     "slug": "sunflower",
@@ -217,12 +232,13 @@
       "september"
     ],
     "worldW": 0.45,
-    "worldH": 1.8,
+    "worldH": 1.7,
     "density": 0.4,
     "seed": 113,
     "beds": [
       0
-    ]
+    ],
+    "placementType": "grid"
   },
   {
     "slug": "sunflower",
@@ -235,12 +251,13 @@
       "november"
     ],
     "worldW": 0.45,
-    "worldH": 1.8,
+    "worldH": 1.6,
     "density": 0.4,
     "seed": 113,
     "beds": [
       0
-    ]
+    ],
+    "placementType": "grid"
   },
   {
     "slug": "salvia",
@@ -253,9 +270,10 @@
       "april"
     ],
     "worldW": 0.3,
-    "worldH": 0.55,
+    "worldH": 0.18,
     "density": 4,
-    "seed": 198
+    "seed": 198,
+    "placementType": "point"
   },
   {
     "slug": "salvia",
@@ -272,7 +290,8 @@
     "worldW": 0.3,
     "worldH": 0.55,
     "density": 4,
-    "seed": 198
+    "seed": 198,
+    "placementType": "point"
   },
   {
     "slug": "salvia",
@@ -284,9 +303,10 @@
       "september"
     ],
     "worldW": 0.3,
-    "worldH": 0.55,
+    "worldH": 0.5,
     "density": 4,
-    "seed": 198
+    "seed": 198,
+    "placementType": "point"
   },
   {
     "slug": "alchemilla",
@@ -299,9 +319,10 @@
       "april"
     ],
     "worldW": 0.55,
-    "worldH": 0.35,
+    "worldH": 0.25,
     "density": 2,
-    "seed": 256
+    "seed": 256,
+    "placementType": "point"
   },
   {
     "slug": "alchemilla",
@@ -317,7 +338,8 @@
     "worldW": 0.55,
     "worldH": 0.35,
     "density": 2,
-    "seed": 256
+    "seed": 256,
+    "placementType": "point"
   },
   {
     "slug": "alchemilla",
@@ -332,7 +354,8 @@
     "worldW": 0.55,
     "worldH": 0.35,
     "density": 2,
-    "seed": 256
+    "seed": 256,
+    "placementType": "point"
   },
   {
     "slug": "sage",
@@ -344,9 +367,10 @@
       "march"
     ],
     "worldW": 0.7,
-    "worldH": 0.6,
+    "worldH": 0.17,
     "density": 1,
-    "seed": 421
+    "seed": 421,
+    "placementType": "point"
   },
   {
     "slug": "sage",
@@ -359,9 +383,10 @@
       "may"
     ],
     "worldW": 0.7,
-    "worldH": 0.6,
+    "worldH": 0.45,
     "density": 1,
-    "seed": 421
+    "seed": 421,
+    "placementType": "point"
   },
   {
     "slug": "sage",
@@ -376,7 +401,9 @@
     "worldW": 0.7,
     "worldH": 0.6,
     "density": 1,
-    "seed": 421
+    "seed": 421,
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "sage",
@@ -389,9 +416,10 @@
       "september"
     ],
     "worldW": 0.7,
-    "worldH": 0.6,
+    "worldH": 0.55,
     "density": 1,
-    "seed": 421
+    "seed": 421,
+    "placementType": "point"
   },
   {
     "slug": "sage",
@@ -407,9 +435,10 @@
       "february"
     ],
     "worldW": 0.7,
-    "worldH": 0.6,
+    "worldH": 0.3,
     "density": 1,
-    "seed": 421
+    "seed": 421,
+    "placementType": "point"
   },
   {
     "slug": "bunias",
@@ -422,9 +451,10 @@
       "march"
     ],
     "worldW": 0.5,
-    "worldH": 1,
+    "worldH": 0.12,
     "density": 1,
-    "seed": 317
+    "seed": 317,
+    "placementType": "point"
   },
   {
     "slug": "bunias",
@@ -437,9 +467,10 @@
       "may"
     ],
     "worldW": 0.5,
-    "worldH": 1,
+    "worldH": 0.45,
     "density": 1,
-    "seed": 317
+    "seed": 317,
+    "placementType": "point"
   },
   {
     "slug": "bunias",
@@ -453,7 +484,9 @@
     "worldW": 0.5,
     "worldH": 1,
     "density": 1,
-    "seed": 317
+    "seed": 317,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "bunias",
@@ -466,9 +499,10 @@
       "august"
     ],
     "worldW": 0.5,
-    "worldH": 1,
+    "worldH": 0.95,
     "density": 1,
-    "seed": 317
+    "seed": 317,
+    "placementType": "point"
   },
   {
     "slug": "bunias",
@@ -484,9 +518,10 @@
       "january"
     ],
     "worldW": 0.5,
-    "worldH": 1,
+    "worldH": 0.9,
     "density": 1,
-    "seed": 317
+    "seed": 317,
+    "placementType": "point"
   },
   {
     "slug": "aquilegia",
@@ -499,9 +534,10 @@
       "march"
     ],
     "worldW": 0.45,
-    "worldH": 0.7,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 1373
+    "seed": 1373,
+    "placementType": "point"
   },
   {
     "slug": "aquilegia",
@@ -513,9 +549,10 @@
       "april"
     ],
     "worldW": 0.45,
-    "worldH": 0.7,
+    "worldH": 0.35,
     "density": 1.5,
-    "seed": 1373
+    "seed": 1373,
+    "placementType": "point"
   },
   {
     "slug": "aquilegia",
@@ -530,7 +567,9 @@
     "worldW": 0.45,
     "worldH": 0.7,
     "density": 1.5,
-    "seed": 1373
+    "seed": 1373,
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "aquilegia",
@@ -542,9 +581,10 @@
       "july"
     ],
     "worldW": 0.45,
-    "worldH": 0.7,
+    "worldH": 0.65,
     "density": 1.5,
-    "seed": 1373
+    "seed": 1373,
+    "placementType": "point"
   },
   {
     "slug": "aquilegia",
@@ -561,9 +601,10 @@
       "january"
     ],
     "worldW": 0.45,
-    "worldH": 0.7,
+    "worldH": 0.6,
     "density": 1.5,
-    "seed": 1373
+    "seed": 1373,
+    "placementType": "point"
   },
   {
     "slug": "primula",
@@ -575,9 +616,10 @@
       "february"
     ],
     "worldW": 0.25,
-    "worldH": 0.25,
+    "worldH": 0.08,
     "density": 3,
-    "seed": 1231
+    "seed": 1231,
+    "placementType": "point"
   },
   {
     "slug": "primula",
@@ -589,9 +631,10 @@
       "march"
     ],
     "worldW": 0.25,
-    "worldH": 0.25,
+    "worldH": 0.17,
     "density": 3,
-    "seed": 1231
+    "seed": 1231,
+    "placementType": "point"
   },
   {
     "slug": "primula",
@@ -606,7 +649,9 @@
     "worldW": 0.25,
     "worldH": 0.25,
     "density": 3,
-    "seed": 1231
+    "seed": 1231,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "primula",
@@ -619,9 +664,10 @@
       "july"
     ],
     "worldW": 0.25,
-    "worldH": 0.25,
+    "worldH": 0.22,
     "density": 3,
-    "seed": 1231
+    "seed": 1231,
+    "placementType": "point"
   },
   {
     "slug": "primula",
@@ -638,9 +684,10 @@
       "january"
     ],
     "worldW": 0.25,
-    "worldH": 0.25,
+    "worldH": 0.05,
     "density": 3,
-    "seed": 1231
+    "seed": 1231,
+    "placementType": "point"
   },
   {
     "slug": "phacelia",
@@ -652,9 +699,10 @@
       "april"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.12,
     "density": 2.5,
-    "seed": 1087
+    "seed": 1087,
+    "placementType": "grid"
   },
   {
     "slug": "phacelia",
@@ -666,9 +714,10 @@
       "may"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.35,
     "density": 2.5,
-    "seed": 1087
+    "seed": 1087,
+    "placementType": "grid"
   },
   {
     "slug": "phacelia",
@@ -683,7 +732,9 @@
     "worldW": 0.35,
     "worldH": 0.7,
     "density": 2.5,
-    "seed": 1087
+    "seed": 1087,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "phacelia",
@@ -695,9 +746,10 @@
       "august"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.65,
     "density": 2.5,
-    "seed": 1087
+    "seed": 1087,
+    "placementType": "grid"
   },
   {
     "slug": "phacelia",
@@ -710,9 +762,10 @@
       "october"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.6,
     "density": 2.5,
-    "seed": 1087
+    "seed": 1087,
+    "placementType": "grid"
   },
   {
     "slug": "calendula",
@@ -724,9 +777,10 @@
       "april"
     ],
     "worldW": 0.35,
-    "worldH": 0.5,
+    "worldH": 0.12,
     "density": 2,
-    "seed": 967
+    "seed": 967,
+    "placementType": "grid"
   },
   {
     "slug": "calendula",
@@ -738,9 +792,10 @@
       "may"
     ],
     "worldW": 0.35,
-    "worldH": 0.5,
+    "worldH": 0.25,
     "density": 2,
-    "seed": 967
+    "seed": 967,
+    "placementType": "grid"
   },
   {
     "slug": "calendula",
@@ -757,7 +812,9 @@
     "worldW": 0.35,
     "worldH": 0.5,
     "density": 2,
-    "seed": 967
+    "seed": 967,
+    "variants": 3,
+    "placementType": "grid"
   },
   {
     "slug": "calendula",
@@ -769,9 +826,10 @@
       "october"
     ],
     "worldW": 0.35,
-    "worldH": 0.5,
+    "worldH": 0.45,
     "density": 2,
-    "seed": 967
+    "seed": 967,
+    "placementType": "grid"
   },
   {
     "slug": "calendula",
@@ -783,9 +841,10 @@
       "november"
     ],
     "worldW": 0.35,
-    "worldH": 0.5,
+    "worldH": 0.4,
     "density": 2,
-    "seed": 967
+    "seed": 967,
+    "placementType": "grid"
   },
   {
     "slug": "anthemis",
@@ -797,9 +856,10 @@
       "march"
     ],
     "worldW": 0.45,
-    "worldH": 0.5,
+    "worldH": 0.12,
     "density": 2,
-    "seed": 853
+    "seed": 853,
+    "placementType": "grid"
   },
   {
     "slug": "anthemis",
@@ -812,9 +872,10 @@
       "may"
     ],
     "worldW": 0.45,
-    "worldH": 0.5,
+    "worldH": 0.3,
     "density": 2,
-    "seed": 853
+    "seed": 853,
+    "placementType": "grid"
   },
   {
     "slug": "anthemis",
@@ -830,7 +891,9 @@
     "worldW": 0.45,
     "worldH": 0.5,
     "density": 2,
-    "seed": 853
+    "seed": 853,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "anthemis",
@@ -842,9 +905,10 @@
       "september"
     ],
     "worldW": 0.45,
-    "worldH": 0.5,
+    "worldH": 0.45,
     "density": 2,
-    "seed": 853
+    "seed": 853,
+    "placementType": "grid"
   },
   {
     "slug": "anthemis",
@@ -857,9 +921,10 @@
       "november"
     ],
     "worldW": 0.45,
-    "worldH": 0.5,
+    "worldH": 0.4,
     "density": 2,
-    "seed": 853
+    "seed": 853,
+    "placementType": "grid"
   },
   {
     "slug": "tithonia",
@@ -871,9 +936,10 @@
       "may"
     ],
     "worldW": 0.7,
-    "worldH": 1.3,
+    "worldH": 0.17,
     "density": 0.8,
-    "seed": 719
+    "seed": 719,
+    "placementType": "grid"
   },
   {
     "slug": "tithonia",
@@ -885,9 +951,10 @@
       "june"
     ],
     "worldW": 0.7,
-    "worldH": 1.3,
+    "worldH": 0.7,
     "density": 0.8,
-    "seed": 719
+    "seed": 719,
+    "placementType": "grid"
   },
   {
     "slug": "tithonia",
@@ -903,7 +970,9 @@
     "worldW": 0.7,
     "worldH": 1.3,
     "density": 0.8,
-    "seed": 719
+    "seed": 719,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "tithonia",
@@ -915,9 +984,10 @@
       "october"
     ],
     "worldW": 0.7,
-    "worldH": 1.3,
+    "worldH": 1.2,
     "density": 0.8,
-    "seed": 719
+    "seed": 719,
+    "placementType": "grid"
   },
   {
     "slug": "tithonia",
@@ -929,9 +999,10 @@
       "november"
     ],
     "worldW": 0.7,
-    "worldH": 1.3,
+    "worldH": 1.1,
     "density": 0.8,
-    "seed": 719
+    "seed": 719,
+    "placementType": "grid"
   },
   {
     "slug": "artichoke",
@@ -944,9 +1015,10 @@
       "march"
     ],
     "worldW": 0.9,
-    "worldH": 1.6,
+    "worldH": 0.25,
     "density": 0.5,
-    "seed": 643
+    "seed": 643,
+    "placementType": "point"
   },
   {
     "slug": "artichoke",
@@ -959,9 +1031,10 @@
       "may"
     ],
     "worldW": 0.9,
-    "worldH": 1.6,
+    "worldH": 0.7,
     "density": 0.5,
-    "seed": 643
+    "seed": 643,
+    "placementType": "point"
   },
   {
     "slug": "artichoke",
@@ -976,7 +1049,9 @@
     "worldW": 0.9,
     "worldH": 1.6,
     "density": 0.5,
-    "seed": 643
+    "seed": 643,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "artichoke",
@@ -989,9 +1064,11 @@
       "september"
     ],
     "worldW": 0.9,
-    "worldH": 1.6,
+    "worldH": 1.55,
     "density": 0.5,
-    "seed": 643
+    "seed": 643,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "artichoke",
@@ -1006,9 +1083,10 @@
       "january"
     ],
     "worldW": 0.9,
-    "worldH": 1.6,
+    "worldH": 1.5,
     "density": 0.5,
-    "seed": 643
+    "seed": 643,
+    "placementType": "point"
   },
   {
     "slug": "achillea",
@@ -1021,9 +1099,10 @@
       "april"
     ],
     "worldW": 0.6,
-    "worldH": 1,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 2847
+    "seed": 2847,
+    "placementType": "point"
   },
   {
     "slug": "achillea",
@@ -1035,9 +1114,10 @@
       "may"
     ],
     "worldW": 0.6,
-    "worldH": 1,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 2847
+    "seed": 2847,
+    "placementType": "point"
   },
   {
     "slug": "achillea",
@@ -1053,7 +1133,9 @@
     "worldW": 0.6,
     "worldH": 1,
     "density": 1.5,
-    "seed": 2847
+    "seed": 2847,
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "achillea",
@@ -1065,9 +1147,10 @@
       "september"
     ],
     "worldW": 0.6,
-    "worldH": 1,
+    "worldH": 0.95,
     "density": 1.5,
-    "seed": 2847
+    "seed": 2847,
+    "placementType": "point"
   },
   {
     "slug": "achillea",
@@ -1083,9 +1166,10 @@
       "february"
     ],
     "worldW": 0.6,
-    "worldH": 1,
+    "worldH": 0.9,
     "density": 1.5,
-    "seed": 2847
+    "seed": 2847,
+    "placementType": "point"
   },
   {
     "slug": "cosmea",
@@ -1097,9 +1181,10 @@
       "may"
     ],
     "worldW": 0.45,
-    "worldH": 1,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 537
+    "seed": 537,
+    "placementType": "grid"
   },
   {
     "slug": "cosmea",
@@ -1111,9 +1196,10 @@
       "june"
     ],
     "worldW": 0.45,
-    "worldH": 1,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 537
+    "seed": 537,
+    "placementType": "grid"
   },
   {
     "slug": "cosmea",
@@ -1129,7 +1215,9 @@
     "worldW": 0.45,
     "worldH": 1,
     "density": 1.5,
-    "seed": 537
+    "seed": 537,
+    "variants": 3,
+    "placementType": "grid"
   },
   {
     "slug": "cosmea",
@@ -1141,9 +1229,10 @@
       "october"
     ],
     "worldW": 0.45,
-    "worldH": 1,
+    "worldH": 0.9,
     "density": 1.5,
-    "seed": 537
+    "seed": 537,
+    "placementType": "grid"
   },
   {
     "slug": "cosmea",
@@ -1155,9 +1244,10 @@
       "november"
     ],
     "worldW": 0.45,
-    "worldH": 1,
+    "worldH": 0.8,
     "density": 1.5,
-    "seed": 537
+    "seed": 537,
+    "placementType": "grid"
   },
   {
     "slug": "paeonia",
@@ -1169,9 +1259,10 @@
       "march"
     ],
     "worldW": 0.9,
-    "worldH": 0.8,
+    "worldH": 0.17,
     "density": 1,
-    "seed": 8834
+    "seed": 8834,
+    "placementType": "point"
   },
   {
     "slug": "paeonia",
@@ -1184,9 +1275,10 @@
       "may"
     ],
     "worldW": 0.9,
-    "worldH": 0.8,
+    "worldH": 0.6,
     "density": 1,
-    "seed": 8834
+    "seed": 8834,
+    "placementType": "point"
   },
   {
     "slug": "paeonia",
@@ -1200,7 +1292,9 @@
     "worldW": 0.9,
     "worldH": 0.8,
     "density": 1,
-    "seed": 8834
+    "seed": 8834,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "paeonia",
@@ -1214,9 +1308,10 @@
       "september"
     ],
     "worldW": 0.9,
-    "worldH": 0.8,
+    "worldH": 0.75,
     "density": 1,
-    "seed": 8834
+    "seed": 8834,
+    "placementType": "point"
   },
   {
     "slug": "paeonia",
@@ -1232,9 +1327,10 @@
       "february"
     ],
     "worldW": 0.9,
-    "worldH": 0.8,
+    "worldH": 0.6,
     "density": 1,
-    "seed": 8834
+    "seed": 8834,
+    "placementType": "point"
   },
   {
     "slug": "artemisia",
@@ -1247,9 +1343,10 @@
       "april"
     ],
     "worldW": 0.6,
-    "worldH": 0.9,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 7531
+    "seed": 7531,
+    "placementType": "point"
   },
   {
     "slug": "artemisia",
@@ -1262,9 +1359,10 @@
       "june"
     ],
     "worldW": 0.6,
-    "worldH": 0.9,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 7531
+    "seed": 7531,
+    "placementType": "point"
   },
   {
     "slug": "artemisia",
@@ -1280,7 +1378,9 @@
     "worldW": 0.6,
     "worldH": 0.9,
     "density": 1.5,
-    "seed": 7531
+    "seed": 7531,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "artemisia",
@@ -1292,9 +1392,10 @@
       "october"
     ],
     "worldW": 0.6,
-    "worldH": 0.9,
+    "worldH": 0.8,
     "density": 1.5,
-    "seed": 7531
+    "seed": 7531,
+    "placementType": "point"
   },
   {
     "slug": "artemisia",
@@ -1309,9 +1410,10 @@
       "february"
     ],
     "worldW": 0.6,
-    "worldH": 0.9,
+    "worldH": 0.35,
     "density": 1.5,
-    "seed": 7531
+    "seed": 7531,
+    "placementType": "point"
   },
   {
     "slug": "lactuca",
@@ -1324,9 +1426,10 @@
       "april"
     ],
     "worldW": 0.35,
-    "worldH": 1.2,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 6234
+    "seed": 6234,
+    "placementType": "point"
   },
   {
     "slug": "lactuca",
@@ -1339,9 +1442,10 @@
       "june"
     ],
     "worldW": 0.35,
-    "worldH": 1.2,
+    "worldH": 0.55,
     "density": 1.5,
-    "seed": 6234
+    "seed": 6234,
+    "placementType": "point"
   },
   {
     "slug": "lactuca",
@@ -1356,7 +1460,8 @@
     "worldW": 0.35,
     "worldH": 1.2,
     "density": 1.5,
-    "seed": 6234
+    "seed": 6234,
+    "placementType": "point"
   },
   {
     "slug": "lactuca",
@@ -1368,9 +1473,10 @@
       "september"
     ],
     "worldW": 0.35,
-    "worldH": 1.2,
+    "worldH": 1.15,
     "density": 1.5,
-    "seed": 6234
+    "seed": 6234,
+    "placementType": "point"
   },
   {
     "slug": "lactuca",
@@ -1383,9 +1489,10 @@
       "november"
     ],
     "worldW": 0.35,
-    "worldH": 1.2,
+    "worldH": 1.1,
     "density": 1.5,
-    "seed": 6234
+    "seed": 6234,
+    "placementType": "point"
   },
   {
     "slug": "nasturtium",
@@ -1398,9 +1505,10 @@
       "may"
     ],
     "worldW": 0.6,
-    "worldH": 0.5,
+    "worldH": 0.12,
     "density": 2,
-    "seed": 5823
+    "seed": 5823,
+    "placementType": "grid"
   },
   {
     "slug": "nasturtium",
@@ -1412,9 +1520,10 @@
       "june"
     ],
     "worldW": 0.6,
-    "worldH": 0.5,
+    "worldH": 0.35,
     "density": 2,
-    "seed": 5823
+    "seed": 5823,
+    "placementType": "grid"
   },
   {
     "slug": "nasturtium",
@@ -1430,7 +1539,9 @@
     "worldW": 0.6,
     "worldH": 0.5,
     "density": 2,
-    "seed": 5823
+    "seed": 5823,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "nasturtium",
@@ -1442,9 +1553,10 @@
       "october"
     ],
     "worldW": 0.6,
-    "worldH": 0.5,
+    "worldH": 0.45,
     "density": 2,
-    "seed": 5823
+    "seed": 5823,
+    "placementType": "grid"
   },
   {
     "slug": "nasturtium",
@@ -1456,9 +1568,10 @@
       "november"
     ],
     "worldW": 0.6,
-    "worldH": 0.5,
+    "worldH": 0.3,
     "density": 2,
-    "seed": 5823
+    "seed": 5823,
+    "placementType": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1471,9 +1584,10 @@
       "may"
     ],
     "worldW": 0.4,
-    "worldH": 1,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 4521
+    "seed": 4521,
+    "placementType": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1485,9 +1599,10 @@
       "june"
     ],
     "worldW": 0.4,
-    "worldH": 1,
+    "worldH": 0.35,
     "density": 1.5,
-    "seed": 4521
+    "seed": 4521,
+    "placementType": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1503,7 +1618,9 @@
     "worldW": 0.4,
     "worldH": 1,
     "density": 1.5,
-    "seed": 4521
+    "seed": 4521,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1515,9 +1632,10 @@
       "october"
     ],
     "worldW": 0.4,
-    "worldH": 1,
+    "worldH": 0.9,
     "density": 1.5,
-    "seed": 4521
+    "seed": 4521,
+    "placementType": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1530,9 +1648,10 @@
       "december"
     ],
     "worldW": 0.4,
-    "worldH": 1,
+    "worldH": 0.7,
     "density": 1.5,
-    "seed": 4521
+    "seed": 4521,
+    "placementType": "grid"
   },
   {
     "slug": "atriplex",
@@ -1545,9 +1664,10 @@
       "may"
     ],
     "worldW": 0.45,
-    "worldH": 1.3,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 3291
+    "seed": 3291,
+    "placementType": "grid"
   },
   {
     "slug": "atriplex",
@@ -1559,9 +1679,10 @@
       "june"
     ],
     "worldW": 0.45,
-    "worldH": 1.3,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 3291
+    "seed": 3291,
+    "placementType": "grid"
   },
   {
     "slug": "atriplex",
@@ -1576,7 +1697,9 @@
     "worldW": 0.45,
     "worldH": 1.3,
     "density": 1.5,
-    "seed": 3291
+    "seed": 3291,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "atriplex",
@@ -1588,9 +1711,10 @@
       "september"
     ],
     "worldW": 0.45,
-    "worldH": 1.3,
+    "worldH": 1.25,
     "density": 1.5,
-    "seed": 3291
+    "seed": 3291,
+    "placementType": "grid"
   },
   {
     "slug": "atriplex",
@@ -1603,9 +1727,10 @@
       "november"
     ],
     "worldW": 0.45,
-    "worldH": 1.3,
+    "worldH": 1.15,
     "density": 1.5,
-    "seed": 3291
+    "seed": 3291,
+    "placementType": "grid"
   },
   {
     "slug": "borago",
@@ -1617,10 +1742,11 @@
       "april",
       "may"
     ],
-    "worldW": 0.45,
-    "worldH": 0.6,
+    "worldW": 0.6,
+    "worldH": 0.12,
     "density": 2,
-    "seed": 6284
+    "seed": 6284,
+    "placementType": "grid"
   },
   {
     "slug": "borago",
@@ -1631,10 +1757,11 @@
     "months": [
       "may"
     ],
-    "worldW": 0.45,
-    "worldH": 0.6,
+    "worldW": 0.6,
+    "worldH": 0.4,
     "density": 2,
-    "seed": 6284
+    "seed": 6284,
+    "placementType": "grid"
   },
   {
     "slug": "borago",
@@ -1647,10 +1774,12 @@
       "july",
       "august"
     ],
-    "worldW": 0.45,
-    "worldH": 0.6,
+    "worldW": 0.6,
+    "worldH": 0.9,
     "density": 2,
-    "seed": 6284
+    "seed": 6284,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "borago",
@@ -1661,10 +1790,11 @@
     "months": [
       "september"
     ],
-    "worldW": 0.45,
-    "worldH": 0.6,
+    "worldW": 0.6,
+    "worldH": 0.8,
     "density": 2,
-    "seed": 6284
+    "seed": 6284,
+    "placementType": "grid"
   },
   {
     "slug": "borago",
@@ -1676,10 +1806,11 @@
       "october",
       "november"
     ],
-    "worldW": 0.45,
+    "worldW": 0.6,
     "worldH": 0.6,
     "density": 2,
-    "seed": 6284
+    "seed": 6284,
+    "placementType": "grid"
   },
   {
     "slug": "symphytum",
@@ -1692,9 +1823,10 @@
       "april"
     ],
     "worldW": 0.7,
-    "worldH": 0.9,
+    "worldH": 0.17,
     "density": 1.5,
-    "seed": 5017
+    "seed": 5017,
+    "placementType": "point"
   },
   {
     "slug": "symphytum",
@@ -1707,9 +1839,10 @@
       "may"
     ],
     "worldW": 0.7,
-    "worldH": 0.9,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 5017
+    "seed": 5017,
+    "placementType": "point"
   },
   {
     "slug": "symphytum",
@@ -1725,7 +1858,9 @@
     "worldW": 0.7,
     "worldH": 0.9,
     "density": 1.5,
-    "seed": 5017
+    "seed": 5017,
+    "variants": 3,
+    "placementType": "point"
   },
   {
     "slug": "symphytum",
@@ -1738,9 +1873,10 @@
       "september"
     ],
     "worldW": 0.7,
-    "worldH": 0.9,
+    "worldH": 0.8,
     "density": 1.5,
-    "seed": 5017
+    "seed": 5017,
+    "placementType": "point"
   },
   {
     "slug": "symphytum",
@@ -1756,9 +1892,10 @@
       "february"
     ],
     "worldW": 0.7,
-    "worldH": 0.9,
+    "worldH": 0.1,
     "density": 1.5,
-    "seed": 5017
+    "seed": 5017,
+    "placementType": "point"
   },
   {
     "slug": "diplotaxis",
@@ -1771,9 +1908,10 @@
       "april"
     ],
     "worldW": 0.3,
-    "worldH": 0.45,
+    "worldH": 0.08,
     "density": 2,
-    "seed": 4193
+    "seed": 4193,
+    "placementType": "grid"
   },
   {
     "slug": "diplotaxis",
@@ -1786,9 +1924,10 @@
       "may"
     ],
     "worldW": 0.3,
-    "worldH": 0.45,
+    "worldH": 0.17,
     "density": 2,
-    "seed": 4193
+    "seed": 4193,
+    "placementType": "grid"
   },
   {
     "slug": "diplotaxis",
@@ -1805,7 +1944,9 @@
     "worldW": 0.3,
     "worldH": 0.45,
     "density": 2,
-    "seed": 4193
+    "seed": 4193,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "diplotaxis",
@@ -1818,9 +1959,10 @@
       "october"
     ],
     "worldW": 0.3,
-    "worldH": 0.45,
+    "worldH": 0.4,
     "density": 2,
-    "seed": 4193
+    "seed": 4193,
+    "placementType": "grid"
   },
   {
     "slug": "diplotaxis",
@@ -1835,9 +1977,10 @@
       "february"
     ],
     "worldW": 0.3,
-    "worldH": 0.45,
+    "worldH": 0.35,
     "density": 2,
-    "seed": 4193
+    "seed": 4193,
+    "placementType": "grid"
   },
   {
     "slug": "beta",
@@ -1850,9 +1993,10 @@
       "may"
     ],
     "worldW": 0.6,
-    "worldH": 0.6,
+    "worldH": 0.12,
     "density": 1.5,
-    "seed": 2156
+    "seed": 2156,
+    "placementType": "point"
   },
   {
     "slug": "beta",
@@ -1866,9 +2010,11 @@
       "august"
     ],
     "worldW": 0.6,
-    "worldH": 0.6,
+    "worldH": 0.5,
     "density": 1.5,
-    "seed": 2156
+    "seed": 2156,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "verbascum",
@@ -1881,9 +2027,10 @@
       "april"
     ],
     "worldW": 0.45,
-    "worldH": 1.2,
+    "worldH": 0.2,
     "density": 1.5,
-    "seed": 3847
+    "seed": 3847,
+    "placementType": "point"
   },
   {
     "slug": "verbascum",
@@ -1895,9 +2042,10 @@
       "may"
     ],
     "worldW": 0.45,
-    "worldH": 1.2,
+    "worldH": 0.35,
     "density": 1.5,
-    "seed": 3847
+    "seed": 3847,
+    "placementType": "point"
   },
   {
     "slug": "verbascum",
@@ -1912,7 +2060,9 @@
     "worldW": 0.45,
     "worldH": 1.2,
     "density": 1.5,
-    "seed": 3847
+    "seed": 3847,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "verbascum",
@@ -1925,9 +2075,10 @@
       "september"
     ],
     "worldW": 0.45,
-    "worldH": 1.2,
+    "worldH": 1.15,
     "density": 1.5,
-    "seed": 3847
+    "seed": 3847,
+    "placementType": "point"
   },
   {
     "slug": "verbascum",
@@ -1943,9 +2094,10 @@
       "february"
     ],
     "worldW": 0.45,
-    "worldH": 1.2,
+    "worldH": 1.1,
     "density": 1.5,
-    "seed": 3847
+    "seed": 3847,
+    "placementType": "point"
   },
   {
     "slug": "fennel",
@@ -1958,9 +2110,10 @@
       "april"
     ],
     "worldW": 0.6,
-    "worldH": 1.8,
+    "worldH": 0.12,
     "density": 1.2,
-    "seed": 1847
+    "seed": 1847,
+    "placementType": "point"
   },
   {
     "slug": "fennel",
@@ -1973,9 +2126,10 @@
       "june"
     ],
     "worldW": 0.6,
-    "worldH": 1.8,
+    "worldH": 0.8,
     "density": 1.2,
-    "seed": 1847
+    "seed": 1847,
+    "placementType": "point"
   },
   {
     "slug": "fennel",
@@ -1988,9 +2142,11 @@
       "august"
     ],
     "worldW": 0.6,
-    "worldH": 1.8,
+    "worldH": 1.4,
     "density": 1.2,
-    "seed": 1847
+    "seed": 1847,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "fennel",
@@ -2003,9 +2159,10 @@
       "october"
     ],
     "worldW": 0.6,
-    "worldH": 1.8,
+    "worldH": 1.3,
     "density": 1.2,
-    "seed": 1847
+    "seed": 1847,
+    "placementType": "point"
   },
   {
     "slug": "fennel",
@@ -2020,9 +2177,10 @@
       "february"
     ],
     "worldW": 0.6,
-    "worldH": 1.8,
+    "worldH": 1.2,
     "density": 1.2,
-    "seed": 1847
+    "seed": 1847,
+    "placementType": "point"
   },
   {
     "slug": "mentha",
@@ -2034,9 +2192,10 @@
       "april"
     ],
     "worldW": 0.4,
-    "worldH": 0.6,
+    "worldH": 0.12,
     "density": 2,
-    "seed": 4712
+    "seed": 4712,
+    "placementType": "point"
   },
   {
     "slug": "mentha",
@@ -2049,9 +2208,10 @@
       "june"
     ],
     "worldW": 0.4,
-    "worldH": 0.6,
+    "worldH": 0.4,
     "density": 2,
-    "seed": 4712
+    "seed": 4712,
+    "placementType": "point"
   },
   {
     "slug": "mentha",
@@ -2067,7 +2227,9 @@
     "worldW": 0.4,
     "worldH": 0.6,
     "density": 2,
-    "seed": 4712
+    "seed": 4712,
+    "variants": 2,
+    "placementType": "point"
   },
   {
     "slug": "mentha",
@@ -2079,9 +2241,10 @@
       "october"
     ],
     "worldW": 0.4,
-    "worldH": 0.6,
+    "worldH": 0.55,
     "density": 2,
-    "seed": 4712
+    "seed": 4712,
+    "placementType": "point"
   },
   {
     "slug": "mentha",
@@ -2097,9 +2260,10 @@
       "march"
     ],
     "worldW": 0.4,
-    "worldH": 0.6,
+    "worldH": 0.45,
     "density": 2,
-    "seed": 4712
+    "seed": 4712,
+    "placementType": "point"
   },
   {
     "slug": "calendula_arvensis",
@@ -2112,9 +2276,10 @@
       "april"
     ],
     "worldW": 0.2,
-    "worldH": 0.3,
+    "worldH": 0.08,
     "density": 3,
-    "seed": 3104
+    "seed": 3104,
+    "placementType": "grid"
   },
   {
     "slug": "calendula_arvensis",
@@ -2127,9 +2292,10 @@
       "may"
     ],
     "worldW": 0.2,
-    "worldH": 0.3,
+    "worldH": 0.17,
     "density": 3,
-    "seed": 3104
+    "seed": 3104,
+    "placementType": "grid"
   },
   {
     "slug": "calendula_arvensis",
@@ -2146,9 +2312,11 @@
       "october"
     ],
     "worldW": 0.2,
-    "worldH": 0.3,
+    "worldH": 0.28,
     "density": 3,
-    "seed": 3104
+    "seed": 3104,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "calendula_arvensis",
@@ -2161,9 +2329,10 @@
       "november"
     ],
     "worldW": 0.2,
-    "worldH": 0.3,
+    "worldH": 0.25,
     "density": 3,
-    "seed": 3104
+    "seed": 3104,
+    "placementType": "grid"
   },
   {
     "slug": "fagopyrum",
@@ -2176,9 +2345,10 @@
       "may"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.08,
     "density": 4,
-    "seed": 2391
+    "seed": 2391,
+    "placementType": "grid"
   },
   {
     "slug": "fagopyrum",
@@ -2191,9 +2361,10 @@
       "june"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.4,
     "density": 4,
-    "seed": 2391
+    "seed": 2391,
+    "placementType": "grid"
   },
   {
     "slug": "fagopyrum",
@@ -2207,9 +2378,11 @@
       "august"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.65,
     "density": 4,
-    "seed": 2391
+    "seed": 2391,
+    "variants": 2,
+    "placementType": "grid"
   },
   {
     "slug": "fagopyrum",
@@ -2222,9 +2395,10 @@
       "september"
     ],
     "worldW": 0.35,
-    "worldH": 0.7,
+    "worldH": 0.6,
     "density": 4,
-    "seed": 2391
+    "seed": 2391,
+    "placementType": "grid"
   },
   {
     "slug": "brassica_sabellica",
@@ -2237,9 +2411,10 @@
       "may"
     ],
     "worldW": 0.55,
-    "worldH": 0.75,
+    "worldH": 0.1,
     "density": 1.2,
-    "seed": 9173
+    "seed": 9173,
+    "placementType": "grid"
   },
   {
     "slug": "brassica_sabellica",
@@ -2258,9 +2433,10 @@
       "january"
     ],
     "worldW": 0.55,
-    "worldH": 0.75,
+    "worldH": 0.7,
     "density": 1.2,
-    "seed": 9173
+    "seed": 9173,
+    "placementType": "grid"
   },
   {
     "slug": "brassica_sabellica",
@@ -2273,8 +2449,10 @@
       "march"
     ],
     "worldW": 0.55,
-    "worldH": 0.75,
+    "worldH": 0.95,
     "density": 1.2,
-    "seed": 9173
+    "seed": 9173,
+    "variants": 2,
+    "placementType": "grid"
   }
 ]

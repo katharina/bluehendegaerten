@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- stem -->
+  <rect x="120" y="160" width="16" height="80" fill="#4a7c3f"/>
+  <!-- petals -->
+  <ellipse cx="128" cy="100" rx="30" ry="50" fill="#e03020"/>
+  <ellipse cx="128" cy="100" rx="50" ry="30" fill="#e03020"/>
+  <ellipse cx="100" cy="80"  rx="25" ry="40" fill="#c02010" transform="rotate(-40 100 80)"/>
+  <ellipse cx="156" cy="80"  rx="25" ry="40" fill="#c02010" transform="rotate(40 156 80)"/>
+  <!-- centre -->
+  <circle cx="128" cy="100" r="20" fill="#f0c030"/>
+</svg>

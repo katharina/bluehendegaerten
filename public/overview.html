@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plant Image Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; font-size: 13px; background: #f0ede8; color: #333; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #222; }
+  .subtitle { font-size: 12px; color: #999; margin-bottom: 20px; }
+
+  table { border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  th { background: #222; color: white; font-weight: 500; padding: 8px 14px; text-align: center; white-space: nowrap; }
+  th.info-col { text-align: left; }
+  td { border-bottom: 1px solid #eee; padding: 8px 12px; vertical-align: bottom; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #faf9f7; }
+
+  .species-info { min-width: 150px; vertical-align: middle !important; padding-right: 16px; }
+  .name-de { font-weight: 600; }
+  .name-la { color: #888; font-style: italic; font-size: 11px; }
+  .dims { color: #aaa; font-size: 11px; margin-top: 2px; }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 1px solid rgba(0,0,0,.15); }
+
+  .stage-cell { text-align: center; min-width: 90px; }
+  .stage-label { font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+
+  /* floor: fixed per row, images sit at the bottom */
+  .floor {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    border-bottom: 2px solid #ddd;
+  }
+  .plant-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .plant-slot img {
+    display: block;
+    width: auto;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+  .ht-label {
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 5px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .missing { color: #ddd; font-size: 16px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1>Plant Images</h1>
+<p class="subtitle">All stages shown at the same scale (3 px = 1 cm). Row height = tallest stage of that species. Images preserve natural aspect ratio.</p>
+
+<div style="overflow-x:auto">
+<table id="grid">
+  <thead>
+    <tr>
+      <th class="info-col">Plant</th>
+      <th>Sprout</th>
+      <th>Foliage</th>
+      <th>Bloom</th>
+      <th>Seed</th>
+      <th>Dried</th>
+      <th>Late</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<script>
+const STAGES    = ['sprout','foliage','bloom','seed','dried','late'];
+const PX_PER_CM = 3;
+
+fetch('plants/manifest.json')
+  .then(r => r.json())
+  .then(manifest => {
+    const bySlug = new Map();
+    for (const e of manifest) {
+      if (!bySlug.has(e.slug)) bySlug.set(e.slug, { meta: e, stages: {} });
+      bySlug.get(e.slug).stages[e.stage] = e;
+    }
+
+    const tbody = document.getElementById('tbody');
+
+    for (const [slug, { meta, stages }] of bySlug) {
+      // row floor height = tallest stage for this species
+      const maxH = Math.max(...Object.values(stages).map(e => e.worldH ?? 0));
+      const floorH = Math.round(maxH * 100 * PX_PER_CM);
+      const widthCm = Math.round((meta.worldW ?? 0.4) * 100);
+
+      const tr = document.createElement('tr');
+
+      // info cell
+      const tdInfo = document.createElement('td');
+      tdInfo.className = 'species-info';
+      tdInfo.innerHTML = `
+        <div class="name-de"><span class="swatch" style="background:${meta.color ?? '#888'}"></span>${meta.name_de ?? slug}</div>
+        <div class="name-la">${meta.name}</div>
+        <div class="dims">${widthCm} cm wide · max ${Math.round(maxH * 100)} cm</div>
+      `;
+      tr.appendChild(tdInfo);
+
+      for (const stage of STAGES) {
+        const td = document.createElement('td');
+        td.className = 'stage-cell';
+        td.innerHTML = `<div class="stage-label">${stage}</div>`;
+
+        const entry = stages[stage];
+        if (!entry) {
+          td.innerHTML += `<div class="missing" style="height:${floorH}px">—</div>`;
+        } else {
+          const stageCm = Math.round((entry.worldH ?? 0) * 100);
+          const imgH    = Math.round(stageCm * PX_PER_CM);
+          const variants = entry.variants ?? 1;
+
+          const slots = Array.from({ length: variants }, (_, vi) => {
+            const file = vi === 0 ? `${slug}_${stage}.png` : `${slug}_${stage}_${vi+1}.png`;
+            const h    = imgH;
+            return `<div class="plant-slot">
+              <img src="plants/${file}" style="height:${h}px" title="${file}" loading="lazy">
+            </div>`;
+          }).join('');
+
+          td.innerHTML += `<div class="floor" style="height:${floorH}px">${slots}</div><div class="ht-label">${stageCm} cm</div>`;
+        }
+
+        tr.appendChild(td);
+      }
+
+      tbody.appendChild(tr);
+    }
+  });
+</script>
+</body>
+</html>

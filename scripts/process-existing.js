@@ -12,7 +12,7 @@ const OUT_DIR   = join(__dirname, '..', 'public', 'plants');
 const species   = JSON.parse(readFileSync(join(__dirname, 'species.json'), 'utf8'));
 
 const MAX_PLANT_CM = 250;
-const MAX_PX       = 1000;
+const MAX_PX       = 2000;
 
 // Removes a white/near-white background by color. Reliable for nursery-catalog
 // style source images. Preserves saturated colours (green leaves, coloured petals).
@@ -74,16 +74,17 @@ async function alphaTrim(rgbaBuffer) {
 async function normalizeCanvas(rgbaBuffer, canvasH) {
   const { buffer: trimmed, w, h } = await alphaTrim(rgbaBuffer);
 
-  const padding = 24;
-  const scale   = (canvasH - padding * 2) / h;
+  const sidePad = 24;
+  const topPad  = 16;
+  const scale   = (canvasH - topPad) / h;
   const fitH    = Math.round(h * scale);
   const fitW    = Math.round(w * scale);
-  const canvasW = fitW + padding * 2;
+  const canvasW = fitW + sidePad * 2;
 
   const resized = await sharp(trimmed).resize(fitW, fitH).toBuffer();
 
-  const left = padding;
-  const top  = canvasH - fitH - padding;
+  const left = sidePad;
+  const top  = canvasH - fitH; // plant anchored flush to bottom
 
   const buffer = await sharp({
     create: { width: canvasW, height: canvasH, channels: 4,
@@ -106,35 +107,29 @@ if (!plant) { console.error(`No species with slug "${filterSlug}"`); process.exi
 
 mkdirSync(OUT_DIR, { recursive: true });
 
-const canvasH = Math.round(plant.height_cm / MAX_PLANT_CM * MAX_PX);
-
-async function processOne(jpegPath, pngPath, label) {
-  if (!existsSync(jpegPath)) {
-    console.log(`  missing  ${label}.jpeg — skipping`);
-    return;
-  }
+async function processOne(base, pngPath, canvasH) {
+  const srcPath = join(OUT_DIR, `${base}_src.png`);
+  if (!existsSync(srcPath)) { console.log(`  missing  ${base}_src.png — skipping`); return; }
   if (!force && existsSync(pngPath)) {
-    console.log(`  skip     ${label}.png — already exists (use --force to overwrite)`);
+    console.log(`  skip     ${base}.png — already exists (use --force to overwrite)`);
     return;
   }
-  console.log(`  process  ${label}`);
-  const jpegBuf = readFileSync(jpegPath);
-  const pngBuf  = await sharp(jpegBuf).png().toBuffer();
-  const noBg    = await removeWhiteBg(pngBuf);
+  console.log(`  process  ${base}`);
+  const noBg = await removeWhiteBg(readFileSync(srcPath));
   const { buffer, canvasW } = await normalizeCanvas(noBg, canvasH);
   writeFileSync(pngPath, buffer);
-  console.log(`  saved    ${label}.png  (${canvasW}×${canvasH})`);
+  console.log(`  saved    ${base}.png  (${canvasW}×${canvasH})`);
 }
 
 for (const stage of plant.stages) {
+  const canvasH = Math.round((stage.height_cm ?? plant.height_cm) / MAX_PLANT_CM * MAX_PX);
   const base = `${plant.slug}_${stage.id}`;
-  await processOne(join(OUT_DIR, `${base}.jpeg`), join(OUT_DIR, `${base}.png`), base);
+  await processOne(base, join(OUT_DIR, `${base}.png`), canvasH);
 
-  // Process numbered variants: {slug}_{stage}_2.jpeg, _3.jpeg, etc.
   for (let v = 2; v <= 10; v++) {
     const varBase = `${base}_${v}`;
-    if (!existsSync(join(OUT_DIR, `${varBase}.jpeg`))) break;
-    await processOne(join(OUT_DIR, `${varBase}.jpeg`), join(OUT_DIR, `${varBase}.png`), varBase);
+    if (!existsSync(join(OUT_DIR, `${varBase}_src.png`))) break;
+    await processOne(varBase, join(OUT_DIR, `${varBase}.png`), canvasH);
   }
 }
 

@@ -14,7 +14,8 @@
           "april"
         ],
         "description": "small clump of dark green basal rosette leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small natural clump of dark green basal rosette leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Echinacea purpurea, purple coneflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a low flat basal rosette 10–15 cm tall, several broad ovate leaves 5–8 cm long emerging directly from the soil, leaves dark green, surface rough and hairy with prominent veining, margins coarsely toothed, leaf undersides paler, no upright stems or flower buds present, leaves slightly asymmetrical and splayed, rooted visibly in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -23,7 +24,8 @@
           "june"
         ],
         "description": "upright plant 40-50cm, rough dark green leaves on stems, flower buds just beginning to form at tips",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several upright stems 40–50 cm tall, rough dark green leaves, flower buds just beginning to form at tips, natural garden habitus"
+        "prompt": "Echinacea purpurea, purple coneflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late spring vegetative growth: a clump of several upright stems 40–50 cm tall, stems stiff, slightly branching, covered with short rough hairs, alternate leaves along stems 8–15 cm long, dark green, lanceolate to ovate with coarse teeth, rough bristly surface, leaf veins prominent, small rounded flower buds just visible at stem tips, base emerging from dark garden soil, vigorous upright garden habitus",
+        "height_cm": 45
       },
       {
         "id": "bloom",
@@ -31,7 +33,8 @@
           "july"
         ],
         "description": "in full bloom, wide-spreading pink ray petals, prominent domed orange-brown central cone, tall upright stem with rough dark green leaves",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with upright stems bearing wide-spreading pink ray petals and domed orange-brown central cone, dark green leaves along stems, natural garden habitus"
+        "prompt": "Echinacea purpurea, purple coneflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright clump 70–80 cm tall, several stiff hairy stems each bearing a single large flower head, ray petals 3–4 cm long, drooping slightly downward, bright magenta-pink, surrounding a prominent domed spiky central cone 2–3 cm across in warm orange-brown, some flowers fully open, some just opening, rough dark green foliage along stems, basal leaves visible at soil level, soil mound at base, characteristic bold prairie garden presence",
+        "height_cm": 80
       },
       {
         "id": "seed",
@@ -40,7 +43,8 @@
           "september"
         ],
         "description": "petals fallen, large dark spiky seed cones on tall stems, some side branches with spent flowers",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several upright stems, petals fallen, large dark spiky seed cones at tips and side branches, natural garden habitus"
+        "prompt": "Echinacea purpurea, purple coneflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — post-bloom seed set: upright clump 70–75 cm tall, several stiff stems, ray petals mostly fallen, prominent dark brown spiky seed cones 3–4 cm across at stem tips and side branches, cone bracts sharp and stiff, some withered petal remnants still clinging, foliage along stems becoming coarser and slightly yellowing, basal foliage still present at soil level, natural late-summer character",
+        "height_cm": 75
       },
       {
         "id": "dried",
@@ -52,11 +56,13 @@
           "february"
         ],
         "description": "fully dried upright stems with empty dark seed cones, no foliage remaining, standing skeletal structure",
-        "prompt": "Echinacea purpurea, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of several fully dried upright stems with empty dark seed cones, no foliage remaining, standing skeletal structure, natural winter habitus"
+        "prompt": "Echinacea purpurea, purple coneflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: a clump of 5–8 fully dried upright stems 70–75 cm tall, stems pale tan-brown, rigid and brittle-looking, all foliage gone, each stem crowned with a dark spiky empty seed cone, the architectural silhouette of the spent plant standing against white, rooted in a small mound of dark soil, dramatic skeletal winter garden structure",
+        "height_cm": 75
       }
     ],
     "color": "#e06090",
-    "name_de": "Purpursonnenhut"
+    "name_de": "Purpursonnenhut",
+    "placement_type": "point"
   },
   {
     "slug": "poppy",
@@ -73,7 +79,8 @@
           "march"
         ],
         "description": "small clump of deeply cut hairy grey-green basal leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deeply cut hairy grey-green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Papaver orientale, Oriental poppy, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a low spreading basal rosette 10–15 cm tall, several deeply pinnately lobed leaves emerging from soil, leaves rough and covered with coarse bristly hairs, blue-grey-green in colour, margins coarsely toothed and lobed, surface texture noticeably bristly, no upright stems or flower buds present, rooted visibly in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -81,7 +88,8 @@
           "april"
         ],
         "description": "low clump of deeply cut hairy blue-green basal leaves, 20-30cm tall, no stems or flowers yet",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low clump of deeply cut hairy blue-green basal leaves, 20–30 cm tall, no stems or flowers yet, natural garden habitus"
+        "prompt": "Papaver orientale, Oriental poppy, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a full spreading basal clump 20–30 cm tall, large deeply pinnately lobed leaves 15–25 cm long, densely covered in coarse bristly hairs, grey-green to blue-green, leaves widely spreading and lush, no flower stems emerging yet, rooted in dark garden soil, vigorous hairy foliage habitus",
+        "height_cm": 25
       },
       {
         "id": "bloom",
@@ -90,7 +98,8 @@
           "june"
         ],
         "description": "in full bloom, large bowl-shaped crinkled scarlet-orange petals with black basal blotches, prominent dark stamens, tall hairy stem with deeply cut leaves",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall hairy stems bearing large crinkled scarlet-orange petals with black basal blotches, dark stamens, deeply cut leaves, natural garden habitus"
+        "prompt": "Papaver orientale, Oriental poppy, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright clump 60–70 cm tall, several tall hairy stems each bearing a single large bowl-shaped flower, crinkled petals 8–10 cm wide, vivid scarlet-orange with a bold black blotch at the base of each petal, prominent dark purple-black stamens in the centre, deeply lobed hairy foliage along stems, basal leaves at soil level, soil mound at base, bold dramatic garden presence",
+        "height_cm": 70
       },
       {
         "id": "seed",
@@ -98,7 +107,8 @@
           "july"
         ],
         "description": "large ornamental grey-green pepper-pot seed pods on upright stems, basal foliage yellowing and dying back",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems topped with ornamental grey-green pepper-pot seed pods, basal foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Papaver orientale, Oriental poppy, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — post-bloom seed set: upright stems 55–65 cm tall, petals fallen, each stem topped with an ornamental rounded grey-green pepper-pot seed capsule 3–4 cm across with a flattened disc-like cap, basal foliage yellowing and beginning to die back, characteristic summer dormancy beginning, natural late-spring character",
+        "height_cm": 65
       },
       {
         "id": "dried",
@@ -111,11 +121,13 @@
           "january"
         ],
         "description": "dried upright stems with empty grey-brown pepper-pot seed pods, no foliage remaining, summer dormancy",
-        "prompt": "Papaver orientale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — several dried upright stems with empty grey-brown pepper-pot seed pods, no foliage remaining, natural summer dormancy habitus"
+        "prompt": "Papaver orientale, Oriental poppy, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — summer dormancy: several dried upright stems 50–60 cm tall, stems pale tan to grey-brown, each topped with an ornamental dried grey-brown pepper-pot capsule, all foliage gone, stems rigid and architectural, rooted in a small mound of dark soil, elegant skeletal summer dormancy structure",
+        "height_cm": 60
       }
     ],
     "color": "#e03020",
-    "name_de": "Orientalischer Mohn"
+    "name_de": "Orientalischer Mohn",
+    "placement_type": "point"
   },
   {
     "slug": "sunflower",
@@ -135,7 +147,8 @@
           "may"
         ],
         "description": "young seedling 15-20cm tall, pair of large rounded cotyledons with first rough true leaves emerging",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 15–20 cm tall, pair of large rounded cotyledons with first rough true leaves emerging"
+        "prompt": "Helianthus annuus, common sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a young sunflower seedling 15–20 cm tall, a pair of large rounded cotyledons spread wide, first rough true leaves emerging between them, stems thickening and slightly hairy, all fresh bright green, rooted in a small mound of dark garden soil, vigorous early growth",
+        "height_cm": 17
       },
       {
         "id": "foliage",
@@ -143,7 +156,8 @@
           "june"
         ],
         "description": "tall plant 80-100cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall plant 80–100 cm, stout upright stem with large rough heart-shaped leaves, large flower bud forming at top, natural garden habitus"
+        "prompt": "Helianthus annuus, common sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a tall upright plant 80–100 cm, a single stout hairy stem bearing several large rough ovate to cordate leaves 15–25 cm long, coarsely toothed, surface rough with short bristles, dark green, a large rounded flower bud just forming at the stem tip, vigorous upright garden habitus",
+        "height_cm": 90
       },
       {
         "id": "bloom",
@@ -152,7 +166,8 @@
           "august"
         ],
         "description": "in full bloom, large circular flowerhead with bright yellow ray petals surrounding dark brown centre disc, tall stout stem with large rough heart-shaped leaves",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stout stem with large circular flowerhead, bright yellow ray petals surrounding dark brown centre disc, large rough heart-shaped leaves, natural garden habitus"
+        "prompt": "Helianthus annuus, common sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a single tall stout hairy stem 160–180 cm, topped with one large circular flowerhead 20–30 cm across, a ring of bright golden-yellow ray florets surrounding a large domed dark brown disc of tubular flowers, a few large rough dark green leaves remaining along the upper stem, soil mound at base, iconic summer garden presence",
+        "height_cm": 180
       },
       {
         "id": "seed",
@@ -160,7 +175,8 @@
           "september"
         ],
         "description": "dried mature flowerhead full of seeds, outer petals gone, leaves yellowed and drooping, stem browning",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stem with dried mature flowerhead full of seeds, petals gone, leaves yellowed and drooping, stem browning, natural garden habitus"
+        "prompt": "Helianthus annuus, common sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: a tall stem 150–170 cm, the large flowerhead now drooping under its own weight, petals fallen, the disc face packed with developing striped seeds in a herringbone pattern, outer leaves yellowed and drooping, stem beginning to brown, natural late-summer character",
+        "height_cm": 170
       },
       {
         "id": "dried",
@@ -169,11 +185,13 @@
           "november"
         ],
         "description": "fully dried brown brittle stem, empty ragged seed head, no leaves remaining",
-        "prompt": "Helianthus annuus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried brown brittle stem, empty ragged seed head, no leaves remaining, natural winter habitus"
+        "prompt": "Helianthus annuus, common sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: a single fully dried brown brittle stem 140–160 cm tall, the large empty seed head at the top, seeds mostly shed, the dried disc face ragged and skeletal, no leaves remaining, rooted in a small mound of dark soil, bold architectural winter silhouette",
+        "height_cm": 160
       }
     ],
     "color": "#f5c010",
-    "name_de": "Sonnenblume"
+    "name_de": "Sonnenblume",
+    "placement_type": "grid"
   },
   {
     "slug": "salvia",
@@ -189,7 +207,8 @@
           "march",
           "april"
         ],
-        "description": "low dense clump of grey-green aromatic textured leaves, 15-20cm, no flower spikes yet"
+        "description": "low dense clump of grey-green aromatic textured leaves, 15-20cm, no flower spikes yet",
+        "height_cm": 18
       },
       {
         "id": "bloom",
@@ -199,18 +218,21 @@
           "july",
           "august"
         ],
-        "description": "tall upright branching spikes densely packed with small violet-blue flowers with purple bracts, grey-green aromatic basal foliage"
+        "description": "tall upright branching spikes densely packed with small violet-blue flowers with purple bracts, grey-green aromatic basal foliage",
+        "height_cm": 55
       },
       {
         "id": "seed",
         "months": [
           "september"
         ],
-        "description": "spent flower spikes with tiny dark seeds, purple bracts faded, grey-green foliage still present below"
+        "description": "spent flower spikes with tiny dark seeds, purple bracts faded, grey-green foliage still present below",
+        "height_cm": 50
       }
     ],
     "color": "#6050c0",
-    "name_de": "Steppensalbei"
+    "name_de": "Steppensalbei",
+    "placement_type": "point"
   },
   {
     "slug": "alchemilla",
@@ -226,7 +248,8 @@
           "march",
           "april"
         ],
-        "description": "low mounding clump of large pleated pale green velvety leaves just unfurling, catching dewdrops, no flowers yet"
+        "description": "low mounding clump of large pleated pale green velvety leaves just unfurling, catching dewdrops, no flowers yet",
+        "height_cm": 25
       },
       {
         "id": "bloom",
@@ -235,7 +258,8 @@
           "june",
           "july"
         ],
-        "description": "low mounding plant, frothy sprays of tiny lime-chartreuse flowers on branching stems above large scalloped velvety pale green leaves"
+        "description": "low mounding plant, frothy sprays of tiny lime-chartreuse flowers on branching stems above large scalloped velvety pale green leaves",
+        "height_cm": 35
       },
       {
         "id": "late",
@@ -243,11 +267,13 @@
           "august",
           "september"
         ],
-        "description": "large scalloped leaves still lush, some browning at edges, spent flower stems fading to straw colour"
+        "description": "large scalloped leaves still lush, some browning at edges, spent flower stems fading to straw colour",
+        "height_cm": 35
       }
     ],
     "color": "#a8c830",
-    "name_de": "Frauenmantel"
+    "name_de": "Frauenmantel",
+    "placement_type": "point"
   },
   {
     "slug": "sage",
@@ -263,7 +289,8 @@
           "march"
         ],
         "description": "low woody-based mound of soft grey-green velvety leaves just emerging from gnarled base, 15-20cm tall, no flower spikes",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody-based mound of soft grey-green velvety leaves just emerging from gnarled base, 15–20 cm tall, no flower spikes yet"
+        "prompt": "Salvia officinalis, common garden sage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a compact low mound 15–20 cm tall, multiple woody gnarled stems branching close to the soil, densely covered with newly unfurling ovate leaves, leaf surface softly wrinkled and velvety with fine silver-grey hairs giving a dusty sage-green colour, leaves 3–5 cm long, slightly cupped, arranged alternately along the stems, no flower spikes present, stems rooted visibly in a small mound of dark garden soil, asymmetrical natural growth habit",
+        "height_cm": 17
       },
       {
         "id": "foliage",
@@ -272,7 +299,8 @@
           "may"
         ],
         "description": "bushy mound of soft grey-green aromatic velvety leaves on woody stems, 40-50cm, no flower spikes yet",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of soft grey-green aromatic velvety leaves on woody stems, 40–50 cm, no flower spikes yet, natural garden habitus"
+        "prompt": "Salvia officinalis, common garden sage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late spring foliage: a full bushy rounded mound 40–50 cm tall and wide, many upright woody stems densely clothed in large ovate leaves 4–8 cm long, leaf surface deeply wrinkled, velvety texture with fine white hairs, colour a distinctive dusty silvery grey-green, some lower leaves larger and more oval, upper leaves smaller, no flower spikes yet, stems emerging from a visible woody base at soil level, lush and aromatic garden habitus",
+        "height_cm": 45
       },
       {
         "id": "bloom",
@@ -281,7 +309,8 @@
           "july"
         ],
         "description": "bushy mound with upright spikes bearing whorls of violet-blue flowers, soft grey-green aromatic velvety leaves",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound with upright spikes bearing whorls of violet-blue flowers, soft grey-green aromatic velvety leaves, natural garden habitus"
+        "prompt": "Salvia officinalis, common garden sage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: bushy mound 55–65 cm tall, numerous upright square stems rising above the foliage each bearing 4–8 whorls of tubular two-lipped flowers in deep violet-blue to blue-purple, calyces purple-tinged, flowers 2–3 cm long, individual flowers clearly visible, lower foliage of large velvety silver-grey-green leaves, leaves slightly smaller near the flowering stems, overall plant full and exuberant, woody base visible at soil, characteristic aromatic herb garden appearance",
+        "height_cm": 60
       },
       {
         "id": "seed",
@@ -290,7 +319,8 @@
           "september"
         ],
         "description": "bushy woody mound with spent flower spikes, soft grey-green velvety foliage still present",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy woody mound with spent flower spikes, soft grey-green velvety foliage still present, natural garden habitus"
+        "prompt": "Salvia officinalis, common garden sage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — post-bloom seed set: bushy mound 50–60 cm, upright stems now bearing spent flower whorls with small brown nutlet seeds in persistent purple-tinged calyces, petals dropped, calyces still decorative, foliage remains full and velvety grey-green, some leaves showing slight summer stress and yellowing at edges, woody base at soil level, natural late-summer garden character",
+        "height_cm": 55
       },
       {
         "id": "dried",
@@ -302,11 +332,13 @@
           "february"
         ],
         "description": "low woody mound with reduced persistent grey-green leaves on gnarled stems, sparse winter foliage",
-        "prompt": "Salvia officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody mound with reduced persistent grey-green leaves on gnarled stems, sparse winter foliage, natural winter habitus"
+        "prompt": "Salvia officinalis, common garden sage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter resting: a low compact woody mound 25–35 cm, thick gnarled woody stems clearly visible, reduced number of small persistent ovate leaves remaining, leaves denser at branch tips, colour greyer and more muted than summer, some leaf tips browned by frost, overall structure open and architectural, the woody framework of the plant revealed, rooted in a small mound of dark soil, quiet winter habitus",
+        "height_cm": 30
       }
     ],
     "color": "#7060b0",
-    "name_de": "Echter Salbei"
+    "name_de": "Echter Salbei",
+    "placement_type": "point"
   },
   {
     "slug": "bunias",
@@ -323,7 +355,8 @@
           "march"
         ],
         "description": "small clump of deeply lobed rough dark green basal leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deeply lobed rough dark green basal leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Bunias orientalis, Turkish warty-cabbage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a low clump of basal leaves 10–15 cm tall, leaves deeply irregularly lobed and toothed, dark green, surface rough and slightly hairy, margins waved and jagged, no upright stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -332,7 +365,8 @@
           "may"
         ],
         "description": "large rosette of deeply lobed rough dark green leaves, upright branching stems 40-50cm tall just forming",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large rosette of deeply lobed rough dark green leaves, upright branching stems 40–50 cm tall just forming, natural garden habitus"
+        "prompt": "Bunias orientalis, Turkish warty-cabbage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a large bold basal rosette 40–50 cm tall, large deeply lobed and toothed dark green leaves 20–35 cm long, surface rough, margins jagged, several upright branching stems just beginning to rise from the rosette, vigorous garden habitus",
+        "height_cm": 45
       },
       {
         "id": "bloom",
@@ -340,7 +374,8 @@
           "june"
         ],
         "description": "upright branching stems densely covered in small bright yellow cross-shaped flowers, large deeply lobed rough basal leaves",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems densely covered in small bright yellow cross-shaped flowers, large deeply lobed rough basal leaves, natural garden habitus"
+        "prompt": "Bunias orientalis, Turkish warty-cabbage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright branching plant 90–100 cm tall, many slender branching stems densely covered with small bright yellow four-petalled flowers, deeply lobed dark green basal leaves still present below, exuberant flowering habitus",
+        "height_cm": 100
       },
       {
         "id": "seed",
@@ -349,7 +384,8 @@
           "august"
         ],
         "description": "upright branching stems bearing distinctive warty knobby greenish-brown seed pods, basal foliage yellowing",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems bearing distinctive warty knobby greenish-brown seed pods, basal foliage yellowing, natural garden habitus"
+        "prompt": "Bunias orientalis, Turkish warty-cabbage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 85–95 cm, flowers replaced by distinctive small knobby-warty ovoid seed pods 5–8 mm long in clusters along stems, pods green-brown, basal foliage yellowing, natural post-bloom character",
+        "height_cm": 95
       },
       {
         "id": "dried",
@@ -361,11 +397,13 @@
           "january"
         ],
         "description": "fully dried upright branching stems with persistent warty seed pods, no foliage remaining",
-        "prompt": "Bunias orientalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — several fully dried upright branching stems with persistent warty seed pods, no foliage remaining, natural winter habitus"
+        "prompt": "Bunias orientalis, Turkish warty-cabbage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: several fully dried upright branching stems 80–90 cm tall, stems pale buff-brown, bearing persistent small warty seed pods now dried and brown, no foliage remaining, branching architectural winter silhouette",
+        "height_cm": 90
       }
     ],
     "color": "#e8d020",
-    "name_de": "Zackenschötchen"
+    "name_de": "Zackenschötchen",
+    "placement_type": "point"
   },
   {
     "slug": "aquilegia",
@@ -382,7 +420,8 @@
           "march"
         ],
         "description": "small clump of delicate blue-green compound leaves just emerging from soil, 10-15cm tall, no stems or flowers",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate blue-green compound leaves just emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Aquilegia vulgaris, common columbine, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small clump of delicate compound leaves 10–15 cm tall emerging from soil, leaves blue-green, trifoliate and deeply lobed, each leaflet rounded with scalloped margins, surface smooth and slightly glaucous, no upright stems yet, rooted in a small mound of dark garden soil, delicate spring character",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -390,7 +429,8 @@
           "april"
         ],
         "description": "lush mound of delicate lobed blue-green compound leaves, 30-40cm tall, no flower stems yet",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush mound of delicate lobed blue-green compound leaves, 30–40 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, common columbine, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a lush mounding clump 30–40 cm tall, compound leaves on branching stems, each leaf trifoliate with rounded deeply lobed blue-green leaflets, surface slightly glaucous, no flower stems yet, soft and airy garden habitus",
+        "height_cm": 35
       },
       {
         "id": "bloom",
@@ -399,7 +439,8 @@
           "june"
         ],
         "description": "tall branching stems bearing nodding spurred flowers in deep violet-blue, delicate blue-green compound foliage",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stems bearing nodding spurred flowers in deep violet-blue, delicate blue-green compound foliage, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, common columbine, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright branching plant 60–70 cm tall, delicate branching stems bearing nodding spurred flowers, petals rich violet-blue to deep purple 3–4 cm across, distinctive backward-curved spurs 1.5–2 cm long, flowers nodding gracefully, compound blue-green foliage below, charming cottage garden presence",
+        "height_cm": 70
       },
       {
         "id": "seed",
@@ -407,7 +448,8 @@
           "july"
         ],
         "description": "upright stems with clusters of erect slender seed pods, blue-green foliage yellowing and dying back",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with clusters of erect slender seed pods, blue-green foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Aquilegia vulgaris, common columbine, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright stems 55–65 cm, flowers replaced by clusters of 5 erect slender follicle pods 2–3 cm long, turning from green to papery brown, foliage yellowing and dying back, natural early-summer character",
+        "height_cm": 65
       },
       {
         "id": "dried",
@@ -420,11 +462,13 @@
           "january"
         ],
         "description": "fully dried upright stems with open empty seed pods, no foliage remaining",
-        "prompt": "Aquilegia vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with open empty seed pods, no foliage remaining, natural summer dormancy habitus"
+        "prompt": "Aquilegia vulgaris, common columbine, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — summer dormancy: several fully dried upright stems 50–60 cm tall, each bearing clusters of open empty follicle pods split along one side, stems pale tan, no foliage remaining, delicate skeletal summer dormancy structure",
+        "height_cm": 60
       }
     ],
     "color": "#5040a0",
-    "name_de": "Akelei"
+    "name_de": "Akelei",
+    "placement_type": "point"
   },
   {
     "slug": "primula",
@@ -440,7 +484,8 @@
           "february"
         ],
         "description": "small rosette of wrinkled oval pale green leaves just emerging from soil, 5-10cm tall, no flower stems yet",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of wrinkled oval pale green leaves just emerging from soil, 5–10 cm tall, no flower stems yet"
+        "prompt": "Primula veris, cowslip, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small basal rosette 5–10 cm across, leaves just emerging from soil, oval to oblong, surface softly wrinkled and crinkled, pale yellow-green, margins finely crenated, leaves softly hairy especially on undersides, no flower stem yet, rooted in a small mound of dark soil",
+        "height_cm": 8
       },
       {
         "id": "foliage",
@@ -448,7 +493,8 @@
           "march"
         ],
         "description": "full basal rosette of wrinkled oval pale green leaves, 15-20cm tall, flower stems just beginning to emerge",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full basal rosette of wrinkled oval pale green leaves, 15–20 cm tall, flower stems just beginning to emerge, natural garden habitus"
+        "prompt": "Primula veris, cowslip, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a full basal rosette 15–20 cm tall, oval wrinkled pale green leaves 5–10 cm long, softly hairy, margins crenated, a short upright flower stem with a cluster of hanging tubular buds just emerging from the rosette centre, charming spring character",
+        "height_cm": 17
       },
       {
         "id": "bloom",
@@ -457,7 +503,8 @@
           "may"
         ],
         "description": "upright stem bearing nodding clusters of small fragrant yellow tubular flowers, wrinkled pale green basal rosette",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stem bearing nodding clusters of small fragrant yellow tubular flowers, wrinkled pale green basal rosette, natural garden habitus"
+        "prompt": "Primula veris, cowslip, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a compact plant 20–25 cm tall, a single upright stem bearing an umbel of 5–15 nodding tubular yellow flowers at the tip, each flower deep golden-yellow with an orange spot in the throat, nodding on individual stalks, softly hairy pale green basal rosette below, delicate meadow character",
+        "height_cm": 25
       },
       {
         "id": "seed",
@@ -466,7 +513,8 @@
           "july"
         ],
         "description": "upright stems with small oval seed capsules, basal rosette yellowing and dying back",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small oval seed capsules, basal rosette yellowing and dying back, natural garden habitus"
+        "prompt": "Primula veris, cowslip, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright stems 18–22 cm, flower calyces enlarged and persistent, each enclosing a small ovoid seed capsule, rosette leaves yellowing and flattening as the plant enters summer dormancy, natural post-bloom character",
+        "height_cm": 22
       },
       {
         "id": "dried",
@@ -479,11 +527,13 @@
           "january"
         ],
         "description": "fully dormant, only a tiny resting bud visible at soil level, no above-ground foliage",
-        "prompt": "Primula veris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dormant, only a tiny resting bud visible at soil level, no above-ground foliage, natural summer dormancy habitus"
+        "prompt": "Primula veris, cowslip, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — summer dormancy: plant fully dormant, only a small tight resting bud 2–5 cm tall visible at soil level, no above-ground foliage, rooted in a small mound of dark soil, minimal skeletal presence",
+        "height_cm": 5
       }
     ],
     "color": "#e8c020",
-    "name_de": "Schlüsselblume"
+    "name_de": "Schlüsselblume",
+    "placement_type": "point"
   },
   {
     "slug": "phacelia",
@@ -499,7 +549,8 @@
           "april"
         ],
         "description": "small clump of feathery deeply divided bright green leaves, 10-15cm tall, no stems or flowers",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of feathery deeply divided bright green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Phacelia tanacetifolia, tansy phacelia, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small clump 10–15 cm tall of feathery deeply pinnately divided bright green leaves just emerging from soil, leaves soft and slightly hairy, fresh bright green, delicate texture, no upright stems or buds yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -507,7 +558,8 @@
           "may"
         ],
         "description": "bushy clump of feathery deeply divided bright green leaves, 30-40cm tall, curling flower buds just forming",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of feathery deeply divided bright green leaves, 30–40 cm tall, curling flower buds just forming, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, tansy phacelia, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bushy upright clump 30–40 cm tall of feathery deeply pinnately divided bright green leaves on branching stems, leaves softly hairy, texture fine and feathery, characteristic coiled flower buds beginning to form at stem tips, vigorous garden habitus",
+        "height_cm": 35
       },
       {
         "id": "bloom",
@@ -516,7 +568,8 @@
           "july"
         ],
         "description": "upright stems with distinctive curling scorpioid cymes of lavender-blue flowers, feathery divided leaves",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with distinctive curling scorpioid cymes of lavender-blue flowers, feathery divided leaves, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, tansy phacelia, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright branching plant 60–70 cm tall, numerous curling scorpioid cymes uncurling as flowers open, flowers bright lavender-blue to violet, bell-shaped 8–10 mm wide with protruding pale stamens, several cymes at different stages of uncoiling, feathery pinnate foliage below, outstanding bee-attracting character",
+        "height_cm": 70
       },
       {
         "id": "seed",
@@ -524,7 +577,8 @@
           "august"
         ],
         "description": "upright stems with spent curled seed clusters, small dark seeds visible, foliage yellowing and wilting",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with spent curled seed clusters, small dark seeds visible, foliage yellowing and wilting, natural garden habitus"
+        "prompt": "Phacelia tanacetifolia, tansy phacelia, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 55–65 cm, the characteristic coiled cymes now straightened and bearing small brown nutlet seeds in calyx cups along their length, foliage yellowing and wilting, natural post-bloom character",
+        "height_cm": 65
       },
       {
         "id": "dried",
@@ -533,11 +587,13 @@
           "october"
         ],
         "description": "fully dried upright stems with empty curled seed clusters, no foliage remaining",
-        "prompt": "Phacelia tanacetifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with empty curled seed clusters, no foliage remaining, natural winter habitus"
+        "prompt": "Phacelia tanacetifolia, tansy phacelia, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried upright branching stems 50–60 cm tall, the uncoiled cymes dried and papery with empty seed cups, stems pale tan, no foliage remaining, fine skeletal structure",
+        "height_cm": 60
       }
     ],
     "color": "#7080d8",
-    "name_de": "Bienenfreund"
+    "name_de": "Bienenfreund",
+    "placement_type": "grid"
   },
   {
     "slug": "calendula",
@@ -553,7 +609,8 @@
           "april"
         ],
         "description": "young seedling 10-15cm tall, pale green slightly sticky aromatic leaves, no stems or buds yet",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 10–15 cm tall, pale green slightly sticky aromatic leaves, no stems or buds yet"
+        "prompt": "Calendula officinalis, pot marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring seedling: a young plant 10–15 cm tall, pale green slightly sticky aromatic leaves on short upright stems, leaves oblong to spoon-shaped 4–7 cm, margins slightly wavy, surface slightly sticky, no buds yet, rooted in a small mound of dark garden soil, fresh and vigorous",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -561,7 +618,8 @@
           "may"
         ],
         "description": "bushy clump of pale green slightly sticky aromatic leaves, 20-30cm tall, flower buds just beginning to form",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of pale green slightly sticky aromatic leaves, 20–30 cm tall, flower buds just beginning to form, natural garden habitus"
+        "prompt": "Calendula officinalis, pot marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bushy branching plant 20–30 cm tall, pale green slightly sticky aromatic leaves on upright stems, leaves 5–12 cm long, oblong to spoon-shaped, margins slightly wavy, small rounded flower buds just beginning to form at branch tips, fresh garden habitus",
+        "height_cm": 25
       },
       {
         "id": "bloom",
@@ -572,7 +630,8 @@
           "september"
         ],
         "description": "bushy plant with upright stems bearing large bright orange daisy-like flowers, pale green aromatic leaves",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy plant with upright stems bearing large bright orange daisy-like flowers, pale green aromatic leaves, natural garden habitus"
+        "prompt": "Calendula officinalis, pot marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a bushy branching plant 40–50 cm tall, multiple upright stems each bearing one large fully double orange flowerhead 5–7 cm across, ray florets numerous and overlapping in rich orange to orange-yellow, disc centre darker, pale green sticky aromatic leaves below, exuberant summer-to-autumn garden character",
+        "height_cm": 50
       },
       {
         "id": "seed",
@@ -580,7 +639,8 @@
           "october"
         ],
         "description": "upright stems with distinctive curved claw-like seed rings, pale green foliage yellowing",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with distinctive curved claw-like seed rings where flowers were, pale green foliage yellowing, natural garden habitus"
+        "prompt": "Calendula officinalis, pot marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 40–45 cm, flowerheads replaced by distinctive rings of curved claw-like achenes 1–2 cm long arranged in a circular crown, pale green foliage yellowing and sparse, natural autumn character",
+        "height_cm": 45
       },
       {
         "id": "dried",
@@ -588,11 +648,13 @@
           "november"
         ],
         "description": "fully dried upright stems with empty spent seed heads, no foliage remaining",
-        "prompt": "Calendula officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with empty spent seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Calendula officinalis, pot marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried branching stems 35–40 cm tall, the dried empty seed crowns still decorative, stems pale brown, no foliage remaining, delicate skeletal structure",
+        "height_cm": 40
       }
     ],
     "color": "#f07010",
-    "name_de": "Ringelblume"
+    "name_de": "Ringelblume",
+    "placement_type": "grid"
   },
   {
     "slug": "anthemis",
@@ -608,7 +670,8 @@
           "march"
         ],
         "description": "low clump of feathery deeply divided grey-green aromatic leaves just emerging, 10-15cm tall, no stems or flowers",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low clump of feathery deeply divided grey-green aromatic leaves just emerging, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Anthemis tinctoria, golden marguerite, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a low clump 10–15 cm tall of feathery deeply divided grey-green aromatic leaves just emerging, leaves finely pinnately dissected, surface slightly hairy, grey-green, aromatic when touched, no upright stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -617,7 +680,8 @@
           "may"
         ],
         "description": "bushy mound of feathery deeply divided grey-green aromatic leaves, 25-35cm tall, no flower stems yet",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of feathery deeply divided grey-green aromatic leaves, 25–35 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Anthemis tinctoria, golden marguerite, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a bushy spreading mound 25–35 cm tall of deeply pinnately divided grey-green aromatic leaves on spreading stems, leaves finely textured and feathery, surface slightly hairy, no flower stems yet, neat aromatic garden habitus",
+        "height_cm": 30
       },
       {
         "id": "bloom",
@@ -627,7 +691,8 @@
           "august"
         ],
         "description": "bushy plant with many upright stems each bearing bright yellow daisy-like flowers, feathery grey-green foliage",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy plant with many upright stems each bearing bright yellow daisy-like flowers, feathery grey-green foliage, natural garden habitus"
+        "prompt": "Anthemis tinctoria, golden marguerite, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a bushy spreading plant 45–50 cm tall, many upright branching stems each topped with a bright yellow daisy-like flowerhead 3–4 cm across, yellow ray florets surrounding a domed yellow disc, flowers covering the plant, feathery grey-green aromatic foliage below, cheerful summer garden presence",
+        "height_cm": 50
       },
       {
         "id": "seed",
@@ -635,7 +700,8 @@
           "september"
         ],
         "description": "upright stems with spent button-like seed heads, petals gone, feathery grey-green foliage still present",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with spent button-like seed heads, petals gone, feathery grey-green foliage still present, natural garden habitus"
+        "prompt": "Anthemis tinctoria, golden marguerite, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 40–45 cm, petals fallen from most flowerheads, small button-like dried receptacles bearing tiny seeds, feathery grey-green foliage still present, natural late-summer character",
+        "height_cm": 45
       },
       {
         "id": "dried",
@@ -644,11 +710,13 @@
           "november"
         ],
         "description": "fully dried upright stems with small empty seed heads, no foliage remaining",
-        "prompt": "Anthemis tinctoria, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with small empty seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Anthemis tinctoria, golden marguerite, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: fully dried upright stems 35–40 cm tall, the small dried seed heads persistent, stems pale buff-brown, no foliage remaining, fine delicate skeletal winter structure",
+        "height_cm": 40
       }
     ],
     "color": "#f0c820",
-    "name_de": "Färberkamille"
+    "name_de": "Färberkamille",
+    "placement_type": "grid"
   },
   {
     "slug": "tithonia",
@@ -664,7 +732,8 @@
           "may"
         ],
         "description": "young seedling 15-20cm tall, broad rough dark green leaves on upright stem, no buds yet",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — young seedling 15–20 cm tall, broad rough dark green leaves on upright stem, no buds yet"
+        "prompt": "Tithonia rotundifolia, Mexican sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a young plant 15–20 cm tall, a few broad rough dark green ovate leaves on an upright stem, leaves 8–12 cm long, slightly velvety surface, margins slightly toothed, stems stout and erect, no buds yet, rooted in a small mound of dark garden soil",
+        "height_cm": 17
       },
       {
         "id": "foliage",
@@ -672,7 +741,8 @@
           "june"
         ],
         "description": "bushy upright plant 60-80cm, branching stems with large rough dark green leaves, flower buds forming at tips",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy upright plant 60–80 cm, branching stems with large rough dark green leaves, flower buds forming at tips, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, Mexican sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bushy upright plant 60–80 cm tall, branching stout stems bearing large rough ovate to triangular dark green leaves 10–20 cm long, surface slightly velvety, veins prominent, large rounded flower buds forming at branch tips, vigorous tropical garden habitus",
+        "height_cm": 70
       },
       {
         "id": "bloom",
@@ -682,7 +752,8 @@
           "september"
         ],
         "description": "tall bushy plant with large vivid orange daisy-like flowers, yellow centre disc, large rough dark green leaves",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall bushy plant with large vivid orange daisy-like flowers, yellow centre disc, large rough dark green leaves, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, Mexican sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a large bushy branching plant 110–130 cm tall, numerous long upright stems each bearing a single vivid orange daisy-like flowerhead 7–10 cm across, broad orange ray florets surrounding a domed yellow-orange disc, hollow stem swelling below each head, large rough dark green leaves, bold tropical garden presence",
+        "height_cm": 130
       },
       {
         "id": "seed",
@@ -690,7 +761,8 @@
           "october"
         ],
         "description": "upright branching stems with spent flowerheads forming seed cones, leaves yellowing and wilting",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems with spent flowerheads forming seed cones, leaves yellowing and wilting, natural garden habitus"
+        "prompt": "Tithonia rotundifolia, Mexican sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: branching stems 100–120 cm, petals fallen, spent flowerheads forming cylindrical seed receptacles, leaves yellowing and wilting, natural late-season character",
+        "height_cm": 120
       },
       {
         "id": "dried",
@@ -698,11 +770,13 @@
           "november"
         ],
         "description": "fully dried upright branching stems with empty seed cones, no foliage remaining",
-        "prompt": "Tithonia rotundifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright branching stems with empty seed cones, no foliage remaining, natural winter habitus"
+        "prompt": "Tithonia rotundifolia, Mexican sunflower, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: fully dried branching stems 90–110 cm tall, the hollow stems pale tan-brown, cylindrical dried seed heads at branch tips, no foliage remaining, bold architectural skeletal structure",
+        "height_cm": 110
       }
     ],
     "color": "#f04810",
-    "name_de": "Mexikanische Sonnenblume"
+    "name_de": "Mexikanische Sonnenblume",
+    "placement_type": "grid"
   },
   {
     "slug": "artichoke",
@@ -719,7 +793,8 @@
           "march"
         ],
         "description": "low rosette of large deeply divided silvery-grey leaves just emerging from soil, 20-30cm tall, no stems or buds",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low rosette of large deeply divided silvery-grey leaves just emerging from soil, 20–30 cm tall, no stems or buds yet"
+        "prompt": "Cynara scolymus, globe artichoke, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a bold rosette 20–30 cm tall just emerging from soil, large deeply pinnately lobed leaves with wavy lacy margins, silvery grey-green above with densely white-felty undersides, leaves spreading wide, lobes slightly spiny, no flower stems yet, rooted in a substantial mound of dark garden soil, dramatic early presence",
+        "height_cm": 25
       },
       {
         "id": "foliage",
@@ -728,7 +803,8 @@
           "may"
         ],
         "description": "large bold rosette of deeply divided silvery-grey leaves, 60-80cm tall, no flower stems yet",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large bold rosette of deeply divided silvery-grey leaves, 60–80 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Cynara scolymus, globe artichoke, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a magnificent large rosette 60–80 cm tall, huge deeply pinnately lobed arching leaves 60–100 cm long, upper surface grey-green to glaucous-green, underside densely white-felty, margins spiny-lobed, leaves arching outward and upward, no flower stems yet, dramatic architectural garden presence",
+        "height_cm": 70
       },
       {
         "id": "bloom",
@@ -737,7 +813,8 @@
           "july"
         ],
         "description": "tall upright stems bearing large rounded artichoke buds with overlapping grey-green bracts, large silvery-grey leaves below",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems bearing large rounded artichoke buds with overlapping grey-green bracts, large silvery-grey leaves below, natural garden habitus"
+        "prompt": "Cynara scolymus, globe artichoke, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall plant 140–160 cm, several upright stout stems each bearing large rounded artichoke heads 8–12 cm across with overlapping fleshy grey-green bracts tightly closed, the topmost head largest, lower side stems bearing smaller heads, large silvery grey-green leaves below, majestic architectural garden presence",
+        "height_cm": 160
       },
       {
         "id": "seed",
@@ -746,7 +823,8 @@
           "september"
         ],
         "description": "tall stems with large open thistle flowerheads, silvery-purple fluffy seed heads, large grey-green leaves below",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with large open thistle flowerheads, silvery-purple fluffy seed heads, large grey-green leaves below, natural garden habitus"
+        "prompt": "Cynara scolymus, globe artichoke, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall stems 130–150 cm, the largest artichoke heads opened fully into large thistle flowerheads 10–15 cm across with masses of silky purple tubular florets and silky pappus, some heads already seeding with silky white down, grey-green leaves below, dramatic late-summer character",
+        "height_cm": 155
       },
       {
         "id": "dried",
@@ -757,11 +835,13 @@
           "january"
         ],
         "description": "fully dried tall stems with large spiky dried thistle heads, no foliage remaining",
-        "prompt": "Cynara scolymus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried tall stems with large spiky dried thistle heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Cynara scolymus, globe artichoke, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: several fully dried stout stems 120–150 cm tall, the large dried thistle heads 8–12 cm across persistent and decorative, stems pale buff-brown, no foliage remaining, spectacular architectural winter silhouette",
+        "height_cm": 150
       }
     ],
     "color": "#7878b8",
-    "name_de": "Artischocke"
+    "name_de": "Artischocke",
+    "placement_type": "point"
   },
   {
     "slug": "achillea",
@@ -778,7 +858,8 @@
           "april"
         ],
         "description": "small rosette of feathery aromatic grey-green leaves just emerging, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of feathery aromatic grey-green leaves just emerging, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Achillea filipendulina, fern-leaf yarrow, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small rosette 10–15 cm tall of feathery aromatic grey-green leaves just emerging, leaves finely bipinnately divided giving a fern-like texture, surface finely hairy, aromatic, no upright stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -786,7 +867,8 @@
           "may"
         ],
         "description": "lush clump of ferny aromatic grey-green foliage on upright stems 40–60 cm tall, no flower heads yet",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush clump of ferny aromatic grey-green foliage on upright stems 40–60 cm tall, no flower heads yet, natural garden habitus"
+        "prompt": "Achillea filipendulina, fern-leaf yarrow, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a lush upright clump 40–60 cm tall, several stems densely clothed in ferny bipinnately divided grey-green leaves, surface finely hairy, aromatic, no flowerheads yet, vigorous garden habitus",
+        "height_cm": 50
       },
       {
         "id": "bloom",
@@ -796,7 +878,8 @@
           "august"
         ],
         "description": "tall upright stems topped with flat bright yellow flower clusters, ferny grey-green foliage below",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems topped with flat bright yellow flower clusters, ferny grey-green foliage below, natural garden habitus"
+        "prompt": "Achillea filipendulina, fern-leaf yarrow, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall upright plant 90–100 cm, several stiff upright stems each topped with a broad flat corymb 8–12 cm across of tiny golden-yellow flowers, the flat-topped heads composed of many small individual florets, ferny grey-green aromatic foliage along stems, bold long-lasting summer presence",
+        "height_cm": 100
       },
       {
         "id": "seed",
@@ -804,7 +887,8 @@
           "september"
         ],
         "description": "tall stems with flat-topped seed heads fading to buff, ferny foliage yellowing and dying back",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with flat-topped seed heads fading to buff, ferny foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Achillea filipendulina, fern-leaf yarrow, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright stems 85–95 cm, the flat corymbs now fading from gold to buff, seeds maturing in the small dried receptacles, ferny foliage yellowing and dying back along lower stems, natural late-summer character",
+        "height_cm": 95
       },
       {
         "id": "dried",
@@ -816,11 +900,13 @@
           "february"
         ],
         "description": "fully dried upright stems with papery flat seed heads, no foliage remaining",
-        "prompt": "Achillea filipendulina, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright stems with papery flat seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Achillea filipendulina, fern-leaf yarrow, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: several fully dried upright stems 80–90 cm tall, the flat-topped papery dried seed heads persistent and buff-brown, stems stiff and pale, no foliage remaining, classic architectural winter silhouette",
+        "height_cm": 90
       }
     ],
     "color": "#f0d010",
-    "name_de": "Goldgarbe"
+    "name_de": "Goldgarbe",
+    "placement_type": "point"
   },
   {
     "slug": "cosmea",
@@ -836,7 +922,8 @@
           "may"
         ],
         "description": "small clump of delicate feathery bright green seedling leaves, 10-15cm tall, no stems or flowers",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate feathery bright green seedling leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Cosmos bipinnatus, garden cosmos, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small clump 10–15 cm tall of delicate feathery bright green seedling leaves, leaves finely bipinnate giving a thread-like appearance, fresh bright green, slender stems, no buds yet, rooted in a small mound of dark garden soil, airy and delicate",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -844,7 +931,8 @@
           "june"
         ],
         "description": "bushy clump of airy feathery bright green foliage on upright stems 40-60cm tall, flower buds just beginning to form",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of airy feathery bright green foliage on upright stems 40–60 cm tall, flower buds just beginning to form, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, garden cosmos, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bushy airy plant 40–60 cm tall, branching slender stems clothed in finely bipinnate bright green foliage, thread-like leaflets, delicate texture throughout, small rounded flower buds just forming at branch tips, light and airy garden habitus",
+        "height_cm": 50
       },
       {
         "id": "bloom",
@@ -854,7 +942,8 @@
           "september"
         ],
         "description": "tall airy stems bearing large daisy-like flowers with pink ray petals and yellow centre disc, feathery bright green foliage",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall airy stems bearing large daisy-like flowers with pink ray petals and yellow centre disc, feathery bright green foliage, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, garden cosmos, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall airy branching plant 90–100 cm, slender stems each bearing a single large daisy-like flower 6–8 cm across, broad ray petals in soft pink to deep rose with finely toothed tips, surrounding a small bright yellow disc, finely bipinnate bright green feathery foliage, charming romantic garden presence",
+        "height_cm": 100
       },
       {
         "id": "seed",
@@ -862,7 +951,8 @@
           "october"
         ],
         "description": "tall airy stems with spent flowerheads bearing slender radiating seed needles, feathery foliage yellowing",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall airy stems with spent flowerheads bearing slender radiating seed needles, feathery foliage yellowing, natural garden habitus"
+        "prompt": "Cosmos bipinnatus, garden cosmos, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall airy branching stems 80–90 cm, flowerheads replaced by slender radiating achenes 1–1.5 cm long spreading from a central receptacle like a starburst, feathery foliage yellowing, natural autumn character",
+        "height_cm": 90
       },
       {
         "id": "dried",
@@ -870,11 +960,13 @@
           "november"
         ],
         "description": "fully dried airy skeletal stems with empty seed heads, no foliage remaining",
-        "prompt": "Cosmos bipinnatus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried airy skeletal stems with empty seed heads, no foliage remaining, natural winter habitus"
+        "prompt": "Cosmos bipinnatus, garden cosmos, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried airy skeletal branching stems 70–80 cm tall, the fine dried seed heads still radiating, stems pale tan, no foliage remaining, delicate skeletal structure",
+        "height_cm": 80
       }
     ],
     "color": "#d860a0",
-    "name_de": "Schmuckkörbchen"
+    "name_de": "Schmuckkörbchen",
+    "placement_type": "grid"
   },
   {
     "slug": "paeonia",
@@ -890,7 +982,8 @@
           "march"
         ],
         "description": "dramatic burgundy-red shoots emerging from soil, 15–20 cm tall, no leaves fully open yet",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dramatic burgundy-red shoots emerging from soil, 15–20 cm tall, no leaves fully open yet"
+        "prompt": "Paeonia lactiflora, Chinese peony, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a dramatic clump of emerging shoots 15–20 cm tall, stout stems deep burgundy-red to dark red-purple, leaves still partly enclosed in the unfolding growth, leaflet tips just showing, surface smooth and glossy, rooted in a substantial mound of dark garden soil, striking early spring presence",
+        "height_cm": 17
       },
       {
         "id": "foliage",
@@ -899,7 +992,8 @@
           "may"
         ],
         "description": "lush bushy mound of glossy deep green compound leaves, 50–70 cm tall, large round flower buds on stems, no open flowers yet",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush bushy mound of glossy deep green compound leaves, 50–70 cm tall, large round flower buds on stems, no open flowers yet, natural garden habitus"
+        "prompt": "Paeonia lactiflora, Chinese peony, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late spring vegetative growth: a lush bushy mound 50–70 cm tall, compound leaves on upright red-green stems, each leaf divided into several ovate dark glossy green leaflets, smooth surface, several large rounded tightly closed buds 3–5 cm across on stem tips beginning to show pink, lush and anticipatory garden habitus",
+        "height_cm": 60
       },
       {
         "id": "bloom",
@@ -907,7 +1001,8 @@
           "june"
         ],
         "description": "lush bushy green foliage with large spectacular multi-petalled deep pink flowers fully open",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush bushy green foliage with large spectacular multi-petalled deep pink flowers fully open, natural garden habitus"
+        "prompt": "Paeonia lactiflora, Chinese peony, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a lush bushy plant 70–80 cm tall, large multi-petalled flowers 10–15 cm across in deep pink to blush-white fully open at stem tips, petals numerous and ruffled, some flowers still cupped, glossy dark green compound foliage below, stems sturdy, soil mound at base, sumptuous classic garden presence",
+        "height_cm": 80
       },
       {
         "id": "seed",
@@ -917,7 +1012,8 @@
           "september"
         ],
         "description": "lush green compound foliage with large star-shaped seed pods beginning to split open",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush green compound foliage with large star-shaped seed pods beginning to split open, natural garden habitus"
+        "prompt": "Paeonia lactiflora, Chinese peony, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright stems 65–75 cm, flowers replaced by large star-shaped follicle pods 4–6 cm across splitting open along their length to reveal dark seeds, some pods still green, others opening, glossy dark green compound foliage still present, natural late-summer character",
+        "height_cm": 75
       },
       {
         "id": "dried",
@@ -929,11 +1025,13 @@
           "february"
         ],
         "description": "dried brown stems with open star-shaped seed pods revealing dark seeds, no foliage remaining",
-        "prompt": "Paeonia lactiflora, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dried brown stems with open star-shaped seed pods revealing dark seeds, no foliage remaining, natural autumn habitus"
+        "prompt": "Paeonia lactiflora, Chinese peony, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — autumn standing: dried brown stems 50–60 cm tall, open star-shaped pods with brown leathery walls revealing dark seeds inside, all foliage gone, stems pale brown, rooted in a mound of dark soil, sculptural autumn garden character",
+        "height_cm": 60
       }
     ],
     "color": "#d04070",
-    "name_de": "Pfingstrose"
+    "name_de": "Pfingstrose",
+    "placement_type": "point"
   },
   {
     "slug": "artemisia",
@@ -950,7 +1048,8 @@
           "april"
         ],
         "description": "small clump of silky silvery-grey feathery aromatic leaves emerging from soil, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of silky silvery-grey feathery aromatic leaves emerging from soil, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Artemisia absinthium, wormwood, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small clump 10–15 cm tall of silky deeply divided aromatic leaves emerging from the soil, leaves finely lobed and covered in dense silky white-silver hairs giving a striking silvery appearance, intensely aromatic, no upright stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -959,7 +1058,8 @@
           "june"
         ],
         "description": "bushy mound of deeply divided silky silvery-grey aromatic foliage, 40–60 cm tall, no flower stems yet",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy mound of deeply divided silky silvery-grey aromatic foliage, 40–60 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Artemisia absinthium, wormwood, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late spring vegetative growth: a bushy mound 40–60 cm tall of deeply bipinnately divided silvery-grey aromatic foliage, stems upright and branching, leaves covered in dense silky silvery hairs, softly luminous silver-grey colour, intensely aromatic, no flower stems yet, striking architectural garden habitus",
+        "height_cm": 50
       },
       {
         "id": "bloom",
@@ -969,7 +1069,8 @@
           "september"
         ],
         "description": "upright stems with silky silvery-grey foliage and drooping sprays of tiny yellow button flowers",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with silky silvery-grey foliage and drooping sprays of tiny yellow button flowers, natural garden habitus"
+        "prompt": "Artemisia absinthium, wormwood, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late summer bloom: an upright plant 80–90 cm tall, numerous upright branching stems clothed in silvery aromatic foliage, the upper stems bearing slender drooping sprays of tiny yellow button flowers 3–4 mm across in loose panicles, silver foliage and small yellow flowers in elegant combination, characteristic wormwood garden presence",
+        "height_cm": 90
       },
       {
         "id": "seed",
@@ -977,7 +1078,8 @@
           "october"
         ],
         "description": "upright stems with small dried seed clusters, silvery-grey foliage fading and yellowing",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small dried seed clusters, silvery-grey foliage fading and yellowing, natural garden habitus"
+        "prompt": "Artemisia absinthium, wormwood, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 70–80 cm, the flower sprays dried to buff-grey with tiny dried seed capsules, silvery foliage fading and becoming greyer, natural late-season character",
+        "height_cm": 80
       },
       {
         "id": "dried",
@@ -988,11 +1090,13 @@
           "february"
         ],
         "description": "low woody mound with sparse persistent silvery-grey leaves on gnarled stems, skeletal winter structure",
-        "prompt": "Artemisia absinthium, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low woody mound with sparse persistent silvery-grey leaves on gnarled stems, skeletal winter structure"
+        "prompt": "Artemisia absinthium, wormwood, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing: a low woody mound 30–35 cm tall, gnarled silvery-grey woody stems visible, sparse persistent small silvery-grey leaves at branch tips, some stems bare, the woody skeletal structure of the plant revealed, quiet architectural winter habitus",
+        "height_cm": 35
       }
     ],
     "color": "#a0a870",
-    "name_de": "Wermut"
+    "name_de": "Wermut",
+    "placement_type": "point"
   },
   {
     "slug": "lactuca",
@@ -1009,7 +1113,8 @@
           "april"
         ],
         "description": "small rosette of deeply lobed spiny-edged blue-green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of deeply lobed spiny-edged blue-green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Lactuca serriola, prickly lettuce, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small basal rosette 10–15 cm tall, leaves deeply pinnately lobed with spiny-toothed margins and a row of spines along the midrib on the underside, blue-green to grey-green, slightly glaucous, compass plant character with leaves beginning to orient vertically, rooted in a small mound of dark soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1018,7 +1123,8 @@
           "june"
         ],
         "description": "upright stem with deeply lobed spiny blue-green leaves arranged vertically on stem, 40–70 cm tall, no flowers yet",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stem with deeply lobed spiny blue-green leaves arranged vertically on stem, 40–70 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Lactuca serriola, prickly lettuce, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a tall upright stem 40–70 cm, leaves clasping the stem, deeply lobed and spiny-edged, blue-green, the leaves distinctively oriented vertically edge-on, no flowers yet, singular architectural character",
+        "height_cm": 55
       },
       {
         "id": "bloom",
@@ -1027,7 +1133,8 @@
           "august"
         ],
         "description": "tall branching stem with many small pale yellow dandelion-like flower heads, deeply lobed blue-green leaves",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stem with many small pale yellow dandelion-like flower heads, deeply lobed blue-green leaves, natural garden habitus"
+        "prompt": "Lactuca serriola, prickly lettuce, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall branching stem 100–120 cm, numerous small pale yellow flower heads 1–1.5 cm across in branching panicles, each resembling a miniature dandelion, blue-green lobed leaves along the lower stem, tall airy branching top, characteristic composite wildflower presence",
+        "height_cm": 120
       },
       {
         "id": "seed",
@@ -1035,7 +1142,8 @@
           "september"
         ],
         "description": "tall branching stem with fluffy white dandelion seed heads, leaves dying back",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stem with fluffy white dandelion seed heads, leaves dying back, natural garden habitus"
+        "prompt": "Lactuca serriola, prickly lettuce, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: a tall branching stem 100–115 cm, the small flowerheads replaced by fluffy white dandelion-like seed heads 2–3 cm across, seeds dispersing on white silky pappus, lower leaves yellowing and dying, delicate and transient",
+        "height_cm": 115
       },
       {
         "id": "dried",
@@ -1044,11 +1152,13 @@
           "november"
         ],
         "description": "fully dried tall branching skeletal stem with dried seed heads, no foliage remaining",
-        "prompt": "Lactuca serriola, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried tall branching skeletal stem with dried seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Lactuca serriola, prickly lettuce, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing: a fully dried tall branching stem 90–110 cm, the branching structure pale buff-brown and skeletal, dried empty seed receptacles along the branches, no foliage remaining, tall elegant skeletal winter silhouette",
+        "height_cm": 110
       }
     ],
     "color": "#d0c840",
-    "name_de": "Kompasslattich"
+    "name_de": "Kompasslattich",
+    "placement_type": "point"
   },
   {
     "slug": "nasturtium",
@@ -1065,7 +1175,8 @@
           "may"
         ],
         "description": "small clump of round bright green shield-shaped seedling leaves on short stems, 10–15 cm tall, no flowers yet",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of round bright green shield-shaped seedling leaves on short stems, 10–15 cm tall, no flowers yet"
+        "prompt": "Tropaeolum majus, garden nasturtium, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small clump 10–15 cm tall, a few round shield-shaped bright green leaves 3–5 cm across on short upright stems, leaves peltate with the stem attached at the centre, entire smooth margin, slightly glaucous surface, no flowers yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1073,7 +1184,8 @@
           "june"
         ],
         "description": "mounding clump of large round bright green peltate leaves on trailing stems, 30–40 cm tall, no flowers yet",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — mounding clump of large round bright green peltate leaves on trailing stems, 30–40 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Tropaeolum majus, garden nasturtium, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a mounding trailing clump 30–40 cm tall, many large round bright green peltate leaves 5–10 cm across on sprawling stems, leaf veins radiating from the central stem attachment, no flowers yet, lush and exuberant garden habitus",
+        "height_cm": 35
       },
       {
         "id": "bloom",
@@ -1083,7 +1195,8 @@
           "september"
         ],
         "description": "trailing stems with large round bright green leaves and bright orange funnel-shaped spurred flowers",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — trailing stems with large round bright green leaves and bright orange funnel-shaped spurred flowers, natural garden habitus"
+        "prompt": "Tropaeolum majus, garden nasturtium, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a mounding trailing plant 40–50 cm tall, large round bright green peltate leaves everywhere, numerous funnel-shaped spurred flowers 4–6 cm across in vivid orange, each with five slightly ruffled petals and a spur 2–3 cm long, flowers standing above the foliage, bold and colourful summer presence",
+        "height_cm": 50
       },
       {
         "id": "seed",
@@ -1091,7 +1204,8 @@
           "october"
         ],
         "description": "trailing stems with large round leaves yellowing and round bumpy green seed pods",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — trailing stems with large round leaves yellowing and round bumpy green seed pods, natural garden habitus"
+        "prompt": "Tropaeolum majus, garden nasturtium, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: trailing stems with yellowing round leaves and wrinkled round bumpy seed pods 1–1.5 cm across in clusters of 3, pods green to yellow-green, foliage beginning to collapse, natural autumn character",
+        "height_cm": 45
       },
       {
         "id": "dried",
@@ -1099,11 +1213,13 @@
           "november"
         ],
         "description": "fully dried trailing stems with dried seed pods, no foliage remaining",
-        "prompt": "Tropaeolum majus, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried trailing stems with dried seed pods, no foliage remaining, natural autumn habitus"
+        "prompt": "Tropaeolum majus, garden nasturtium, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: dried trailing stems with dried papery seed pods, no foliage remaining, light skeletal structure",
+        "height_cm": 30
       }
     ],
     "color": "#f06010",
-    "name_de": "Kapuzinerkresse"
+    "name_de": "Kapuzinerkresse",
+    "placement_type": "grid"
   },
   {
     "slug": "nicotiana",
@@ -1120,7 +1236,8 @@
           "may"
         ],
         "description": "small rosette of large soft sticky pale green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of large soft sticky pale green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Nicotiana plumbaginifolia, ornamental tobacco, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small rosette 10–15 cm tall of large soft pale green leaves, leaves slightly sticky and glandular-hairy, oval to oblong, margins entire, no upright stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1128,7 +1245,8 @@
           "june"
         ],
         "description": "rosette of large soft velvety pale green leaves on short stems, 30–40 cm tall, no flower stems yet",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — rosette of large soft velvety pale green leaves on short stems, 30–40 cm tall, no flower stems yet, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, ornamental tobacco, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a rosette 30–40 cm tall of large soft pale green leaves on short stems, leaves 10–20 cm long, oval to oblong, glandular-sticky surface, pale mid-green, no flower stems yet, lush and velvety garden habitus",
+        "height_cm": 35
       },
       {
         "id": "bloom",
@@ -1138,7 +1256,8 @@
           "september"
         ],
         "description": "tall branching sticky stems bearing loose clusters of small white tubular flowers, large pale green basal leaves",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching sticky stems bearing loose clusters of small white tubular flowers, large pale green basal leaves, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, ornamental tobacco, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall branching sticky plant 90–100 cm, numerous slender branching sticky stems bearing loose clusters of small white tubular flowers 2–3 cm long with spreading lobes, flowers opening in the evening, large pale green basal leaves below, delicate evening garden presence",
+        "height_cm": 100
       },
       {
         "id": "seed",
@@ -1146,7 +1265,8 @@
           "october"
         ],
         "description": "tall branching stems with small oval seed capsules, large basal leaves yellowing",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall branching stems with small oval seed capsules, large basal leaves yellowing, natural garden habitus"
+        "prompt": "Nicotiana plumbaginifolia, ornamental tobacco, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall branching stems 80–90 cm with small oval 2-lobed seed capsules 5–8 mm long in place of each flower, basal leaves yellowing, natural autumn character",
+        "height_cm": 90
       },
       {
         "id": "dried",
@@ -1155,11 +1275,13 @@
           "december"
         ],
         "description": "fully dried branching stems with small dried seed capsules, no foliage remaining",
-        "prompt": "Nicotiana plumbaginifolia, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried branching stems with small dried seed capsules, no foliage remaining, natural autumn habitus"
+        "prompt": "Nicotiana plumbaginifolia, ornamental tobacco, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried branching stems 60–70 cm, the small dried seed capsules persistent along stems, stems pale tan, no foliage remaining, fine skeletal structure",
+        "height_cm": 70
       }
     ],
     "color": "#d8d8e8",
-    "name_de": "Ziertabak"
+    "name_de": "Ziertabak",
+    "placement_type": "grid"
   },
   {
     "slug": "atriplex",
@@ -1176,7 +1298,8 @@
           "may"
         ],
         "description": "small clump of deep burgundy-red arrow-shaped seedling leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of deep burgundy-red arrow-shaped seedling leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Atriplex hortensis var. rubra, red orache, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small clump 10–15 cm tall of deep burgundy-red arrow-shaped seedling leaves with a mealy surface texture characteristic of the genus, dramatic dark red-purple colour throughout, no upright flower stems yet, rooted in a small mound of dark garden soil, striking early colour",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1184,7 +1307,8 @@
           "june"
         ],
         "description": "bushy upright stems with striking deep burgundy-red arrow-shaped leaves, 40–60 cm tall, no flowers yet",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy upright stems with striking deep burgundy-red arrow-shaped leaves, 40–60 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, red orache, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: an upright plant 40–60 cm tall, several upright stems bearing large arrow-shaped to triangular leaves 5–12 cm long, deep burgundy-red to dark red-purple throughout, mealy surface, stems stout and red, no flower spikes yet, dramatic architectural garden presence",
+        "height_cm": 50
       },
       {
         "id": "bloom",
@@ -1193,7 +1317,8 @@
           "august"
         ],
         "description": "tall upright stems bearing slender reddish flower spikes among deep burgundy-red arrow-shaped foliage",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright stems bearing slender reddish flower spikes among deep burgundy-red arrow-shaped foliage, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, red orache, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall upright branching plant 120–130 cm, numerous slender upright branches bearing small reddish flower spikes among the deep red arrow-shaped foliage, overall plant dramatically dark red and architectural, unique late-summer presence",
+        "height_cm": 130
       },
       {
         "id": "seed",
@@ -1201,7 +1326,8 @@
           "september"
         ],
         "description": "tall stems densely covered in papery reddish seed bracts, deep red foliage fading",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems densely covered in papery reddish seed bracts, deep red foliage fading, natural garden habitus"
+        "prompt": "Atriplex hortensis var. rubra, red orache, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall upright stems 115–125 cm densely covered in papery triangular seed bracts 5–8 mm long in whorls, bracts reddish-brown to buff, foliage below fading and sparse, ornamental seed effect",
+        "height_cm": 125
       },
       {
         "id": "dried",
@@ -1210,17 +1336,19 @@
           "november"
         ],
         "description": "fully dried reddish-brown skeletal stems with papery seed clusters, no foliage remaining",
-        "prompt": "Atriplex hortensis var. rubra, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried reddish-brown skeletal stems with papery seed clusters, no foliage remaining, natural autumn habitus"
+        "prompt": "Atriplex hortensis var. rubra, red orache, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried reddish-brown skeletal stems 100–115 cm, the papery seed bracts persistent, stems buff-brown, no foliage remaining, distinctive architectural skeletal structure",
+        "height_cm": 115
       }
     ],
     "color": "#901830",
-    "name_de": "Rote Gartenmelde"
+    "name_de": "Rote Gartenmelde",
+    "placement_type": "grid"
   },
   {
     "slug": "borago",
     "name": "Borago officinalis",
-    "height_cm": 60,
-    "width_cm": 45,
+    "height_cm": 90,
+    "width_cm": 60,
     "density": 2,
     "scatter_seed": 6284,
     "stages": [
@@ -1231,7 +1359,8 @@
           "may"
         ],
         "description": "small clump of large oval rough bristly grey-green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of large oval rough bristly grey-green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Borago officinalis, borage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small clump 10–15 cm tall of large oval rough grey-green leaves, surface covered in coarse white bristles giving a distinctly rough-hairy texture, leaves 5–10 cm long, softly grey-green due to the dense bristles, no flower stems yet, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1239,7 +1368,8 @@
           "may"
         ],
         "description": "bushy clump of large oval rough bristly grey-green leaves, branching stems 25–35 cm tall, flower buds just forming",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy clump of large oval rough bristly grey-green leaves, branching stems 25–35 cm tall, flower buds just forming, natural garden habitus"
+        "prompt": "Borago officinalis, borage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bushy clump 25–35 cm tall, large oval rough bristly grey-green leaves on branching hairy stems, leaves 8–15 cm, surface densely covered in stiff white bristles, stems also bristly, coiled flower buds beginning to form, vigorous garden habitus",
+        "height_cm": 40
       },
       {
         "id": "bloom",
@@ -1249,7 +1379,8 @@
           "august"
         ],
         "description": "bushy branching plant with nodding clusters of vivid star-shaped bright blue flowers with prominent black anthers, large rough bristly grey-green leaves",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bushy branching plant with nodding clusters of vivid star-shaped bright blue flowers with prominent black anthers, large rough bristly grey-green leaves, natural garden habitus"
+        "prompt": "Borago officinalis, borage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a bushy branching plant 50–60 cm tall, numerous nodding star-shaped flowers 2–3 cm across, petals a striking sky-blue with a distinctive pointed cone of black anthers at the centre, flowers in nodding clusters at branch tips, large rough grey-green bristly leaves below, charming cottage garden character",
+        "height_cm": 90
       },
       {
         "id": "seed",
@@ -1257,7 +1388,8 @@
           "september"
         ],
         "description": "branching stems with small brown nutlets in star-shaped calyces, large bristly leaves yellowing and wilting",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — branching stems with small brown nutlets in star-shaped calyces, large bristly leaves yellowing and wilting, natural garden habitus"
+        "prompt": "Borago officinalis, borage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: branching stems 45–55 cm, star-shaped persistent calyces bearing 1–4 small brown nutlet seeds within each, leaves yellowing and wilting, natural late-summer character",
+        "height_cm": 80
       },
       {
         "id": "dried",
@@ -1266,11 +1398,13 @@
           "november"
         ],
         "description": "fully dried brittle branching stems with empty star-shaped calyces, no foliage remaining",
-        "prompt": "Borago officinalis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried brittle branching stems with empty star-shaped calyces, no foliage remaining, natural autumn habitus"
+        "prompt": "Borago officinalis, borage, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: fully dried brittle branching stems 35–40 cm, the empty star-shaped calyces decorative and persistent, stems pale tan, no foliage remaining, delicate skeletal structure",
+        "height_cm": 60
       }
     ],
     "color": "#3060e0",
-    "name_de": "Borretsch"
+    "name_de": "Borretsch",
+    "placement_type": "grid"
   },
   {
     "slug": "symphytum",
@@ -1287,7 +1421,8 @@
           "april"
         ],
         "description": "large clump of broad rough dark green hairy leaves just emerging from soil, 15–20 cm tall, no stems or flowers yet",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — large clump of broad rough dark green hairy leaves just emerging from soil, 15–20 cm tall, no stems or flowers yet"
+        "prompt": "Symphytum officinale, common comfrey, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a substantial clump 15–20 cm tall of large broad dark green leaves emerging from soil, leaves 15–20 cm long, oval to lanceolate, surface rough with coarse white bristles, the decurrent leaf base running down the stem as a wing, no flower stems yet, rooted in a large mound of dark garden soil, bold spring emergence",
+        "height_cm": 17
       },
       {
         "id": "foliage",
@@ -1296,7 +1431,8 @@
           "may"
         ],
         "description": "bold clump of large broad rough dark green hairy leaves on winged stems, 40–60 cm tall, no flowers yet",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bold clump of large broad rough dark green hairy leaves on winged stems, 40–60 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Symphytum officinale, common comfrey, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a bold lush clump 40–60 cm tall, several upright branching stems densely clothed in large rough dark green hairy leaves 20–35 cm long, the leaves decurrent with wings running down the stem, surfaces rough and bristly, no flowers yet, bold and lush garden habitus",
+        "height_cm": 50
       },
       {
         "id": "bloom",
@@ -1306,7 +1442,8 @@
           "july"
         ],
         "description": "upright branching stems with nodding scorpioid cymes of tubular creamy-white to pale purple bell-shaped flowers, large rough dark green hairy leaves",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems with nodding curled cymes of tubular pale purple bell-shaped flowers, large rough dark green hairy leaves, natural garden habitus"
+        "prompt": "Symphytum officinale, common comfrey, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright branching plant 80–90 cm tall, numerous upright stems each tipped with nodding scorpioid cymes uncurling to reveal tubular bell-shaped flowers 1.5–2 cm long in creamy-white to pale purple, flower buds in tight coils unrolling, large rough hairy leaves below, vigorous and generous garden presence",
+        "height_cm": 90
       },
       {
         "id": "seed",
@@ -1315,7 +1452,8 @@
           "september"
         ],
         "description": "upright stems with small black nutlets in persistent calyces, large hairy leaves yellowing and flopping",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright stems with small black nutlets in persistent calyces, large hairy leaves yellowing and flopping, natural garden habitus"
+        "prompt": "Symphytum officinale, common comfrey, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 70–80 cm, cymes straightened bearing 4 small black nutlet seeds in persistent calyces at each flower position, large hairy leaves yellowing and beginning to flop, natural summer character",
+        "height_cm": 80
       },
       {
         "id": "dried",
@@ -1327,11 +1465,13 @@
           "february"
         ],
         "description": "fully died back, no above-ground growth, bare soil with a few dried stem bases",
-        "prompt": "Symphytum officinale, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully died back, bare soil with only a few dried broken stem bases at ground level, no above-ground growth, natural winter dormancy"
+        "prompt": "Symphytum officinale, common comfrey, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter dormancy: plant fully died back, bare soil with a few remnant dried broken stem bases 5–10 cm tall at ground level, no above-ground green growth, dark mound of soil, natural winter dormancy",
+        "height_cm": 10
       }
     ],
     "color": "#a080c0",
-    "name_de": "Beinwell"
+    "name_de": "Beinwell",
+    "placement_type": "point"
   },
   {
     "slug": "diplotaxis",
@@ -1348,7 +1488,8 @@
           "april"
         ],
         "description": "small rosette of pinnately lobed dark green leaves, 5–10 cm tall, no stems or flowers yet",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small rosette of pinnately lobed dark green leaves, 5–10 cm tall, no stems or flowers yet"
+        "prompt": "Diplotaxis muralis, wall rocket, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small basal rosette 5–10 cm tall, leaves pinnately lobed with rounded lobes, dark green, surface smooth to slightly hairy, margins deeply cut, no upright stems yet, rooted in a small mound of dark soil, delicate small-scale character",
+        "height_cm": 8
       },
       {
         "id": "foliage",
@@ -1357,7 +1498,8 @@
           "may"
         ],
         "description": "fuller rosette of pinnately lobed dark green leaves, upright slender stems just beginning to rise, 15–20 cm tall, no flowers yet",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fuller rosette of pinnately lobed dark green leaves, upright slender stems just beginning to rise, 15–20 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Diplotaxis muralis, wall rocket, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a basal rosette 15–20 cm tall with more fully developed pinnately lobed dark green leaves 5–10 cm long, several slender upright stems just beginning to rise, no flowers yet, neat and delicate character",
+        "height_cm": 17
       },
       {
         "id": "bloom",
@@ -1368,7 +1510,8 @@
           "september"
         ],
         "description": "upright branching stems with small bright yellow 4-petalled cross-shaped flowers at tips, long narrow silique pods forming below, pinnately lobed basal rosette",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems bearing small bright yellow 4-petalled cross-shaped flowers at tips, long narrow silique seed pods forming below, pinnately lobed basal rosette, natural garden habitus"
+        "prompt": "Diplotaxis muralis, wall rocket, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright branching plant 40–45 cm tall, slender stems bearing small bright yellow four-petalled cross-shaped flowers 1–1.5 cm across at tips, long narrow silique pods 2–4 cm already forming below each flower, pinnately lobed basal rosette, natural wildflower character",
+        "height_cm": 45
       },
       {
         "id": "seed",
@@ -1377,7 +1520,8 @@
           "october"
         ],
         "description": "upright branching stems densely lined with long narrow silique seed pods, basal leaves yellowing and dying back",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — upright branching stems densely lined with long narrow silique seed pods, basal leaves yellowing and dying back, natural garden habitus"
+        "prompt": "Diplotaxis muralis, wall rocket, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: upright branching stems 35–40 cm densely lined with long narrow silique pods 2–4 cm long pointing upward, pods green to yellow-brown, basal leaves yellowing and dying, natural late-summer character",
+        "height_cm": 40
       },
       {
         "id": "dried",
@@ -1388,11 +1532,13 @@
           "february"
         ],
         "description": "fully dried slender skeletal stems with split empty silique pods, no foliage remaining",
-        "prompt": "Diplotaxis muralis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried slender skeletal stems with split empty silique pods, no foliage remaining, natural winter habitus"
+        "prompt": "Diplotaxis muralis, wall rocket, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing: fully dried slender skeletal branching stems 30–35 cm, the empty split silique pods still attached, stems pale tan, no foliage remaining, fine delicate skeletal structure",
+        "height_cm": 35
       }
     ],
     "color": "#f0d010",
-    "name_de": "Mauerrauke"
+    "name_de": "Mauerrauke",
+    "placement_type": "grid"
   },
   {
     "slug": "beta",
@@ -1409,7 +1555,8 @@
           "may"
         ],
         "description": "small seedling with oval cotyledons and first glossy crinkled dark green leaves, 10–15 cm tall, no stems yet",
-        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling with oval cotyledons and first glossy crinkled dark green leaves, 10–15 cm tall, no stems yet"
+        "prompt": "Beta vulgaris vulgaris, Swiss chard, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small seedling 10–15 cm tall, rounded cotyledons and first glossy crinkled true leaves, stems reddish, leaves dark green with prominent pale midribs, fresh young garden growth, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1419,11 +1566,13 @@
           "august"
         ],
         "description": "full leafy rosette of large glossy crinkled dark green leaves with prominent white midribs and stems, 40–60 cm tall, no flower spike yet",
-        "prompt": "Beta vulgaris vulgaris, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full leafy rosette of large glossy crinkled dark green leaves with prominent white midribs and stems, 40–60 cm tall, no flower spike yet, natural garden habitus"
+        "prompt": "Beta vulgaris vulgaris, Swiss chard, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a full leafy plant 40–60 cm tall, large glossy crinkled dark green leaves 20–35 cm long with very prominent thick white midribs and white leaf stems standing upright and spreading, leaves bold and glossy, no flower spikes yet, robust and lush garden habitus",
+        "height_cm": 50
       }
     ],
     "color": "#506830",
-    "name_de": "Rote Rübe"
+    "name_de": "Rote Rübe",
+    "placement_type": "point"
   },
   {
     "slug": "verbascum",
@@ -1440,7 +1589,8 @@
           "april"
         ],
         "description": "low rosette of large dark green softly hairy leaves just emerging from soil, 15–25 cm tall, no flower spike yet",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low rosette of large dark green softly hairy leaves just emerging from soil, 15–25 cm tall, no flower spike yet"
+        "prompt": "Verbascum nigrum, dark mullein, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a low basal rosette 15–25 cm tall of large dark green softly hairy leaves just emerging, leaves ovate to oblong 15–25 cm long, surface covered with short soft hairs, dark green above, paler below, no flower spike yet, rooted in a substantial mound of dark garden soil",
+        "height_cm": 20
       },
       {
         "id": "foliage",
@@ -1448,7 +1598,8 @@
           "may"
         ],
         "description": "full basal rosette of large dark green softly hairy leaves with pale woolly undersides, 30–40 cm tall, no flower spike yet",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — full basal rosette of large dark green softly hairy leaves with pale woolly undersides, 30–40 cm tall, no flower spike yet, natural garden habitus"
+        "prompt": "Verbascum nigrum, dark mullein, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring vegetative growth: a full basal rosette 30–40 cm tall of large dark green softly hairy leaves 20–30 cm long, broadly oval with crenated margins, the dark green upper surface contrasting with paler woolly undersides, no flower spike yet, handsome rosette habitus",
+        "height_cm": 35
       },
       {
         "id": "bloom",
@@ -1457,7 +1608,8 @@
           "july"
         ],
         "description": "tall slender upright spike 80–120 cm with dense rows of small yellow flowers with purple-hairy stamens, large dark green basal rosette",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall slender upright spike bearing dense rows of small yellow flowers with distinctive purple-hairy stamens, large dark green basal rosette below, natural garden habitus"
+        "prompt": "Verbascum nigrum, dark mullein, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a tall slender plant 100–120 cm, a single slender upright spike rising from the basal rosette densely set with small yellow flowers 1.5–2 cm across, each with 5 yellow petals and distinctive purple-hairy stamens in the centre, flowers arranged continuously along the spike, large dark green basal rosette visible below, elegant vertical garden presence",
+        "height_cm": 120
       },
       {
         "id": "seed",
@@ -1466,7 +1618,8 @@
           "september"
         ],
         "description": "tall upright spike with small round seed capsules, basal rosette yellowing and declining",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright spike studded with small round seed capsules, basal rosette yellowing and declining, natural garden habitus"
+        "prompt": "Verbascum nigrum, dark mullein, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall upright spike 100–115 cm, the flower spike now bearing small round ovoid seed capsules 5–7 mm at every flower node, spike tightly packed with seed capsules, basal rosette yellowing and declining, natural late-summer character",
+        "height_cm": 115
       },
       {
         "id": "dried",
@@ -1478,16 +1631,18 @@
           "february"
         ],
         "description": "fully dried upright spike with persistent small seed capsules on stiff stem, no foliage remaining",
-        "prompt": "Verbascum nigrum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fully dried upright spike with persistent small seed capsules on stiff stem, no foliage remaining, architectural winter habitus"
+        "prompt": "Verbascum nigrum, dark mullein, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: a single fully dried upright spike 100–110 cm tall, the spike densely covered with persistent small round seed capsules, stem pale straw-brown, no foliage remaining, elegant architectural winter silhouette",
+        "height_cm": 110
       }
     ],
     "color": "#f0d820",
-    "name_de": "Schwarze Königskerze"
+    "name_de": "Schwarze Königskerze",
+    "placement_type": "point"
   },
   {
     "slug": "fennel",
     "name": "Foeniculum vulgare",
-    "height_cm": 180,
+    "height_cm": 140,
     "width_cm": 60,
     "density": 1.2,
     "scatter_seed": 1847,
@@ -1501,7 +1656,8 @@
           "april"
         ],
         "description": "small clump of delicate feathery thread-like bright green leaves, 10–15 cm tall, no stems or flowers yet",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small clump of delicate feathery thread-like bright green leaves, 10–15 cm tall, no stems or flowers yet"
+        "prompt": "Foeniculum vulgare, common fennel, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: a small delicate clump 10–15 cm tall of feathery thread-like bright green leaves, leaves finely divided into hair-like segments, anise-scented, fresh vivid green, no upright stems yet, rooted in a small mound of dark garden soil, delicate feathery character",
+        "height_cm": 12
       },
       {
         "id": "foliage",
@@ -1510,7 +1666,8 @@
           "june"
         ],
         "description": "tall upright hollow stems with masses of feathery thread-like bright green foliage, 80–120 cm tall, no flowers yet",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall upright hollow stems with masses of feathery thread-like bright green foliage, 80–120 cm tall, no flowers yet, natural garden habitus"
+        "prompt": "Foeniculum vulgare, common fennel, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a tall upright clump 80–120 cm of hollow blue-green stems bearing masses of feathery thread-like foliage finely divided to hair-like segments, stems round and hollow, glaucous blue-green, anise-scented foliage, no flowers yet, cloud-like feathery garden habitus",
+        "height_cm": 80
       },
       {
         "id": "bloom",
@@ -1519,7 +1676,8 @@
           "august"
         ],
         "description": "very tall hollow stems with flat-topped bright yellow umbel flowerheads, feathery thread-like bright green foliage below",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — very tall hollow stems with flat-topped bright yellow umbel flowerheads, feathery thread-like bright green foliage below, natural garden habitus"
+        "prompt": "Foeniculum vulgare, common fennel, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a very tall plant 160–180 cm, tall hollow blue-green stems topped with large flat umbels 10–15 cm across of tiny bright yellow flowers in compound umbels of 20–40 rays, feathery thread-like foliage below, bold architectural summer presence",
+        "height_cm": 140
       },
       {
         "id": "seed",
@@ -1528,7 +1686,8 @@
           "october"
         ],
         "description": "tall stems with flat-topped green-brown seed umbels, feathery foliage yellowing and dying back",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall stems with flat-topped green-brown seed umbels, feathery foliage yellowing and dying back, natural garden habitus"
+        "prompt": "Foeniculum vulgare, common fennel, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: tall hollow stems 150–170 cm, the flat umbels bearing dense clusters of small oblong fennel achenes 4–6 mm long ripening from green to grey-brown, feathery foliage yellowing and dying, natural late-summer character",
+        "height_cm": 130
       },
       {
         "id": "dried",
@@ -1539,11 +1698,13 @@
           "february"
         ],
         "description": "tall dried skeletal hollow stems with flat dried seed heads, no foliage remaining",
-        "prompt": "Foeniculum vulgare, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — tall dried skeletal hollow stems with flat dried seed heads, no foliage remaining, architectural winter habitus"
+        "prompt": "Foeniculum vulgare, common fennel, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing structure: tall hollow dried stems 140–160 cm pale straw-tan, the flat dried seed umbels at the top, the branching structure of the umbels clear and architectural, no foliage remaining, elegant botanical winter silhouette",
+        "height_cm": 120
       }
     ],
     "color": "#c0d020",
-    "name_de": "Fenchel"
+    "name_de": "Fenchel",
+    "placement_type": "point"
   },
   {
     "slug": "mentha",
@@ -1557,35 +1718,58 @@
     "stages": [
       {
         "id": "sprout",
-        "months": ["april"],
+        "months": [
+          "april"
+        ],
         "description": "fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled leaves in pairs, strongly aromatic",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled aromatic leaves in opposite pairs, vigorous new growth"
+        "prompt": "Mentha spicata, spearmint, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring emergence: fresh young mint shoots 10–15 cm tall emerging from soil, bright green crinkled aromatic leaves in opposite pairs, leaves lance-shaped 2–4 cm long with toothed margins, veins prominent, intensely spearmint-scented, vigorous new growth from underground runners, rooted in a small mound of dark garden soil",
+        "height_cm": 12
       },
       {
         "id": "foliage",
-        "months": ["may", "june"],
+        "months": [
+          "may",
+          "june"
+        ],
         "description": "lush upright stems 30–50 cm, bright green lance-shaped crinkled leaves in pairs, no flower spikes yet, strongly aromatic",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — lush clump of upright stems 30–50 cm tall, bright green lance-shaped crinkled aromatic leaves in opposite pairs, no flower spikes yet"
+        "prompt": "Mentha spicata, spearmint, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late spring vegetative growth: a lush upright clump 30–50 cm tall, multiple erect square stems densely clothed in bright green lance-shaped crinkled leaves 4–7 cm long in opposite pairs, leaf margins toothed, surface slightly crinkled and aromatic, no flower spikes yet, vigorous spreading mint habitus",
+        "height_cm": 40
       },
       {
         "id": "bloom",
-        "months": ["july", "august", "september"],
+        "months": [
+          "july",
+          "august",
+          "september"
+        ],
         "description": "60 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled leaves below",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump 55–65 cm tall, upright stems topped with slender whorled lilac-purple flower spikes, bright green crinkled aromatic leaves, full bloom"
+        "prompt": "Mentha spicata, spearmint, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: an upright clump 55–65 cm tall, square stems topped with slender whorled flower spikes 4–8 cm long, each with whorls of tiny lilac-pink to pale purple flowers closely arranged along the spike, bright green aromatic foliage below the spikes, typical spearmint character",
+        "height_cm": 60
       },
       {
         "id": "seed",
-        "months": ["october"],
+        "months": [
+          "october"
+        ],
         "description": "upright stems with spent whorled flower spikes turning brown, tiny seed clusters visible along spikes, leaves yellowing and wilting",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with upright stems, spent whorled flower spikes turning brown with tiny seed clusters, leaves yellowing and wilting, end-of-season habitus"
+        "prompt": "Mentha spicata, spearmint, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — late season: upright stems 50–55 cm, the spent whorled flower spikes turned brown with tiny nutlet seeds in each calyx, leaves yellowing and wilting, natural end-of-season habitus",
+        "height_cm": 55
       },
       {
         "id": "dried",
-        "months": ["november", "december", "january", "february", "march"],
+        "months": [
+          "november",
+          "december",
+          "january",
+          "february",
+          "march"
+        ],
         "description": "dried upright stems with spent brown flower spikes, leaves gone, skeletal winter structure",
-        "prompt": "Mentha spicata, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — dried upright stems with spent brown whorled flower spikes, no leaves remaining, skeletal winter structure"
+        "prompt": "Mentha spicata, spearmint, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — winter standing: dried upright square stems 40–45 cm, the spent brown flower spikes persistent along stem tips, no leaves remaining, skeletal winter structure",
+        "height_cm": 45
       }
-    ]
+    ],
+    "placement_type": "point"
   },
   {
     "slug": "calendula_arvensis",
@@ -1599,29 +1783,50 @@
     "stages": [
       {
         "id": "sprout",
-        "months": ["march", "april"],
+        "months": [
+          "march",
+          "april"
+        ],
         "description": "small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling 5–10 cm tall, pale green slightly sticky aromatic leaves in a low rosette, no stems yet"
+        "prompt": "Calendula arvensis, field marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — early spring seedling: a tiny seedling 5–10 cm tall, a small low rosette of pale green slightly sticky aromatic leaves, leaves spoon-shaped to oblong, surface slightly glandular, no stems yet, rooted in a small mound of dark soil, small-scale delicate character",
+        "height_cm": 8
       },
       {
         "id": "foliage",
-        "months": ["april", "may"],
+        "months": [
+          "april",
+          "may"
+        ],
         "description": "spreading low plant 15–20 cm tall, pale green aromatic leaves on branching stems, small buds beginning to form",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — spreading low plant 15–20 cm tall, pale green slightly sticky aromatic leaves on branching stems, small buds beginning to form"
+        "prompt": "Calendula arvensis, field marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a low spreading plant 15–20 cm tall, pale green aromatic leaves on branching spreading stems, leaves oblong to spoon-shaped slightly sticky, margins slightly wavy, small rounded buds just beginning to form at tips, compact field-flower character",
+        "height_cm": 17
       },
       {
         "id": "bloom",
-        "months": ["may", "june", "july", "august", "september", "october"],
+        "months": [
+          "may",
+          "june",
+          "july",
+          "august",
+          "september",
+          "october"
+        ],
         "description": "low spreading plant covered in many small bright orange-yellow daisy-like flowers, petals narrower than garden marigold, pale green aromatic leaves",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — low spreading plant 25–30 cm tall covered in many small bright orange-yellow daisy-like flowers with narrower petals than garden marigold, pale green aromatic leaves, natural wildflower habitus"
+        "prompt": "Calendula arvensis, field marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a low spreading plant 25–30 cm tall, many branching stems each bearing a small bright orange-yellow daisy-like flowerhead 2–3 cm across, ray florets narrower and fewer than garden marigold, pale green aromatic leaves, continuous natural wildflower character",
+        "height_cm": 28
       },
       {
         "id": "seed",
-        "months": ["october", "november"],
+        "months": [
+          "october",
+          "november"
+        ],
         "description": "spreading stems with small curved claw-like seed clusters, foliage yellowing and sparse",
-        "prompt": "Calendula arvensis, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — spreading stems with small curved claw-like seed clusters where flowers were, foliage yellowing and sparse, natural end-of-season habitus"
+        "prompt": "Calendula arvensis, field marigold, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: spreading stems 20–25 cm with small distinctive rings of curved hook-shaped achenes 8–12 mm long replacing each flowerhead, foliage yellowing and sparse, natural autumn character",
+        "height_cm": 25
       }
-    ]
+    ],
+    "placement_type": "grid"
   },
   {
     "slug": "fagopyrum",
@@ -1635,29 +1840,47 @@
     "stages": [
       {
         "id": "sprout",
-        "months": ["april", "may"],
+        "months": [
+          "april",
+          "may"
+        ],
         "description": "small seedlings with rounded cotyledons and first heart-shaped true leaves, 5–10 cm tall, bright fresh green",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small dense cluster of seedlings with rounded cotyledons and first heart-shaped true leaves, 5–10 cm tall, fresh bright green"
+        "prompt": "Fagopyrum esculentum, common buckwheat, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small dense cluster of seedlings 5–10 cm tall, rounded cotyledons spread wide on short reddish stems, first heart-shaped true leaves emerging, fresh bright green with reddish stem coloration, rooted in a small mound of dark garden soil",
+        "height_cm": 8
       },
       {
         "id": "foliage",
-        "months": ["may", "june"],
+        "months": [
+          "may",
+          "june"
+        ],
         "description": "upright branching stems 30–50 cm tall, heart-shaped mid-green leaves on reddish stems, no flowers yet",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump of upright branching stems 30–50 cm tall, heart-shaped mid-green leaves on reddish stems, no flowers yet"
+        "prompt": "Fagopyrum esculentum, common buckwheat, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — vegetative growth: a natural clump of upright branching plants 30–50 cm tall, heart-shaped to triangular bright green leaves 4–8 cm wide on reddish stems, leaf base sagittate, smooth surface, no flowers yet, vigorous upright branching habitus",
+        "height_cm": 40
       },
       {
         "id": "bloom",
-        "months": ["june", "july", "august"],
+        "months": [
+          "june",
+          "july",
+          "august"
+        ],
         "description": "60–70 cm tall, covered in dense clusters of tiny white to blush-pink five-petalled flowers at stem tips, bees foraging",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump 60–70 cm tall covered in dense clusters of tiny white to soft blush-pink five-petalled flowers at every stem tip, reddish stems, heart-shaped leaves, full bloom"
+        "prompt": "Fagopyrum esculentum, common buckwheat, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — full bloom: a clump 60–70 cm tall, branching reddish stems densely covered in clusters of tiny white to soft blush-pink five-petalled flowers 3–5 mm across at every stem tip, the whole plant appearing to float in a cloud of small flowers, heart-shaped leaves between the flower clusters, outstanding pollinator plant presence",
+        "height_cm": 65
       },
       {
         "id": "seed",
-        "months": ["august", "september"],
+        "months": [
+          "august",
+          "september"
+        ],
         "description": "stems drying to brown, triangular dark brown buckwheat seeds visible in clusters where flowers were",
-        "prompt": "Fagopyrum esculentum, isolated on pure white background, stems visible from ground level to top, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — natural clump with stems turning brown, dense clusters of triangular dark brown buckwheat achenes where flowers were, some leaves yellowing"
+        "prompt": "Fagopyrum esculentum, common buckwheat, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seed ripening: branching stems 55–65 cm turning from green to brown, dense clusters of distinctive three-winged triangular dark brown achenes 5–6 mm long replacing each flower cluster, some leaves yellowing, natural harvest character",
+        "height_cm": 60
       }
-    ]
+    ],
+    "placement_type": "grid"
   },
   {
     "slug": "brassica_sabellica",
@@ -1671,22 +1894,41 @@
     "stages": [
       {
         "id": "sprout",
-        "months": ["april", "may"],
+        "months": [
+          "april",
+          "may"
+        ],
         "description": "small seedling with rounded blue-green cotyledons and first crinkled true leaves, 8–12 cm tall, growing from bare soil",
-        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — small seedling with rounded blue-green cotyledons and first crinkled true leaves, 8–12 cm tall, fresh young growth"
+        "prompt": "Brassica oleracea var. sabellica, curly kale, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — seedling emergence: a small seedling 8–12 cm tall, a pair of rounded blue-green cotyledons on short stems and first crinkled true leaves emerging, leaves deeply blistered and curled, blue-green colour, rooted in a small mound of dark garden soil, fresh brassica character",
+        "height_cm": 10
       },
       {
         "id": "foliage",
-        "months": ["june", "july", "august", "september", "october", "november", "december", "january"],
+        "months": [
+          "june",
+          "july",
+          "august",
+          "september",
+          "october",
+          "november",
+          "december",
+          "january"
+        ],
         "description": "mature plant with a thick central stem, large deeply crinkled blue-green to dark green leaves fanning outward, 60–75 cm tall, robust garden habitus",
-        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to leaf tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — mature kale plant with thick central stem, large deeply crinkled and curled blue-green leaves fanning outward, 60–75 cm tall, robust garden habitus, no flowers"
+        "prompt": "Brassica oleracea var. sabellica, curly kale, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — mature vegetative growth: a mature kale plant 60–75 cm tall, a thick central stem bearing large deeply crinkled and curled leaves fanning outward, leaves 40–60 cm long, deeply blistered blue-green to dark green, ruffled and curled especially at margins, stems and midribs robust and pale, robust cold-hardy garden habitus",
+        "height_cm": 70
       },
       {
         "id": "bloom",
-        "months": ["february", "march"],
+        "months": [
+          "february",
+          "march"
+        ],
         "description": "bolting second-year plant, tall branching stems 90–100 cm, clusters of bright yellow four-petalled flowers at tips, lower leaves yellowing",
-        "prompt": "Brassica oleracea var. sabellica, isolated on pure white background, stems visible from ground level to flowering tips, eye-level, telephoto, straight-on, natural daylight, asymmetrical, natural growth, photorealistic, no shadow, no pot, soil base — bolting kale, tall branching stems 90–100 cm, clusters of bright yellow four-petalled crucifer flowers at branch tips, a few remaining blue-green lower leaves, natural spring bolting habitus"
+        "prompt": "Brassica oleracea var. sabellica, curly kale, portrait format 3:4 ratio, isolated on pure white background, three-quarter view from slightly above, soft natural daylight from the left, photorealistic quality, no shadow, no pot, soil visible at base — spring bolting: a bolting second-year plant 90–100 cm tall, tall branching stems rising from a few remaining basal blue-green leaves, branch tips bearing loose corymbs of bright yellow four-petalled crucifer flowers 1.5–2 cm across, classic spring bolting habitus",
+        "height_cm": 95
       }
-    ]
+    ],
+    "placement_type": "grid"
   }
 ]

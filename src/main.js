@@ -6,11 +6,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const canvas = document.getElementById('c');
 const wrap   = document.getElementById('canvas-wrap');
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0xffffff);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.localClippingEnabled = true;
 
 const scene = new THREE.Scene();
@@ -269,11 +267,108 @@ let _prevView      = 'iso-se';
 let _editMode      = false;
 let _plantFilter   = '';
 
+// ── Grid placement helpers ────────────────────────────────────────────────────
+const GRID_STEP = 0.4;
+
+function snapToRef(v, ref) {
+  return ref + (Math.floor((v - ref) / GRID_STEP) + 0.5) * GRID_STEP;
+}
+// beds is defined later; these helpers are called only at interaction time
+function snapGridX(v) { return snapToRef(v, -BED_L / 2); }
+function snapGridZ(v) {
+  const bed = beds?.find(b => v >= b.z - b.w / 2 - GRID_STEP && v <= b.z + b.w / 2 + GRID_STEP);
+  return snapToRef(v, bed ? bed.z - bed.w / 2 : 0);
+}
+
+function seededRng(seed) {
+  let s = seed.split('').reduce((a, c) => (Math.imul(a, 31) + c.charCodeAt(0)) | 0, 0);
+  return () => { s = (Math.imul(s, 1664525) + 1013904223) | 0; return (s >>> 0) / 0x100000000; };
+}
+
+function cellPositions(p, density) {
+  const rng = seededRng(p.id);
+  const spread = GRID_STEP * (density <= 1 ? 0.55 : 0.82);
+  return Array.from({ length: Math.max(1, density) }, () => ({
+    x: p.x + (rng() - 0.5) * spread,
+    z: p.z + (rng() - 0.5) * spread,
+  }));
+}
+
+let _gridOverlay  = null;  // LineSegments grid
+let _gridHover    = null;  // single hover cell Mesh
+let _gridDragPrev = null;  // rectangle preview Mesh
+let _gridDrag     = null;  // { x0, z0, x1, z1, addMode } while dragging
+
+function buildGridOverlay() {
+  if (_gridOverlay) { scene.remove(_gridOverlay); _gridOverlay = null; }
+  const pts = [];
+  const Y   = 0.018;
+  for (const bed of beds) {
+    const x0 = -BED_L / 2, x1 = BED_L / 2;
+    const z0 = bed.z - bed.w / 2, z1 = bed.z + bed.w / 2;
+    for (let z = z0; z <= z1 + 1e-6; z = Math.round((z + GRID_STEP) * 1e6) / 1e6) {
+      pts.push(new THREE.Vector3(x0, Y, z), new THREE.Vector3(x1, Y, z));
+    }
+    for (let x = x0; x <= x1 + 1e-6; x = Math.round((x + GRID_STEP) * 1e6) / 1e6) {
+      pts.push(new THREE.Vector3(x, Y, z0), new THREE.Vector3(x, Y, z1));
+    }
+  }
+  _gridOverlay = new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 }),
+  );
+  scene.add(_gridOverlay);
+}
+
+function removeGridOverlay() {
+  if (_gridOverlay)  { scene.remove(_gridOverlay);  _gridOverlay  = null; }
+  if (_gridHover)    { scene.remove(_gridHover);     _gridHover    = null; }
+  if (_gridDragPrev) { scene.remove(_gridDragPrev);  _gridDragPrev = null; }
+  _gridDrag = null;
+}
+
+function setGridHover(x, z, color) {
+  if (_gridHover) { scene.remove(_gridHover); _gridHover = null; }
+  if (x === null) return;
+  const s = GRID_STEP * 0.88;
+  const geo = new THREE.PlaneGeometry(s, s);
+  geo.rotateX(-Math.PI / 2);
+  _gridHover = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.5 }));
+  _gridHover.position.set(x, 0.019, z);
+  scene.add(_gridHover);
+}
+
+function setGridDragPreview(x0, z0, x1, z1, addMode, color) {
+  if (_gridDragPrev) { scene.remove(_gridDragPrev); _gridDragPrev = null; }
+  const xa = Math.min(x0, x1), xb = Math.max(x0, x1);
+  const za = Math.min(z0, z1), zb = Math.max(z0, z1);
+  const w = xb - xa + GRID_STEP * 0.88;
+  const d = zb - za + GRID_STEP * 0.88;
+  const geo = new THREE.PlaneGeometry(w, d);
+  geo.rotateX(-Math.PI / 2);
+  _gridDragPrev = new THREE.Mesh(
+    geo,
+    new THREE.MeshBasicMaterial({ color: addMode ? color : 0xff2222, transparent: true, opacity: 0.35 }),
+  );
+  _gridDragPrev.position.set((xa + xb) / 2, 0.019, (za + zb) / 2);
+  scene.add(_gridDragPrev);
+}
+
+function updateGridMode() {
+  if (_editMode && _selectedSlug) {
+    if (!_gridOverlay) buildGridOverlay();
+  } else {
+    removeGridOverlay();
+  }
+  requestRender();
+}
+
 function selectPlant(slug) {
   _selectedSlug = _selectedSlug === slug ? null : slug;
-  canvas.style.cursor = _selectedSlug ? 'crosshair' : 'default';
+  canvas.classList.toggle('selecting', !!_selectedSlug);
   renderPlantPanel();
   renderInfoPanel(_selectedSlug);
+  updateGridMode();
 }
 
 function renderPlantPanel() {
@@ -289,10 +384,10 @@ function renderPlantPanel() {
   for (const plant of visible) {
     const row = document.createElement('div');
     row.className = 'plant-row' + (_selectedSlug === plant.slug ? ' selected' : '');
-    const name = document.createElement('div');
-    name.className = 'plant-name';
-    name.textContent = plant.name;
-    row.appendChild(name);
+    row.innerHTML = `
+      <div class="plant-name">${plant.name_de ?? plant.name}</div>
+      ${plant.name_de ? `<div class="plant-name-la">${plant.name}</div>` : ''}
+    `;
     row.addEventListener('click', () => selectPlant(plant.slug));
     list.appendChild(row);
   }
@@ -327,6 +422,8 @@ function renderInfoPanel(slug) {
   const entries = _manifest.filter(e => e.slug === slug);
   const hCm = Math.round((plant.worldH ?? 1) * 100);
   const wCm = Math.round(plant.worldW * 100);
+  const ver = currentVersion();
+  const density = ver.densities?.[slug] ?? 1;
 
   const stagesHtml = entries.map(e => `
     <div class="info-stage-row">
@@ -349,9 +446,31 @@ function renderInfoPanel(slug) {
       </div>
     </div>
     <div class="info-dims">${hCm} × ${wCm} cm</div>
+    <div class="info-density-row">
+      <span class="stage-label">Dichte</span>
+      <div class="density-ctrl">
+        <button class="density-btn" data-slug="${slug}" data-delta="-1">−</button>
+        <span class="density-val" id="density-val-${slug}">${density}</span>
+        <button class="density-btn" data-slug="${slug}" data-delta="1">+</button>
+      </div>
+    </div>
     ${stagesHtml}
   `;
   panel.classList.add('visible');
+
+  panel.querySelectorAll('.density-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = currentVersion();
+      if (!v.densities) v.densities = {};
+      const cur = v.densities[btn.dataset.slug] ?? 1;
+      v.densities[btn.dataset.slug] = Math.max(1, Math.min(16, cur + Number(btn.dataset.delta)));
+      saveStore();
+      document.getElementById(`density-val-${btn.dataset.slug}`).textContent = v.densities[btn.dataset.slug];
+      rebuildForVersion();
+      showMonth(currentMonth);
+      buildTopViewCircles();
+    });
+  });
 }
 
 function enterEditMode() {
@@ -366,15 +485,17 @@ function enterEditMode() {
   document.getElementById('plant-panel').classList.add('open');
   document.getElementById('btn-edit').classList.add('active');
   document.getElementById('btn-view').classList.remove('active');
+  updateGridMode();
 }
 
 function enterViewMode() {
   if (_selectedSlug) {
     _selectedSlug = null;
-    canvas.style.cursor = 'default';
+    canvas.classList.remove('selecting');
     renderPlantPanel();
   }
   _editMode = false;
+  removeGridOverlay();
   renderInfoPanel(null);
   setView(_prevView);
   document.getElementById('plant-panel').classList.remove('open');
@@ -389,6 +510,7 @@ function enterViewMode() {
 
 document.getElementById('btn-edit').addEventListener('click', enterEditMode);
 document.getElementById('btn-view').addEventListener('click', enterViewMode);
+
 
 // ── Garden bed layout ─────────────────────────────────────────────────────────
 // 9 beds from north (−Z) to south (+Z), each 9 m east-west.
@@ -410,7 +532,94 @@ const beds = (() => {
   });
 })();
 
-const bedMat    = new THREE.MeshLambertMaterial({ color: 0x5c3d25 });
+function makeSoilTexture() {
+  const S = 512;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = S;
+  const ctx = canvas.getContext('2d');
+  const img = ctx.createImageData(S, S);
+  const d = img.data;
+
+  // Seamless: wrap grid coords at period S so noise tiles perfectly
+  function hash(xi, yi) {
+    const x = ((xi % S) + S) % S;
+    const y = ((yi % S) + S) % S;
+    const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+    return n - Math.floor(n);
+  }
+  function ss(t) { return t * t * (3 - 2 * t); }
+  function vnoise(x, y) {
+    const ix = Math.floor(x), iy = Math.floor(y);
+    const fx = ss(x - ix), fy = ss(y - iy);
+    return (hash(ix,iy)*(1-fx) + hash(ix+1,iy)*fx) * (1-fy)
+         + (hash(ix,iy+1)*(1-fx) + hash(ix+1,iy+1)*fx) * fy;
+  }
+  // Scale octaves so each wraps evenly within S texels
+  function fbm(px, py) {
+    // octave frequencies in texel-space: 1, 2, 4, 8 → all divide S evenly
+    return vnoise(px,py)*0.50 + vnoise(px*2,py*2)*0.25
+         + vnoise(px*4,py*4)*0.15 + vnoise(px*8,py*8)*0.10;
+  }
+
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      const n = fbm(x / S * 16, y / S * 16); // 16 base cells across S
+      const v = (n - 0.5) * 0.45;
+      const i = (y * S + x) * 4;
+      d[i]   = Math.max(0, Math.min(255, Math.round(0x12 * (1 + v))));
+      d[i+1] = Math.max(0, Math.min(255, Math.round(0x0b * (1 + v * 0.8))));
+      d[i+2] = Math.max(0, Math.min(255, Math.round(0x04 * (1 + v * 0.5))));
+      d[i+3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}
+
+const _soilTex = makeSoilTexture();
+
+function makeBlobShadowTex() {
+  const S = 128;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = S;
+  const ctx = canvas.getContext('2d');
+  const grad = ctx.createRadialGradient(S/2, S/2, 0, S/2, S/2, S/2);
+  grad.addColorStop(0,   'rgba(0,0,0,0.50)');
+  grad.addColorStop(0.4, 'rgba(0,0,0,0.25)');
+  grad.addColorStop(1,   'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, S, S);
+  return new THREE.CanvasTexture(canvas);
+}
+const _blobShadowTex = makeBlobShadowTex();
+
+function addBlobShadows(g, positions, worldW, clips = null) {
+  if (!positions.length) return;
+  const geo = new THREE.PlaneGeometry(1, 1);
+  const mat = new THREE.MeshBasicMaterial({
+    map: _blobShadowTex,
+    transparent: true,
+    depthWrite: false,
+  });
+  if (clips) mat.clippingPlanes = clips;
+  const mesh = new THREE.InstancedMesh(geo, mat, positions.length);
+  mesh.frustumCulled = false;
+  const dummy = new THREE.Object3D();
+  const r = worldW * 1.1;
+  positions.forEach((p, i) => {
+    dummy.position.set(p.x, p.y + 0.003, p.z);
+    dummy.rotation.x = -Math.PI / 2;
+    dummy.scale.set(r * p.scale, r * p.scale, 1);
+    dummy.updateMatrix();
+    mesh.setMatrixAt(i, dummy.matrix);
+  });
+  mesh.instanceMatrix.needsUpdate = true;
+  g.add(mesh);
+}
+
+const bedMat    = null; // per-bed materials created in the loop below
 const shadowMat = new THREE.ShadowMaterial({ opacity: 0.18, transparent: true });
 const borderMat = new THREE.LineBasicMaterial({ color: 0x666666 });
 const wallMat   = new THREE.MeshLambertMaterial({ color: 0xc8bfb4 });
@@ -418,7 +627,10 @@ const wallMat   = new THREE.MeshLambertMaterial({ color: 0xc8bfb4 });
 for (const bed of beds) {
   const geo = new THREE.PlaneGeometry(BED_L, bed.w);
 
-  const mesh = new THREE.Mesh(geo, bedMat);
+  const tex = _soilTex.clone();
+  tex.needsUpdate = true;
+  tex.repeat.set(BED_L / 2, bed.w / 2);
+  const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: tex }));
   mesh.rotation.x = -Math.PI / 2;
   mesh.position.set(0, bed.y, bed.z);
   scene.add(mesh);
@@ -474,8 +686,8 @@ varying vec3 vColor;
 void main() {
   #include <clipping_planes_fragment>
   vec4 c = texture2D(map, vUv);
-  if (c.a < 0.5) discard;
-  gl_FragColor = vec4(c.rgb * vColor, 1.0);
+  if (c.a < 0.4) discard;
+  gl_FragColor = vec4(c.rgb, 1.0);
 }`;
 
 // Vertical: cylindrical billboard, pivot at base, always faces camera around Y
@@ -691,7 +903,9 @@ function buildMonth(key) {
       const tkey = `${slug}_${entry.stage}`;
       if (!_textures[tkey]) continue;
       const variants = entry.variants ?? 1;
-      const opts = { orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH };
+      const tex0 = _textures[tkey];
+      const imgAspect = tex0 ? tex0.image.width / tex0.image.height : entry.worldW / entry.worldH;
+      const opts = { orient: 'vertical', worldW: entry.worldH * imgAspect, worldH: entry.worldH };
 
       // Group placements by bed so we can apply per-bed clip planes
       for (let bi = 0; bi < beds.length; bi++) {
@@ -699,11 +913,15 @@ function buildMonth(key) {
         const bedList = list.filter(p =>
           p.z >= bed.z - bed.w / 2 && p.z <= bed.z + bed.w / 2 && Math.abs(p.x) <= BED_L / 2);
         if (!bedList.length) continue;
-        const allPositions = bedList.map(p => ({
-          x: p.x, y: yAtPosition(p.x, p.z), z: p.z, scale: scaleForPos(p.x, p.z),
-        }));
+        const density = ver.densities?.[slug] ?? 1;
+        const allPositions = bedList.flatMap(p =>
+          cellPositions(p, density).map(({ x, z }) => ({
+            x, z, y: yAtPosition(x, z), scale: scaleForPos(x, z),
+          }))
+        );
         const clips = bedClipPlanes(bed);
         addVariantMeshes(g, mats, _textures[tkey], allPositions, variants, tkey, _textures, opts, clips);
+        addBlobShadows(g, allPositions, entry.worldW, clips);
       }
     }
   } else {
@@ -715,7 +933,9 @@ function buildMonth(key) {
       if (!_textures[tkey]) continue;
       const allPositions = _posBySeed[entry.seed];
       const variants = entry.variants ?? 1;
-      const opts = { orient: 'vertical', worldW: entry.worldW, worldH: entry.worldH };
+      const tex0 = _textures[tkey];
+      const imgAspect = tex0 ? tex0.image.width / tex0.image.height : entry.worldW / entry.worldH;
+      const opts = { orient: 'vertical', worldW: entry.worldH * imgAspect, worldH: entry.worldH };
 
       // Split by bed for per-bed clip planes
       for (let bi = 0; bi < beds.length; bi++) {
@@ -724,7 +944,9 @@ function buildMonth(key) {
         const bedPositions = allPositions.filter(p =>
           p.z >= bed.z - bed.w / 2 - 0.01 && p.z <= bed.z + bed.w / 2 + 0.01);
         if (!bedPositions.length) continue;
-        addVariantMeshes(g, mats, _textures[tkey], bedPositions, variants, tkey, _textures, opts, bedClipPlanes(bed));
+        const clips = bedClipPlanes(bed);
+        addVariantMeshes(g, mats, _textures[tkey], bedPositions, variants, tkey, _textures, opts, clips);
+        addBlobShadows(g, bedPositions, entry.worldW, clips);
       }
     }
   }
@@ -748,6 +970,7 @@ function showMonth(key) {
 
 async function init() {
   _manifest = await fetch(`${import.meta.env.BASE_URL}plants/manifest.json`).then(r => r.json());
+  _manifest = _manifest.filter(entry => entry.slug !== 'paeonia');
 
   _posBySeed = {};
   for (const entry of _manifest) {
@@ -764,7 +987,7 @@ async function init() {
       const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}.png`);
       tex.colorSpace = THREE.SRGBColorSpace;
       _textures[key] = tex;
-    } catch { /* image not generated yet */ }
+    } catch { }
     for (let v = 2; v <= (entry.variants ?? 1); v++) {
       try {
         const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}_${v}.png`);
@@ -783,7 +1006,7 @@ async function init() {
         slug: entry.slug, name: entry.name ?? entry.slug,
         name_de: entry.name_de ?? null,
         color: entry.color ?? '#888888', worldW: entry.worldW, worldH: entry.worldH,
-        defaultBeds: entry.beds ?? null,
+        defaultBeds: entry.beds ?? null, placementType: entry.placementType ?? 'point',
       });
     }
   }
@@ -805,32 +1028,28 @@ function buildTopViewCircles() {
   const ver = currentVersion();
   if (!ver.placements?.length) { _circleGroup = null; return; }
 
+  const cellGeo = new THREE.PlaneGeometry(GRID_STEP * 0.92, GRID_STEP * 0.92);
+  cellGeo.rotateX(-Math.PI / 2);
+  const dotGeo  = new THREE.CircleGeometry(GRID_STEP * 0.09, 8);
+  dotGeo.rotateX(-Math.PI / 2);
+
   const group = new THREE.Group();
   for (const p of ver.placements) {
     const plant = _uniquePlants.find(u => u.slug === p.slug);
     if (!plant) continue;
-    const r = (plant.worldW ?? 0.4) / 2;
+    const density = ver.densities?.[plant.slug] ?? 1;
     const y = yAtPosition(p.x, p.z) + 0.012;
-
-    const fill = new THREE.Mesh(
-      new THREE.CircleGeometry(r, 48),
-      new THREE.MeshBasicMaterial({ color: plant.color, transparent: true, opacity: 0.85 }),
-    );
-    fill.rotation.x = -Math.PI / 2;
+    const mat = new THREE.MeshBasicMaterial({ color: plant.color, transparent: true, opacity: 0.4 });
+    const fill = new THREE.Mesh(cellGeo, mat);
     fill.position.set(p.x, y, p.z);
     group.add(fill);
 
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(
-        Array.from({ length: 49 }, (_, i) => {
-          const a = (i / 48) * Math.PI * 2;
-          return new THREE.Vector3(Math.cos(a) * r, 0, Math.sin(a) * r);
-        })
-      ),
-      new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.25 }),
-    );
-    ring.position.set(p.x, y + 0.001, p.z);
-    group.add(ring);
+    const dotMat = new THREE.MeshBasicMaterial({ color: plant.color, transparent: true, opacity: 0.9 });
+    for (const { x, z } of cellPositions(p, density)) {
+      const dot = new THREE.Mesh(dotGeo, dotMat);
+      dot.position.set(x, y + 0.001, z);
+      group.add(dot);
+    }
   }
   _circleGroup = group;
   scene.add(group);
@@ -856,9 +1075,94 @@ function groundPoint(event) {
   return _raycaster.ray.intersectPlane(_hitPlane, pt) ? pt : null;
 }
 
+function commitPlacements() {
+  saveStore(); rebuildForVersion(); showMonth(currentMonth); buildTopViewCircles();
+}
+
+function inAnyBed(x, z) {
+  return beds.some(b => z >= b.z - b.w / 2 && z <= b.z + b.w / 2 && Math.abs(x) <= BED_L / 2);
+}
+
+function hasGridCell(placements, slug, x, z) {
+  return placements.some(p => p.slug === slug && Math.abs(p.x - x) < 0.01 && Math.abs(p.z - z) < 0.01);
+}
+
 let _dragStart = null;
-canvas.addEventListener('mousedown', e => { _dragStart = { x: e.clientX, y: e.clientY }; });
+
+canvas.addEventListener('mousemove', e => {
+  if (!_editMode || !_selectedSlug) return;
+  const pt = groundPoint(e);
+  if (!pt) { setGridHover(null, null, 0); return; }
+  const sx = snapGridX(pt.x), sz = snapGridZ(pt.z);
+  const plant = _uniquePlants.find(p => p.slug === _selectedSlug);
+  if (!plant) return;
+
+  if (_gridDrag) {
+    _gridDrag.x1 = sx; _gridDrag.z1 = sz;
+    setGridDragPreview(_gridDrag.x0, _gridDrag.z0, sx, sz, _gridDrag.addMode, parseInt(plant.color.replace('#',''), 16));
+    if (_gridHover) { scene.remove(_gridHover); _gridHover = null; }
+  } else {
+    setGridHover(inAnyBed(sx, sz) ? sx : null, sz, parseInt(plant.color.replace('#',''), 16));
+  }
+  requestRender();
+});
+
+canvas.addEventListener('mouseleave', () => {
+  if (_gridHover) { scene.remove(_gridHover); _gridHover = null; requestRender(); }
+});
+
+canvas.addEventListener('mousedown', e => {
+  _dragStart = { x: e.clientX, y: e.clientY };
+  if (e.button !== 0 || !_editMode || !_selectedSlug) return;
+  const ver = currentVersion();
+  if (!ver.placements) return;
+  const pt = groundPoint(e);
+  if (!pt) return;
+  const sx = snapGridX(pt.x), sz = snapGridZ(pt.z);
+  if (!inAnyBed(sx, sz)) return;
+  const addMode = !hasGridCell(ver.placements, _selectedSlug, sx, sz);
+  _gridDrag = { x0: sx, z0: sz, x1: sx, z1: sz, addMode };
+  topControls.enabled = false;
+});
+
 canvas.addEventListener('mouseup', e => {
+  topControls.enabled = true;
+
+  // ── grid drag commit ───────────────────────────────────────────────────────
+  if (_gridDrag && e.button === 0 && _editMode) {
+    const ver = currentVersion();
+    if (ver.placements) {
+      const xa = Math.min(_gridDrag.x0, _gridDrag.x1);
+      const xb = Math.max(_gridDrag.x0, _gridDrag.x1);
+      const za = Math.min(_gridDrag.z0, _gridDrag.z1);
+      const zb = Math.max(_gridDrag.z0, _gridDrag.z1);
+      const adding = _gridDrag.addMode;
+      for (let x = xa; x <= xb + 1e-6; x = Math.round((x + GRID_STEP) * 1e6) / 1e6) {
+        for (let z = za; z <= zb + 1e-6; z = Math.round((z + GRID_STEP) * 1e6) / 1e6) {
+          if (!inAnyBed(x, z)) continue;
+          if (adding) {
+            if (!hasGridCell(ver.placements, _selectedSlug, x, z)) {
+              ver.placements.push({
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                slug: _selectedSlug, x, z,
+              });
+            }
+          } else {
+            ver.placements = ver.placements.filter(
+              p => !(p.slug === _selectedSlug && Math.abs(p.x - x) < 0.01 && Math.abs(p.z - z) < 0.01),
+            );
+          }
+        }
+      }
+      commitPlacements();
+    }
+    if (_gridDragPrev) { scene.remove(_gridDragPrev); _gridDragPrev = null; }
+    _gridDrag = null;
+    requestRender();
+    return;
+  }
+
+  // ── point placement (click, no drag) ──────────────────────────────────────
   if (!_dragStart) return;
   const moved = Math.hypot(e.clientX - _dragStart.x, e.clientY - _dragStart.y) > 4;
   _dragStart = null;
@@ -867,33 +1171,31 @@ canvas.addEventListener('mouseup', e => {
   if (e.button === 2) {
     if (_selectedSlug) {
       _selectedSlug = null;
-      canvas.style.cursor = 'default';
+      canvas.classList.remove('selecting');
       renderPlantPanel();
+      updateGridMode();
     }
     return;
   }
-  if (e.button !== 0) return;
-  if (!_editMode) return;
+  if (e.button !== 0 || !_editMode) return;
 
   const ver = currentVersion();
-  if (!ver.placements) return; // scatter mode — no placement editing
+  if (!ver.placements) return;
 
   const pt = groundPoint(e);
   if (!pt) return;
 
   if (_selectedSlug) {
-    const inBed = beds.some(b =>
-      pt.z >= b.z - b.w / 2 && pt.z <= b.z + b.w / 2 && Math.abs(pt.x) <= BED_L / 2);
-    if (!inBed) return;
-    ver.placements.push({
-      id:   Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      slug: _selectedSlug, x: pt.x, z: pt.z,
-    });
-    saveStore();
-    rebuildForVersion();
-    showMonth(currentMonth);
-    buildTopViewCircles();
-  } else {
+    const sx = snapGridX(pt.x), sz = snapGridZ(pt.z);
+    if (!inAnyBed(sx, sz)) return;
+    if (!hasGridCell(ver.placements, _selectedSlug, sx, sz)) {
+      ver.placements.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        slug: _selectedSlug, x: sx, z: sz,
+      });
+      commitPlacements();
+    }
+  } else if (!_selectedSlug) {
     const THRESH = 0.4;
     let nearest = null, nearestD = Infinity;
     for (const p of ver.placements) {
@@ -902,10 +1204,7 @@ canvas.addEventListener('mouseup', e => {
     }
     if (nearest && nearestD < THRESH) {
       ver.placements = ver.placements.filter(p => p.id !== nearest.id);
-      saveStore();
-      rebuildForVersion();
-      showMonth(currentMonth);
-      buildTopViewCircles();
+      commitPlacements();
     }
   }
 });
