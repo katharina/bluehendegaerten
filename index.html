@@ -505,9 +505,9 @@
 
     #modal {
       background: #fff;
-      border: 5px solid #000;
-      width: 80vw;
-      height: 80vh;
+      border: none;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -522,11 +522,12 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: #888;
+      color: var(--modal-fg, #888);
+      opacity: 0.6;
       line-height: 1;
       z-index: 10;
     }
-    #modal-close:hover { color: #000; }
+    #modal-close:hover { opacity: 1; }
 
     #modal-columns {
       display: flex;
@@ -539,13 +540,13 @@
       flex-shrink: 0;
       padding: 32px;
       overflow-y: auto;
-      border-right: 1px solid #eee;
+      border-right: 1px solid rgba(128,128,128,0.2);
     }
 
     #modal-name {
       font-size: 24px;
       font-style: italic;
-      color: #222;
+      font-family: Georgia, serif;
       line-height: 1.2;
       margin-bottom: 4px;
       padding-right: 32px;
@@ -553,13 +554,15 @@
 
     #modal-de {
       font-size: 14px;
-      color: #555;
+      color: var(--modal-fg, #555);
+      opacity: 0.7;
       margin-bottom: 2px;
     }
 
     #modal-family {
       font-size: 11px;
-      color: #aaa;
+      color: var(--modal-fg, #aaa);
+      opacity: 0.5;
       margin-bottom: 28px;
     }
 
@@ -567,7 +570,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(128,128,128,0.2);
       padding-top: 20px;
       margin-bottom: 24px;
     }
@@ -608,7 +611,8 @@
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.08em;
-      color: #aaa;
+      color: var(--modal-fg, #aaa);
+      opacity: 0.5;
       text-transform: uppercase;
       width: 72px;
       flex-shrink: 0;
@@ -616,7 +620,8 @@
 
     .modal-stage-months {
       font-size: 12px;
-      color: #555;
+      color: var(--modal-fg, #555);
+      opacity: 0.8;
     }
 
     #modal-images {
@@ -629,7 +634,7 @@
     #obs-toggle-bar {
       flex-shrink: 0;
       padding: 16px 24px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid rgba(128,128,128,0.2);
     }
 
     #obs-toggle-btn {
@@ -1057,9 +1062,21 @@
       }
     }
 
+    function contrastColor(hex) {
+      const c = hex?.replace('#', '') ?? 'ffffff';
+      const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
+      // WCAG relative luminance
+      const lum = ([r,g,b].map(v => { v /= 255; return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }));
+      return (0.2126*lum[0] + 0.7152*lum[1] + 0.0722*lum[2]) > 0.179 ? '#000' : '#fff';
+    }
+
     async function openModal(p) {
       _modalSlug = p.slug;
-      document.getElementById('modal').style.borderColor = p.color ?? '#000';
+      const bg  = p.color ?? '#ffffff';
+      const fg  = contrastColor(bg);
+      const modal = document.getElementById('modal');
+      modal.style.background = bg;
+      modal.style.setProperty('--modal-fg', fg);
       document.getElementById('modal-name').textContent = p.name;
       document.getElementById('modal-de').textContent = p.name_de ?? '';
       document.getElementById('modal-family').textContent = p.family ?? '';
