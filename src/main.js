@@ -155,15 +155,6 @@ document.getElementById('export-btn')?.addEventListener('click', exportSVG);
 scene.add(new THREE.AmbientLight(0xffffff, 0.75));
 const sun = new THREE.DirectionalLight(0xfff6e8, 0.8);
 sun.position.set(3, 5, 4);
-sun.castShadow = true;
-sun.shadow.mapSize.setScalar(1024);
-sun.shadow.bias = -0.001;
-sun.shadow.camera.left = -12;
-sun.shadow.camera.right = 12;
-sun.shadow.camera.top = 12;
-sun.shadow.camera.bottom = -12;
-sun.shadow.camera.near = 0.5;
-sun.shadow.camera.far = 50;
 scene.add(sun);
 const fill = new THREE.DirectionalLight(0xe8f0ff, 0.3);
 fill.position.set(-3, 2, -2);
@@ -178,11 +169,19 @@ function loadStore() {
 }
 
 let store = loadStore() ?? {
-  versions: [{ id: 'default', name: 'Garten 1', bedAssignments: {} }],
+  versions: [{ id: 'default', name: 'Garten 1', placements: [] }],
   currentId: 'default',
 };
 
-function saveStore() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+function saveStore() {
+  store._savedAt = Date.now();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  fetch('/api/plans/betonbeete', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: JSON.stringify(store) }),
+  }).catch(() => {});
+}
 
 function currentVersion() {
   return store.versions.find(v => v.id === store.currentId) ?? store.versions[0];
@@ -202,14 +201,6 @@ function renderVersionBar() {
 }
 
 function rebuildForVersion() {
-  const ver = currentVersion();
-  if (_manifest && ver.placements === undefined) {
-    _posBySeed = {};
-    for (const entry of _manifest) {
-      if (_posBySeed[entry.seed]) continue;
-      _posBySeed[entry.seed] = scatterBeds(entry.seed, entry.density, entry.beds ?? null);
-    }
-  }
   for (const k of Object.keys(gardens))      delete gardens[k];
   for (const k of Object.keys(swayByMonth))  delete swayByMonth[k];
 }
@@ -242,6 +233,8 @@ function createVersion() {
 
 function deleteVersion() {
   if (store.versions.length <= 1) return;
+  const ver = currentVersion();
+  if (!confirm(`„${ver.name}" wirklich löschen?`)) return;
   const idx = store.versions.findIndex(v => v.id === store.currentId);
   store.versions.splice(idx, 1);
   store.currentId = store.versions[Math.max(0, idx - 1)].id;
@@ -627,43 +620,11 @@ const wallMat   = new THREE.MeshLambertMaterial({ color: 0xc8bfb4 });
 for (const bed of beds) {
   const geo = new THREE.PlaneGeometry(BED_L, bed.w);
 
-  const tex = _soilTex.clone();
-  tex.needsUpdate = true;
-  tex.repeat.set(BED_L / 2, bed.w / 2);
-  const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: tex }));
-  mesh.rotation.x = -Math.PI / 2;
-  mesh.position.set(0, bed.y, bed.z);
-  scene.add(mesh);
-
-  const shadow = new THREE.Mesh(geo, shadowMat);
-  shadow.rotation.x = -Math.PI / 2;
-  shadow.position.set(0, bed.y + 0.001, bed.z);
-  shadow.receiveShadow = true;
-  scene.add(shadow);
-
   const border = new THREE.LineSegments(new THREE.EdgesGeometry(geo), borderMat);
   border.rotation.x = -Math.PI / 2;
   border.position.set(0, bed.y + 0.002, bed.z);
   scene.add(border);
 
-  const wallY = bed.y + WALL_H / 2;
-  const walls = [
-    { geo: new THREE.BoxGeometry(BED_L + WALL_T * 2, WALL_H, WALL_T),
-      pos: [0, wallY, bed.z - bed.w / 2 - WALL_T / 2] },
-    { geo: new THREE.BoxGeometry(BED_L + WALL_T * 2, WALL_H, WALL_T),
-      pos: [0, wallY, bed.z + bed.w / 2 + WALL_T / 2] },
-    { geo: new THREE.BoxGeometry(WALL_T, WALL_H, bed.w),
-      pos: [-BED_L / 2 - WALL_T / 2, wallY, bed.z] },
-    { geo: new THREE.BoxGeometry(WALL_T, WALL_H, bed.w),
-      pos: [ BED_L / 2 + WALL_T / 2, wallY, bed.z] },
-  ];
-  for (const { geo: wg, pos } of walls) {
-    const wall = new THREE.Mesh(wg, wallMat);
-    wall.position.set(...pos);
-    wall.castShadow = true;
-    wall.receiveShadow = true;
-    scene.add(wall);
-  }
 }
 
 // ── Billboard pipeline ────────────────────────────────────────────────────────
@@ -682,11 +643,10 @@ const FRAG = `
 #include <clipping_planes_pars_fragment>
 uniform sampler2D map;
 varying vec2 vUv;
-varying vec3 vColor;
 void main() {
   #include <clipping_planes_fragment>
   vec4 c = texture2D(map, vUv);
-  if (c.a < 0.4) discard;
+  if (c.a < 0.5) discard;
   gl_FragColor = vec4(c.rgb, 1.0);
 }`;
 
@@ -696,12 +656,9 @@ const VERT_VERTICAL = `
 uniform float time;
 attribute vec3 iPos;
 attribute float iScale;
-attribute vec3 iColor;
 varying vec2 vUv;
-varying vec3 vColor;
 void main() {
   vUv    = uv;
-  vColor = iColor;
   vec3 right = vec3(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0]);
   right.y    = 0.0;
   right      = normalize(right);
@@ -769,8 +726,11 @@ function makeBillboardMesh(texture, positions, { orient = 'vertical', worldW = 0
     posArr[i*3+1] = p.y + (horiz ? 0.01 + rand() * 0.02 : 0); // tiny Y jitter kills depth fighting
     posArr[i*3+2] = p.z;
     scaleArr[i]   = p.scale;
-    const b = 0.82 + rand() * 0.36;
-    colorArr[i*3] = b;  colorArr[i*3+1] = b;  colorArr[i*3+2] = b;
+    const b = 0.88 + rand() * 0.2;
+    const h = (rand() - 0.5) * 0.12;
+    colorArr[i*3]   = Math.min(1, b + h);
+    colorArr[i*3+1] = Math.min(1, b);
+    colorArr[i*3+2] = Math.min(1, b - h);
     if (rotArr) rotArr[i] = rand() * Math.PI * 2;
   });
 
@@ -794,6 +754,8 @@ function makeBillboardMesh(texture, positions, { orient = 'vertical', worldW = 0
   mesh.frustumCulled = false;
   return mesh;
 }
+
+const FIXED_CANVAS_WORLD_H = 2.5; // MAX_PLANT_CM/100 — matches process-existing.js fixed canvas scale
 
 const DENSITY_MULT = 3;
 const CLUMP_RADIUS = 0.35;
@@ -847,7 +809,7 @@ const gardens    = {};
 const MONTHS     = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 // module-level so showMonth can build lazily
-let _manifest = null, _textures = null, _posBySeed = null;
+let _manifest = null, _textures = null;
 
 function yAtPosition(x, z) {
   const bed = beds.find(b =>
@@ -857,7 +819,7 @@ function yAtPosition(x, z) {
 
 function scaleForPos(x, z) {
   const v = ((Math.sin(x * 127.1 + z * 311.7) * 43758.5453) % 1 + 1) % 1;
-  return 0.8 + v * 0.4;
+  return 1.0 + v * 0.25;
 }
 
 // Clip planes that confine billboard geometry to the inner soil area of a bed.
@@ -891,63 +853,35 @@ function buildMonth(key) {
   const mats = [];
   const ver  = currentVersion();
 
-  if (ver.placements !== undefined) {
-    // ── exact placement mode ──────────────────────────────────────────────────
-    const bySlug = {};
-    for (const p of ver.placements) {
-      (bySlug[p.slug] ??= []).push(p);
-    }
-    for (const [slug, list] of Object.entries(bySlug)) {
-      const entry = _manifest.find(e => e.slug === slug && e.months.includes(key));
-      if (!entry) continue;
-      const tkey = `${slug}_${entry.stage}`;
-      if (!_textures[tkey]) continue;
-      const variants = entry.variants ?? 1;
-      const tex0 = _textures[tkey];
-      const imgAspect = tex0 ? tex0.image.width / tex0.image.height : entry.worldW / entry.worldH;
-      const opts = { orient: 'vertical', worldW: entry.worldH * imgAspect, worldH: entry.worldH };
+  const placements = ver.placements ?? [];
+  const bySlug = {};
+  for (const p of placements) (bySlug[p.slug] ??= []).push(p);
 
-      // Group placements by bed so we can apply per-bed clip planes
-      for (let bi = 0; bi < beds.length; bi++) {
-        const bed = beds[bi];
-        const bedList = list.filter(p =>
-          p.z >= bed.z - bed.w / 2 && p.z <= bed.z + bed.w / 2 && Math.abs(p.x) <= BED_L / 2);
-        if (!bedList.length) continue;
-        const density = ver.densities?.[slug] ?? 1;
-        const allPositions = bedList.flatMap(p =>
-          cellPositions(p, density).map(({ x, z }) => ({
-            x, z, y: yAtPosition(x, z), scale: scaleForPos(x, z),
-          }))
-        );
-        const clips = bedClipPlanes(bed);
-        addVariantMeshes(g, mats, _textures[tkey], allPositions, variants, tkey, _textures, opts, clips);
-        addBlobShadows(g, allPositions, entry.worldW, clips);
-      }
-    }
-  } else {
-    // ── scatter mode ─────────────────────────────────────────────────────────
-    for (const entry of _manifest) {
-      if (!entry.months.includes(key)) continue;
-      if (EXPLICIT_BEDS_MODE && !entry.beds) continue;
-      const tkey = `${entry.slug}_${entry.stage}`;
-      if (!_textures[tkey]) continue;
-      const allPositions = _posBySeed[entry.seed];
-      const variants = entry.variants ?? 1;
-      const tex0 = _textures[tkey];
-      const imgAspect = tex0 ? tex0.image.width / tex0.image.height : entry.worldW / entry.worldH;
-      const opts = { orient: 'vertical', worldW: entry.worldH * imgAspect, worldH: entry.worldH };
+  for (const [slug, list] of Object.entries(bySlug)) {
+    const entry = _manifest.find(e => e.slug === slug && e.months.includes(key));
+    if (!entry) continue;
+    const tkey = `${slug}_${entry.stage}`;
+    if (!_textures[tkey]) continue;
+    const variants  = entry.variants ?? 1;
+    const tex0      = _textures[tkey];
+    const imgAspect = tex0 ? tex0.image.width / tex0.image.height : entry.worldW / entry.worldH;
+    const billboardH = entry.fixedCanvas ? FIXED_CANVAS_WORLD_H : entry.worldH;
+    const opts = { orient: 'vertical', worldW: billboardH * imgAspect, worldH: billboardH };
+    const density = ver.densities?.[slug] ?? 1;
 
-      // Split by bed for per-bed clip planes
-      for (let bi = 0; bi < beds.length; bi++) {
-        if (entry.beds && !entry.beds.includes(bi)) continue;
-        const bed = beds[bi];
-        const bedPositions = allPositions.filter(p =>
-          p.z >= bed.z - bed.w / 2 - 0.01 && p.z <= bed.z + bed.w / 2 + 0.01);
-        if (!bedPositions.length) continue;
-        const clips = bedClipPlanes(bed);
-        addVariantMeshes(g, mats, _textures[tkey], bedPositions, variants, tkey, _textures, opts, clips);
-        addBlobShadows(g, bedPositions, entry.worldW, clips);
-      }
+    for (let bi = 0; bi < beds.length; bi++) {
+      const bed = beds[bi];
+      const bedList = list.filter(p =>
+        p.z >= bed.z - bed.w / 2 && p.z <= bed.z + bed.w / 2 && Math.abs(p.x) <= BED_L / 2);
+      if (!bedList.length) continue;
+      const allPositions = bedList.flatMap(p =>
+        cellPositions(p, density).map(({ x, z }) => ({
+          x, z, y: yAtPosition(x, z), scale: scaleForPos(x, z),
+        }))
+      );
+      const clips = bedClipPlanes(bed);
+      addVariantMeshes(g, mats, _textures[tkey], allPositions, variants, tkey, _textures, opts, clips);
+      addBlobShadows(g, allPositions, entry.worldW, clips);
     }
   }
 
@@ -969,15 +903,24 @@ function showMonth(key) {
 }
 
 async function init() {
+  // sync planting plan from server (prefer server if newer)
+  try {
+    const res = await fetch('/api/plans/betonbeete');
+    if (res.ok) {
+      const { data } = await res.json();
+      if (data) {
+        const serverStore = JSON.parse(data);
+        if (!store._savedAt || (serverStore._savedAt ?? 0) > store._savedAt) {
+          store = serverStore;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          renderVersionBar();
+        }
+      }
+    }
+  } catch {}
+
   _manifest = await fetch(`${import.meta.env.BASE_URL}plants/manifest.json`).then(r => r.json());
   _manifest = _manifest.filter(entry => entry.slug !== 'paeonia');
-
-  _posBySeed = {};
-  for (const entry of _manifest) {
-    if (!_posBySeed[entry.seed]) {
-      _posBySeed[entry.seed] = scatterBeds(entry.seed, entry.density, entry.beds ?? null);
-    }
-  }
 
   const loader = new THREE.TextureLoader();
   _textures = {};
@@ -986,12 +929,16 @@ async function init() {
     try {
       const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}.png`);
       tex.colorSpace = THREE.SRGBColorSpace;
+      tex.minFilter = THREE.NearestFilter;
+      tex.magFilter = THREE.NearestFilter;
       _textures[key] = tex;
     } catch { }
     for (let v = 2; v <= (entry.variants ?? 1); v++) {
       try {
         const tex = await loader.loadAsync(`${import.meta.env.BASE_URL}plants/${key}_${v}.png`);
         tex.colorSpace = THREE.SRGBColorSpace;
+        tex.minFilter = THREE.NearestFilter;
+        tex.magFilter = THREE.NearestFilter;
         _textures[`${key}_${v}`] = tex;
       } catch { }
     }

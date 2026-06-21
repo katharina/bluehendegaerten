@@ -62,7 +62,9 @@
     ],
     "color": "#e06090",
     "name_de": "Purpursonnenhut",
-    "placement_type": "point"
+    "placement_type": "point",
+    "fixedCanvas": true,
+    "family": "Asteraceae"
   },
   {
     "slug": "poppy",
@@ -127,7 +129,8 @@
     ],
     "color": "#e03020",
     "name_de": "Orientalischer Mohn",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Papaveraceae"
   },
   {
     "slug": "sunflower",
@@ -191,13 +194,14 @@
     ],
     "color": "#f5c010",
     "name_de": "Sonnenblume",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "salvia",
     "name": "Salvia nemorosa",
     "height_cm": 55,
-    "width_cm": 30,
+    "width_cm": 45,
     "density": 4,
     "scatter_seed": 198,
     "stages": [
@@ -232,7 +236,8 @@
     ],
     "color": "#6050c0",
     "name_de": "Steppensalbei",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Lamiaceae"
   },
   {
     "slug": "alchemilla",
@@ -273,7 +278,8 @@
     ],
     "color": "#a8c830",
     "name_de": "Frauenmantel",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Rosaceae"
   },
   {
     "slug": "sage",
@@ -338,7 +344,8 @@
     ],
     "color": "#7060b0",
     "name_de": "Echter Salbei",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Lamiaceae"
   },
   {
     "slug": "bunias",
@@ -403,7 +410,8 @@
     ],
     "color": "#e8d020",
     "name_de": "Zackenschötchen",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Brassicaceae"
   },
   {
     "slug": "aquilegia",
@@ -468,13 +476,14 @@
     ],
     "color": "#5040a0",
     "name_de": "Akelei",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Ranunculaceae"
   },
   {
     "slug": "primula",
     "name": "Primula veris",
     "height_cm": 25,
-    "width_cm": 25,
+    "width_cm": 18,
     "density": 3,
     "scatter_seed": 1231,
     "stages": [
@@ -533,7 +542,8 @@
     ],
     "color": "#e8c020",
     "name_de": "Schlüsselblume",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Primulaceae"
   },
   {
     "slug": "phacelia",
@@ -593,7 +603,8 @@
     ],
     "color": "#7080d8",
     "name_de": "Bienenfreund",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Boraginaceae"
   },
   {
     "slug": "calendula",
@@ -654,7 +665,8 @@
     ],
     "color": "#f07010",
     "name_de": "Ringelblume",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "anthemis",
@@ -716,7 +728,8 @@
     ],
     "color": "#f0c820",
     "name_de": "Färberkamille",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "tithonia",
@@ -776,7 +789,8 @@
     ],
     "color": "#f04810",
     "name_de": "Mexikanische Sonnenblume",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "artichoke",
@@ -841,7 +855,8 @@
     ],
     "color": "#7878b8",
     "name_de": "Artischocke",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Asteraceae"
   },
   {
     "slug": "achillea",
@@ -906,7 +921,8 @@
     ],
     "color": "#f0d010",
     "name_de": "Goldgarbe",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Asteraceae"
   },
   {
     "slug": "cosmea",
@@ -966,7 +982,8 @@
     ],
     "color": "#d860a0",
     "name_de": "Schmuckkörbchen",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "paeonia",
@@ -1031,7 +1048,8 @@
     ],
     "color": "#d04070",
     "name_de": "Pfingstrose",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Paeoniaceae"
   },
   {
     "slug": "artemisia",
@@ -1096,7 +1114,8 @@
     ],
     "color": "#a0a870",
     "name_de": "Wermut",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Asteraceae"
   },
   {
     "slug": "lactuca",
@@ -1158,7 +1177,8 @@
     ],
     "color": "#d0c840",
     "name_de": "Kompasslattich",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Asteraceae"
   },
   {
     "slug": "nasturtium",
@@ -1219,7 +1239,8 @@
     ],
     "color": "#f06010",
     "name_de": "Kapuzinerkresse",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Tropaeolaceae"
   },
   {
     "slug": "nicotiana",
@@ -1281,7 +1302,8 @@
     ],
     "color": "#d8d8e8",
     "name_de": "Ziertabak",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Solanaceae"
   },
   {
     "slug": "atriplex",
@@ -1342,7 +1364,8 @@
     ],
     "color": "#901830",
     "name_de": "Rote Gartenmelde",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Amaranthaceae"
   },
   {
     "slug": "borago",
@@ -1404,7 +1427,8 @@
     ],
     "color": "#3060e0",
     "name_de": "Borretsch",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Boraginaceae"
   },
   {
     "slug": "symphytum",
@@ -1471,7 +1495,8 @@
     ],
     "color": "#a080c0",
     "name_de": "Beinwell",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Boraginaceae"
   },
   {
     "slug": "diplotaxis",
@@ -1538,7 +1563,8 @@
     ],
     "color": "#f0d010",
     "name_de": "Mauerrauke",
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Brassicaceae"
   },
   {
     "slug": "beta",
@@ -1572,7 +1598,8 @@
     ],
     "color": "#506830",
     "name_de": "Rote Rübe",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Amaranthaceae"
   },
   {
     "slug": "verbascum",
@@ -1637,7 +1664,8 @@
     ],
     "color": "#f0d820",
     "name_de": "Schwarze Königskerze",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Plantaginaceae"
   },
   {
     "slug": "fennel",
@@ -1704,7 +1732,8 @@
     ],
     "color": "#c0d020",
     "name_de": "Fenchel",
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Apiaceae"
   },
   {
     "slug": "mentha",
@@ -1769,7 +1798,8 @@
         "height_cm": 45
       }
     ],
-    "placement_type": "point"
+    "placement_type": "point",
+    "family": "Lamiaceae"
   },
   {
     "slug": "calendula_arvensis",
@@ -1826,7 +1856,8 @@
         "height_cm": 25
       }
     ],
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Asteraceae"
   },
   {
     "slug": "fagopyrum",
@@ -1880,7 +1911,8 @@
         "height_cm": 60
       }
     ],
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Polygonaceae"
   },
   {
     "slug": "brassica_sabellica",
@@ -1929,6 +1961,7 @@
         "height_cm": 95
       }
     ],
-    "placement_type": "grid"
+    "placement_type": "grid",
+    "family": "Brassicaceae"
   }
 ]

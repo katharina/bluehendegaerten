@@ -27,6 +27,7 @@ export function writeManifest(species, outDir) {
         slug:    plant.slug,
         name:    plant.name,
         name_de: plant.name_de ?? null,
+        family:  plant.family  ?? null,
         color:   plant.color   ?? null,
         stage:   stage.id,
         months:  stage.months,
@@ -38,6 +39,7 @@ export function writeManifest(species, outDir) {
       if (variants > 1) entry.variants = variants;
       if (plant.beds) entry.beds = plant.beds;
       if (plant.placement_type) entry.placementType = plant.placement_type;
+      if (plant.fixedCanvas) entry.fixedCanvas = true;
       entries.push(entry);
     }
   }

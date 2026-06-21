@@ -1,323 +1,1739 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Bluehende Gaerten</title>
+  <title>Bluehende Gaerten — Pflanzenindex</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #fff; font-family: system-ui, sans-serif; overflow: hidden; height: 100vh; }
 
-    #wordmark {
-      position: absolute;
-      top: 16px;
-      left: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: #222;
-      z-index: 20;
-      pointer-events: none;
+    html, body {
+      height: 100%;
+      overflow: hidden;
     }
 
-    #version-bar {
-      position: absolute;
-      top: 40px;
-      left: 20px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      z-index: 20;
-    }
-
-    #version-select {
-      font-size: 11px;
+    body {
+      background: #fff;
       font-family: system-ui, sans-serif;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      padding: 4px 10px;
-      background: #fff;
-      color: #666;
-      cursor: pointer;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-      min-width: 90px;
-      transition: all 0.15s;
-    }
-    #version-select:hover { border-color: #888; color: #222; }
-
-    .version-icon-btn {
-      width: 22px;
-      height: 22px;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      background: #fff;
-      font-size: 13px;
-      cursor: pointer;
-      color: #666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      padding: 0;
-      line-height: 1;
-    }
-    .version-icon-btn:hover:not(:disabled) { border-color: #888; color: #222; }
-    .version-icon-btn:disabled { opacity: 0.3; cursor: default; }
-
-    #mode-bar {
-      position: absolute;
-      top: 68px;
-      left: 20px;
-      display: flex;
-      gap: 4px;
-      z-index: 20;
-    }
-    .mode-btn {
-      padding: 4px 12px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      background: #fff;
-      font-size: 11px;
-      cursor: pointer;
-      color: #666;
-      transition: all 0.15s;
-    }
-    .mode-btn:hover { border-color: #888; color: #222; }
-    .mode-btn.active { background: #222; color: #fff; border-color: #222; }
-
-    #plant-panel {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 290px;
-      background: rgba(255,255,255,0.97);
-      border-right: 1px solid #e8e8e8;
-      z-index: 15;
+      color: #222;
       display: flex;
       flex-direction: column;
-      transform: translateX(-100%);
-      transition: transform 0.22s ease;
     }
-    #plant-panel.open { transform: translateX(0); }
 
-    .panel-header {
-      padding: 100px 16px 10px;
-      font-size: 10px;
+    header {
+      padding: 20px 48px;
+      border-bottom: 1px solid #000;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .wordmark {
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.12em;
-      color: #aaa;
-      border-bottom: 1px solid #eee;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    #garden-label {
+      display: none;
+      font-size: 12px;
+      color: #888;
+    }
+
+    #garden-bar {
+      display: none;
+      gap: 6px;
+    }
+
+    .garden-btn {
+      font-size: 11px;
+      color: #888;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 4px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .garden-btn:hover { border-color: #888; color: #222; }
+    .garden-btn.active { background: #222; color: #fff; border-color: #222; }
+
+    .open-btn {
+      font-size: 11px;
+      color: #888;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 5px 14px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .open-btn:hover { border-color: #888; color: #222; }
+
+    #edit-mode-btn {
+      font-size: 11px;
+      font-family: inherit;
+      color: #888;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    #edit-mode-btn:hover { border-color: #888; color: #222; }
+    #edit-mode-btn.active { background: #222; color: #fff; border-color: #222; }
+
+    /* All observations modal */
+    #all-obs-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    #all-obs-backdrop.open { display: flex; }
+
+    #all-obs-modal {
+      background: #fff;
+      border: 2px solid #000;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    #all-obs-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 24px 32px;
+      border-bottom: 1px solid #000;
       flex-shrink: 0;
     }
 
-    #plant-list {
-      overflow-y: auto;
-      flex: 1;
-      padding: 4px 0;
+    #all-obs-header h2 { font-size: 18px; font-weight: 600; }
+
+    #all-obs-close {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    #all-obs-close:hover { color: #000; }
+
+    #all-obs-list {
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .plant-row {
-      padding: 9px 16px;
-      border-bottom: 1px solid #f2f2f2;
+    .all-obs-card {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid #eee;
+      align-items: flex-start;
+    }
+
+    .all-obs-thumb {
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .all-obs-thumb img {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      background: #f5f5f3;
+      display: block;
+    }
+    .all-obs-thumb-empty {
+      width: 120px;
+      height: 80px;
+      background: #f5f5f3;
+    }
+
+    .all-obs-body { flex: 1; min-width: 0; }
+
+    .all-obs-meta {
+      font-size: 11px;
+      color: #aaa;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .all-obs-text {
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .all-obs-plants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .all-obs-plant-tag {
+      font-size: 11px;
+      font-style: italic;
+      color: #888;
+      border: 1px solid #eee;
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+
+    .all-obs-empty {
+      font-size: 13px;
+      color: #bbb;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    /* Edit mode layout */
+    body.edit-mode #garden-description { display: none; }
+    body.edit-mode #observations { width: 50%; }
+
+    /* Edit indicator above bed plan */
+    #bed-plan-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 0 12px;
+      flex-shrink: 0;
+    }
+    #version-select-plan {
+      font-size: 11px;
+      font-family: inherit;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 3px 0;
+      outline: none;
+      background: transparent;
+      color: #555;
+      display: none;
+    }
+    body.edit-mode #version-select-plan { display: block; }
+    #selected-plant-label {
+      font-size: 12px;
+      font-style: italic;
+      color: #888;
+      display: none;
+    }
+    body.edit-mode #selected-plant-label { display: block; }
+
+    #bed-plan.editable { cursor: crosshair; }
+
+    /* Selected plant card */
+    .plant-card.selected {
+      background: #f0f0f0;
+      outline: 2px solid #000;
+      outline-offset: -2px;
+    }
+
+    #content {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid #000;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #garden-description {
+      padding: 40px 48px;
+      width: 33.333%;
+      flex-shrink: 0;
+      border-right: 1px solid #000;
+    }
+
+    #garden-description h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    #garden-description p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 1em;
+    }
+    #garden-description p:last-child { margin-bottom: 0; }
+
+    #observations {
+      padding: 40px 48px;
+      width: 33.333%;
+      flex-shrink: 0;
+      border-right: 1px solid #000;
+      overflow-y: auto;
+    }
+
+    #observations h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 28px;
+    }
+
+    #bed-plan {
+      width: 100%;
+    }
+
+    #bed-plan svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    #bed-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: #fff;
+      border: 1px solid #000;
+      padding: 6px 10px;
+      font-size: 12px;
+      line-height: 1.4;
+      z-index: 200;
+      display: none;
+    }
+
+    #bed-tooltip .tt-name { font-style: italic; }
+    #bed-tooltip .tt-de { color: #555; }
+
+    #plant-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #plant-col-header {
+      flex-shrink: 0;
+      border-bottom: 1px solid #000;
+      padding: 40px 48px 20px;
+    }
+
+    #plant-col-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 16px;
+    }
+
+    #plant-col-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    #add-plant-btn {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      padding: 4px 12px;
+      cursor: pointer;
+      background: #fff;
+      color: #666;
+      white-space: nowrap;
+    }
+    #add-plant-btn:hover { border-color: #000; color: #000; }
+    #add-plant-btn.open { background: #000; color: #fff; border-color: #000; }
+
+    #add-plant-form {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px 48px;
+      border-bottom: 1px solid #000;
+      background: #fafafa;
+    }
+    #add-plant-form.open { display: flex; }
+
+    .apf-row { display: flex; gap: 16px; }
+    .apf-field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .apf-field.narrow { flex: 0 0 100px; }
+    .apf-field > label { display: flex; align-items: baseline; gap: 6px; }
+    .apf-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+    .apf-input {
+      font-size: 13px;
+      font-family: inherit;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 5px 0;
+      outline: none;
+      background: transparent;
+      color: #222;
+    }
+    .apf-input:focus { border-bottom-color: #000; }
+    .apf-input[type=color] {
+      padding: 0;
+      height: 28px;
+      cursor: pointer;
+      border: none;
+      border-bottom: 1px solid #ccc;
+    }
+    .apf-actions { display: flex; gap: 8px; padding-top: 4px; }
+    #apf-submit {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #000;
+      padding: 6px 18px;
+      cursor: pointer;
+      background: #000;
+      color: #fff;
+    }
+    #apf-cancel {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      padding: 6px 14px;
+      cursor: pointer;
+      background: #fff;
+      color: #666;
+    }
+    #apf-error {
+      font-size: 11px;
+      color: #c00;
+      display: none;
+    }
+
+    #plant-filter {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 6px 0;
+      font-size: 13px;
+      font-family: inherit;
+      color: #222;
+      outline: none;
+      background: transparent;
+    }
+    #plant-filter::placeholder { color: #bbb; }
+    #plant-filter:focus { border-bottom-color: #000; }
+
+    #plant-grid {
+      flex: 1;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-auto-rows: 140px;
+      gap: 0;
+    }
+
+    .plant-card {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
       cursor: pointer;
       transition: background 0.1s;
     }
-    .plant-row:hover { background: #f5f5f5; }
-    .plant-row.selected { background: #222; }
-    .plant-row.selected .plant-name { color: #fff; }
+    .plant-card:hover { background: #f5f5f5; }
 
-    #plant-search-wrap {
-      padding: 6px 12px 6px;
+    .card-dot {
+      border-radius: 50%;
+      position: absolute;
+      bottom: 16px;
+      right: 18px;
+    }
+
+    .card-name, .card-family, .card-de {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-name {
+      font-size: 18px;
+      font-style: italic;
+      color: #222;
+      line-height: 1.3;
+    }
+
+    .card-family {
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .card-de {
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* Modal */
+    #modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    #modal-backdrop.open { display: flex; }
+
+    #modal {
+      background: #fff;
+      border: 5px solid #000;
+      width: 80vw;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+      z-index: 10;
+    }
+    #modal-close:hover { color: #000; }
+
+    #modal-columns {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #modal-info {
+      width: 38%;
+      flex-shrink: 0;
+      padding: 32px;
+      overflow-y: auto;
+      border-right: 1px solid #eee;
+    }
+
+    #modal-name {
+      font-size: 24px;
+      font-style: italic;
+      color: #222;
+      line-height: 1.2;
+      margin-bottom: 4px;
+      padding-right: 32px;
+    }
+
+    #modal-de {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 2px;
+    }
+
+    #modal-family {
+      font-size: 11px;
+      color: #aaa;
+      margin-bottom: 28px;
+    }
+
+    #modal-stages {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+      margin-bottom: 24px;
+    }
+
+    #modal-generated {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .modal-gen-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .modal-gen-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      background: #f5f5f3;
+      display: block;
+    }
+
+    .modal-gen-caption {
+      font-size: 10px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    .modal-stage-row {
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .modal-stage-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      text-transform: uppercase;
+      width: 72px;
+      flex-shrink: 0;
+    }
+
+    .modal-stage-months {
+      font-size: 12px;
+      color: #555;
+    }
+
+    #modal-images {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #obs-toggle-bar {
+      flex-shrink: 0;
+      padding: 16px 24px;
+      border-bottom: 1px solid #eee;
+    }
+
+    #obs-toggle-btn {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      padding: 5px 14px;
+      cursor: pointer;
+      background: #fff;
+      color: #444;
+    }
+    #obs-toggle-btn:hover { border-color: #000; color: #000; }
+    #obs-toggle-btn.open { background: #000; color: #fff; border-color: #000; }
+
+    #obs-form {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px 24px;
       border-bottom: 1px solid #eee;
       flex-shrink: 0;
     }
-    #plant-search {
-      width: 100%;
-      border: 1px solid #e0e0e0;
-      border-radius: 20px;
-      padding: 5px 10px;
-      font-size: 11px;
-      font-family: system-ui, sans-serif;
-      color: #444;
-      outline: none;
-      background: #fafafa;
-      transition: border-color 0.15s;
-    }
-    #plant-search:focus { border-color: #aaa; background: #fff; }
+    #obs-form.open { display: flex; }
 
-    .plant-name {
-      font-size: 12px;
-      font-weight: 500;
-      color: #222;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .plant-name-la {
+    .obs-row { display: flex; gap: 12px; }
+    .obs-field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .obs-label {
       font-size: 10px;
-      font-style: italic;
-      color: #999;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .plant-row.selected .plant-name-la { color: #aaa; }
-
-    #canvas-wrap { position: absolute; inset: 0; z-index: 0; }
-    #canvas-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
-    #canvas-wrap canvas.selecting { cursor: crosshair !important; }
-
-    #ui {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 10;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      text-transform: uppercase;
     }
 
-    .month-btn {
-      padding: 6px 16px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      background: #fff;
+    .obs-input, .obs-select {
       font-size: 12px;
-      cursor: pointer;
-      color: #666;
-      transition: all 0.15s;
+      font-family: inherit;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 4px 0;
+      outline: none;
+      background: transparent;
+      color: #222;
     }
+    .obs-input:focus, .obs-select:focus { border-bottom-color: #000; }
 
-    .month-btn:hover { border-color: #888; color: #222; }
-    .month-btn.active { background: #222; color: #fff; border-color: #222; }
+    .obs-textarea {
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid #eee;
+      padding: 8px;
+      outline: none;
+      background: transparent;
+      color: #222;
+      resize: vertical;
+      min-height: 64px;
+    }
+    .obs-textarea:focus { border-color: #ccc; }
 
-    #view-ui {
-      position: absolute;
-      top: 16px;
-      right: 16px;
+    #obs-plant-grid {
       display: flex;
-      gap: 6px;
-      z-index: 10;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-height: 90px;
+      overflow-y: auto;
     }
 
-    .view-btn {
-      padding: 5px 12px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      background: #fff;
+    .obs-plant-chip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
       font-size: 11px;
+      font-style: italic;
+      color: #777;
       cursor: pointer;
-      color: #666;
-      transition: all 0.15s;
+      padding: 3px 7px;
+      border: 1px solid #eee;
+      border-radius: 2px;
+      user-select: none;
     }
-    .view-btn:hover { border-color: #888; color: #222; }
-    .view-btn.active { background: #222; color: #fff; border-color: #222; }
+    .obs-plant-chip:hover { border-color: #bbb; color: #333; }
+    .obs-plant-chip.checked { border-color: #000; color: #000; background: #f9f9f9; }
+    .obs-plant-chip input { display: none; }
 
-    #hint {
-      position: absolute;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
+    .obs-file-label {
       font-size: 11px;
-      color: #bbb;
-      pointer-events: none;
-      z-index: 10;
+      color: #888;
+      border: 1px dashed #ccc;
+      padding: 8px 12px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .obs-file-label:hover { border-color: #888; color: #444; }
+    .obs-file-label.has-file { border-color: #000; color: #222; border-style: solid; }
+
+    .obs-form-actions { display: flex; gap: 8px; }
+
+    #obs-submit {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #000;
+      padding: 6px 18px;
+      cursor: pointer;
+      background: #000;
+      color: #fff;
+    }
+    #obs-cancel {
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      padding: 6px 14px;
+      cursor: pointer;
+      background: #fff;
+      color: #666;
     }
 
-    #info-panel {
-      position: absolute;
-      top: 60px;
-      right: 16px;
-      width: 200px;
-      background: rgba(255,255,255,0.96);
-      border: 1px solid #e8e8e8;
-      border-radius: 8px;
-      overflow: hidden;
-      z-index: 10;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(-4px);
-      transition: opacity 0.18s, transform 0.18s;
+    #obs-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
-    #info-panel.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    #info-content { padding: 12px 14px; }
 
-    .info-img {
-      display: block;
+    .obs-card {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 16px;
+    }
+
+    .obs-card-thumb {
       width: 100%;
-      height: 140px;
+      max-width: 400px;
+      height: auto;
       object-fit: contain;
       background: #f5f5f3;
-      margin: -12px -14px 10px;
-      width: calc(100% + 28px);
+      display: block;
     }
-    .info-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
-    .info-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-    .info-name-de { font-size: 12px; font-weight: 600; color: #222; line-height: 1.3; }
-    .info-plant-name { font-size: 10px; font-style: italic; color: #999; line-height: 1.3; }
-    .info-dims { font-size: 10px; color: #bbb; margin-bottom: 10px; padding-left: 18px; }
-    .info-density-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-    .density-ctrl { display: flex; align-items: center; gap: 6px; }
-    .density-btn { width: 22px; height: 22px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer; font-size: 14px; line-height: 1; display: flex; align-items: center; justify-content: center; }
-    .density-btn:hover { background: #e8e8e8; }
-    .density-val { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
-    .info-stage-row { margin-bottom: 5px; }
-    .stage-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; color: #aaa; text-transform: uppercase; }
-    .stage-months-text { font-size: 10px; color: #555; margin-top: 1px; }
 
+    .obs-card-body { flex: 1; min-width: 0; }
+
+    .obs-card-meta {
+      font-size: 10px;
+      color: #aaa;
+      margin-bottom: 5px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .obs-card-type {
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .obs-card-text {
+      font-size: 12px;
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+
+    .obs-card-plants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .obs-plant-tag {
+      font-size: 10px;
+      font-style: italic;
+      color: #888;
+      border: 1px solid #eee;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .obs-empty {
+      font-size: 12px;
+      color: #bbb;
+      padding: 24px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      #content { flex-direction: column; }
+      #garden-description, #observations { width: 100%; border-right: none; border-bottom: 1px solid #000; }
+    }
   </style>
 </head>
 <body>
-  <div id="canvas-wrap"><canvas id="c"></canvas></div>
-
-  <div id="wordmark">BLUEHENDE GAERTEN</div>
-
-  <div id="version-bar">
-    <select id="version-select"></select>
-    <button class="version-icon-btn" id="version-new" title="New version">+</button>
-    <button class="version-icon-btn" id="version-delete" title="Delete version">×</button>
-  </div>
-
-  <div id="mode-bar">
-    <button class="mode-btn" id="btn-edit">Edit</button>
-    <button class="mode-btn active" id="btn-view">Ansehen</button>
-  </div>
-
-  <div id="plant-panel">
-    <div class="panel-header">PFLANZEN</div>
-    <div id="plant-search-wrap">
-      <input id="plant-search" type="text" placeholder="Suchen…" autocomplete="off" spellcheck="false">
+  <header>
+    <span class="wordmark">BLUEHENDE GAERTEN</span>
+    <div class="header-right">
+      <span id="garden-label"></span>
+      <div id="garden-bar"></div>
+      <button id="all-obs-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Beobachtungen</button>
+      <button id="edit-mode-btn">Bearbeiten</button>
+      <a class="open-btn" href="sim.html">Simulator →</a>
     </div>
-    <div id="plant-list"></div>
+  </header>
+
+  <div id="content">
+    <div id="garden-description"></div>
+    <div id="observations">
+      <div id="bed-plan-bar">
+        <select id="version-select-plan"></select>
+        <span id="selected-plant-label">Keine Pflanze gewählt</span>
+        <div id="density-ctrl" style="display:none;align-items:center;gap:6px;margin-left:8px;">
+          <button class="density-btn" id="density-dec" style="font-size:13px;line-height:1;border:1px solid #ccc;background:#fff;width:22px;height:22px;cursor:pointer;">−</button>
+          <span id="density-val" style="font-size:11px;min-width:16px;text-align:center;"></span>
+          <button class="density-btn" id="density-inc" style="font-size:13px;line-height:1;border:1px solid #ccc;background:#fff;width:22px;height:22px;cursor:pointer;">+</button>
+          <span style="font-size:10px;color:#aaa;letter-spacing:0.06em;text-transform:uppercase;">Anzahl</span>
+        </div>
+        <button id="clear-plan-btn" style="display:none;margin-left:auto;font-size:11px;font-family:inherit;border:1px solid #ccc;padding:3px 10px;cursor:pointer;background:#fff;color:#888;">Alles löschen</button>
+      </div>
+      <div id="bed-plan"></div>
+    </div>
+    <div id="plant-col">
+      <div id="plant-col-header">
+        <div id="plant-col-header-row">
+          <h2 id="plant-col-title">Pflanzen</h2>
+          <button id="add-plant-btn">+ Pflanze</button>
+        </div>
+        <input id="plant-filter" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+      </div>
+      <div id="add-plant-form">
+        <div class="apf-row">
+          <div class="apf-field">
+            <label class="apf-label">Botanischer Name</label>
+            <input id="apf-name" class="apf-input" type="text" placeholder="z.B. Lavandula angustifolia">
+          </div>
+          <div class="apf-field">
+            <label class="apf-label">Deutscher Name</label>
+            <input id="apf-name-de" class="apf-input" type="text" placeholder="z.B. Echter Lavendel">
+          </div>
+        </div>
+        <div class="apf-row">
+          <div class="apf-field">
+            <label class="apf-label">Familie</label>
+            <input id="apf-family" class="apf-input" type="text" placeholder="z.B. Lamiaceae">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Breite (cm)</label>
+            <input id="apf-width" class="apf-input" type="number" min="1" max="500" placeholder="40">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Höhe (cm)</label>
+            <input id="apf-height" class="apf-input" type="number" min="1" max="500" placeholder="60">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Farbe</label>
+            <input id="apf-color" class="apf-input" type="color" value="#a0c878">
+          </div>
+        </div>
+        <div class="apf-actions">
+          <button id="apf-submit">Hinzufügen</button>
+          <button id="apf-cancel">Abbrechen</button>
+          <span id="apf-error"></span>
+        </div>
+      </div>
+      <div id="plant-grid"></div>
+    </div>
   </div>
 
-  <div id="view-ui">
-    <button class="view-btn active" data-view="iso-se">SE</button>
-    <button class="view-btn" data-view="iso-sw">SW</button>
-    <button class="view-btn" data-view="iso-ne">NE</button>
-    <button class="view-btn" data-view="iso-nw">NW</button>
-    <button class="view-btn" data-view="3d">3D</button>
+  <div id="bed-tooltip"><span class="tt-name"></span><br><span class="tt-de"></span></div>
+
+  <div id="all-obs-backdrop">
+    <div id="all-obs-modal">
+      <div id="all-obs-header">
+        <h2 id="all-obs-title">Beobachtungen</h2>
+        <button id="all-obs-close">×</button>
+      </div>
+      <div id="all-obs-list"></div>
+    </div>
   </div>
 
-  <div id="ui">
-    <button class="month-btn" data-month="january">Jan</button>
-    <button class="month-btn" data-month="february">Feb</button>
-    <button class="month-btn" data-month="march">Mar</button>
-    <button class="month-btn" data-month="april">Apr</button>
-    <button class="month-btn" data-month="may">May</button>
-    <button class="month-btn active" data-month="june">Jun</button>
-    <button class="month-btn" data-month="july">Jul</button>
-    <button class="month-btn" data-month="august">Aug</button>
-    <button class="month-btn" data-month="september">Sep</button>
-    <button class="month-btn" data-month="october">Oct</button>
-    <button class="month-btn" data-month="november">Nov</button>
-    <button class="month-btn" data-month="december">Dec</button>
+  <div id="modal-backdrop">
+    <div id="modal">
+      <button id="modal-close">×</button>
+      <div id="modal-columns">
+        <div id="modal-info">
+          <div id="modal-name"></div>
+          <div id="modal-de"></div>
+          <div id="modal-family"></div>
+          <div id="modal-stages"></div>
+          <div id="modal-generated"></div>
+        </div>
+        <div id="modal-images">
+          <div id="obs-toggle-bar">
+            <button id="obs-toggle-btn">+ Neue Beobachtung</button>
+          </div>
+
+          <div id="obs-form">
+            <div class="obs-row">
+              <div class="obs-field">
+                <label class="obs-label">Datum</label>
+                <input id="obs-date" class="obs-input" type="date">
+              </div>
+              <div class="obs-field">
+                <label class="obs-label">Typ</label>
+                <select id="obs-type" class="obs-select">
+                  <option value="foto">Foto</option>
+                  <option value="zeichnung">Zeichnung</option>
+                  <option value="herbarbeleg">Herbarbeleg</option>
+                  <option value="notiz">Notiz</option>
+                </select>
+              </div>
+              <div class="obs-field">
+                <label class="obs-label">Garten</label>
+                <select id="obs-garden" class="obs-select"></select>
+              </div>
+            </div>
+            <div class="obs-field">
+              <label class="obs-label">Notiz</label>
+              <textarea id="obs-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+            </div>
+            <div class="obs-field">
+              <label class="obs-label">Pflanzen</label>
+              <div id="obs-plant-grid"></div>
+            </div>
+            <div class="obs-field">
+              <label class="obs-file-label" id="obs-file-label">
+                <span id="obs-file-text">Bild auswählen…</span>
+                <input id="obs-file" type="file" accept="image/*" style="display:none">
+              </label>
+            </div>
+            <div class="obs-form-actions">
+              <button id="obs-submit">Speichern</button>
+              <button id="obs-cancel">Abbrechen</button>
+            </div>
+          </div>
+
+          <div id="obs-list"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="info-panel"><div id="info-content"></div></div>
+  <script type="module">
+    const base = import.meta.env.BASE_URL;
+    const [all, gardens] = await Promise.all([
+      fetch(base + 'plants/manifest.json').then(r => r.json()),
+      fetch(base + 'gardens.json').then(r => r.json()),
+    ]);
 
-  <script type="module" src="/src/main.js"></script>
+    // one entry per slug (bloom stage preferred)
+    const bySlug = new Map();
+    // all stages per slug
+    const stagesBySlug = new Map();
+    for (const e of all) {
+      if (!bySlug.has(e.slug) || e.stage === 'bloom') bySlug.set(e.slug, e);
+      if (!stagesBySlug.has(e.slug)) stagesBySlug.set(e.slug, []);
+      stagesBySlug.get(e.slug).push(e);
+    }
+
+    const MONTH_NAMES = {
+      january:'Jan', february:'Feb', march:'Mär', april:'Apr',
+      may:'Mai', june:'Jun', july:'Jul', august:'Aug',
+      september:'Sep', october:'Okt', november:'Nov', december:'Dez',
+    };
+
+    // ── Modal ─────────────────────────────────────────────────────────────────
+    const backdrop = document.getElementById('modal-backdrop');
+    let _modalSlug = null;
+
+    const STAGES = ['sprout', 'foliage', 'bloom', 'seed', 'dried'];
+
+    const TYPE_LABELS_OBS = { foto: 'Foto', zeichnung: 'Zeichnung', herbarbeleg: 'Herbarbeleg', notiz: 'Notiz' };
+
+    function renderGeneratedImages(slug) {
+      const gen = document.getElementById('modal-generated');
+      gen.innerHTML = '';
+      for (const stage of STAGES) {
+        const src = `${base}plants/${slug}_${stage}.png`;
+        const item = document.createElement('div');
+        item.className = 'modal-gen-item';
+        item.innerHTML = `
+          <img src="${src}" onerror="this.parentElement.style.display='none'">
+          <span class="modal-gen-caption">${stage}</span>
+        `;
+        gen.appendChild(item);
+      }
+    }
+
+    async function renderObservations(slug) {
+      const list = document.getElementById('obs-list');
+      list.innerHTML = '';
+      try {
+        const obs = await fetch(`/api/observations?slug=${slug}`).then(r => r.json());
+        if (!obs.length) {
+          list.innerHTML = '<div class="obs-empty">Noch keine Beobachtungen</div>';
+          return;
+        }
+        for (const o of obs) {
+          const card = document.createElement('div');
+          card.className = 'obs-card';
+          const thumb = o.filename
+            ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">`
+            : `<div class="obs-card-thumb-empty"></div>`;
+          const dateStr = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) : '';
+          const plants = o.slugs.map(s => {
+            const p = bySlug.get(s);
+            return `<span class="obs-plant-tag">${p?.name ?? s}</span>`;
+          }).join('');
+          card.innerHTML = `
+            ${thumb}
+            <div class="obs-card-body">
+              <div class="obs-card-meta">
+                <span class="obs-card-type">${TYPE_LABELS_OBS[o.type] ?? o.type}</span>
+                ${dateStr ? `<span>${dateStr}</span>` : ''}
+              </div>
+              ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+              ${plants ? `<div class="obs-card-plants">${plants}</div>` : ''}
+            </div>
+          `;
+          list.appendChild(card);
+        }
+      } catch {
+        list.innerHTML = '<div class="obs-empty">Server nicht erreichbar</div>';
+      }
+    }
+
+    async function openModal(p) {
+      _modalSlug = p.slug;
+      document.getElementById('modal').style.borderColor = p.color ?? '#000';
+      document.getElementById('modal-name').textContent = p.name;
+      document.getElementById('modal-de').textContent = p.name_de ?? '';
+      document.getElementById('modal-family').textContent = p.family ?? '';
+
+      const stages = stagesBySlug.get(p.slug) ?? [];
+      document.getElementById('modal-stages').innerHTML = stages.map(s => `
+        <div class="modal-stage-row">
+          <span class="modal-stage-name">${s.stage}</span>
+          <span class="modal-stage-months">${s.months.map(m => MONTH_NAMES[m]).join(', ')}</span>
+        </div>
+      `).join('');
+
+      renderGeneratedImages(p.slug);
+      closeObsForm();
+      await renderObservations(p.slug);
+      backdrop.classList.add('open');
+    }
+
+    // ── Observation form ──────────────────────────────────────────────────────
+
+    const obsForm   = document.getElementById('obs-form');
+    const obsToggle = document.getElementById('obs-toggle-btn');
+    const obsFile   = document.getElementById('obs-file');
+    const obsFileLabel = document.getElementById('obs-file-label');
+
+    // prefill date with today
+    document.getElementById('obs-date').value = new Date().toISOString().slice(0, 10);
+
+    // populate garden select
+    const obsGarden = document.getElementById('obs-garden');
+    gardens.forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g.id;
+      opt.textContent = g.name;
+      obsGarden.appendChild(opt);
+    });
+
+    function buildPlantGrid(preselect) {
+      const grid = document.getElementById('obs-plant-grid');
+      grid.innerHTML = '';
+      const gardenSlugs = new Set(gardens.find(g => g.id === obsGarden.value)?.plants ?? []);
+      [...bySlug.values()]
+        .filter(p => gardenSlugs.has(p.slug))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(p => {
+          const chip = document.createElement('label');
+          chip.className = 'obs-plant-chip' + (p.slug === preselect ? ' checked' : '');
+          chip.innerHTML = `<input type="checkbox" value="${p.slug}"${p.slug === preselect ? ' checked' : ''}>${p.name}`;
+          chip.querySelector('input').addEventListener('change', e => {
+            chip.classList.toggle('checked', e.target.checked);
+          });
+          grid.appendChild(chip);
+        });
+    }
+
+    function closeObsForm() {
+      obsForm.classList.remove('open');
+      obsToggle.classList.remove('open');
+      obsToggle.textContent = '+ Neue Beobachtung';
+    }
+
+    obsToggle.addEventListener('click', () => {
+      const open = obsForm.classList.toggle('open');
+      obsToggle.classList.toggle('open', open);
+      obsToggle.textContent = open ? '× Abbrechen' : '+ Neue Beobachtung';
+      if (open) buildPlantGrid(_modalSlug);
+    });
+
+    obsFile.addEventListener('change', () => {
+      const name = obsFile.files[0]?.name;
+      document.getElementById('obs-file-text').textContent = name ?? 'Bild auswählen…';
+      obsFileLabel.classList.toggle('has-file', !!name);
+    });
+
+    document.getElementById('obs-cancel').addEventListener('click', closeObsForm);
+
+    document.getElementById('obs-submit').addEventListener('click', async () => {
+      const slugs = [...document.querySelectorAll('#obs-plant-grid input:checked')].map(i => i.value);
+      const fd = new FormData();
+      fd.append('garden', obsGarden.value);
+      fd.append('date',   document.getElementById('obs-date').value);
+      fd.append('type',   document.getElementById('obs-type').value);
+      fd.append('text',   document.getElementById('obs-text').value);
+      slugs.forEach(s => fd.append('slugs', s));
+      if (obsFile.files[0]) fd.append('file', obsFile.files[0]);
+
+      await fetch('/api/observations', { method: 'POST', body: fd });
+
+      // reset form fields
+      document.getElementById('obs-date').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('obs-text').value = '';
+      obsFile.value = '';
+      document.getElementById('obs-file-text').textContent = 'Bild auswählen…';
+      obsFileLabel.classList.remove('has-file');
+
+      closeObsForm();
+      await renderObservations(_modalSlug);
+    });
+
+    backdrop.addEventListener('click', e => {
+      if (e.target === backdrop) backdrop.classList.remove('open');
+    });
+    document.getElementById('modal-close').addEventListener('click', () => {
+      backdrop.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        backdrop.classList.remove('open');
+        document.getElementById('all-obs-backdrop').classList.remove('open');
+      }
+    });
+
+    // ── All observations modal ────────────────────────────────────────────────
+    const allObsBackdrop = document.getElementById('all-obs-backdrop');
+
+    async function openAllObs() {
+      const list = document.getElementById('all-obs-list');
+      list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
+      allObsBackdrop.classList.add('open');
+
+      try {
+        const obs = await fetch(`/api/observations?garden=${activeGarden}`).then(r => r.json());
+        list.innerHTML = '';
+
+        if (!obs.length) {
+          list.innerHTML = '<div class="all-obs-empty">Noch keine Beobachtungen</div>';
+          return;
+        }
+
+        for (const o of obs) {
+          const card = document.createElement('div');
+          card.className = 'all-obs-card';
+          const dateStr = o.date
+            ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' })
+            : '';
+          const thumb = o.filename
+            ? `<div class="all-obs-thumb"><img src="/uploads/${o.filename}"></div>`
+            : `<div class="all-obs-thumb"><div class="all-obs-thumb-empty"></div></div>`;
+          const plants = o.slugs.map(s => {
+            const p = bySlug.get(s);
+            return `<span class="all-obs-plant-tag">${p?.name ?? s}</span>`;
+          }).join('');
+          card.innerHTML = `
+            ${thumb}
+            <div class="all-obs-body">
+              <div class="all-obs-meta">
+                <span>${TYPE_LABELS_OBS[o.type] ?? o.type}</span>
+                ${dateStr ? `<span>${dateStr}</span>` : ''}
+              </div>
+              ${o.text ? `<div class="all-obs-text">${o.text}</div>` : ''}
+              ${plants ? `<div class="all-obs-plants">${plants}</div>` : ''}
+            </div>
+          `;
+          list.appendChild(card);
+        }
+      } catch {
+        list.innerHTML = '<div class="all-obs-empty">Server nicht erreichbar</div>';
+      }
+    }
+
+    document.getElementById('all-obs-btn').addEventListener('click', openAllObs);
+    document.getElementById('all-obs-close').addEventListener('click', () => allObsBackdrop.classList.remove('open'));
+    allObsBackdrop.addEventListener('click', e => { if (e.target === allObsBackdrop) allObsBackdrop.classList.remove('open'); });
+
+    // ── Planting store ────────────────────────────────────────────────────────
+    const STORAGE_KEY = 'bluehendegaerten';
+
+    let store = (() => {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? null; } catch { return null; }
+    })() ?? { versions: [{ id: 'default', name: 'Garten 1', placements: [] }], currentId: 'default' };
+
+    // sync from server (prefer newer)
+    try {
+      const res = await fetch('/api/plans/betonbeete');
+      if (res.ok) {
+        const { data } = await res.json();
+        if (data) {
+          const srv = JSON.parse(data);
+          if (!store._savedAt || (srv._savedAt ?? 0) > store._savedAt) {
+            store = srv;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          }
+        }
+      }
+    } catch {}
+
+    function currentVersion() {
+      return store.versions.find(v => v.id === store.currentId) ?? store.versions[0];
+    }
+
+    function savePlan() {
+      store._savedAt = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+      fetch('/api/plans/betonbeete', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: JSON.stringify(store) }),
+      }).catch(() => {});
+    }
+
+    function addPlacement(slug, x, z) {
+      const ver = currentVersion();
+      if (!ver.placements) ver.placements = [];
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+      ver.placements.push({ id, slug, x: +x.toFixed(3), z: +z.toFixed(3) });
+      savePlan();
+      renderBedPlan();
+    }
+
+    function removePlacement(id) {
+      const ver = currentVersion();
+      if (!ver.placements) return;
+      ver.placements = ver.placements.filter(p => p.id !== id);
+      savePlan();
+      renderBedPlan();
+    }
+
+    function renderVersionSelect() {
+      const sel = document.getElementById('version-select-plan');
+      sel.innerHTML = store.versions.map(v =>
+        `<option value="${v.id}"${v.id === store.currentId ? ' selected' : ''}>${v.name}</option>`
+      ).join('');
+    }
+
+    document.getElementById('version-select-plan').addEventListener('change', e => {
+      store.currentId = e.target.value;
+      savePlan();
+      renderBedPlan();
+    });
+
+    renderVersionSelect();
+
+    // ── Edit mode ─────────────────────────────────────────────────────────────
+    let editMode = false;
+    let selectedSlug = null;
+
+    function updateDensityCtrl() {
+      const ctrl = document.getElementById('density-ctrl');
+      if (!selectedSlug || !editMode) { ctrl.style.display = 'none'; return; }
+      ctrl.style.display = 'flex';
+      const density = currentVersion().densities?.[selectedSlug] ?? 1;
+      document.getElementById('density-val').textContent = density;
+    }
+
+    function setDensity(delta) {
+      const ver = currentVersion();
+      if (!ver.densities) ver.densities = {};
+      const cur = ver.densities[selectedSlug] ?? 1;
+      ver.densities[selectedSlug] = Math.max(1, Math.min(16, cur + delta));
+      savePlan();
+      updateDensityCtrl();
+    }
+
+    document.getElementById('density-dec').addEventListener('click', () => setDensity(-1));
+    document.getElementById('density-inc').addEventListener('click', () => setDensity(+1));
+
+    function setSelectedSlug(slug) {
+      selectedSlug = slug;
+      const label = document.getElementById('selected-plant-label');
+      label.textContent = slug ? (bySlug.get(slug)?.name ?? slug) : 'Keine Pflanze gewählt';
+      document.querySelectorAll('.plant-card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.slug === slug);
+      });
+      updateDensityCtrl();
+    }
+
+    document.getElementById('edit-mode-btn').addEventListener('click', () => {
+      editMode = !editMode;
+      document.body.classList.toggle('edit-mode', editMode);
+      document.getElementById('edit-mode-btn').classList.toggle('active', editMode);
+      document.getElementById('edit-mode-btn').textContent = editMode ? 'Fertig' : 'Bearbeiten';
+      document.getElementById('bed-plan').classList.toggle('editable', editMode);
+      document.getElementById('clear-plan-btn').style.display = editMode ? '' : 'none';
+      if (!editMode) { setSelectedSlug(null); document.getElementById('density-ctrl').style.display = 'none'; }
+      renderBedPlan();
+      render();
+    });
+
+    document.getElementById('clear-plan-btn').addEventListener('click', () => {
+      if (!confirm('Alle Pflanzungen in dieser Version löschen?')) return;
+      currentVersion().placements = [];
+      savePlan();
+      renderBedPlan();
+    });
+
+    // ── Bed plan ─────────────────────────────────────────────────────────────────
+    const BED_L = 9, BED_GAP = 0.5;
+    const bedWidths = [1.5, 1.5, 1.5, 1.5, 3.0, 1.5, 1.5, 1.5, 3.0];
+    const totalZ = bedWidths.reduce((a, b) => a + b, 0) + BED_GAP * (bedWidths.length - 1);
+    const bedLayout = (() => {
+      let cursor = -totalZ / 2;
+      return bedWidths.map((w, i) => {
+        const z = cursor + w / 2;
+        cursor += w + BED_GAP;
+        return { w, z, i };
+      });
+    })();
+
+    function inBed(sx, sz) {
+      return Math.abs(sx) <= BED_L / 2 - 0.01 &&
+        bedLayout.some(bed => sz >= bed.z - bed.w / 2 + 0.01 && sz <= bed.z + bed.w / 2 - 0.01);
+    }
+
+    function svgWorldCoords(e) {
+      const svg = document.querySelector('#bed-plan svg');
+      if (!svg) return null;
+      const rect = svg.getBoundingClientRect();
+      const vb   = svg.viewBox.baseVal;
+      return {
+        x: (e.clientX - rect.left) / rect.width  * vb.width  + vb.x,
+        z: (e.clientY - rect.top)  / rect.height * vb.height + vb.y,
+      };
+    }
+
+const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.slug, p.color ?? '#ccc']));
+
+    function renderBedPlan() {
+      const PAD = 0.15;
+      const vbX = -BED_L / 2 - PAD;
+      const vbY = -totalZ / 2 - PAD;
+      const vbW = BED_L + PAD * 2;
+      const vbH = totalZ + PAD * 2;
+      const colors = colorBySlug();
+
+      let svg = `<svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
+
+      for (const bed of bedLayout) {
+        const x0 = -BED_L / 2;
+        const z0 = bed.z - bed.w / 2;
+        svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.02"/>`;
+
+        svg += `<text x="${x0 + 0.1}" y="${z0 + 0.28}" font-size="0.22" fill="#aaa" font-family="system-ui">${bed.i + 1}</text>`;
+        svg += `<line x1="0" y1="${z0}" x2="0" y2="${z0 + bed.w}" stroke="#000" stroke-width="0.025" opacity="0.5"/>`;
+      }
+
+      // placements
+      const ver = currentVersion();
+      const placements = ver?.placements ?? [];
+      const dotR = w => (w ?? 0.4) / 2;
+
+      for (const p of placements) {
+        const entry = bySlug.get(p.slug);
+        const matches = !filterText || [entry?.name, entry?.name_de, entry?.family]
+          .some(s => s?.toLowerCase().includes(filterText));
+        const color   = colors[p.slug] ?? '#ccc';
+        const opacity = !filterText ? 0.85 : matches ? 0.85 : 0.15;
+        const r       = dotR(entry?.worldW ?? 1);
+        const isSelected = editMode && p.slug === selectedSlug;
+        svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r.toFixed(3)}"
+          fill="${color}" opacity="${opacity}"
+          stroke="${isSelected ? '#000' : 'none'}" stroke-width="0.04"
+          data-slug="${p.slug}" data-id="${p.id}"
+          data-name="${entry?.name ?? p.slug}" data-de="${entry?.name_de ?? ''}"/>`;
+      }
+
+      svg += '</svg>';
+      document.getElementById('bed-plan').innerHTML = svg;
+    }
+
+    let activeGarden = gardens[0]?.id ?? null;
+    let filterText = '';
+
+    // ── Custom plants ─────────────────────────────────────────────────────────
+
+    function toSlug(name) {
+      return name.toLowerCase()
+        .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+        .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    }
+
+    async function loadCustomPlants() {
+      try {
+        const plants = await fetch(`/api/custom-plants?garden=${activeGarden}`).then(r => r.json());
+        for (const p of plants) {
+          const entry = {
+            slug: p.slug, name: p.name, name_de: p.name_de, family: p.family,
+            color: p.color, worldW: p.world_w, worldH: p.world_h,
+            _custom: true,
+          };
+          bySlug.set(p.slug, entry);
+          if (!stagesBySlug.has(p.slug)) stagesBySlug.set(p.slug, []);
+          // also add to the garden's plant list
+          const g = gardens.find(g => g.id === p.garden);
+          if (g && !g.plants.includes(p.slug)) g.plants.push(p.slug);
+        }
+      } catch {}
+    }
+
+    await loadCustomPlants();
+
+    const addPlantBtn  = document.getElementById('add-plant-btn');
+    const addPlantForm = document.getElementById('add-plant-form');
+
+    function closeAddPlantForm() {
+      addPlantForm.classList.remove('open');
+      addPlantBtn.classList.remove('open');
+      addPlantBtn.textContent = '+ Pflanze';
+      document.getElementById('apf-error').style.display = 'none';
+    }
+
+    addPlantBtn.addEventListener('click', () => {
+      const open = addPlantForm.classList.toggle('open');
+      addPlantBtn.classList.toggle('open', open);
+      addPlantBtn.textContent = open ? '× Abbrechen' : '+ Pflanze';
+      if (open) document.getElementById('apf-name').focus();
+    });
+
+    document.getElementById('apf-cancel').addEventListener('click', closeAddPlantForm);
+
+    // ── GBIF taxonomy lookup ──────────────────────────────────────────────────
+    const FAMILY_COLORS = {
+      Asteraceae:     '#f5d040',
+      Lamiaceae:      '#9b7fc7',
+      Rosaceae:       '#f5a0b0',
+      Ranunculaceae:  '#6b9fd4',
+      Apiaceae:       '#d4c878',
+      Papaveraceae:   '#e85545',
+      Fabaceae:       '#d478c8',
+      Boraginaceae:   '#5878d4',
+      Solanaceae:     '#a060d0',
+      Brassicaceae:   '#e8d040',
+      Amaranthaceae:  '#c84848',
+      Primulaceae:    '#f5c040',
+      Paeoniaceae:    '#e878a0',
+      Tropaeolaceae:  '#f59020',
+      Plantaginaceae: '#6878d4',
+      Polygonaceae:   '#d4a878',
+      Campanulaceae:  '#7890d4',
+      Scrophulariaceae:'#a07fd4',
+      Caryophyllaceae:'#f0a0c8',
+      Violaceae:      '#7860c8',
+      Geraniaceae:    '#d47880',
+    };
+
+    function applyFamilyColor(family) {
+      const apfColor = document.getElementById('apf-color');
+      const color = FAMILY_COLORS[family];
+      if (color) apfColor.value = color;
+    }
+    let _gbifTimer = null;
+    const apfName   = document.getElementById('apf-name');
+    const apfFamily = document.getElementById('apf-family');
+    const apfLookupStatus = (() => {
+      const el = document.createElement('span');
+      el.style.cssText = 'font-size:10px;color:#aaa;margin-left:8px;';
+      apfFamily.parentElement.appendChild(el);
+      return el;
+    })();
+
+    const apfNameDe = document.getElementById('apf-name-de');
+    let _gbifDeTimer = null;
+
+    apfNameDe.addEventListener('input', () => {
+      clearTimeout(_gbifDeTimer);
+      const q = apfNameDe.value.trim();
+      if (q.length < 3) return;
+      _gbifDeTimer = setTimeout(async () => {
+        try {
+          apfLookupStatus.textContent = '…';
+          // Step 1: Wikidata search (handles aliases + case) → scientific name
+          // prefer species-rank hits over genus
+          const searchRes = await fetch(
+            `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=de&type=item&limit=8&format=json&origin=*`
+          ).then(r => r.json());
+
+          let sciName = null;
+          let sciNameGenus = null;
+          for (const hit of searchRes.search ?? []) {
+            const ent = await fetch(
+              `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${hit.id}&props=claims&format=json&origin=*`
+            ).then(r => r.json());
+            const claims = ent.entities?.[hit.id]?.claims ?? {};
+            const sci = claims.P225?.[0]?.mainsnak?.datavalue?.value;
+            if (!sci) continue;
+            const rankId = claims.P105?.[0]?.mainsnak?.datavalue?.value?.id;
+            if (rankId === 'Q7432') { sciName = sci; break; }          // species
+            if (!sciNameGenus) sciNameGenus = sci;                       // genus fallback
+          }
+          if (!sciName) sciName = sciNameGenus;
+          if (!sciName) { apfLookupStatus.textContent = 'nicht gefunden'; return; }
+
+          if (!apfName.value) apfName.value = sciName;
+
+          // Step 2: GBIF match → family
+          const gbif = await fetch(
+            `https://api.gbif.org/v1/species/match?kingdom=Plantae&name=${encodeURIComponent(sciName)}`
+          ).then(r => r.json());
+          if (gbif.family) {
+            if (!apfFamily.value) { apfFamily.value = gbif.family; applyFamilyColor(gbif.family); }
+            apfLookupStatus.textContent = gbif.family;
+          }
+        } catch { apfLookupStatus.textContent = ''; }
+      }, 600);
+    });
+
+    apfName.addEventListener('input', () => {
+      clearTimeout(_gbifTimer);
+      const q = apfName.value.trim();
+      if (q.length < 4) return;
+      apfLookupStatus.textContent = '…';
+      _gbifTimer = setTimeout(async () => {
+        try {
+          const data = await fetch(
+            `https://api.gbif.org/v1/species/match?kingdom=Plantae&name=${encodeURIComponent(q)}`
+          ).then(r => r.json());
+          if (data.family && (data.confidence ?? 0) >= 70) {
+            if (!apfFamily.value) { apfFamily.value = data.family; applyFamilyColor(data.family); }
+            apfLookupStatus.textContent = `${data.family} · ${data.confidence}%`;
+          } else {
+            apfLookupStatus.textContent = data.matchType === 'NONE' ? 'nicht gefunden' : '';
+          }
+        } catch {
+          apfLookupStatus.textContent = '';
+        }
+      }, 600);
+    });
+
+    document.getElementById('apf-submit').addEventListener('click', async () => {
+      const name    = document.getElementById('apf-name').value.trim();
+      const name_de = document.getElementById('apf-name-de').value.trim();
+      const family  = document.getElementById('apf-family').value.trim();
+      const width   = parseFloat(document.getElementById('apf-width').value) || 50;
+      const height  = parseFloat(document.getElementById('apf-height').value) || 100;
+      const color   = document.getElementById('apf-color').value;
+      const errEl   = document.getElementById('apf-error');
+
+      if (!name) { errEl.textContent = 'Botanischer Name fehlt.'; errEl.style.display = ''; return; }
+
+      const slug = toSlug(name);
+      const res = await fetch('/api/custom-plants', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slug, name, name_de, family, color,
+          world_w: width / 100, world_h: height / 100,
+          garden: activeGarden,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        errEl.textContent = err.error === 'slug already exists' ? 'Pflanze existiert bereits.' : err.error;
+        errEl.style.display = '';
+        return;
+      }
+
+      const p = await res.json();
+      const entry = {
+        slug: p.slug, name: p.name, name_de: p.name_de, family: p.family,
+        color: p.color, worldW: p.world_w, worldH: p.world_h, _custom: true,
+      };
+      bySlug.set(p.slug, entry);
+      if (!stagesBySlug.has(p.slug)) stagesBySlug.set(p.slug, []);
+      const g = gardens.find(g => g.id === p.garden);
+      if (g && !g.plants.includes(p.slug)) g.plants.push(p.slug);
+
+      // reset form
+      ['apf-name','apf-name-de','apf-family','apf-width','apf-height'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('apf-color').value = '#a0c878';
+      errEl.style.display = 'none';
+      closeAddPlantForm();
+      render();
+    });
+
+    renderBedPlan();
+
+    const tooltip = document.getElementById('bed-tooltip');
+    document.getElementById('bed-plan').addEventListener('click', e => {
+      if (editMode) {
+        const el = e.target.closest('circle[data-id]');
+        if (el && el.dataset.slug === selectedSlug) {
+          removePlacement(el.dataset.id);
+          return;
+        }
+        if (!selectedSlug) return;
+        const coords = svgWorldCoords(e);
+        if (!coords) return;
+        if (inBed(coords.x, coords.z)) addPlacement(selectedSlug, coords.x, coords.z);
+      } else {
+        const el = e.target.closest('circle[data-slug]');
+        if (el) {
+          const p = bySlug.get(el.dataset.slug);
+          if (p) openModal(p);
+        }
+      }
+    });
+
+    document.getElementById('bed-plan').addEventListener('mousemove', e => {
+      const el = e.target.closest('circle[data-slug]');
+      if (el) {
+        tooltip.querySelector('.tt-name').textContent = el.dataset.name;
+        tooltip.querySelector('.tt-de').textContent = el.dataset.de;
+        tooltip.style.display = 'block';
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top  = (e.clientY + 12) + 'px';
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+    document.getElementById('bed-plan').addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+
+    document.getElementById('plant-filter').addEventListener('input', e => {
+      filterText = e.target.value.toLowerCase();
+      render();
+      renderBedPlan();
+    });
+
+    function render() {
+      const slugs = activeGarden
+        ? new Set(gardens.find(g => g.id === activeGarden)?.plants ?? [])
+        : null;
+
+      const placedSlugs = editMode
+        ? null
+        : new Set((currentVersion().placements ?? []).map(p => p.slug));
+
+      const plants = [...bySlug.values()]
+        .filter(p => !slugs || slugs.has(p.slug))
+        .filter(p => !placedSlugs || placedSlugs.has(p.slug))
+        .filter(p => !filterText ||
+          p.name.toLowerCase().includes(filterText) ||
+          (p.name_de ?? '').toLowerCase().includes(filterText) ||
+          (p.family ?? '').toLowerCase().includes(filterText))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      const globalMaxW = Math.max(...[...bySlug.values()].map(p => p.worldW ?? 1));
+
+      const grid = document.getElementById('plant-grid');
+      grid.innerHTML = '';
+      plants.forEach(p => {
+        const dotSize = Math.round((p.worldW ?? 0.3) / globalMaxW * 64);
+        const card = document.createElement('div');
+        card.className = 'plant-card' + (editMode && p.slug === selectedSlug ? ' selected' : '');
+        card.dataset.slug = p.slug;
+        card.innerHTML = `
+          <span class="card-dot" style="background:${p.color ?? '#ccc'};width:${dotSize}px;height:${dotSize}px"></span>
+          <span class="card-name">${p.name}</span>
+          <span class="card-family">${p.family ?? ''}</span>
+          <span class="card-de">${p.name_de ?? ''}</span>
+        `;
+        card.addEventListener('click', () => {
+          if (editMode) { setSelectedSlug(p.slug === selectedSlug ? null : p.slug); renderBedPlan(); render(); }
+          else openModal(p);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    if (gardens.length > 1) {
+      const bar = document.getElementById('garden-bar');
+      bar.style.display = 'flex';
+      gardens.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'garden-btn' + (g.id === activeGarden ? ' active' : '');
+        btn.textContent = g.name;
+        btn.onclick = () => {
+          activeGarden = g.id;
+          bar.querySelectorAll('.garden-btn').forEach(b => b.classList.toggle('active', b === btn));
+          render();
+        };
+        bar.appendChild(btn);
+      });
+    }
+
+    const activeG = gardens.find(g => g.id === activeGarden);
+    if (activeG) {
+      document.getElementById('garden-description').innerHTML =
+        `<h1>${activeG.name}</h1>${activeG.description ?? ''}`;
+    }
+
+    render();
+  </script>
 </body>
 </html>

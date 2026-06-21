@@ -3,6 +3,7 @@
     "slug": "echinacea",
     "name": "Echinacea purpurea",
     "name_de": "Purpursonnenhut",
+    "family": "Asteraceae",
     "color": "#e06090",
     "stage": "sprout",
     "months": [
@@ -13,12 +14,14 @@
     "worldH": 0.12,
     "density": 1.5,
     "seed": 42,
-    "placementType": "point"
+    "placementType": "point",
+    "fixedCanvas": true
   },
   {
     "slug": "echinacea",
     "name": "Echinacea purpurea",
     "name_de": "Purpursonnenhut",
+    "family": "Asteraceae",
     "color": "#e06090",
     "stage": "foliage",
     "months": [
@@ -29,12 +32,14 @@
     "worldH": 0.45,
     "density": 1.5,
     "seed": 42,
-    "placementType": "point"
+    "placementType": "point",
+    "fixedCanvas": true
   },
   {
     "slug": "echinacea",
     "name": "Echinacea purpurea",
     "name_de": "Purpursonnenhut",
+    "family": "Asteraceae",
     "color": "#e06090",
     "stage": "bloom",
     "months": [
@@ -44,13 +49,15 @@
     "worldH": 0.8,
     "density": 1.5,
     "seed": 42,
-    "variants": 3,
-    "placementType": "point"
+    "variants": 2,
+    "placementType": "point",
+    "fixedCanvas": true
   },
   {
     "slug": "echinacea",
     "name": "Echinacea purpurea",
     "name_de": "Purpursonnenhut",
+    "family": "Asteraceae",
     "color": "#e06090",
     "stage": "seed",
     "months": [
@@ -61,12 +68,14 @@
     "worldH": 0.75,
     "density": 1.5,
     "seed": 42,
-    "placementType": "point"
+    "placementType": "point",
+    "fixedCanvas": true
   },
   {
     "slug": "echinacea",
     "name": "Echinacea purpurea",
     "name_de": "Purpursonnenhut",
+    "family": "Asteraceae",
     "color": "#e06090",
     "stage": "dried",
     "months": [
@@ -80,12 +89,14 @@
     "worldH": 0.75,
     "density": 1.5,
     "seed": 42,
-    "placementType": "point"
+    "placementType": "point",
+    "fixedCanvas": true
   },
   {
     "slug": "poppy",
     "name": "Papaver orientale",
     "name_de": "Orientalischer Mohn",
+    "family": "Papaveraceae",
     "color": "#e03020",
     "stage": "sprout",
     "months": [
@@ -102,6 +113,7 @@
     "slug": "poppy",
     "name": "Papaver orientale",
     "name_de": "Orientalischer Mohn",
+    "family": "Papaveraceae",
     "color": "#e03020",
     "stage": "foliage",
     "months": [
@@ -117,6 +129,7 @@
     "slug": "poppy",
     "name": "Papaver orientale",
     "name_de": "Orientalischer Mohn",
+    "family": "Papaveraceae",
     "color": "#e03020",
     "stage": "bloom",
     "months": [
@@ -134,6 +147,7 @@
     "slug": "poppy",
     "name": "Papaver orientale",
     "name_de": "Orientalischer Mohn",
+    "family": "Papaveraceae",
     "color": "#e03020",
     "stage": "seed",
     "months": [
@@ -149,6 +163,7 @@
     "slug": "poppy",
     "name": "Papaver orientale",
     "name_de": "Orientalischer Mohn",
+    "family": "Papaveraceae",
     "color": "#e03020",
     "stage": "dried",
     "months": [
@@ -169,6 +184,7 @@
     "slug": "sunflower",
     "name": "Helianthus annuus",
     "name_de": "Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f5c010",
     "stage": "sprout",
     "months": [
@@ -188,6 +204,7 @@
     "slug": "sunflower",
     "name": "Helianthus annuus",
     "name_de": "Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f5c010",
     "stage": "foliage",
     "months": [
@@ -206,6 +223,7 @@
     "slug": "sunflower",
     "name": "Helianthus annuus",
     "name_de": "Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f5c010",
     "stage": "bloom",
     "months": [
@@ -226,6 +244,7 @@
     "slug": "sunflower",
     "name": "Helianthus annuus",
     "name_de": "Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f5c010",
     "stage": "seed",
     "months": [
@@ -244,6 +263,7 @@
     "slug": "sunflower",
     "name": "Helianthus annuus",
     "name_de": "Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f5c010",
     "stage": "dried",
     "months": [
@@ -263,13 +283,14 @@
     "slug": "salvia",
     "name": "Salvia nemorosa",
     "name_de": "Steppensalbei",
+    "family": "Lamiaceae",
     "color": "#6050c0",
     "stage": "foliage",
     "months": [
       "march",
       "april"
     ],
-    "worldW": 0.3,
+    "worldW": 0.45,
     "worldH": 0.18,
     "density": 4,
     "seed": 198,
@@ -279,6 +300,7 @@
     "slug": "salvia",
     "name": "Salvia nemorosa",
     "name_de": "Steppensalbei",
+    "family": "Lamiaceae",
     "color": "#6050c0",
     "stage": "bloom",
     "months": [
@@ -287,7 +309,7 @@
       "july",
       "august"
     ],
-    "worldW": 0.3,
+    "worldW": 0.45,
     "worldH": 0.55,
     "density": 4,
     "seed": 198,
@@ -297,12 +319,13 @@
     "slug": "salvia",
     "name": "Salvia nemorosa",
     "name_de": "Steppensalbei",
+    "family": "Lamiaceae",
     "color": "#6050c0",
     "stage": "seed",
     "months": [
       "september"
     ],
-    "worldW": 0.3,
+    "worldW": 0.45,
     "worldH": 0.5,
     "density": 4,
     "seed": 198,
@@ -312,6 +335,7 @@
     "slug": "alchemilla",
     "name": "Alchemilla mollis",
     "name_de": "Frauenmantel",
+    "family": "Rosaceae",
     "color": "#a8c830",
     "stage": "foliage",
     "months": [
@@ -328,6 +352,7 @@
     "slug": "alchemilla",
     "name": "Alchemilla mollis",
     "name_de": "Frauenmantel",
+    "family": "Rosaceae",
     "color": "#a8c830",
     "stage": "bloom",
     "months": [
@@ -345,6 +370,7 @@
     "slug": "alchemilla",
     "name": "Alchemilla mollis",
     "name_de": "Frauenmantel",
+    "family": "Rosaceae",
     "color": "#a8c830",
     "stage": "late",
     "months": [
@@ -361,6 +387,7 @@
     "slug": "sage",
     "name": "Salvia officinalis",
     "name_de": "Echter Salbei",
+    "family": "Lamiaceae",
     "color": "#7060b0",
     "stage": "sprout",
     "months": [
@@ -376,6 +403,7 @@
     "slug": "sage",
     "name": "Salvia officinalis",
     "name_de": "Echter Salbei",
+    "family": "Lamiaceae",
     "color": "#7060b0",
     "stage": "foliage",
     "months": [
@@ -392,6 +420,7 @@
     "slug": "sage",
     "name": "Salvia officinalis",
     "name_de": "Echter Salbei",
+    "family": "Lamiaceae",
     "color": "#7060b0",
     "stage": "bloom",
     "months": [
@@ -409,6 +438,7 @@
     "slug": "sage",
     "name": "Salvia officinalis",
     "name_de": "Echter Salbei",
+    "family": "Lamiaceae",
     "color": "#7060b0",
     "stage": "seed",
     "months": [
@@ -425,6 +455,7 @@
     "slug": "sage",
     "name": "Salvia officinalis",
     "name_de": "Echter Salbei",
+    "family": "Lamiaceae",
     "color": "#7060b0",
     "stage": "dried",
     "months": [
@@ -444,6 +475,7 @@
     "slug": "bunias",
     "name": "Bunias orientalis",
     "name_de": "Zackenschötchen",
+    "family": "Brassicaceae",
     "color": "#e8d020",
     "stage": "sprout",
     "months": [
@@ -460,6 +492,7 @@
     "slug": "bunias",
     "name": "Bunias orientalis",
     "name_de": "Zackenschötchen",
+    "family": "Brassicaceae",
     "color": "#e8d020",
     "stage": "foliage",
     "months": [
@@ -476,6 +509,7 @@
     "slug": "bunias",
     "name": "Bunias orientalis",
     "name_de": "Zackenschötchen",
+    "family": "Brassicaceae",
     "color": "#e8d020",
     "stage": "bloom",
     "months": [
@@ -492,6 +526,7 @@
     "slug": "bunias",
     "name": "Bunias orientalis",
     "name_de": "Zackenschötchen",
+    "family": "Brassicaceae",
     "color": "#e8d020",
     "stage": "seed",
     "months": [
@@ -508,6 +543,7 @@
     "slug": "bunias",
     "name": "Bunias orientalis",
     "name_de": "Zackenschötchen",
+    "family": "Brassicaceae",
     "color": "#e8d020",
     "stage": "dried",
     "months": [
@@ -527,6 +563,7 @@
     "slug": "aquilegia",
     "name": "Aquilegia vulgaris",
     "name_de": "Akelei",
+    "family": "Ranunculaceae",
     "color": "#5040a0",
     "stage": "sprout",
     "months": [
@@ -543,6 +580,7 @@
     "slug": "aquilegia",
     "name": "Aquilegia vulgaris",
     "name_de": "Akelei",
+    "family": "Ranunculaceae",
     "color": "#5040a0",
     "stage": "foliage",
     "months": [
@@ -558,6 +596,7 @@
     "slug": "aquilegia",
     "name": "Aquilegia vulgaris",
     "name_de": "Akelei",
+    "family": "Ranunculaceae",
     "color": "#5040a0",
     "stage": "bloom",
     "months": [
@@ -575,6 +614,7 @@
     "slug": "aquilegia",
     "name": "Aquilegia vulgaris",
     "name_de": "Akelei",
+    "family": "Ranunculaceae",
     "color": "#5040a0",
     "stage": "seed",
     "months": [
@@ -590,6 +630,7 @@
     "slug": "aquilegia",
     "name": "Aquilegia vulgaris",
     "name_de": "Akelei",
+    "family": "Ranunculaceae",
     "color": "#5040a0",
     "stage": "dried",
     "months": [
@@ -610,12 +651,13 @@
     "slug": "primula",
     "name": "Primula veris",
     "name_de": "Schlüsselblume",
+    "family": "Primulaceae",
     "color": "#e8c020",
     "stage": "sprout",
     "months": [
       "february"
     ],
-    "worldW": 0.25,
+    "worldW": 0.18,
     "worldH": 0.08,
     "density": 3,
     "seed": 1231,
@@ -625,12 +667,13 @@
     "slug": "primula",
     "name": "Primula veris",
     "name_de": "Schlüsselblume",
+    "family": "Primulaceae",
     "color": "#e8c020",
     "stage": "foliage",
     "months": [
       "march"
     ],
-    "worldW": 0.25,
+    "worldW": 0.18,
     "worldH": 0.17,
     "density": 3,
     "seed": 1231,
@@ -640,13 +683,14 @@
     "slug": "primula",
     "name": "Primula veris",
     "name_de": "Schlüsselblume",
+    "family": "Primulaceae",
     "color": "#e8c020",
     "stage": "bloom",
     "months": [
       "april",
       "may"
     ],
-    "worldW": 0.25,
+    "worldW": 0.18,
     "worldH": 0.25,
     "density": 3,
     "seed": 1231,
@@ -657,13 +701,14 @@
     "slug": "primula",
     "name": "Primula veris",
     "name_de": "Schlüsselblume",
+    "family": "Primulaceae",
     "color": "#e8c020",
     "stage": "seed",
     "months": [
       "june",
       "july"
     ],
-    "worldW": 0.25,
+    "worldW": 0.18,
     "worldH": 0.22,
     "density": 3,
     "seed": 1231,
@@ -673,6 +718,7 @@
     "slug": "primula",
     "name": "Primula veris",
     "name_de": "Schlüsselblume",
+    "family": "Primulaceae",
     "color": "#e8c020",
     "stage": "dried",
     "months": [
@@ -683,7 +729,7 @@
       "december",
       "january"
     ],
-    "worldW": 0.25,
+    "worldW": 0.18,
     "worldH": 0.05,
     "density": 3,
     "seed": 1231,
@@ -693,6 +739,7 @@
     "slug": "phacelia",
     "name": "Phacelia tanacetifolia",
     "name_de": "Bienenfreund",
+    "family": "Boraginaceae",
     "color": "#7080d8",
     "stage": "sprout",
     "months": [
@@ -708,6 +755,7 @@
     "slug": "phacelia",
     "name": "Phacelia tanacetifolia",
     "name_de": "Bienenfreund",
+    "family": "Boraginaceae",
     "color": "#7080d8",
     "stage": "foliage",
     "months": [
@@ -723,6 +771,7 @@
     "slug": "phacelia",
     "name": "Phacelia tanacetifolia",
     "name_de": "Bienenfreund",
+    "family": "Boraginaceae",
     "color": "#7080d8",
     "stage": "bloom",
     "months": [
@@ -740,6 +789,7 @@
     "slug": "phacelia",
     "name": "Phacelia tanacetifolia",
     "name_de": "Bienenfreund",
+    "family": "Boraginaceae",
     "color": "#7080d8",
     "stage": "seed",
     "months": [
@@ -755,6 +805,7 @@
     "slug": "phacelia",
     "name": "Phacelia tanacetifolia",
     "name_de": "Bienenfreund",
+    "family": "Boraginaceae",
     "color": "#7080d8",
     "stage": "dried",
     "months": [
@@ -771,6 +822,7 @@
     "slug": "calendula",
     "name": "Calendula officinalis",
     "name_de": "Ringelblume",
+    "family": "Asteraceae",
     "color": "#f07010",
     "stage": "sprout",
     "months": [
@@ -786,6 +838,7 @@
     "slug": "calendula",
     "name": "Calendula officinalis",
     "name_de": "Ringelblume",
+    "family": "Asteraceae",
     "color": "#f07010",
     "stage": "foliage",
     "months": [
@@ -801,6 +854,7 @@
     "slug": "calendula",
     "name": "Calendula officinalis",
     "name_de": "Ringelblume",
+    "family": "Asteraceae",
     "color": "#f07010",
     "stage": "bloom",
     "months": [
@@ -820,6 +874,7 @@
     "slug": "calendula",
     "name": "Calendula officinalis",
     "name_de": "Ringelblume",
+    "family": "Asteraceae",
     "color": "#f07010",
     "stage": "seed",
     "months": [
@@ -835,6 +890,7 @@
     "slug": "calendula",
     "name": "Calendula officinalis",
     "name_de": "Ringelblume",
+    "family": "Asteraceae",
     "color": "#f07010",
     "stage": "dried",
     "months": [
@@ -850,6 +906,7 @@
     "slug": "anthemis",
     "name": "Anthemis tinctoria",
     "name_de": "Färberkamille",
+    "family": "Asteraceae",
     "color": "#f0c820",
     "stage": "sprout",
     "months": [
@@ -865,6 +922,7 @@
     "slug": "anthemis",
     "name": "Anthemis tinctoria",
     "name_de": "Färberkamille",
+    "family": "Asteraceae",
     "color": "#f0c820",
     "stage": "foliage",
     "months": [
@@ -881,6 +939,7 @@
     "slug": "anthemis",
     "name": "Anthemis tinctoria",
     "name_de": "Färberkamille",
+    "family": "Asteraceae",
     "color": "#f0c820",
     "stage": "bloom",
     "months": [
@@ -899,6 +958,7 @@
     "slug": "anthemis",
     "name": "Anthemis tinctoria",
     "name_de": "Färberkamille",
+    "family": "Asteraceae",
     "color": "#f0c820",
     "stage": "seed",
     "months": [
@@ -914,6 +974,7 @@
     "slug": "anthemis",
     "name": "Anthemis tinctoria",
     "name_de": "Färberkamille",
+    "family": "Asteraceae",
     "color": "#f0c820",
     "stage": "dried",
     "months": [
@@ -930,6 +991,7 @@
     "slug": "tithonia",
     "name": "Tithonia rotundifolia",
     "name_de": "Mexikanische Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f04810",
     "stage": "sprout",
     "months": [
@@ -945,6 +1007,7 @@
     "slug": "tithonia",
     "name": "Tithonia rotundifolia",
     "name_de": "Mexikanische Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f04810",
     "stage": "foliage",
     "months": [
@@ -960,6 +1023,7 @@
     "slug": "tithonia",
     "name": "Tithonia rotundifolia",
     "name_de": "Mexikanische Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f04810",
     "stage": "bloom",
     "months": [
@@ -978,6 +1042,7 @@
     "slug": "tithonia",
     "name": "Tithonia rotundifolia",
     "name_de": "Mexikanische Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f04810",
     "stage": "seed",
     "months": [
@@ -993,6 +1058,7 @@
     "slug": "tithonia",
     "name": "Tithonia rotundifolia",
     "name_de": "Mexikanische Sonnenblume",
+    "family": "Asteraceae",
     "color": "#f04810",
     "stage": "dried",
     "months": [
@@ -1008,6 +1074,7 @@
     "slug": "artichoke",
     "name": "Cynara scolymus",
     "name_de": "Artischocke",
+    "family": "Asteraceae",
     "color": "#7878b8",
     "stage": "sprout",
     "months": [
@@ -1024,6 +1091,7 @@
     "slug": "artichoke",
     "name": "Cynara scolymus",
     "name_de": "Artischocke",
+    "family": "Asteraceae",
     "color": "#7878b8",
     "stage": "foliage",
     "months": [
@@ -1040,6 +1108,7 @@
     "slug": "artichoke",
     "name": "Cynara scolymus",
     "name_de": "Artischocke",
+    "family": "Asteraceae",
     "color": "#7878b8",
     "stage": "bloom",
     "months": [
@@ -1057,6 +1126,7 @@
     "slug": "artichoke",
     "name": "Cynara scolymus",
     "name_de": "Artischocke",
+    "family": "Asteraceae",
     "color": "#7878b8",
     "stage": "seed",
     "months": [
@@ -1074,6 +1144,7 @@
     "slug": "artichoke",
     "name": "Cynara scolymus",
     "name_de": "Artischocke",
+    "family": "Asteraceae",
     "color": "#7878b8",
     "stage": "dried",
     "months": [
@@ -1092,6 +1163,7 @@
     "slug": "achillea",
     "name": "Achillea filipendulina",
     "name_de": "Goldgarbe",
+    "family": "Asteraceae",
     "color": "#f0d010",
     "stage": "sprout",
     "months": [
@@ -1108,6 +1180,7 @@
     "slug": "achillea",
     "name": "Achillea filipendulina",
     "name_de": "Goldgarbe",
+    "family": "Asteraceae",
     "color": "#f0d010",
     "stage": "foliage",
     "months": [
@@ -1123,6 +1196,7 @@
     "slug": "achillea",
     "name": "Achillea filipendulina",
     "name_de": "Goldgarbe",
+    "family": "Asteraceae",
     "color": "#f0d010",
     "stage": "bloom",
     "months": [
@@ -1141,6 +1215,7 @@
     "slug": "achillea",
     "name": "Achillea filipendulina",
     "name_de": "Goldgarbe",
+    "family": "Asteraceae",
     "color": "#f0d010",
     "stage": "seed",
     "months": [
@@ -1156,6 +1231,7 @@
     "slug": "achillea",
     "name": "Achillea filipendulina",
     "name_de": "Goldgarbe",
+    "family": "Asteraceae",
     "color": "#f0d010",
     "stage": "dried",
     "months": [
@@ -1175,6 +1251,7 @@
     "slug": "cosmea",
     "name": "Cosmos bipinnatus",
     "name_de": "Schmuckkörbchen",
+    "family": "Asteraceae",
     "color": "#d860a0",
     "stage": "sprout",
     "months": [
@@ -1190,6 +1267,7 @@
     "slug": "cosmea",
     "name": "Cosmos bipinnatus",
     "name_de": "Schmuckkörbchen",
+    "family": "Asteraceae",
     "color": "#d860a0",
     "stage": "foliage",
     "months": [
@@ -1205,6 +1283,7 @@
     "slug": "cosmea",
     "name": "Cosmos bipinnatus",
     "name_de": "Schmuckkörbchen",
+    "family": "Asteraceae",
     "color": "#d860a0",
     "stage": "bloom",
     "months": [
@@ -1223,6 +1302,7 @@
     "slug": "cosmea",
     "name": "Cosmos bipinnatus",
     "name_de": "Schmuckkörbchen",
+    "family": "Asteraceae",
     "color": "#d860a0",
     "stage": "seed",
     "months": [
@@ -1238,6 +1318,7 @@
     "slug": "cosmea",
     "name": "Cosmos bipinnatus",
     "name_de": "Schmuckkörbchen",
+    "family": "Asteraceae",
     "color": "#d860a0",
     "stage": "dried",
     "months": [
@@ -1253,6 +1334,7 @@
     "slug": "paeonia",
     "name": "Paeonia lactiflora",
     "name_de": "Pfingstrose",
+    "family": "Paeoniaceae",
     "color": "#d04070",
     "stage": "sprout",
     "months": [
@@ -1268,6 +1350,7 @@
     "slug": "paeonia",
     "name": "Paeonia lactiflora",
     "name_de": "Pfingstrose",
+    "family": "Paeoniaceae",
     "color": "#d04070",
     "stage": "foliage",
     "months": [
@@ -1284,6 +1367,7 @@
     "slug": "paeonia",
     "name": "Paeonia lactiflora",
     "name_de": "Pfingstrose",
+    "family": "Paeoniaceae",
     "color": "#d04070",
     "stage": "bloom",
     "months": [
@@ -1300,6 +1384,7 @@
     "slug": "paeonia",
     "name": "Paeonia lactiflora",
     "name_de": "Pfingstrose",
+    "family": "Paeoniaceae",
     "color": "#d04070",
     "stage": "seed",
     "months": [
@@ -1317,6 +1402,7 @@
     "slug": "paeonia",
     "name": "Paeonia lactiflora",
     "name_de": "Pfingstrose",
+    "family": "Paeoniaceae",
     "color": "#d04070",
     "stage": "dried",
     "months": [
@@ -1336,6 +1422,7 @@
     "slug": "artemisia",
     "name": "Artemisia absinthium",
     "name_de": "Wermut",
+    "family": "Asteraceae",
     "color": "#a0a870",
     "stage": "sprout",
     "months": [
@@ -1352,6 +1439,7 @@
     "slug": "artemisia",
     "name": "Artemisia absinthium",
     "name_de": "Wermut",
+    "family": "Asteraceae",
     "color": "#a0a870",
     "stage": "foliage",
     "months": [
@@ -1368,6 +1456,7 @@
     "slug": "artemisia",
     "name": "Artemisia absinthium",
     "name_de": "Wermut",
+    "family": "Asteraceae",
     "color": "#a0a870",
     "stage": "bloom",
     "months": [
@@ -1386,6 +1475,7 @@
     "slug": "artemisia",
     "name": "Artemisia absinthium",
     "name_de": "Wermut",
+    "family": "Asteraceae",
     "color": "#a0a870",
     "stage": "seed",
     "months": [
@@ -1401,6 +1491,7 @@
     "slug": "artemisia",
     "name": "Artemisia absinthium",
     "name_de": "Wermut",
+    "family": "Asteraceae",
     "color": "#a0a870",
     "stage": "dried",
     "months": [
@@ -1419,6 +1510,7 @@
     "slug": "lactuca",
     "name": "Lactuca serriola",
     "name_de": "Kompasslattich",
+    "family": "Asteraceae",
     "color": "#d0c840",
     "stage": "sprout",
     "months": [
@@ -1435,6 +1527,7 @@
     "slug": "lactuca",
     "name": "Lactuca serriola",
     "name_de": "Kompasslattich",
+    "family": "Asteraceae",
     "color": "#d0c840",
     "stage": "foliage",
     "months": [
@@ -1451,6 +1544,7 @@
     "slug": "lactuca",
     "name": "Lactuca serriola",
     "name_de": "Kompasslattich",
+    "family": "Asteraceae",
     "color": "#d0c840",
     "stage": "bloom",
     "months": [
@@ -1467,6 +1561,7 @@
     "slug": "lactuca",
     "name": "Lactuca serriola",
     "name_de": "Kompasslattich",
+    "family": "Asteraceae",
     "color": "#d0c840",
     "stage": "seed",
     "months": [
@@ -1482,6 +1577,7 @@
     "slug": "lactuca",
     "name": "Lactuca serriola",
     "name_de": "Kompasslattich",
+    "family": "Asteraceae",
     "color": "#d0c840",
     "stage": "dried",
     "months": [
@@ -1498,6 +1594,7 @@
     "slug": "nasturtium",
     "name": "Tropaeolum majus",
     "name_de": "Kapuzinerkresse",
+    "family": "Tropaeolaceae",
     "color": "#f06010",
     "stage": "sprout",
     "months": [
@@ -1514,6 +1611,7 @@
     "slug": "nasturtium",
     "name": "Tropaeolum majus",
     "name_de": "Kapuzinerkresse",
+    "family": "Tropaeolaceae",
     "color": "#f06010",
     "stage": "foliage",
     "months": [
@@ -1529,6 +1627,7 @@
     "slug": "nasturtium",
     "name": "Tropaeolum majus",
     "name_de": "Kapuzinerkresse",
+    "family": "Tropaeolaceae",
     "color": "#f06010",
     "stage": "bloom",
     "months": [
@@ -1547,6 +1646,7 @@
     "slug": "nasturtium",
     "name": "Tropaeolum majus",
     "name_de": "Kapuzinerkresse",
+    "family": "Tropaeolaceae",
     "color": "#f06010",
     "stage": "seed",
     "months": [
@@ -1562,6 +1662,7 @@
     "slug": "nasturtium",
     "name": "Tropaeolum majus",
     "name_de": "Kapuzinerkresse",
+    "family": "Tropaeolaceae",
     "color": "#f06010",
     "stage": "dried",
     "months": [
@@ -1577,6 +1678,7 @@
     "slug": "nicotiana",
     "name": "Nicotiana plumbaginifolia",
     "name_de": "Ziertabak",
+    "family": "Solanaceae",
     "color": "#d8d8e8",
     "stage": "sprout",
     "months": [
@@ -1593,6 +1695,7 @@
     "slug": "nicotiana",
     "name": "Nicotiana plumbaginifolia",
     "name_de": "Ziertabak",
+    "family": "Solanaceae",
     "color": "#d8d8e8",
     "stage": "foliage",
     "months": [
@@ -1608,6 +1711,7 @@
     "slug": "nicotiana",
     "name": "Nicotiana plumbaginifolia",
     "name_de": "Ziertabak",
+    "family": "Solanaceae",
     "color": "#d8d8e8",
     "stage": "bloom",
     "months": [
@@ -1626,6 +1730,7 @@
     "slug": "nicotiana",
     "name": "Nicotiana plumbaginifolia",
     "name_de": "Ziertabak",
+    "family": "Solanaceae",
     "color": "#d8d8e8",
     "stage": "seed",
     "months": [
@@ -1641,6 +1746,7 @@
     "slug": "nicotiana",
     "name": "Nicotiana plumbaginifolia",
     "name_de": "Ziertabak",
+    "family": "Solanaceae",
     "color": "#d8d8e8",
     "stage": "dried",
     "months": [
@@ -1657,6 +1763,7 @@
     "slug": "atriplex",
     "name": "Atriplex hortensis var. rubra",
     "name_de": "Rote Gartenmelde",
+    "family": "Amaranthaceae",
     "color": "#901830",
     "stage": "sprout",
     "months": [
@@ -1673,6 +1780,7 @@
     "slug": "atriplex",
     "name": "Atriplex hortensis var. rubra",
     "name_de": "Rote Gartenmelde",
+    "family": "Amaranthaceae",
     "color": "#901830",
     "stage": "foliage",
     "months": [
@@ -1688,6 +1796,7 @@
     "slug": "atriplex",
     "name": "Atriplex hortensis var. rubra",
     "name_de": "Rote Gartenmelde",
+    "family": "Amaranthaceae",
     "color": "#901830",
     "stage": "bloom",
     "months": [
@@ -1705,6 +1814,7 @@
     "slug": "atriplex",
     "name": "Atriplex hortensis var. rubra",
     "name_de": "Rote Gartenmelde",
+    "family": "Amaranthaceae",
     "color": "#901830",
     "stage": "seed",
     "months": [
@@ -1720,6 +1830,7 @@
     "slug": "atriplex",
     "name": "Atriplex hortensis var. rubra",
     "name_de": "Rote Gartenmelde",
+    "family": "Amaranthaceae",
     "color": "#901830",
     "stage": "dried",
     "months": [
@@ -1736,6 +1847,7 @@
     "slug": "borago",
     "name": "Borago officinalis",
     "name_de": "Borretsch",
+    "family": "Boraginaceae",
     "color": "#3060e0",
     "stage": "sprout",
     "months": [
@@ -1752,6 +1864,7 @@
     "slug": "borago",
     "name": "Borago officinalis",
     "name_de": "Borretsch",
+    "family": "Boraginaceae",
     "color": "#3060e0",
     "stage": "foliage",
     "months": [
@@ -1767,6 +1880,7 @@
     "slug": "borago",
     "name": "Borago officinalis",
     "name_de": "Borretsch",
+    "family": "Boraginaceae",
     "color": "#3060e0",
     "stage": "bloom",
     "months": [
@@ -1785,6 +1899,7 @@
     "slug": "borago",
     "name": "Borago officinalis",
     "name_de": "Borretsch",
+    "family": "Boraginaceae",
     "color": "#3060e0",
     "stage": "seed",
     "months": [
@@ -1800,6 +1915,7 @@
     "slug": "borago",
     "name": "Borago officinalis",
     "name_de": "Borretsch",
+    "family": "Boraginaceae",
     "color": "#3060e0",
     "stage": "dried",
     "months": [
@@ -1816,6 +1932,7 @@
     "slug": "symphytum",
     "name": "Symphytum officinale",
     "name_de": "Beinwell",
+    "family": "Boraginaceae",
     "color": "#a080c0",
     "stage": "sprout",
     "months": [
@@ -1832,6 +1949,7 @@
     "slug": "symphytum",
     "name": "Symphytum officinale",
     "name_de": "Beinwell",
+    "family": "Boraginaceae",
     "color": "#a080c0",
     "stage": "foliage",
     "months": [
@@ -1848,6 +1966,7 @@
     "slug": "symphytum",
     "name": "Symphytum officinale",
     "name_de": "Beinwell",
+    "family": "Boraginaceae",
     "color": "#a080c0",
     "stage": "bloom",
     "months": [
@@ -1866,6 +1985,7 @@
     "slug": "symphytum",
     "name": "Symphytum officinale",
     "name_de": "Beinwell",
+    "family": "Boraginaceae",
     "color": "#a080c0",
     "stage": "seed",
     "months": [
@@ -1882,6 +2002,7 @@
     "slug": "symphytum",
     "name": "Symphytum officinale",
     "name_de": "Beinwell",
+    "family": "Boraginaceae",
     "color": "#a080c0",
     "stage": "dried",
     "months": [
@@ -1901,6 +2022,7 @@
     "slug": "diplotaxis",
     "name": "Diplotaxis muralis",
     "name_de": "Mauerrauke",
+    "family": "Brassicaceae",
     "color": "#f0d010",
     "stage": "sprout",
     "months": [
@@ -1917,6 +2039,7 @@
     "slug": "diplotaxis",
     "name": "Diplotaxis muralis",
     "name_de": "Mauerrauke",
+    "family": "Brassicaceae",
     "color": "#f0d010",
     "stage": "foliage",
     "months": [
@@ -1933,6 +2056,7 @@
     "slug": "diplotaxis",
     "name": "Diplotaxis muralis",
     "name_de": "Mauerrauke",
+    "family": "Brassicaceae",
     "color": "#f0d010",
     "stage": "bloom",
     "months": [
@@ -1952,6 +2076,7 @@
     "slug": "diplotaxis",
     "name": "Diplotaxis muralis",
     "name_de": "Mauerrauke",
+    "family": "Brassicaceae",
     "color": "#f0d010",
     "stage": "seed",
     "months": [
@@ -1968,6 +2093,7 @@
     "slug": "diplotaxis",
     "name": "Diplotaxis muralis",
     "name_de": "Mauerrauke",
+    "family": "Brassicaceae",
     "color": "#f0d010",
     "stage": "dried",
     "months": [
@@ -1986,6 +2112,7 @@
     "slug": "beta",
     "name": "Beta vulgaris vulgaris",
     "name_de": "Rote Rübe",
+    "family": "Amaranthaceae",
     "color": "#506830",
     "stage": "sprout",
     "months": [
@@ -2002,6 +2129,7 @@
     "slug": "beta",
     "name": "Beta vulgaris vulgaris",
     "name_de": "Rote Rübe",
+    "family": "Amaranthaceae",
     "color": "#506830",
     "stage": "foliage",
     "months": [
@@ -2020,6 +2148,7 @@
     "slug": "verbascum",
     "name": "Verbascum nigrum",
     "name_de": "Schwarze Königskerze",
+    "family": "Plantaginaceae",
     "color": "#f0d820",
     "stage": "sprout",
     "months": [
@@ -2036,6 +2165,7 @@
     "slug": "verbascum",
     "name": "Verbascum nigrum",
     "name_de": "Schwarze Königskerze",
+    "family": "Plantaginaceae",
     "color": "#f0d820",
     "stage": "foliage",
     "months": [
@@ -2051,6 +2181,7 @@
     "slug": "verbascum",
     "name": "Verbascum nigrum",
     "name_de": "Schwarze Königskerze",
+    "family": "Plantaginaceae",
     "color": "#f0d820",
     "stage": "bloom",
     "months": [
@@ -2068,6 +2199,7 @@
     "slug": "verbascum",
     "name": "Verbascum nigrum",
     "name_de": "Schwarze Königskerze",
+    "family": "Plantaginaceae",
     "color": "#f0d820",
     "stage": "seed",
     "months": [
@@ -2084,6 +2216,7 @@
     "slug": "verbascum",
     "name": "Verbascum nigrum",
     "name_de": "Schwarze Königskerze",
+    "family": "Plantaginaceae",
     "color": "#f0d820",
     "stage": "dried",
     "months": [
@@ -2103,6 +2236,7 @@
     "slug": "fennel",
     "name": "Foeniculum vulgare",
     "name_de": "Fenchel",
+    "family": "Apiaceae",
     "color": "#c0d020",
     "stage": "sprout",
     "months": [
@@ -2119,6 +2253,7 @@
     "slug": "fennel",
     "name": "Foeniculum vulgare",
     "name_de": "Fenchel",
+    "family": "Apiaceae",
     "color": "#c0d020",
     "stage": "foliage",
     "months": [
@@ -2135,6 +2270,7 @@
     "slug": "fennel",
     "name": "Foeniculum vulgare",
     "name_de": "Fenchel",
+    "family": "Apiaceae",
     "color": "#c0d020",
     "stage": "bloom",
     "months": [
@@ -2152,6 +2288,7 @@
     "slug": "fennel",
     "name": "Foeniculum vulgare",
     "name_de": "Fenchel",
+    "family": "Apiaceae",
     "color": "#c0d020",
     "stage": "seed",
     "months": [
@@ -2168,6 +2305,7 @@
     "slug": "fennel",
     "name": "Foeniculum vulgare",
     "name_de": "Fenchel",
+    "family": "Apiaceae",
     "color": "#c0d020",
     "stage": "dried",
     "months": [
@@ -2186,6 +2324,7 @@
     "slug": "mentha",
     "name": "Mentha spicata",
     "name_de": "Grüne Minze",
+    "family": "Lamiaceae",
     "color": "#b890d0",
     "stage": "sprout",
     "months": [
@@ -2201,6 +2340,7 @@
     "slug": "mentha",
     "name": "Mentha spicata",
     "name_de": "Grüne Minze",
+    "family": "Lamiaceae",
     "color": "#b890d0",
     "stage": "foliage",
     "months": [
@@ -2217,6 +2357,7 @@
     "slug": "mentha",
     "name": "Mentha spicata",
     "name_de": "Grüne Minze",
+    "family": "Lamiaceae",
     "color": "#b890d0",
     "stage": "bloom",
     "months": [
@@ -2235,6 +2376,7 @@
     "slug": "mentha",
     "name": "Mentha spicata",
     "name_de": "Grüne Minze",
+    "family": "Lamiaceae",
     "color": "#b890d0",
     "stage": "seed",
     "months": [
@@ -2250,6 +2392,7 @@
     "slug": "mentha",
     "name": "Mentha spicata",
     "name_de": "Grüne Minze",
+    "family": "Lamiaceae",
     "color": "#b890d0",
     "stage": "dried",
     "months": [
@@ -2269,6 +2412,7 @@
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",
+    "family": "Asteraceae",
     "color": "#e89010",
     "stage": "sprout",
     "months": [
@@ -2285,6 +2429,7 @@
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",
+    "family": "Asteraceae",
     "color": "#e89010",
     "stage": "foliage",
     "months": [
@@ -2301,6 +2446,7 @@
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",
+    "family": "Asteraceae",
     "color": "#e89010",
     "stage": "bloom",
     "months": [
@@ -2322,6 +2468,7 @@
     "slug": "calendula_arvensis",
     "name": "Calendula arvensis",
     "name_de": "Acker-Ringelblume",
+    "family": "Asteraceae",
     "color": "#e89010",
     "stage": "seed",
     "months": [
@@ -2338,6 +2485,7 @@
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",
+    "family": "Polygonaceae",
     "color": "#f5e8e0",
     "stage": "sprout",
     "months": [
@@ -2354,6 +2502,7 @@
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",
+    "family": "Polygonaceae",
     "color": "#f5e8e0",
     "stage": "foliage",
     "months": [
@@ -2370,6 +2519,7 @@
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",
+    "family": "Polygonaceae",
     "color": "#f5e8e0",
     "stage": "bloom",
     "months": [
@@ -2388,6 +2538,7 @@
     "slug": "fagopyrum",
     "name": "Fagopyrum esculentum",
     "name_de": "Buchweizen",
+    "family": "Polygonaceae",
     "color": "#f5e8e0",
     "stage": "seed",
     "months": [
@@ -2404,6 +2555,7 @@
     "slug": "brassica_sabellica",
     "name": "Brassica oleracea var. sabellica",
     "name_de": "Grünkohl",
+    "family": "Brassicaceae",
     "color": "#4a7c3f",
     "stage": "sprout",
     "months": [
@@ -2420,6 +2572,7 @@
     "slug": "brassica_sabellica",
     "name": "Brassica oleracea var. sabellica",
     "name_de": "Grünkohl",
+    "family": "Brassicaceae",
     "color": "#4a7c3f",
     "stage": "foliage",
     "months": [
@@ -2442,6 +2595,7 @@
     "slug": "brassica_sabellica",
     "name": "Brassica oleracea var. sabellica",
     "name_de": "Grünkohl",
+    "family": "Brassicaceae",
     "color": "#4a7c3f",
     "stage": "bloom",
     "months": [
