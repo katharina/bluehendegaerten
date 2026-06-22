@@ -42,8 +42,31 @@ db.exec(`
     observation_id INTEGER NOT NULL REFERENCES observations(id) ON DELETE CASCADE,
     slug           TEXT NOT NULL,
     PRIMARY KEY (observation_id, slug)
+  );
+  CREATE TABLE IF NOT EXISTS bed_images (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    garden    TEXT NOT NULL DEFAULT 'betonbeete',
+    bed_index INTEGER NOT NULL,
+    filename  TEXT NOT NULL,
+    created   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(garden, bed_index)
+  );
+  CREATE TABLE IF NOT EXISTS plant_info (
+    slug      TEXT PRIMARY KEY,
+    art       TEXT,
+    wuchs     TEXT,
+    hoehe     TEXT,
+    breite    TEXT,
+    frost     TEXT,
+    wurzel    TEXT,
+    updated   TEXT NOT NULL DEFAULT (datetime('now'))
   )
 `);
+
+// migrate: add columns that may not exist in older DBs
+for (const col of ['licht', 'boden', 'wasser', 'naehrstoff', 'ph', 'kuebel', 'bloom_months', 'invasiv']) {
+  try { db.exec(`ALTER TABLE plant_info ADD COLUMN ${col} TEXT`); } catch {}
+}
 
 const storage = multer.diskStorage({
   destination: UPLOADS,
@@ -52,7 +75,12 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
   },
 });
-const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
+const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif']);
+const upload = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => cb(null, ALLOWED_MIME.has(file.mimetype)),
+});
 
 const app = express();
 app.use(express.json());
@@ -101,8 +129,90 @@ app.post('/api/custom-plants', (req, res) => {
   }
 });
 
+app.patch('/api/custom-plants/:slug', (req, res) => {
+  const { name, name_de, family, color, world_w, world_h } = req.body;
+  const fields = [];
+  const values = [];
+  if (name    !== undefined) { fields.push('name = ?');    values.push(name); }
+  if (name_de !== undefined) { fields.push('name_de = ?'); values.push(name_de); }
+  if (family  !== undefined) { fields.push('family = ?');  values.push(family); }
+  if (color   !== undefined) { fields.push('color = ?');   values.push(color); }
+  if (world_w !== undefined) { fields.push('world_w = ?'); values.push(parseFloat(world_w) || 0.5); }
+  if (world_h !== undefined) { fields.push('world_h = ?'); values.push(parseFloat(world_h) || 1.0); }
+  if (!fields.length) return res.status(400).json({ error: 'nothing to update' });
+  values.push(req.params.slug);
+  db.prepare(`UPDATE custom_plants SET ${fields.join(', ')} WHERE slug = ?`).run(...values);
+  res.json({ ok: true });
+});
+
 app.delete('/api/custom-plants/:slug', (req, res) => {
   db.prepare('DELETE FROM custom_plants WHERE slug = ?').run(req.params.slug);
+  res.json({ ok: true });
+});
+
+// ── Bed images ────────────────────────────────────────────────────────────────
+
+app.get('/api/bed-images', (req, res) => {
+  const { garden = 'betonbeete' } = req.query;
+  res.json(db.prepare('SELECT * FROM bed_images WHERE garden = ?').all(garden));
+});
+
+app.post('/api/bed-images', upload.single('file'), (req, res) => {
+  const { garden = 'betonbeete', bed_index } = req.body;
+  if (!req.file) return res.status(400).json({ error: 'file required' });
+  db.prepare(`
+    INSERT INTO bed_images (garden, bed_index, filename)
+    VALUES (?, ?, ?)
+    ON CONFLICT(garden, bed_index) DO UPDATE SET filename = excluded.filename, created = datetime('now')
+  `).run(garden, parseInt(bed_index), req.file.filename);
+  res.json({ ok: true, filename: req.file.filename });
+});
+
+app.delete('/api/bed-images/:id', (req, res) => {
+  db.prepare('DELETE FROM bed_images WHERE id = ?').run(req.params.id);
+  res.json({ ok: true });
+});
+
+// ── Plant info ────────────────────────────────────────────────────────────────
+
+app.patch('/api/plant-info/:slug', (req, res) => {
+  const allowed = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
+  const fields = [], values = [];
+  for (const [k, v] of Object.entries(req.body)) {
+    if (allowed.includes(k)) { fields.push(`${k} = ?`); values.push(v ?? null); }
+  }
+  if (!fields.length) return res.status(400).json({ error: 'nothing to update' });
+  values.push(req.params.slug);
+  db.prepare(`
+    INSERT INTO plant_info (slug) VALUES (?) ON CONFLICT(slug) DO NOTHING
+  `).run(req.params.slug);
+  db.prepare(`UPDATE plant_info SET ${fields.join(', ')}, updated = datetime('now') WHERE slug = ?`).run(...values);
+  res.json({ ok: true });
+});
+
+app.get('/api/plant-info/all', (req, res) => {
+  res.json(db.prepare('SELECT * FROM plant_info').all());
+});
+
+app.get('/api/plant-info/:slug', (req, res) => {
+  const row = db.prepare('SELECT * FROM plant_info WHERE slug = ?').get(req.params.slug);
+  res.json(row ?? { slug: req.params.slug });
+});
+
+app.put('/api/plant-info/:slug', (req, res) => {
+  const { art, wuchs, hoehe, breite, frost, wurzel, licht, boden, wasser, naehrstoff, ph, kuebel, bloom_months, invasiv } = req.body;
+  db.prepare(`
+    INSERT INTO plant_info (slug, art, wuchs, hoehe, breite, frost, wurzel, licht, boden, wasser, naehrstoff, ph, kuebel, bloom_months, invasiv)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(slug) DO UPDATE SET
+      art = excluded.art, wuchs = excluded.wuchs, hoehe = excluded.hoehe,
+      breite = excluded.breite, frost = excluded.frost, wurzel = excluded.wurzel,
+      licht = excluded.licht, boden = excluded.boden, wasser = excluded.wasser,
+      naehrstoff = excluded.naehrstoff, ph = excluded.ph, kuebel = excluded.kuebel,
+      bloom_months = excluded.bloom_months, invasiv = excluded.invasiv, updated = datetime('now')
+  `).run(req.params.slug, art ?? null, wuchs ?? null, hoehe ?? null, breite ?? null,
+         frost ?? null, wurzel ?? null, licht ?? null, boden ?? null, wasser ?? null,
+         naehrstoff ?? null, ph ?? null, kuebel ?? null, bloom_months ?? null, invasiv ?? null);
   res.json({ ok: true });
 });
 
@@ -148,6 +258,26 @@ app.post('/api/observations', upload.single('file'), (req, res) => {
   db.transaction(() => slugs.forEach(s => ins.run(obs.id, s)))();
 
   res.json({ ...obs, slugs });
+});
+
+// update observation
+app.patch('/api/observations/:id', upload.single('file'), (req, res) => {
+  const { date, type, text } = req.body;
+  let slugs = req.body.slugs ?? [];
+  if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
+  const fields = [], values = [];
+  if (date !== undefined) { fields.push('date = ?'); values.push(date || null); }
+  if (type !== undefined) { fields.push('type = ?'); values.push(type); }
+  if (text !== undefined) { fields.push('text = ?'); values.push(text || null); }
+  if (req.file)           { fields.push('filename = ?'); values.push(req.file.filename); }
+  if (fields.length) {
+    values.push(req.params.id);
+    db.prepare(`UPDATE observations SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+  }
+  db.prepare('DELETE FROM observation_plants WHERE observation_id = ?').run(req.params.id);
+  const ins = db.prepare('INSERT OR IGNORE INTO observation_plants (observation_id, slug) VALUES (?, ?)');
+  db.transaction(() => slugs.forEach(s => ins.run(req.params.id, s)))();
+  res.json({ ok: true });
 });
 
 // delete observation

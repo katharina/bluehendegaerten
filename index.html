@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Bluehende Gaerten — Pflanzenindex</title>
+  <title>Blühende Gärten — Pflanzenindex</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -97,110 +97,39 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.4);
       z-index: 100;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 40px;
-      overflow-y: auto;
     }
-    #all-obs-backdrop.open { display: flex; }
+    #all-obs-backdrop.open { display: block; }
 
     #all-obs-modal {
       background: #fff;
-      border: 2px solid #000;
       width: 100%;
-      max-width: 900px;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      min-height: 0;
+      position: relative;
+      overflow: hidden;
     }
-
-    #all-obs-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: 24px 32px;
-      border-bottom: 1px solid #000;
-      flex-shrink: 0;
-    }
-
-    #all-obs-header h2 { font-size: 18px; font-weight: 600; }
 
     #all-obs-close {
-      font-size: 20px;
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 24px;
       background: none;
       border: none;
       cursor: pointer;
-      color: #888;
+      color: #000;
       line-height: 1;
+      z-index: 10;
     }
-    #all-obs-close:hover { color: #000; }
+    #all-obs-close:hover { color: #555; }
 
     #all-obs-list {
-      padding: 24px 32px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .all-obs-card {
-      display: flex;
-      gap: 20px;
-      padding: 20px 0;
-      border-bottom: 1px solid #eee;
-      align-items: flex-start;
-    }
-
-    .all-obs-thumb {
-      width: 120px;
-      flex-shrink: 0;
-    }
-    .all-obs-thumb img {
-      width: 120px;
-      height: auto;
-      object-fit: contain;
-      background: #f5f5f3;
-      display: block;
-    }
-    .all-obs-thumb-empty {
-      width: 120px;
-      height: 80px;
-      background: #f5f5f3;
-    }
-
-    .all-obs-body { flex: 1; min-width: 0; }
-
-    .all-obs-meta {
-      font-size: 11px;
-      color: #aaa;
-      display: flex;
-      gap: 10px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 600;
-    }
-
-    .all-obs-text {
-      font-size: 13px;
-      color: #333;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .all-obs-plants {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .all-obs-plant-tag {
-      font-size: 11px;
-      font-style: italic;
-      color: #888;
-      border: 1px solid #eee;
-      padding: 2px 7px;
-      border-radius: 2px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      position: relative;
     }
 
     .all-obs-empty {
@@ -491,6 +420,26 @@
       color: #555;
     }
 
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-invasiv {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ff0000;
+      color: #fff;
+      font-size: 10px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
     /* Modal */
     #modal-backdrop {
       display: none;
@@ -543,36 +492,229 @@
       border-right: 1px solid rgba(128,128,128,0.2);
     }
 
+    #modal-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    #modal-invasiv-btn {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--modal-fg, #000);
+      opacity: 0.2;
+      padding: 4px;
+      flex-shrink: 0;
+      transition: opacity 0.15s, background 0.15s, color 0.15s;
+      line-height: 1;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #modal-invasiv-btn:hover { opacity: 0.5; }
+    #modal-invasiv-btn.active { background: #ff0000; color: #fff; opacity: 1; }
+
     #modal-name {
-      font-size: 120px;
+      font-size: 100px;
       font-style: italic;
       font-family: Georgia, serif;
       color: var(--modal-fg, #000);
-      line-height: 1.15;
-      margin-bottom: 8px;
+      line-height: 0.9;
+      margin-bottom: 24px;
       padding-right: 48px;
+      outline: none;
+      cursor: text;
+    }
+
+    #modal-name:focus, #modal-de:focus {
+      opacity: 0.8;
     }
 
     #modal-de {
       font-size: 14px;
       color: var(--modal-fg, #000);
       margin-bottom: 2px;
+      outline: none;
+      cursor: text;
+    }
+
+    #modal-family-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     #modal-family {
       font-size: 11px;
       color: var(--modal-fg, #000);
       opacity: 0.6;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      padding: 0;
+      width: 120px;
+    }
+    #modal-family:hover, #modal-family:focus {
+      opacity: 1;
+      border-bottom: 1px solid currentColor;
+    }
+
+    #modal-color-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      border: 1px solid rgba(128,128,128,0.3);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #modal-color-input {
+      opacity: 0;
+      position: absolute;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    #modal-bloom-bar {
       margin-bottom: 28px;
     }
+
+    #modal-bloom-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--modal-fg, #000);
+      opacity: 0.5;
+      margin-bottom: 10px;
+    }
+
+    .bloom-bar-segments {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 5px;
+    }
+
+    .bloom-seg {
+      flex: 1;
+      height: 10px;
+      border-radius: 99px;
+      background: rgba(128,128,128,0.25);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .bloom-seg:hover { background: rgba(128,128,128,0.45); }
+    .bloom-seg.active:hover { opacity: 0.7; }
+
+    .bloom-seg.active {
+      background: var(--modal-fg, #000);
+    }
+
+    .bloom-bar-labels {
+      display: flex;
+      gap: 3px;
+    }
+
+    .bloom-bar-labels span {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      color: var(--modal-fg, #000);
+      opacity: 0.45;
+    }
+
+    #modal-stages-section {
+      border-top: 1px solid rgba(128,128,128,0.2);
+      padding-top: 16px;
+      margin-bottom: 24px;
+    }
+
+    #modal-stages-toggle {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--modal-fg, #000);
+      opacity: 0.4;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    #modal-stages-toggle:hover { opacity: 0.7; }
+    #modal-stages-toggle::after { content: '▴'; font-size: 9px; }
+    #modal-stages-section.collapsed #modal-stages-toggle::after { content: '▾'; }
+    #modal-stages-section.collapsed #modal-stages,
+    #modal-stages-section.collapsed #modal-generated { display: none; }
 
     #modal-stages {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    #modal-plant-info {
       border-top: 1px solid rgba(128,128,128,0.2);
       padding-top: 20px;
       margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .plant-info-row {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .plant-info-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--modal-fg, #000);
+      opacity: 0.5;
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    .plant-info-value {
+      font-size: 12px;
+      color: var(--modal-fg, #000);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid transparent;
+      outline: none;
+      font-family: inherit;
+      width: 100%;
+      min-width: 40px;
+      padding: 0;
+    }
+
+    .plant-info-value:hover { border-bottom-color: rgba(128,128,128,0.3); }
+    .plant-info-value:focus { border-bottom-color: rgba(128,128,128,0.6); opacity: 0.8; }
+    .plant-info-value::placeholder { opacity: 0.3; color: var(--modal-fg, #000); }
+
+    .plant-info-unit {
+      font-size: 11px;
+      color: var(--modal-fg, #000);
+      opacity: 0.4;
     }
 
     #modal-generated {
@@ -637,16 +779,21 @@
     }
 
     #obs-toggle-btn {
-      font-size: 11px;
+      font-size: 10px;
       font-family: inherit;
-      border: 1px solid #ccc;
-      padding: 5px 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 99px;
+      padding: 6px 16px;
       cursor: pointer;
-      background: #fff;
-      color: #444;
+      background: var(--modal-fg, #000);
+      color: var(--modal-bg, #fff);
+      opacity: 0.85;
     }
-    #obs-toggle-btn:hover { border-color: #000; color: #000; }
-    #obs-toggle-btn.open { background: #000; color: #fff; border-color: #000; }
+    #obs-toggle-btn:hover { opacity: 1; }
+    #obs-toggle-btn.open { opacity: 1; }
 
     #obs-form {
       display: none;
@@ -753,58 +900,107 @@
     #obs-list {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      padding: 16px;
+      position: relative;
     }
 
     .obs-card {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 16px 0;
-      border-bottom: 1px solid #f0f0f0;
-      gap: 16px;
+      position: absolute;
     }
 
     .obs-card-thumb {
       width: 100%;
-      max-width: 400px;
       height: auto;
+      display: block;
+      object-fit: cover;
+      cursor: zoom-in;
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
       object-fit: contain;
-      background: #f5f5f3;
       display: block;
     }
 
-    .obs-card-body { flex: 1; min-width: 0; }
+    .obs-card-thumb-empty { display: none; }
 
-    .obs-card-meta {
-      font-size: 10px;
-      color: #aaa;
-      margin-bottom: 5px;
-      display: flex;
-      gap: 8px;
+    .obs-card-label {
+      padding: 6px 8px;
+      font-size: 11px;
+      color: var(--modal-fg, #000);
+      line-height: 1.3;
     }
 
-    .obs-card-type {
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .obs-card-label-date { font-weight: 600; }
+
+    .obs-card-label-plants {
+      font-style: italic;
+      opacity: 0.6;
     }
 
     .obs-card-text {
-      font-size: 12px;
-      color: #444;
-      line-height: 1.5;
-      margin-bottom: 6px;
+      font-size: 11px;
+      color: var(--modal-fg, #000);
+      padding: 6px 8px;
+      line-height: 1.4;
     }
 
-    .obs-card-plants {
+    .obs-card-edit {
+      position: absolute;
+      bottom: 6px;
+      right: 34px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
       display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s;
     }
+    .obs-card:hover .obs-card-edit { opacity: 1; }
+    .obs-card-edit:hover { background: rgba(0,0,0,0.8); }
+
+    .obs-card-delete {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .obs-card:hover .obs-card-delete { opacity: 1; }
+    .obs-card-delete:hover { background: rgba(180,0,0,0.8); }
 
     .obs-plant-tag {
       font-size: 10px;
@@ -830,7 +1026,7 @@
 </head>
 <body>
   <header>
-    <span class="wordmark">BLUEHENDE GAERTEN</span>
+    <span class="wordmark">BLÜHENDE GÄRTEN</span>
     <div class="header-right">
       <span id="garden-label"></span>
       <div id="garden-bar"></div>
@@ -856,6 +1052,7 @@
       </div>
       <div id="bed-plan"></div>
     </div>
+    <input type="file" id="bed-img-input" accept="image/*" style="display:none">
     <div id="plant-col">
       <div id="plant-col-header">
         <div id="plant-col-header-row">
@@ -907,24 +1104,40 @@
 
   <div id="all-obs-backdrop">
     <div id="all-obs-modal">
-      <div id="all-obs-header">
-        <h2 id="all-obs-title">Beobachtungen</h2>
-        <button id="all-obs-close">×</button>
-      </div>
+      <button id="all-obs-close">×</button>
       <div id="all-obs-list"></div>
     </div>
   </div>
+
+  <div id="pif-datalists"></div>
+
+  <div id="lightbox"><img id="lightbox-img" src=""></div>
 
   <div id="modal-backdrop">
     <div id="modal">
       <button id="modal-close">×</button>
       <div id="modal-columns">
         <div id="modal-info">
-          <div id="modal-name"></div>
-          <div id="modal-de"></div>
-          <div id="modal-family"></div>
-          <div id="modal-stages"></div>
-          <div id="modal-generated"></div>
+          <div id="modal-name" contenteditable="true" spellcheck="false"></div>
+          <div id="modal-meta-row">
+            <button id="modal-invasiv-btn" title="Invasive Art">⚠</button>
+            <div>
+              <div id="modal-de" contenteditable="true" spellcheck="false"></div>
+              <div id="modal-family-row">
+                <input id="modal-family" type="text" spellcheck="false" autocomplete="off" list="family-datalist" placeholder="Familie">
+                <datalist id="family-datalist"></datalist>
+                <span id="modal-color-swatch"></span>
+                <input id="modal-color-input" type="color">
+              </div>
+            </div>
+          </div>
+          <div id="modal-bloom-bar"></div>
+          <div id="modal-plant-info"></div>
+          <div id="modal-stages-section" class="collapsed">
+            <button id="modal-stages-toggle">Wachstum</button>
+            <div id="modal-stages"></div>
+            <div id="modal-generated"></div>
+          </div>
         </div>
         <div id="modal-images">
           <div id="obs-toggle-bar">
@@ -962,7 +1175,7 @@
             <div class="obs-field">
               <label class="obs-file-label" id="obs-file-label">
                 <span id="obs-file-text">Bild auswählen…</span>
-                <input id="obs-file" type="file" accept="image/*" style="display:none">
+                <input id="obs-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
               </label>
             </div>
             <div class="obs-form-actions">
@@ -1035,30 +1248,75 @@
         for (const o of obs) {
           const card = document.createElement('div');
           card.className = 'obs-card';
-          const thumb = o.filename
-            ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">`
-            : `<div class="obs-card-thumb-empty"></div>`;
           const dateStr = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) : '';
-          const plants = o.slugs.map(s => {
-            const p = bySlug.get(s);
-            return `<span class="obs-plant-tag">${p?.name ?? s}</span>`;
-          }).join('');
+          const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+          const hasLabel = dateStr || plantNames;
           card.innerHTML = `
-            ${thumb}
-            <div class="obs-card-body">
-              <div class="obs-card-meta">
-                <span class="obs-card-type">${TYPE_LABELS_OBS[o.type] ?? o.type}</span>
-                ${dateStr ? `<span>${dateStr}</span>` : ''}
-              </div>
-              ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
-              ${plants ? `<div class="obs-card-plants">${plants}</div>` : ''}
-            </div>
+            ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
+            ${hasLabel ? `<div class="obs-card-label">
+              ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
+              ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
+            </div>` : ''}
+            ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+            <button class="obs-card-edit" title="Bearbeiten">✎</button>
+            <button class="obs-card-delete" title="Löschen">×</button>
           `;
+          if (o.filename) {
+            card.querySelector('img').addEventListener('load', () => masonryLayout(list));
+          }
+          card.querySelector('.obs-card-edit').addEventListener('click', () => {
+            _editingObsId = o.id;
+            document.getElementById('obs-date').value = o.date ?? '';
+            document.getElementById('obs-type').value = o.type ?? 'foto';
+            document.getElementById('obs-text').value = o.text ?? '';
+            buildPlantGrid(_modalSlug);
+            // pre-check linked plants
+            o.slugs.forEach(s => {
+              const cb = document.querySelector(`#obs-plant-grid input[value="${s}"]`);
+              if (cb) cb.checked = true;
+            });
+            obsForm.classList.add('open');
+            obsToggle.classList.add('open');
+            obsToggle.textContent = '× Abbrechen';
+            document.getElementById('obs-toggle-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          card.querySelector('.obs-card-delete').addEventListener('click', async () => {
+            if (!confirm('Eintrag wirklich löschen?')) return;
+            await fetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+            await renderObservations(_modalSlug);
+          });
           list.appendChild(card);
         }
+        masonryLayout(list);
       } catch {
         list.innerHTML = '<div class="obs-empty">Server nicht erreichbar</div>';
       }
+    }
+
+    function masonryLayout(list, cols = 3) {
+      const cards = [...list.querySelectorAll('.obs-card')];
+      if (!cards.length) return;
+      const COLS = cols;
+      const GAP = 8;
+      const PAD = 16;
+      const colW = (list.clientWidth - PAD * 2 - GAP * (COLS - 1)) / COLS;
+      const colH = new Array(COLS).fill(0);
+      cards.forEach(card => {
+        card.style.width = colW + 'px';
+        const col = colH.indexOf(Math.min(...colH));
+        card.style.left = (PAD + col * (colW + GAP)) + 'px';
+        card.style.top = (PAD + colH[col]) + 'px';
+        colH[col] += card.offsetHeight + GAP;
+      });
+      // spacer drives scrollHeight — absolute cards don't contribute to it
+      let spacer = list.querySelector('.masonry-spacer');
+      if (!spacer) {
+        spacer = document.createElement('div');
+        spacer.className = 'masonry-spacer';
+        spacer.style.cssText = 'pointer-events:none';
+        list.appendChild(spacer);
+      }
+      spacer.style.height = (PAD + Math.max(...colH)) + 'px';
     }
 
     function contrastColor(hex) {
@@ -1071,16 +1329,25 @@
 
     async function openModal(p) {
       _modalSlug = p.slug;
-      const bg  = p.color ?? '#ffffff';
+      const bg  = (store.colorOverrides ?? {})[p.slug] ?? p.color ?? '#ffffff';
       const fg  = contrastColor(bg);
       const modal = document.getElementById('modal');
       modal.style.background = bg;
       modal.style.setProperty('--modal-fg', fg);
+      modal.style.setProperty('--modal-bg', bg);
       document.getElementById('modal-name').textContent = p.name;
       document.getElementById('modal-de').textContent = p.name_de ?? '';
-      document.getElementById('modal-family').textContent = p.family ?? '';
+      document.getElementById('modal-family').value = p.family ?? '';
+      document.getElementById('modal-color-swatch').style.background = bg;
+      document.getElementById('modal-color-input').value = bg.length === 7 ? bg : '#ffffff';
 
       const stages = stagesBySlug.get(p.slug) ?? [];
+      const manifestBloom = new Set(stages.find(s => s.stage === 'bloom')?.months ?? []);
+      renderBloomBar(manifestBloom);
+      renderGeneratedImages(p.slug);
+      document.getElementById('modal-invasiv-btn').classList.remove('active');
+      renderPlantInfo({}, p);
+
       document.getElementById('modal-stages').innerHTML = stages.map(s => `
         <div class="modal-stage-row">
           <span class="modal-stage-name">${s.stage}</span>
@@ -1088,11 +1355,277 @@
         </div>
       `).join('');
 
-      renderGeneratedImages(p.slug);
+      fetch(`/api/plant-info/${p.slug}`).then(r => r.json()).then(info => {
+        const saved = info.bloom_months ? new Set(JSON.parse(info.bloom_months)) : null;
+        renderBloomBar(saved ?? manifestBloom);
+        renderPlantInfo(info, p);
+        const invasiv = !!info.invasiv;
+        document.getElementById('modal-invasiv-btn').classList.toggle('active', invasiv);
+        const entry = bySlug.get(p.slug);
+        if (entry) entry._invasiv = invasiv;
+      }).catch(() => {});
       closeObsForm();
       await renderObservations(p.slug);
       backdrop.classList.add('open');
     }
+
+    function parseCm(val) {
+      if (!val) return null;
+      const s = String(val).trim();
+      const range = s.match(/^(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)$/);
+      if (range) return (parseFloat(range[1]) + parseFloat(range[2])) / 2;
+      return parseFloat(s) || null;
+    }
+
+    const MONTH_INITIALS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+
+    function renderBloomBar(activeMonths) {
+      const bar = document.getElementById('modal-bloom-bar');
+      bar.innerHTML = `
+        <div id="modal-bloom-bar-label">Blütezeit</div>
+        <div class="bloom-bar-segments">
+          ${MONTH_INITIALS.map((_, i) => `<div class="bloom-seg${activeMonths.has(i) ? ' active' : ''}" data-month="${i}"></div>`).join('')}
+        </div>
+        <div class="bloom-bar-labels">
+          ${MONTH_INITIALS.map(l => `<span>${l}</span>`).join('')}
+        </div>
+      `;
+      bar.querySelectorAll('.bloom-seg').forEach(seg => {
+        seg.addEventListener('click', () => {
+          seg.classList.toggle('active');
+          saveBloomMonths();
+        });
+      });
+    }
+
+    function saveBloomMonths() {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const months = [...document.querySelectorAll('.bloom-seg.active')].map(s => +s.dataset.month);
+      fetch(`/api/plant-info/${slug}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bloom_months: JSON.stringify(months) }),
+      }).catch(() => {});
+      // keep stagesBySlug in sync
+      const existing = stagesBySlug.get(slug) ?? [];
+      const withoutBloom = existing.filter(s => s.stage !== 'bloom');
+      stagesBySlug.set(slug, months.length ? [...withoutBloom, { stage: 'bloom', months }] : withoutBloom);
+    }
+
+    const TEXT_INFO_KEYS = ['art','wuchs','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel'];
+
+    function loadPlantInfoSuggestions() {
+      fetch('/api/plant-info/all').then(r => r.json()).then(rows => {
+        const suggestions = {};
+        TEXT_INFO_KEYS.forEach(k => suggestions[k] = new Set());
+        rows.forEach(row => TEXT_INFO_KEYS.forEach(k => { if (row[k]) suggestions[k].add(row[k]); }));
+        const container = document.getElementById('pif-datalists');
+        container.innerHTML = TEXT_INFO_KEYS.map(k => `
+          <datalist id="pif-list-${k}">
+            ${[...suggestions[k]].map(v => `<option value="${v.replace(/"/g,'&quot;')}"></option>`).join('')}
+          </datalist>
+        `).join('');
+      }).catch(() => {});
+    }
+
+    const PLANT_INFO_FIELDS = [
+      { key: 'art',        label: 'Pflanzenart' },
+      { key: 'wuchs',      label: 'Wuchs' },
+      { key: 'hoehe',      label: 'Höhe',                plantProp: 'worldH' },
+      { key: 'breite',     label: 'Breite',              plantProp: 'worldW' },
+      { key: 'frost',      label: 'Frostverträglich' },
+      { key: 'wurzel',     label: 'Wurzelsystem' },
+      { key: 'licht',      label: 'Licht' },
+      { key: 'boden',      label: 'Boden' },
+      { key: 'wasser',     label: 'Wasser' },
+      { key: 'naehrstoff', label: 'Nährstoffe' },
+      { key: 'ph',         label: 'PH-Wert' },
+      { key: 'kuebel',     label: 'Kübel/Balkon' },
+    ];
+
+    function renderPlantInfo(info, plant) {
+      const container = document.getElementById('modal-plant-info');
+      container.innerHTML = PLANT_INFO_FIELDS.map(f => {
+        let val;
+        if (f.plantProp) {
+          val = (info[f.key] != null && info[f.key] !== '')
+            ? info[f.key]
+            : (plant?.[f.plantProp] ? Math.round(parseFloat(plant[f.plantProp]) * 100) : '');
+        } else {
+          val = info[f.key] ?? '';
+        }
+        const listAttr = f.plantProp ? '' : `list="pif-list-${f.key}"`;
+        return `
+          <div class="plant-info-row">
+            <span class="plant-info-label">${f.label}</span>
+            <input class="plant-info-value" ${listAttr} value="${String(val).replace(/"/g, '&quot;')}"
+              data-key="${f.key}" autocomplete="off" spellcheck="false" placeholder="—">
+            ${f.plantProp ? `<span class="plant-info-unit">cm</span>` : ''}
+          </div>`;
+      }).join('');
+
+      let saveTimer;
+      container.querySelectorAll('.plant-info-value').forEach(el => {
+        el.addEventListener('input', () => {
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(() => savePlantInfo(), 600);
+        });
+        el.addEventListener('blur', () => { clearTimeout(saveTimer); savePlantInfo(); });
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') el.blur(); });
+      });
+    }
+
+    function savePlantInfo() {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const body = {};
+      const dimPatch = {};
+      document.querySelectorAll('.plant-info-value').forEach(el => {
+        const key = el.dataset.key;
+        const val = el.value.trim();
+        body[key] = val;
+        if (key === 'hoehe')  { const cm = parseCm(val); dimPatch.world_h = cm ? cm / 100 : undefined; }
+        if (key === 'breite') { const cm = parseCm(val); dimPatch.world_w = cm ? cm / 100 : undefined; }
+      });
+
+      // update in-memory plant dimensions
+      const p = bySlug.get(slug);
+      if (p) {
+        if (dimPatch.world_h != null) p.worldH = dimPatch.world_h;
+        if (dimPatch.world_w != null) p.worldW = dimPatch.world_w;
+        if (dimPatch.world_h != null || dimPatch.world_w != null) renderBedPlan();
+        if (p._custom) {
+          fetch(`/api/custom-plants/${slug}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dimPatch),
+          }).catch(() => {});
+        }
+      }
+
+      fetch(`/api/plant-info/${slug}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then(() => loadPlantInfoSuggestions()).catch(() => {});
+    }
+
+    // ── Invasiv toggle ────────────────────────────────────────────────────────
+
+    document.getElementById('modal-invasiv-btn').addEventListener('click', () => {
+      const btn = document.getElementById('modal-invasiv-btn');
+      const active = btn.classList.toggle('active');
+      const slug = _modalSlug;
+      if (slug) {
+        const p = bySlug.get(slug);
+        if (p) p._invasiv = active;
+        fetch(`/api/plant-info/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ invasiv: active ? 1 : 0 }),
+        }).catch(() => {});
+        render();
+      }
+    });
+
+    // ── Stages toggle ─────────────────────────────────────────────────────────
+
+    document.getElementById('modal-stages-toggle').addEventListener('click', () => {
+      document.getElementById('modal-stages-section').classList.toggle('collapsed');
+    });
+
+    // ── Color editing ─────────────────────────────────────────────────────────
+
+    document.getElementById('modal-color-swatch').addEventListener('click', () => {
+      document.getElementById('modal-color-input').click();
+    });
+
+    document.getElementById('modal-color-input').addEventListener('input', e => {
+      const color = e.target.value;
+      const slug = _modalSlug;
+      const fg = contrastColor(color);
+      const modal = document.getElementById('modal');
+      modal.style.background = color;
+      modal.style.setProperty('--modal-fg', fg);
+      modal.style.setProperty('--modal-bg', color);
+      document.getElementById('modal-color-swatch').style.background = color;
+      const p = bySlug.get(slug);
+      if (p) p.color = color;
+      store.colorOverrides = store.colorOverrides ?? {};
+      store.colorOverrides[slug] = color;
+      savePlan();
+      render();
+    });
+
+    function saveNameEdit(field, value) {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const p = bySlug.get(slug);
+      if (!p) return;
+      store.nameOverrides = store.nameOverrides ?? {};
+      store.nameOverrides[slug] = store.nameOverrides[slug] ?? {};
+      if (field === 'name') {
+        p.name = value;
+        store.nameOverrides[slug].name = value;
+      } else {
+        p.name_de = value;
+        store.nameOverrides[slug].name_de = value;
+      }
+      savePlan();
+      render();
+      if (p._custom) {
+        fetch(`/api/custom-plants/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ [field]: value }),
+        }).catch(() => {});
+      }
+    }
+
+    const modalName = document.getElementById('modal-name');
+    const modalDe   = document.getElementById('modal-de');
+
+    modalName.addEventListener('blur', () => saveNameEdit('name',    modalName.textContent.trim()));
+    modalDe  .addEventListener('blur', () => saveNameEdit('name_de', modalDe.textContent.trim()));
+
+    modalName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalName.blur(); } });
+    modalDe  .addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalDe.blur(); } });
+
+    const modalFamily = document.getElementById('modal-family');
+    modalFamily.addEventListener('blur', () => {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const p = bySlug.get(slug);
+      if (!p) return;
+      const value = modalFamily.value.trim();
+      p.family = value;
+      store.nameOverrides = store.nameOverrides ?? {};
+      store.nameOverrides[slug] = store.nameOverrides[slug] ?? {};
+      store.nameOverrides[slug].family = value;
+      savePlan();
+      render();
+      if (p._custom) {
+        fetch(`/api/custom-plants/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ family: value }),
+        }).catch(() => {});
+      }
+      // refresh datalist
+      const dl = document.getElementById('family-datalist');
+      if (value && !dl.querySelector(`option[value="${CSS.escape(value)}"]`)) {
+        const opt = document.createElement('option'); opt.value = value; dl.appendChild(opt);
+      }
+    });
+    modalFamily.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalFamily.blur(); } });
+
+    // populate family datalist from known families
+    (function() {
+      const dl = document.getElementById('family-datalist');
+      const families = new Set([...bySlug.values()].map(p => p.family).filter(Boolean));
+      families.forEach(f => { const o = document.createElement('option'); o.value = f; dl.appendChild(o); });
+    })();
 
     // ── Observation form ──────────────────────────────────────────────────────
 
@@ -1135,6 +1668,7 @@
       obsForm.classList.remove('open');
       obsToggle.classList.remove('open');
       obsToggle.textContent = '+ Neue Beobachtung';
+      _editingObsId = null;
     }
 
     obsToggle.addEventListener('click', () => {
@@ -1152,6 +1686,8 @@
 
     document.getElementById('obs-cancel').addEventListener('click', closeObsForm);
 
+    let _editingObsId = null;
+
     document.getElementById('obs-submit').addEventListener('click', async () => {
       const slugs = [...document.querySelectorAll('#obs-plant-grid input:checked')].map(i => i.value);
       const fd = new FormData();
@@ -1162,7 +1698,12 @@
       slugs.forEach(s => fd.append('slugs', s));
       if (obsFile.files[0]) fd.append('file', obsFile.files[0]);
 
-      await fetch('/api/observations', { method: 'POST', body: fd });
+      if (_editingObsId) {
+        await fetch(`/api/observations/${_editingObsId}`, { method: 'PATCH', body: fd });
+        _editingObsId = null;
+      } else {
+        await fetch('/api/observations', { method: 'POST', body: fd });
+      }
 
       // reset form fields
       document.getElementById('obs-date').value = new Date().toISOString().slice(0, 10);
@@ -1207,30 +1748,32 @@
 
         for (const o of obs) {
           const card = document.createElement('div');
-          card.className = 'all-obs-card';
+          card.className = 'obs-card';
           const dateStr = o.date
             ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' })
             : '';
-          const thumb = o.filename
-            ? `<div class="all-obs-thumb"><img src="/uploads/${o.filename}"></div>`
-            : `<div class="all-obs-thumb"><div class="all-obs-thumb-empty"></div></div>`;
-          const plants = o.slugs.map(s => {
-            const p = bySlug.get(s);
-            return `<span class="all-obs-plant-tag">${p?.name ?? s}</span>`;
-          }).join('');
+          const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+          const hasLabel = dateStr || plantNames;
           card.innerHTML = `
-            ${thumb}
-            <div class="all-obs-body">
-              <div class="all-obs-meta">
-                <span>${TYPE_LABELS_OBS[o.type] ?? o.type}</span>
-                ${dateStr ? `<span>${dateStr}</span>` : ''}
-              </div>
-              ${o.text ? `<div class="all-obs-text">${o.text}</div>` : ''}
-              ${plants ? `<div class="all-obs-plants">${plants}</div>` : ''}
-            </div>
+            ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
+            ${hasLabel ? `<div class="obs-card-label">
+              ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
+              ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
+            </div>` : ''}
+            ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+            <button class="obs-card-delete" title="Löschen">×</button>
           `;
+          if (o.filename) {
+            card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
+          }
+          card.querySelector('.obs-card-delete').addEventListener('click', async () => {
+            if (!confirm('Eintrag wirklich löschen?')) return;
+            await fetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+            await openAllObs();
+          });
           list.appendChild(card);
         }
+        masonryLayout(list, 6);
       } catch {
         list.innerHTML = '<div class="all-obs-empty">Server nicht erreichbar</div>';
       }
@@ -1392,6 +1935,15 @@
 
 const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.slug, p.color ?? '#ccc']));
 
+    let bedImages = {}; // bed_index → filename
+
+    async function loadBedImages() {
+      try {
+        const rows = await fetch(`/api/bed-images?garden=${activeGarden}`).then(r => r.json());
+        bedImages = Object.fromEntries(rows.map(r => [r.bed_index, r.filename]));
+      } catch {}
+    }
+
     function renderBedPlan() {
       const PAD = 0.15;
       const vbX = -BED_L / 2 - PAD;
@@ -1400,21 +1952,30 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       const vbH = totalZ + PAD * 2;
       const colors = colorBySlug();
 
-      let svg = `<svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
+      let svg = `<svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">`;
 
       for (const bed of bedLayout) {
         const x0 = -BED_L / 2;
         const z0 = bed.z - bed.w / 2;
         svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.02"/>`;
 
+        if (editMode && bedImages[bed.i]) {
+          svg += `<image href="/uploads/${bedImages[bed.i]}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid meet" opacity="0.45"/>`;
+        }
+
         svg += `<text x="${x0 + 0.1}" y="${z0 + 0.28}" font-size="0.22" fill="#aaa" font-family="system-ui">${bed.i + 1}</text>`;
         svg += `<line x1="0" y1="${z0}" x2="0" y2="${z0 + bed.w}" stroke="#000" stroke-width="0.025" opacity="0.5"/>`;
+        if (editMode) {
+          const btnW = 0.6, btnH = 0.28, btnX = x0 + BED_L - btnW - 0.1, btnY = z0 + 0.08;
+          svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#555' : '#888'}" opacity="0.7" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
+          svg += `<text x="${btnX + btnW/2}" y="${btnY + 0.19}" font-size="0.16" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '🖼 Bild' : '+ Bild'}</text>`;
+        }
       }
 
       // placements
       const ver = currentVersion();
       const placements = ver?.placements ?? [];
-      const dotR = w => (w ?? 0.4) / 2;
+      const dotR = entry => (entry?.worldW ?? 0.4) / 2;
 
       for (const p of placements) {
         const entry = bySlug.get(p.slug);
@@ -1422,7 +1983,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
           .some(s => s?.toLowerCase().includes(filterText));
         const color   = colors[p.slug] ?? '#ccc';
         const opacity = !filterText ? 0.85 : matches ? 0.85 : 0.15;
-        const r       = dotR(entry?.worldW ?? 1);
+        const r       = dotR(entry);
         const isSelected = editMode && p.slug === selectedSlug;
         svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r.toFixed(3)}"
           fill="${color}" opacity="${opacity}"
@@ -1465,6 +2026,25 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     await loadCustomPlants();
+    await loadBedImages();
+    await fetch('/api/plant-info/all').then(r => r.json()).then(rows => {
+      for (const row of rows) {
+        const p = bySlug.get(row.slug);
+        if (!p) continue;
+        const w = parseCm(row.breite); if (w) p.worldW = w / 100;
+        const h = parseCm(row.hoehe);  if (h) p.worldH = h / 100;
+      }
+    }).catch(() => {});
+    loadPlantInfoSuggestions();
+
+    for (const [slug, color] of Object.entries(store.colorOverrides ?? {})) {
+      const p = bySlug.get(slug);
+      if (p) p.color = color;
+    }
+    for (const [slug, ov] of Object.entries(store.nameOverrides ?? {})) {
+      const p = bySlug.get(slug);
+      if (p) { if (ov.name) p.name = ov.name; if (ov.name_de) p.name_de = ov.name_de; if (ov.family) p.family = ov.family; }
+    }
 
     const addPlantBtn  = document.getElementById('add-plant-btn');
     const addPlantForm = document.getElementById('add-plant-form');
@@ -1645,8 +2225,32 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     renderBedPlan();
 
     const tooltip = document.getElementById('bed-tooltip');
+    let _uploadBedIndex = null;
+    const bedImgInput = document.getElementById('bed-img-input');
+    bedImgInput.addEventListener('change', async () => {
+      const file = bedImgInput.files[0];
+      if (!file || _uploadBedIndex === null) return;
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('garden', activeGarden);
+      fd.append('bed_index', _uploadBedIndex);
+      try {
+        await fetch('/api/bed-images', { method: 'POST', body: fd });
+        await loadBedImages();
+        renderBedPlan();
+      } catch {}
+      bedImgInput.value = '';
+      _uploadBedIndex = null;
+    });
+
     document.getElementById('bed-plan').addEventListener('click', e => {
       if (editMode) {
+        const uploadEl = e.target.closest('[data-upload-bed]');
+        if (uploadEl) {
+          _uploadBedIndex = parseInt(uploadEl.dataset.uploadBed);
+          bedImgInput.click();
+          return;
+        }
         const el = e.target.closest('circle[data-id]');
         if (el && el.dataset.slug === selectedSlug) {
           removePlacement(el.dataset.id);
@@ -1705,7 +2309,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
           (p.family ?? '').toLowerCase().includes(filterText))
         .sort((a, b) => a.name.localeCompare(b.name));
 
-      const globalMaxW = Math.max(...[...bySlug.values()].map(p => p.worldW ?? 1));
+      const globalMaxW = Math.max(...[...bySlug.values()].map(p => p.worldW ?? 0.3));
 
       const grid = document.getElementById('plant-grid');
       grid.innerHTML = '';
@@ -1717,8 +2321,13 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         card.innerHTML = `
           <span class="card-dot" style="background:${p.color ?? '#ccc'};width:${dotSize}px;height:${dotSize}px"></span>
           <span class="card-name">${p.name}</span>
-          <span class="card-family">${p.family ?? ''}</span>
-          <span class="card-de">${p.name_de ?? ''}</span>
+          <div class="card-meta-row">
+            ${p._invasiv ? '<span class="card-invasiv">⚠</span>' : ''}
+            <div>
+              <div class="card-de">${p.name_de ?? ''}</div>
+              <div class="card-family">${p.family ?? ''}</div>
+            </div>
+          </div>
         `;
         card.addEventListener('click', () => {
           if (editMode) { setSelectedSlug(p.slug === selectedSlug ? null : p.slug); renderBedPlan(); render(); }
@@ -1751,6 +2360,21 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     render();
+
+    // ── Lightbox ──────────────────────────────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('obs-card-thumb')) {
+        lightboxImg.src = e.target.src;
+        lightbox.classList.add('open');
+      }
+    });
+
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
   </script>
 </body>
 </html>
