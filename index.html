@@ -131,6 +131,26 @@
       padding: 16px;
       position: relative;
     }
+    #all-obs-list.herbar-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      position: static;
+    }
+    .herbar-card {
+      /* 6 cols, 5 gaps of 8px, 2×16px padding = 72px total offset */
+      height: calc((100vw - 72px) / 6 * 4 / 3);
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-color: #f0ede8;
+      overflow: hidden;
+    }
+    .herbar-card .obs-card-delete {
+      top: 6px;
+      right: 6px;
+      bottom: auto;
+    }
 
     .all-obs-empty {
       font-size: 13px;
@@ -1018,7 +1038,7 @@
       text-align: center;
     }
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
       #content { flex-direction: column; }
       #garden-description, #observations { width: 100%; border-right: none; border-bottom: 1px solid #000; }
     }
@@ -1030,6 +1050,7 @@
     <div class="header-right">
       <span id="garden-label"></span>
       <div id="garden-bar"></div>
+<button id="all-herbar-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Herbarbelege</button>
       <button id="all-obs-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Beobachtungen</button>
       <button id="edit-mode-btn">Bearbeiten</button>
       <a class="open-btn" href="sim.html">Simulator →</a>
@@ -1105,11 +1126,13 @@
   <div id="all-obs-backdrop">
     <div id="all-obs-modal">
       <button id="all-obs-close">×</button>
+      <div id="all-obs-title" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;padding:18px 24px 0;"></div>
       <div id="all-obs-list"></div>
     </div>
   </div>
 
   <div id="pif-datalists"></div>
+
 
   <div id="lightbox"><img id="lightbox-img" src=""></div>
 
@@ -1732,56 +1755,88 @@
     // ── All observations modal ────────────────────────────────────────────────
     const allObsBackdrop = document.getElementById('all-obs-backdrop');
 
-    async function openAllObs() {
+    async function openAllObs(typeFilter = null) {
       const list = document.getElementById('all-obs-list');
+      document.getElementById('all-obs-title').textContent = typeFilter === 'herbarbeleg' ? 'Herbarbelege' : 'Beobachtungen';
       list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
       allObsBackdrop.classList.add('open');
 
       try {
-        const obs = await fetch(`/api/observations?garden=${activeGarden}`).then(r => r.json());
+        let obs = await fetch(`/api/observations?garden=${activeGarden}`).then(r => r.json());
+        if (typeFilter) obs = obs.filter(o => o.type === typeFilter);
         list.innerHTML = '';
 
         if (!obs.length) {
-          list.innerHTML = '<div class="all-obs-empty">Noch keine Beobachtungen</div>';
+          list.innerHTML = `<div class="all-obs-empty">Noch keine ${typeFilter === 'herbarbeleg' ? 'Herbarbelege' : 'Beobachtungen'}</div>`;
           return;
+        }
+
+        const isHerbar = typeFilter === 'herbarbeleg';
+        list.classList.toggle('herbar-grid', isHerbar);
+
+        if (isHerbar) {
+          obs.sort((a, b) => {
+            const nameA = a.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+            const nameB = b.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+            return nameA.localeCompare(nameB);
+          });
         }
 
         for (const o of obs) {
           const card = document.createElement('div');
-          card.className = 'obs-card';
           const dateStr = o.date
             ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' })
             : '';
           const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
-          const hasLabel = dateStr || plantNames;
-          card.innerHTML = `
-            ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
-            ${hasLabel ? `<div class="obs-card-label">
-              ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
-              ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
-            </div>` : ''}
-            ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
-            <button class="obs-card-delete" title="Löschen">×</button>
-          `;
-          if (o.filename) {
-            card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
+
+          if (isHerbar) {
+            card.className = 'herbar-card';
+            if (o.filename) {
+              card.style.backgroundImage = `url('/uploads/${o.filename}')`;
+              card.style.cursor = 'zoom-in';
+              card.addEventListener('click', e => {
+                if (e.target.closest('.obs-card-delete')) return;
+                const lb = document.getElementById('lightbox');
+                document.getElementById('lightbox-img').src = `/uploads/${o.filename}`;
+                lb.classList.add('open');
+              });
+            }
+            card.innerHTML = `<button class="obs-card-delete" title="Löschen">×</button>`;
+          } else {
+            card.className = 'obs-card';
+            const hasLabel = dateStr || plantNames;
+            card.innerHTML = `
+              ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
+              ${hasLabel ? `<div class="obs-card-label">
+                ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
+                ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
+              </div>` : ''}
+              ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+              <button class="obs-card-delete" title="Löschen">×</button>
+            `;
+            if (o.filename) {
+              card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
+            }
           }
+
           card.querySelector('.obs-card-delete').addEventListener('click', async () => {
             if (!confirm('Eintrag wirklich löschen?')) return;
             await fetch(`/api/observations/${o.id}`, { method: 'DELETE' });
-            await openAllObs();
+            await openAllObs(typeFilter);
           });
           list.appendChild(card);
         }
-        masonryLayout(list, 6);
+        if (!isHerbar) masonryLayout(list, 6);
       } catch {
         list.innerHTML = '<div class="all-obs-empty">Server nicht erreichbar</div>';
       }
     }
 
-    document.getElementById('all-obs-btn').addEventListener('click', openAllObs);
+    document.getElementById('all-obs-btn').addEventListener('click', () => openAllObs());
+    document.getElementById('all-herbar-btn').addEventListener('click', () => openAllObs('herbarbeleg'));
     document.getElementById('all-obs-close').addEventListener('click', () => allObsBackdrop.classList.remove('open'));
     allObsBackdrop.addEventListener('click', e => { if (e.target === allObsBackdrop) allObsBackdrop.classList.remove('open'); });
+
 
     // ── Planting store ────────────────────────────────────────────────────────
     const STORAGE_KEY = 'bluehendegaerten';
