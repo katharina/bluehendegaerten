@@ -1,0 +1,4 @@
+# Don't commit image backups — only the SQL dump
+*.tar.gz
+*.zip
+images_backup/
