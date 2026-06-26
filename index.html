@@ -1102,6 +1102,14 @@
     #content { opacity: 0; }
     #content.ready { opacity: 1; transition: opacity 0.4s ease; }
 
+    body.index-mode #garden-description,
+    body.index-mode #panels-area { display: none; }
+    body.index-mode #plant-col {
+      width: 100vw;
+      margin-left: 0;
+      box-shadow: none;
+    }
+
     #landing {
       display: none;
       flex-direction: column;
@@ -2529,7 +2537,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         ? new Set(gardens.find(g => g.id === activeGarden)?.plants ?? [])
         : null;
 
-      const placedSlugs = editMode
+      const placedSlugs = (editMode || !activeGarden)
         ? null
         : new Set((currentVersion().placements ?? []).map(p => p.slug));
 
@@ -2596,24 +2604,22 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     if (activeG) {
       document.getElementById('garden-title').innerHTML = `<h1>${activeG.name}</h1>`;
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
+    } else {
+      document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
+      const gardenLinks = gardens.map(g =>
+        `<a href="/${g.path}" style="font-size:11px;color:#888;border:1px solid #ddd;border-radius:20px;padding:5px 14px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='#888';this.style.color='#222'" onmouseout="this.style.borderColor='#ddd';this.style.color='#888'">${g.name}</a>`
+      ).join('');
+      document.getElementById('plant-col-header-row').insertAdjacentHTML('afterend',
+        `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">${gardenLinks}</div>`);
     }
 
     const loader = document.getElementById('loader');
     loader.classList.add('hidden');
     loader.addEventListener('transitionend', () => loader.remove(), { once: true });
 
-    if (activeGarden) {
-      render();
-      document.getElementById('content').classList.add('ready');
-    } else {
-      const landing = document.getElementById('landing');
-      landing.innerHTML = gardens.map(g => `
-        <a href="/${g.path}" class="landing-card">
-          <div class="landing-card-name">${g.name}</div>
-        </a>
-      `).join('');
-      landing.classList.add('ready');
-    }
+    if (!activeGarden) document.body.classList.add('index-mode');
+    render();
+    document.getElementById('content').classList.add('ready');
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
