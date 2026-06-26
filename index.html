@@ -1103,11 +1103,14 @@
     #content.ready { opacity: 1; transition: opacity 0.4s ease; }
 
     body.index-mode #garden-description,
-    body.index-mode #panels-area { display: none; }
+    body.index-mode #observations { display: none; }
+    body.index-mode #panels-area { pointer-events: none; }
     body.index-mode #plant-col {
       width: 100vw;
       margin-left: 0;
       box-shadow: none;
+      transform: none !important;
+      pointer-events: auto;
     }
 
     #landing {
