@@ -1274,7 +1274,7 @@
 
   <script type="module">
     const base = import.meta.env.BASE_URL;
-    const R2_URL = import.meta.env.VITE_R2_PUBLIC_URL ?? '';
+    const R2_URL = __R2_URL__;
 
     async function uploadToR2(file) {
       const { url, key } = await fetch('/api/upload-url', {
