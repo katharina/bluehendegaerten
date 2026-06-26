@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase.js';
+import { supabase } from '../../lib/supabase.js';
 
 async function withSlugs(rows) {
   if (!rows.length) return rows;
