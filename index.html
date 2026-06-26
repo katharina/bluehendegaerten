@@ -1330,6 +1330,7 @@
     }
 
     const obsCache = new Map();
+    const plantInfoCache = new Map();
 
     async function renderObservations(slug) {
       const list = document.getElementById('obs-list');
@@ -1454,7 +1455,15 @@
         </div>
       `).join('');
 
+      const _piData = plantInfoCache.get(p.slug);
+      if (_piData) {
+        const saved = _piData.bloom_months ? new Set(JSON.parse(_piData.bloom_months)) : null;
+        renderBloomBar(saved ?? manifestBloom);
+        renderPlantInfo(_piData, p);
+        document.getElementById('modal-invasiv-btn').classList.toggle('active', !!_piData.invasiv);
+      }
       fetch(`/api/plant-info/${p.slug}`).then(r => r.json()).then(info => {
+        plantInfoCache.set(p.slug, info);
         const saved = info.bloom_months ? new Set(JSON.parse(info.bloom_months)) : null;
         renderBloomBar(saved ?? manifestBloom);
         renderPlantInfo(info, p);
@@ -1464,7 +1473,6 @@
         if (entry) entry._invasiv = invasiv;
       }).catch(() => {});
       closeObsForm();
-      await renderObservations(p.slug);
       const card = document.querySelector(`.plant-card[data-slug="${p.slug}"]`);
       if (card) {
         const r = card.getBoundingClientRect();
@@ -1476,6 +1484,7 @@
       modal.classList.add('opening');
       modal.addEventListener('animationend', () => modal.classList.remove('opening'), { once: true });
       backdrop.classList.add('open');
+      renderObservations(p.slug);
     }
 
     function parseCm(val) {
