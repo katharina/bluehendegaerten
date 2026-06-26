@@ -5,6 +5,15 @@
   --font-family-mono: "Source Code Pro", monospace;
 }
 
+/* ── Mobile: switch to natural scroll ───────────────────────────────────── */
+@media (max-width: 767px) {
+  html, body { height: auto; overflow: auto; }
+  #content    { overflow: visible; height: auto; min-height: 100svh; }
+  body.index-mode #panels-area,
+  body.index-mode #plant-col  { height: auto; overflow: visible; width: 100%; }
+  body.index-mode #plant-grid { overflow: visible; height: auto; }
+}
+
 /* ── Plant column header ─────────────────────────────────────────────────── */
 #plant-col-header {
   flex-shrink: 0;
