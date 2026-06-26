@@ -1102,6 +1102,32 @@
     #content { opacity: 0; }
     #content.ready { opacity: 1; transition: opacity 0.4s ease; }
 
+    #landing {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 80px 48px;
+      gap: 12px;
+      opacity: 0;
+    }
+    #landing.ready { display: flex; opacity: 1; transition: opacity 0.4s ease; }
+
+    .landing-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #000;
+      padding: 24px 32px;
+      transition: background 0.15s;
+    }
+    .landing-card:hover { background: #000; color: #fff; }
+    .landing-card-name {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 600;
+      font-style: italic;
+    }
+
     #loader {
       position: fixed;
       inset: 0;
@@ -1124,6 +1150,7 @@
 </head>
 <body>
   <div id="loader"><span id="loader-text">Blühende Gärten</span></div>
+  <div id="landing"></div>
   <div id="content">
     <div id="garden-description">
       <div style="font-family:var(--font-serif);font-size:100px;font-weight:600;line-height:1;margin-bottom:40px;">Der Große Garten</div>
@@ -1312,6 +1339,9 @@
       fetch(base + 'plants/manifest.json').then(r => r.json()),
       fetch(base + 'gardens.json').then(r => r.json()),
     ]);
+
+    const _urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    const _activeGardenId = gardens.find(g => g.path === _urlPath)?.id ?? null;
 
     // one entry per slug (bloom stage preferred)
     const bySlug = new Map();
@@ -1990,8 +2020,9 @@
     })() ?? { versions: [{ id: 'default', name: 'Garten 1', placements: [] }], currentId: 'default' };
 
     // kick off plan fetch immediately; resolved later in Promise.all
-    const _planPromise = fetch('/api/plans/betonbeete')
-      .then(r => r.ok ? r.json() : null).catch(() => null);
+    const _planPromise = _activeGardenId
+      ? fetch('/api/plans/' + _activeGardenId).then(r => r.ok ? r.json() : null).catch(() => null)
+      : Promise.resolve(null);
 
     function currentVersion() {
       return store.versions.find(v => v.id === store.currentId) ?? store.versions[0];
@@ -2000,7 +2031,7 @@
     function savePlan() {
       store._savedAt = Date.now();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-      fetch('/api/plans/betonbeete', {
+      fetch('/api/plans/' + activeGarden, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: JSON.stringify(store) }),
@@ -2184,7 +2215,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       document.getElementById('bed-plan').innerHTML = svg;
     }
 
-    let activeGarden = gardens[0]?.id ?? null;
+    let activeGarden = _activeGardenId;
     let filterText = '';
 
     // ── Custom plants ─────────────────────────────────────────────────────────
@@ -2567,11 +2598,22 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
     }
 
-    render();
-    document.getElementById('content').classList.add('ready');
     const loader = document.getElementById('loader');
     loader.classList.add('hidden');
     loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+
+    if (activeGarden) {
+      render();
+      document.getElementById('content').classList.add('ready');
+    } else {
+      const landing = document.getElementById('landing');
+      landing.innerHTML = gardens.map(g => `
+        <a href="/${g.path}" class="landing-card">
+          <div class="landing-card-name">${g.name}</div>
+        </a>
+      `).join('');
+      landing.classList.add('ready');
+    }
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
