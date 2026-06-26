@@ -1957,20 +1957,9 @@
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? null; } catch { return null; }
     })() ?? { versions: [{ id: 'default', name: 'Garten 1', placements: [] }], currentId: 'default' };
 
-    // sync from server (prefer newer)
-    try {
-      const res = await fetch('/api/plans/betonbeete');
-      if (res.ok) {
-        const { data } = await res.json();
-        if (data) {
-          const srv = JSON.parse(data);
-          if (!store._savedAt || (srv._savedAt ?? 0) > store._savedAt) {
-            store = srv;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-          }
-        }
-      }
-    } catch {}
+    // kick off plan fetch immediately; resolved later in Promise.all
+    const _planPromise = fetch('/api/plans/betonbeete')
+      .then(r => r.ok ? r.json() : null).catch(() => null);
 
     function currentVersion() {
       return store.versions.find(v => v.id === store.currentId) ?? store.versions[0];
@@ -2192,16 +2181,30 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       } catch {}
     }
 
-    await loadCustomPlants();
-    await loadBedImages();
-    await fetch('/api/plant-info/all').then(r => r.json()).then(rows => {
-      for (const row of rows) {
-        const p = bySlug.get(row.slug);
-        if (!p) continue;
-        const w = parseCm(row.breite); if (w) p.worldW = w / 100;
-        const h = parseCm(row.hoehe);  if (h) p.worldH = h / 100;
-      }
-    }).catch(() => {});
+    const [_planData, , , _plantInfoRows] = await Promise.all([
+      _planPromise,
+      loadCustomPlants(),
+      loadBedImages(),
+      fetch('/api/plant-info/all').then(r => r.json()).catch(() => []),
+    ]);
+
+    if (_planData?.data) {
+      try {
+        const srv = JSON.parse(_planData.data);
+        if (!store._savedAt || (srv._savedAt ?? 0) > store._savedAt) {
+          store = srv;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          renderVersionSelect();
+        }
+      } catch {}
+    }
+
+    for (const row of _plantInfoRows ?? []) {
+      const p = bySlug.get(row.slug);
+      if (!p) continue;
+      const w = parseCm(row.breite); if (w) p.worldW = w / 100;
+      const h = parseCm(row.hoehe);  if (h) p.worldH = h / 100;
+    }
     loadPlantInfoSuggestions();
 
     for (const [slug, color] of Object.entries(store.colorOverrides ?? {})) {
