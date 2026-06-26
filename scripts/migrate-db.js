@@ -46,28 +46,35 @@ async function run() {
   console.log('── observations ────────────────────────────');
   const obs = db.prepare('SELECT * FROM observations').all();
   if (obs.length) {
-    const rows = obs.map(r => ({ ...r, created_at: r.created }));
-    rows.forEach(r => delete r.created);
-    const { error, data } = await supabase.from('observations').upsert(rows).select('id');
-    if (error) { console.error('observations:', error.message); }
-    else {
-      console.log(`  inserted ${rows.length} rows`);
-      console.log('── observation_plants ──────────────────────');
-      const links = db.prepare('SELECT * FROM observation_plants').all();
-      if (links.length) {
-        const { error: le } = await supabase.from('observation_plants').upsert(links);
-        if (le) console.error('observation_plants:', le.message);
-        else console.log(`  inserted ${links.length} rows`);
-      }
+    const idMap = new Map();
+    for (const r of obs) {
+      const oldId = r.id;
+      const { data, error } = await supabase
+        .from('observations')
+        .insert({ garden: r.garden, date: r.date, type: r.type, text: r.text,
+                  filename: r.filename, created_at: r.created })
+        .select('id').single();
+      if (error) { console.error(`  obs ${oldId}:`, error.message); continue; }
+      idMap.set(oldId, data.id);
+    }
+    console.log(`  inserted ${idMap.size} rows`);
+    console.log('── observation_plants ──────────────────────');
+    const links = db.prepare('SELECT * FROM observation_plants').all();
+    const remapped = links.map(l => ({ observation_id: idMap.get(l.observation_id), slug: l.slug }))
+                          .filter(l => l.observation_id != null);
+    if (remapped.length) {
+      const { error: le } = await supabase.from('observation_plants').insert(remapped);
+      if (le) console.error('observation_plants:', le.message);
+      else console.log(`  inserted ${remapped.length} rows`);
     }
   }
 
   console.log('── bed_images ──────────────────────────────');
   const beds = db.prepare('SELECT * FROM bed_images').all();
   if (beds.length) {
-    const rows = beds.map(r => ({ ...r, created_at: r.created }));
-    rows.forEach(r => delete r.created);
-    const { error } = await supabase.from('bed_images').upsert(rows);
+    const rows = beds.map(r => ({ garden: r.garden, bed_index: r.bed_index,
+                                   filename: r.filename, created_at: r.created }));
+    const { error } = await supabase.from('bed_images').insert(rows);
     if (error) console.error('bed_images:', error.message);
     else console.log(`  inserted ${rows.length} rows`);
   }
