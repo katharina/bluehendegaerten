@@ -5,10 +5,8 @@
   --font-family-mono: "Source Code Pro", monospace;
 }
 
-/* ── Mobile: switch to natural scroll ───────────────────────────────────── */
+/* ── Mobile index: let panels fill width and flow naturally ─────────────── */
 @media (max-width: 767px) {
-  html, body { height: auto; overflow: auto; }
-  #content    { overflow: visible; height: auto; min-height: 100svh; }
   body.index-mode #panels-area,
   body.index-mode #plant-col  { height: auto; overflow: visible; width: 100%; }
   body.index-mode #plant-grid { overflow: visible; height: auto; }
