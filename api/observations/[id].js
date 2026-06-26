@@ -4,11 +4,12 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'PATCH') {
-    const { date, type, text, slugs } = req.body ?? {};
+    const { date, type, text, filename, slugs } = req.body ?? {};
     const fields = {};
-    if (date !== undefined) fields.date = date || null;
-    if (type !== undefined) fields.type = type;
-    if (text !== undefined) fields.text = text || null;
+    if (date     !== undefined) fields.date     = date || null;
+    if (type     !== undefined) fields.type     = type;
+    if (text     !== undefined) fields.text     = text || null;
+    if (filename !== undefined) fields.filename = filename || null;
     if (Object.keys(fields).length) {
       const { error } = await supabase.from('observations').update(fields).eq('id', id);
       if (error) return res.status(500).json({ error: error.message });

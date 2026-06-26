@@ -5,8 +5,12 @@
   <title>Blühende Gärten — Pflanzenindex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --font-serif: "Bitter", serif;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
@@ -220,9 +224,9 @@
     }
 
     #garden-description h1 {
-      font-family: Georgia, serif;
+      font-family: var(--font-serif);
       font-size: 22px;
-      font-weight: normal;
+      font-weight: 600;
       letter-spacing: normal;
       color: #222;
       margin-bottom: 20px;
@@ -264,9 +268,9 @@
     }
 
     #observations h2 {
-      font-family: Georgia, serif;
+      font-family: var(--font-serif);
       font-size: 22px;
-      font-weight: normal;
+      font-weight: 600;
       letter-spacing: normal;
       color: #222;
       margin-bottom: 28px;
@@ -294,7 +298,7 @@
       display: none;
     }
 
-    #bed-tooltip .tt-name { font-family: Georgia, serif; font-style: italic; font-size: 15px; }
+    #bed-tooltip .tt-name { font-family: var(--font-serif); font-style: italic; font-size: 15px; }
     #bed-tooltip .tt-de { color: #555; }
 
     #plant-col {
@@ -318,9 +322,9 @@
     }
 
     #plant-col-title {
-      font-family: Georgia, serif;
+      font-family: var(--font-serif);
       font-size: 22px;
-      font-weight: normal;
+      font-weight: 600;
       letter-spacing: normal;
       color: #222;
       margin-bottom: 16px;
@@ -465,7 +469,7 @@
     .card-name {
       font-size: 18px;
       font-style: italic;
-      font-family: Georgia, serif;
+      font-family: var(--font-serif);
       color: #222;
       line-height: 1.3;
     }
@@ -594,7 +598,8 @@
     #modal-name {
       font-size: 100px;
       font-style: italic;
-      font-family: Georgia, serif;
+      font-weight: 600;
+      font-family: var(--font-serif);
       color: var(--modal-fg, #000);
       line-height: 0.9;
       margin-bottom: 24px;
@@ -1098,7 +1103,7 @@
 <body>
   <div id="content">
     <div id="garden-description">
-      <div style="font-family:Georgia,serif;font-size:100px;line-height:1;margin-bottom:40px;">Der Große Garten</div>
+      <div style="font-family:var(--font-serif);font-size:100px;font-weight:600;line-height:1;margin-bottom:40px;">Der Große Garten</div>
       <div id="garden-title"></div>
       <div id="garden-bar"></div>
       <div style="display:flex;gap:8px;margin-bottom:16px;">
@@ -1110,7 +1115,7 @@
     <div id="panels-area">
     <div id="observations">
       <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;">
-        <h2 style="margin-bottom:0;font-family:Georgia,serif;letter-spacing:normal;font-weight:normal;">Plan</h2>
+        <h2 style="margin-bottom:0;font-family:var(--font-serif);letter-spacing:normal;font-weight:600;">Plan</h2>
         <button id="edit-mode-btn">Bearbeiten</button>
       </div>
       <div id="bed-plan-bar">
@@ -1269,6 +1274,17 @@
 
   <script type="module">
     const base = import.meta.env.BASE_URL;
+    const R2_URL = import.meta.env.VITE_R2_PUBLIC_URL ?? '';
+
+    async function uploadToR2(file) {
+      const { url, key } = await fetch('/api/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentType: file.type, filename: file.name }),
+      }).then(r => r.json());
+      await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+      return key;
+    }
     const [all, gardens] = await Promise.all([
       fetch(base + 'plants/manifest.json').then(r => r.json()),
       fetch(base + 'gardens.json').then(r => r.json()),
@@ -1334,7 +1350,7 @@
           const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
           const hasLabel = dateStr || plantNames;
           card.innerHTML = `
-            ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
+            ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
             ${hasLabel ? `<div class="obs-card-label">
               ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
               ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
@@ -1783,19 +1799,28 @@
 
     document.getElementById('obs-submit').addEventListener('click', async () => {
       const slugs = [...document.querySelectorAll('#obs-plant-grid input:checked')].map(i => i.value);
-      const fd = new FormData();
-      fd.append('garden', obsGarden.value);
-      fd.append('date',   document.getElementById('obs-date').value);
-      fd.append('type',   document.getElementById('obs-type').value);
-      fd.append('text',   document.getElementById('obs-text').value);
-      slugs.forEach(s => fd.append('slugs', s));
-      if (obsFile.files[0]) fd.append('file', obsFile.files[0]);
+      let filename = null;
+      if (obsFile.files[0]) filename = await uploadToR2(obsFile.files[0]);
+      const body = {
+        garden: obsGarden.value,
+        date:   document.getElementById('obs-date').value,
+        type:   document.getElementById('obs-type').value,
+        text:   document.getElementById('obs-text').value,
+        slugs,
+        ...(filename && { filename }),
+      };
 
       if (_editingObsId) {
-        await fetch(`/api/observations/${_editingObsId}`, { method: 'PATCH', body: fd });
+        await fetch(`/api/observations/${_editingObsId}`, {
+          method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
         _editingObsId = null;
       } else {
-        await fetch('/api/observations', { method: 'POST', body: fd });
+        await fetch('/api/observations', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
       }
 
       // reset form fields
@@ -1871,12 +1896,12 @@
           if (isHerbar) {
             card.className = 'herbar-card';
             if (o.filename) {
-              card.style.backgroundImage = `url('/uploads/${o.filename}')`;
+              card.style.backgroundImage = `url('${R2_URL}/${o.filename}')`;
               card.style.cursor = 'zoom-in';
               card.addEventListener('click', e => {
                 if (e.target.closest('.obs-card-delete')) return;
                 const lb = document.getElementById('lightbox');
-                document.getElementById('lightbox-img').src = `/uploads/${o.filename}`;
+                document.getElementById('lightbox-img').src = `${R2_URL}/${o.filename}`;
                 lb.classList.add('open');
               });
             }
@@ -1885,7 +1910,7 @@
             card.className = 'obs-card';
             const hasLabel = dateStr || plantNames;
             card.innerHTML = `
-              ${o.filename ? `<img class="obs-card-thumb" src="/uploads/${o.filename}">` : ''}
+              ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
               ${hasLabel ? `<div class="obs-card-label">
                 ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
                 ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
@@ -2102,7 +2127,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.02"/>`;
 
         if (editMode && bedImages[bed.i]) {
-          svg += `<image href="/uploads/${bedImages[bed.i]}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid meet" opacity="0.45"/>`;
+          svg += `<image href="${R2_URL}/${bedImages[bed.i]}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid meet" opacity="0.45"/>`;
         }
 
         svg += `<text x="${x0 + 0.1}" y="${z0 + 0.28}" font-size="0.22" fill="#aaa" font-family="system-ui">${bed.i + 1}</text>`;
@@ -2372,12 +2397,12 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     bedImgInput.addEventListener('change', async () => {
       const file = bedImgInput.files[0];
       if (!file || _uploadBedIndex === null) return;
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('garden', activeGarden);
-      fd.append('bed_index', _uploadBedIndex);
       try {
-        await fetch('/api/bed-images', { method: 'POST', body: fd });
+        const filename = await uploadToR2(file);
+        await fetch('/api/bed-images', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ garden: activeGarden, bed_index: _uploadBedIndex, filename }),
+        });
         await loadBedImages();
         renderBedPlan();
       } catch {}
