@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-bitter: "Bitter", serif;
+  --font-family-mono: "Source Code Pro", monospace;
+}
+
+/* ── Plant column header ─────────────────────────────────────────────────── */
+#plant-col-header {
+  flex-shrink: 0;
+  border-bottom: 1px solid #000;
+  padding: 24px 20px 16px;
+}
+#plant-col-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+#plant-filter {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 6px 0;
+  font-size: 13px;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+  background: transparent;
+}
+#plant-filter::placeholder { color: #bbb; }
+#plant-filter:focus { border-bottom-color: #000; }
+
+@media (min-width: 640px) {
+  #plant-col-header { padding: 40px 48px 20px; }
+}
+
+/* ── Plant grid ──────────────────────────────────────────────────────────── */
+#plant-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 140px;
+}
+
+@media (min-width: 640px) {
+  #plant-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  #plant-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+/* ── Plant card ──────────────────────────────────────────────────────────── */
+.plant-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+  transition: background-color 250ms, color 250ms;
+}
+.plant-card:hover,
+.plant-card:hover .card-name,
+.plant-card:hover .card-de,
+.plant-card:hover .card-family {
+  background-color: var(--dot-color);
+  color: var(--card-fg);
+}
+.plant-card.selected {
+  background: #f0f0f0;
+  outline: 2px solid #000;
+  outline-offset: -2px;
+}
+
+.card-dot   { position: absolute; border-radius: 50%; bottom: 16px; right: 18px; }
+.card-name  { position: relative; z-index: 1; font-family: var(--font-bitter, "Bitter", serif); font-style: italic; font-size: 18px; color: #222; line-height: 1.3; }
+.card-de    { position: relative; z-index: 1; font-size: 12px; color: #555; }
+.card-family{ position: relative; z-index: 1; font-size: 11px; color: #aaa; }
+.card-meta-row { display: flex; align-items: center; gap: 6px; }
+.card-invasiv {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #ff0000; color: #fff; font-size: 10px; flex-shrink: 0;
+}
