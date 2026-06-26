@@ -1098,9 +1098,32 @@
       #content { flex-direction: column; }
       #garden-description, #observations { width: 100%; border-right: none; border-bottom: 1px solid #000; }
     }
+
+    #content { opacity: 0; }
+    #content.ready { opacity: 1; transition: opacity 0.4s ease; }
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      z-index: 9999;
+      transition: opacity 0.4s ease;
+    }
+    #loader.hidden { opacity: 0; pointer-events: none; }
+    #loader-text {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 600;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
+  <div id="loader"><span id="loader-text">Blühende Gärten</span></div>
   <div id="content">
     <div id="garden-description">
       <div style="font-family:var(--font-serif);font-size:100px;font-weight:600;line-height:1;margin-bottom:40px;">Der Große Garten</div>
@@ -2545,6 +2568,10 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     render();
+    document.getElementById('content').classList.add('ready');
+    const loader = document.getElementById('loader');
+    loader.classList.add('hidden');
+    loader.addEventListener('transitionend', () => loader.remove(), { once: true });
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
