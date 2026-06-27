@@ -2303,6 +2303,9 @@
     // populate garden select
     const obsGarden = document.getElementById('obs-garden');
     const qoGarden = document.getElementById('qo-garden');
+    const qoBlank = document.createElement('option');
+    qoBlank.value = ''; qoBlank.textContent = '—';
+    qoGarden.appendChild(qoBlank);
     gardens.forEach(g => {
       const opt = document.createElement('option');
       opt.value = g.id;
