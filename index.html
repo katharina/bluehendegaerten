@@ -430,6 +430,9 @@
       overflow: hidden;
     }
 
+    #modal-info-toggle { display: none; }
+    #modal-info-body { display: block; }
+
     #modal-info {
       width: 38%;
       flex-shrink: 0;
@@ -1033,6 +1036,7 @@
     @media (max-width: 767px) {
       html, body  { height: auto; overflow: auto; }
       #content    { overflow: visible; height: auto; }
+      #modal-name { font-size: 72px; }
       body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; }
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
@@ -1041,7 +1045,11 @@
       /* Modal: stack info above observations */
       #modal { width: 100vw; height: 100dvh; }
       #modal-columns { flex-direction: column; overflow-y: auto; }
-      #modal-info { width: 100%; flex-shrink: 0; border-right: none; border-bottom: 1px solid rgba(128,128,128,0.2); padding: 32px 24px 24px; overflow-y: visible; }
+      #modal-info { width: 100%; flex-shrink: 0; border-right: none; border-bottom: 1px solid rgba(128,128,128,0.2); padding: 32px 24px 8px; overflow-y: visible; }
+      #modal-info-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; border-top: 1px solid rgba(128,128,128,0.15); padding: 14px 0; font-size: 12px; font-family: inherit; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--modal-fg, #000); opacity: 0.5; cursor: pointer; }
+      #modal-info-toggle:hover { opacity: 0.8; }
+      #modal-info-body { display: none; padding-bottom: 20px; }
+      #modal-info-body.open { display: block; }
       #modal-images { overflow: visible; }
       #obs-toggle-bar { padding: 24px 24px 16px; }
       #obs-form { padding: 16px 24px; }
@@ -1154,7 +1162,7 @@
         <div id="modal-info">
           <div id="modal-name" contenteditable="true" spellcheck="false"></div>
           <div id="modal-meta-row">
-            <button id="modal-invasiv-btn" title="Invasive Art">⚠</button>
+            <!-- <button id="modal-invasiv-btn" title="Invasive Art">⚠</button> -->
             <div>
               <div id="modal-de" contenteditable="true" spellcheck="false"></div>
               <div id="modal-family-row">
@@ -1165,12 +1173,15 @@
               </div>
             </div>
           </div>
-          <div id="modal-bloom-bar"></div>
-          <div id="modal-plant-info"></div>
-          <div id="modal-stages-section" class="collapsed">
-            <button id="modal-stages-toggle">Wachstum</button>
-            <div id="modal-stages"></div>
-            <div id="modal-generated"></div>
+          <button id="modal-info-toggle">Pflanzendaten <span id="modal-info-chevron">▾</span></button>
+          <div id="modal-info-body">
+            <div id="modal-bloom-bar"></div>
+            <div id="modal-plant-info"></div>
+            <div id="modal-stages-section" class="collapsed">
+              <button id="modal-stages-toggle">Wachstum</button>
+              <div id="modal-stages"></div>
+              <div id="modal-generated"></div>
+            </div>
           </div>
         </div>
         <div id="modal-images">
@@ -1316,7 +1327,7 @@
             <button class="obs-card-delete" title="Löschen">×</button>
           `;
           if (o.filename) {
-            card.querySelector('img').addEventListener('load', () => masonryLayout(list));
+            card.querySelector('img').addEventListener('load', () => masonryLayout(list, window.innerWidth < 768 ? 2 : 3));
           }
           card.querySelector('.obs-card-edit').addEventListener('click', () => {
             _editingObsId = o.id;
@@ -1342,7 +1353,7 @@
           });
           list.appendChild(card);
         }
-        masonryLayout(list);
+        masonryLayout(list, window.innerWidth < 768 ? 2 : 3);
       } catch {
         list.innerHTML = '<div class="obs-empty">Server nicht erreichbar</div>';
       }
@@ -1400,7 +1411,7 @@
       const manifestBloom = new Set(stages.find(s => s.stage === 'bloom')?.months ?? []);
       renderBloomBar(manifestBloom);
       renderGeneratedImages(p.slug);
-      document.getElementById('modal-invasiv-btn').classList.remove('active');
+      // document.getElementById('modal-invasiv-btn').classList.remove('active');
       renderPlantInfo({}, p);
 
       document.getElementById('modal-stages').innerHTML = stages.map(s => `
@@ -1422,10 +1433,10 @@
         const saved = info.bloom_months ? new Set(JSON.parse(info.bloom_months)) : null;
         renderBloomBar(saved ?? manifestBloom);
         renderPlantInfo(info, p);
-        const invasiv = !!info.invasiv;
-        document.getElementById('modal-invasiv-btn').classList.toggle('active', invasiv);
-        const entry = bySlug.get(p.slug);
-        if (entry) entry._invasiv = invasiv;
+        // const invasiv = !!info.invasiv;
+        // document.getElementById('modal-invasiv-btn').classList.toggle('active', invasiv);
+        // const entry = bySlug.get(p.slug);
+        // if (entry) entry._invasiv = invasiv;
       }).catch(() => {});
       closeObsForm();
       const card = document.querySelector(`.plant-card[data-slug="${p.slug}"]`);
@@ -1439,6 +1450,8 @@
       modal.classList.add('opening');
       modal.addEventListener('animationend', () => modal.classList.remove('opening'), { once: true });
       backdrop.classList.add('open');
+      document.getElementById('modal-info-body').classList.remove('open');
+      document.getElementById('modal-info-chevron').textContent = '▾';
       renderObservations(p.slug);
     }
 
@@ -1584,8 +1597,8 @@
       }).then(() => loadPlantInfoSuggestions()).catch(() => {});
     }
 
-    // ── Invasiv toggle ────────────────────────────────────────────────────────
-
+    // ── Invasiv toggle (commented out) ───────────────────────────────────────
+    /*
     document.getElementById('modal-invasiv-btn').addEventListener('click', () => {
       const btn = document.getElementById('modal-invasiv-btn');
       const active = btn.classList.toggle('active');
@@ -1600,6 +1613,16 @@
         }).catch(() => {});
         render();
       }
+    });
+    */
+
+    // ── Plant info accordion (mobile) ────────────────────────────────────────
+
+    document.getElementById('modal-info-toggle').addEventListener('click', () => {
+      const body = document.getElementById('modal-info-body');
+      const chevron = document.getElementById('modal-info-chevron');
+      const open = body.classList.toggle('open');
+      chevron.textContent = open ? '▴' : '▾';
     });
 
     // ── Stages toggle ─────────────────────────────────────────────────────────
@@ -2463,7 +2486,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
           <span class="card-dot" style="background:${p.color ?? '#ccc'};width:${dotSize}px;height:${dotSize}px"></span>
           <span class="card-name">${p.name}</span>
           <div class="card-meta-row">
-            ${p._invasiv ? '<span class="card-invasiv">⚠</span>' : ''}
+            ${'' /* p._invasiv ? '<span class="card-invasiv">⚠</span>' : '' */}
             <div>
               <div class="card-de">${p.name_de ?? ''}</div>
               <div class="card-family">${p.family ?? ''}</div>

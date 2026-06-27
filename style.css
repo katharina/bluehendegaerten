@@ -86,22 +86,24 @@
   flex-direction: column;
   gap: 4px;
   padding: 16px 18px;
-  border-right: 1px solid #000;
+  border-left: 1px solid #000;
   border-bottom: 1px solid #000;
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
 }
 
-/* Remove right border from last card in each row */
-.plant-card:nth-child(2n) { border-right: none; }
+/* Hide the leftmost border so the grid has no outer left edge */
+.plant-card:nth-child(2n+1) { border-left: none; }
 
 @media (min-width: 640px) {
-  .plant-card:nth-child(2n) { border-right: 1px solid #000; }
-  .plant-card:nth-child(3n) { border-right: none; }
+  .plant-card:nth-child(2n+1) { border-left: 1px solid #000; }
+  .plant-card:nth-child(3n+1) { border-left: none; }
 }
 
 @media (min-width: 768px) {
-  .plant-card:nth-child(3n) { border-right: 1px solid #000; }
+  .plant-card:nth-child(3n+1) { border-left: 1px solid #000; }
+  /* auto-fill: first card in each row can't be targeted by nth-child,
+     so we accept a left border on col 1 — it frames the grid cleanly */
 }
 .plant-card:hover {
   background-color: var(--dot-color);
