@@ -2449,7 +2449,7 @@
         const body = {
           date: document.getElementById('qo-date').value,
           type: document.getElementById('qo-type').value,
-          garden: qoGarden.value,
+          ...(qoGarden.value && { garden: qoGarden.value }),
           text: document.getElementById('qo-text').value,
           slugs,
           ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
