@@ -3,8 +3,9 @@
 // and inserts matched plant slugs into observation_plants.
 // Skips observations that already have slugs unless --all is passed.
 //
-// Usage: node --env-file=.env.local scripts/identify-existing.js [--all]
-// Images are fetched via the deployed thumb endpoint — no R2 credentials needed locally.
+// Usage: node --env-file=.env.local scripts/identify-existing.js
+// Processes all observations with images, writes top-5 PlantNet suggestions
+// (with scores) to plantnet_suggestions column for confirmation in the UI.
 
 import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
@@ -12,7 +13,6 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ALL = process.argv.includes('--all');
 const BASE = process.env.APP_URL || 'https://bluehendegaerten.vercel.app';
 
 const PLANTNET_API_KEY    = process.env.PLANTNET_API_KEY;
@@ -50,26 +50,12 @@ const { data: obs, error: obsErr } = await supabase
   .order('id', { ascending: false });
 if (obsErr) { console.error(obsErr); process.exit(1); }
 
-// Fetch existing links so we can skip / avoid duplicates
-const { data: existingLinks } = await supabase
-  .from('observation_plants')
-  .select('observation_id, slug');
-const existingMap = new Map();
-for (const l of existingLinks ?? []) {
-  if (!existingMap.has(l.observation_id)) existingMap.set(l.observation_id, new Set());
-  existingMap.get(l.observation_id).add(l.slug);
-}
 
-const candidates = ALL
-  ? obs
-  : obs.filter(o => !existingMap.has(o.id) || existingMap.get(o.id).size === 0);
+console.log(`Processing all ${obs.length} observations with images…\n`);
 
-console.log(`${obs.length} observations with images, processing ${candidates.length} (${ALL ? 'all' : 'without slugs'})…\n`);
+let saved = 0, failed = 0;
 
-let identified = 0, noMatch = 0, failed = 0;
-
-for (const o of candidates) {
-  const existing = existingMap.get(o.id) ?? new Set();
+for (const o of obs) {
   process.stdout.write(`  #${o.id} ${o.filename}: `);
 
   try {
@@ -88,26 +74,19 @@ for (const o of candidates) {
     if (!pnRes.ok) throw new Error(`PlantNet ${pnRes.status}: ${await pnRes.text()}`);
 
     const pnData = await pnRes.json();
-    const top = (pnData.results ?? []).slice(0, 3);
+    const suggestions = (pnData.results ?? []).slice(0, 5).map(r => ({
+      name: r.species.scientificNameWithoutAuthor,
+      score: Math.round(r.score * 100),
+      slug: nameToSlug(r.species.scientificNameWithoutAuthor),
+    }));
 
-    const newSlugs = [];
-    for (const r of top) {
-      const slug = nameToSlug(r.species.scientificNameWithoutAuthor);
-      if (slug && !existing.has(slug) && !newSlugs.includes(slug)) newSlugs.push(slug);
-    }
+    const { error } = await supabase.from('observations')
+      .update({ plantnet_suggestions: JSON.stringify(suggestions) })
+      .eq('id', o.id);
+    if (error) throw new Error(error.message);
 
-    if (newSlugs.length) {
-      const { error: insErr } = await supabase.from('observation_plants')
-        .upsert(newSlugs.map(slug => ({ observation_id: o.id, slug })), { onConflict: 'observation_id,slug' });
-      if (insErr) throw new Error(insErr.message);
-      const topNames = top.map(r => `${r.species.scientificNameWithoutAuthor} (${Math.round(r.score * 100)}%)`).join(', ');
-      console.log(`✓ ${newSlugs.join(', ')}  [${topNames}]`);
-      identified++;
-    } else {
-      const topNames = top.map(r => r.species.scientificNameWithoutAuthor).join(', ') || 'none';
-      console.log(`— no match  [top: ${topNames}]`);
-      noMatch++;
-    }
+    console.log(suggestions.map(s => `${s.name} ${s.score}%${s.slug ? ` [${s.slug}]` : ''}`).join(', '));
+    saved++;
   } catch (e) {
     console.log(`✗ ${e.message}`);
     failed++;
@@ -116,4 +95,4 @@ for (const o of candidates) {
   await new Promise(r => setTimeout(r, 600));
 }
 
-console.log(`\nDone: ${identified} identified, ${noMatch} no match, ${failed} errors`);
+console.log(`\nDone: ${saved} saved, ${failed} errors`);

@@ -2528,6 +2528,27 @@
       document.getElementById('qo-msg').textContent = '';
       _qoLat = o.lat ?? null; _qoLon = o.lon ?? null;
       buildQoPlantGrid(o.slugs ?? []);
+      const pn = document.getElementById('qo-plantnet');
+      const pnChips = document.getElementById('qo-plantnet-chips');
+      const suggestions = o.plantnet_suggestions ? JSON.parse(o.plantnet_suggestions) : [];
+      if (suggestions.length) {
+        pn.style.display = 'block';
+        pnChips.innerHTML = '';
+        suggestions.forEach(s => {
+          const chip = document.createElement('span');
+          chip.className = 'pn-chip' + (s.slug ? ' pn-chip-match' : '');
+          chip.title = s.slug ? 'Klicken zum Übernehmen' : 'Nicht in Pflanzenliste';
+          chip.innerHTML = `<em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+          if (s.slug) chip.addEventListener('click', () => {
+            const cb = document.querySelector(`#qo-plant-grid input[value="${s.slug}"]`);
+            if (cb && !cb.checked) { cb.checked = true; cb.closest('label').classList.add('checked'); }
+            chip.style.opacity = '0.4';
+          });
+          pnChips.appendChild(chip);
+        });
+      } else {
+        pn.style.display = 'none';
+      }
       quickObsBackdrop.style.display = 'flex';
     }
 
@@ -2580,7 +2601,7 @@
         if (_qoEditId) {
           await authedFetch(`/api/observations/${_qoEditId}`, {
             method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
+            body: JSON.stringify({ ...body, plantnet_suggestions: null }),
           });
           _qoEditId = null;
         } else {
