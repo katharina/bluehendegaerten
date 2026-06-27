@@ -106,6 +106,7 @@ export default async function handler(req, res) {
         name: item.species.scientificNameWithoutAuthor,
         score: Math.round(item.score * 100),
         common: item.species.commonNames?.[0] ?? null,
+        family: item.species.family?.scientificNameWithoutAuthor ?? null,
       }));
       return res.json({ results });
     } catch (e) {

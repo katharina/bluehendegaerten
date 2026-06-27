@@ -909,6 +909,9 @@
     .obs-plant-chip.pn-suggested.checked { border-color:#000; background:#f5f8f0; }
     .pn-score { font-style:normal; font-size:10px; opacity:0.45; margin-left:3px; }
     .obs-plant-chip.pn-identifying { color:#aaa; font-style:italic; border-color:#eee; cursor:default; pointer-events:none; }
+    .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:11px; font-family:inherit; }
+    .obs-plant-chip.pn-new-plant:hover { border-color:#000; color:#000; }
+    .obs-plant-chip.pn-new-plant:disabled { opacity:0.4; cursor:default; }
 
     .obs-file-label {
       font-size: 11px;
@@ -1855,7 +1858,7 @@
           body: JSON.stringify({ dataUrl }),
         }).then(r => r.json());
         const suggestions = (data.results ?? []).map(r => ({
-          name: r.name, score: r.score, slug: _plantNetToSlug(r.name),
+          name: r.name, score: r.score, family: r.family ?? null, slug: _plantNetToSlug(r.name),
         }));
         const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
         buildQoPlantGrid(preselected, suggestions);
@@ -2441,15 +2444,34 @@
     function buildQoPlantGrid(preselectedSlugs = [], suggestions = []) {
       const grid = document.getElementById('qo-plant-grid');
       grid.innerHTML = '';
-      const suggestedSlugs = suggestions.map(s => s.slug).filter(Boolean);
-      const scoreMap = new Map(suggestions.filter(s => s.slug).map(s => [s.slug, s.score]));
+      const matched   = suggestions.filter(s => s.slug);
+      const unmatched = suggestions.filter(s => !s.slug);
+      const suggestedSlugs = matched.map(s => s.slug);
+      const scoreMap = new Map(matched.map(s => [s.slug, s.score]));
 
-      const suggested = suggestedSlugs.map(sl => bySlug.get(sl)).filter(Boolean);
+      // Unmatched suggestions — "add new plant" buttons
+      unmatched.forEach(s => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'obs-plant-chip pn-new-plant';
+        btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+        btn.title = 'Als neue Pflanze hinzufügen';
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          btn.textContent = 'Wird hinzugefügt…';
+          const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+          await addPlantFromPlantNet(s, suggestions, current);
+        });
+        grid.appendChild(btn);
+      });
+
+      // Matched suggestions first, then rest alphabetically
+      const suggestedPlants = suggestedSlugs.map(sl => bySlug.get(sl)).filter(Boolean);
       const rest = [...bySlug.values()]
         .filter(p => !suggestedSlugs.includes(p.slug))
         .sort((a, b) => a.name.localeCompare(b.name));
 
-      [...suggested, ...rest].forEach(p => {
+      [...suggestedPlants, ...rest].forEach(p => {
         const isSuggested = suggestedSlugs.includes(p.slug);
         const checked = preselectedSlugs.includes(p.slug) || (isSuggested && !preselectedSlugs.length);
         const score = scoreMap.get(p.slug);
@@ -2459,6 +2481,29 @@
         chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
         grid.appendChild(chip);
       });
+    }
+
+    async function addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {
+      const slug = toSlug(suggestion.name);
+      const garden = document.getElementById('qo-garden')?.value || activeGarden || 'betonbeete';
+      try {
+        const res = await authedFetch('/api/custom-plants', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null, garden }),
+        });
+        const p = await res.json();
+        if (!res.ok && p.error !== 'slug already exists') { alert(p.error); return; }
+        const finalSlug = p.slug ?? slug;
+        const entry = { slug: finalSlug, name: suggestion.name, family: suggestion.family ?? null, _custom: true };
+        bySlug.set(finalSlug, entry);
+        if (!stagesBySlug.has(finalSlug)) stagesBySlug.set(finalSlug, []);
+        _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);
+        const genus = suggestion.name.split(' ')[0].toLowerCase();
+        if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
+        const updatedSuggestions = allSuggestions.map(s => s.name === suggestion.name ? { ...s, slug: finalSlug } : s);
+        buildQoPlantGrid([...currentPreselected, finalSlug], updatedSuggestions);
+      } catch (e) { alert('Fehler: ' + e.message); }
     }
 
     function buildPlantGrid(preselect) {

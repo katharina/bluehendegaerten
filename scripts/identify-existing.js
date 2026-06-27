@@ -78,6 +78,7 @@ for (const o of obs) {
       name: r.species.scientificNameWithoutAuthor,
       score: Math.round(r.score * 100),
       slug: nameToSlug(r.species.scientificNameWithoutAuthor),
+      family: r.species.family?.scientificNameWithoutAuthor ?? null,
     }));
 
     const { error } = await supabase.from('observations')
