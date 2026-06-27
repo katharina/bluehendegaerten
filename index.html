@@ -2856,24 +2856,49 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       });
     }
 
+    function applyGarden(gardenId) {
+      activeGarden = gardenId;
+      const g = gardens.find(g => g.id === gardenId);
+      document.body.classList.toggle('index-mode', !gardenId);
+      if (g) {
+        document.getElementById('plant-col-title').textContent = g.name;
+        document.getElementById('garden-title').innerHTML = `<h1>${g.name}</h1>`;
+        document.getElementById('garden-info').innerHTML = g.description ?? '';
+      } else {
+        document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
+      }
+      document.querySelectorAll('.garden-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.gardenId === gardenId));
+      if (editMode) { editMode = false; document.body.classList.remove('edit-mode'); }
+      render();
+    }
+
     if (gardens.length > 1) {
       const bar = document.getElementById('garden-bar');
       bar.style.display = 'flex';
       gardens.forEach(g => {
         const btn = document.createElement('button');
         btn.className = 'garden-btn' + (g.id === activeGarden ? ' active' : '');
+        btn.dataset.gardenId = g.id;
         btn.textContent = g.name;
         btn.onclick = () => {
-          activeGarden = g.id;
-          bar.querySelectorAll('.garden-btn').forEach(b => b.classList.toggle('active', b === btn));
-          render();
+          const path = '/' + (g.path ?? g.id);
+          history.pushState({ gardenId: g.id }, '', path);
+          applyGarden(g.id);
         };
         bar.appendChild(btn);
       });
     }
 
+    window.addEventListener('popstate', e => {
+      const urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
+      const g = gardens.find(g => (g.path ?? g.id) === urlPath);
+      applyGarden(g?.id ?? null);
+    });
+
     const activeG = gardens.find(g => g.id === activeGarden);
     if (activeG) {
+      document.getElementById('plant-col-title').textContent = activeG.name;
       document.getElementById('garden-title').innerHTML = `<h1>${activeG.name}</h1>`;
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
     } else {
@@ -2886,7 +2911,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     loader.classList.add('hidden');
     loader.addEventListener('transitionend', () => loader.remove(), { once: true });
 
-    if (!activeGarden) document.body.classList.add('index-mode');
+    document.body.classList.toggle('index-mode', !activeGarden);
     render();
     document.getElementById('content').classList.add('ready');
 
