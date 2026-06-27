@@ -21,13 +21,8 @@ async function withSlugs(rows) {
 }
 
 export default async function handler(req, res) {
-  // Vercel sets req.query.path for [...path] catch-alls; fall back to URL parsing
-  let segments;
-  if (req.query.path) {
-    segments = Array.isArray(req.query.path) ? req.query.path : req.query.path.split('/').filter(Boolean);
-  } else {
-    segments = req.url.split('?')[0].replace(/^\/api\//, '').replace(/^\//, '').split('/').filter(Boolean);
-  }
+  const pathname = new URL(req.url, 'http://x').pathname;
+  const segments = pathname.replace(/^\/api\//, '').replace(/^\//, '').split('/').filter(Boolean);
   const [resource, id] = segments;
 
   // ── Health ──────────────────────────────────────────────────────────────────
