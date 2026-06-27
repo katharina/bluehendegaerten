@@ -1375,24 +1375,46 @@
   </div>
 
   <div id="quick-obs-backdrop" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
-    <div style="background:#fff;position:relative;width:min(400px,92vw);padding:48px 40px 40px;">
+    <div style="background:#fff;position:relative;width:min(520px,92vw);padding:48px 40px 40px;max-height:90vh;overflow-y:auto;">
       <button id="quick-obs-close" style="position:absolute;top:12px;right:16px;font-size:28px;line-height:1;background:none;border:none;cursor:pointer;color:#888;">×</button>
       <div id="qo-title" style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
-      <div style="display:flex;flex-direction:column;gap:20px;">
-        <div class="agf-field">
-          <label class="agf-label">Foto</label>
-          <input id="qo-file" type="file" accept="image/*" style="font-size:13px;font-family:inherit;">
+      <div class="obs-row">
+        <div class="obs-field">
+          <label class="obs-label">Datum</label>
+          <input id="qo-date" class="obs-input" type="date">
         </div>
-        <div class="agf-field">
-          <label class="agf-label">Datum</label>
-          <input id="qo-date" class="agf-input" type="date">
+        <div class="obs-field">
+          <label class="obs-label">Typ</label>
+          <select id="qo-type" class="obs-select">
+            <option value="foto">Foto</option>
+            <option value="zeichnung">Zeichnung</option>
+            <option value="herbarbeleg">Herbarbeleg</option>
+            <option value="notiz">Notiz</option>
+          </select>
         </div>
-        <div class="agf-field">
-          <label class="agf-label">Notiz</label>
-          <textarea id="qo-text" class="agf-input agf-textarea" placeholder="Optional…"></textarea>
+        <div class="obs-field">
+          <label class="obs-label">Garten</label>
+          <select id="qo-garden" class="obs-select"></select>
         </div>
-        <div id="qo-msg" style="font-size:13px;color:#c00;min-height:18px;"></div>
+      </div>
+      <div class="obs-field">
+        <label class="obs-label">Notiz</label>
+        <textarea id="qo-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+      </div>
+      <div class="obs-field">
+        <label class="obs-label">Pflanzen</label>
+        <div id="qo-plant-grid"></div>
+      </div>
+      <div class="obs-field">
+        <label class="obs-file-label" id="qo-file-label">
+          <span id="qo-file-text">Bild auswählen…</span>
+          <input id="qo-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
+        </label>
+      </div>
+      <div id="qo-msg" style="font-size:13px;color:#c00;min-height:18px;"></div>
+      <div class="obs-form-actions">
         <button id="qo-submit" class="action-btn">Speichern</button>
+        <button id="qo-cancel">Abbrechen</button>
       </div>
     </div>
   </div>
@@ -2280,12 +2302,32 @@
 
     // populate garden select
     const obsGarden = document.getElementById('obs-garden');
+    const qoGarden = document.getElementById('qo-garden');
     gardens.forEach(g => {
       const opt = document.createElement('option');
       opt.value = g.id;
       opt.textContent = g.name;
       obsGarden.appendChild(opt);
+      qoGarden.appendChild(opt.cloneNode(true));
     });
+
+    function buildQoPlantGrid(preselectedSlugs = []) {
+      const grid = document.getElementById('qo-plant-grid');
+      grid.innerHTML = '';
+      const gardenSlugs = new Set(gardens.find(g => g.id === qoGarden.value)?.plants ?? []);
+      [...bySlug.values()]
+        .filter(p => gardenSlugs.has(p.slug))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(p => {
+          const checked = preselectedSlugs.includes(p.slug);
+          const chip = document.createElement('label');
+          chip.className = 'obs-plant-chip' + (checked ? ' checked' : '');
+          chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}`;
+          chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
+          grid.appendChild(chip);
+        });
+    }
+    qoGarden.addEventListener('change', () => buildQoPlantGrid([]));
 
     function buildPlantGrid(preselect) {
       const grid = document.getElementById('obs-plant-grid');
@@ -2320,10 +2362,14 @@
       _qoEditId = null;
       document.getElementById('qo-title').textContent = 'Beobachtung';
       document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('qo-type').value = 'foto';
       document.getElementById('qo-text').value = '';
       document.getElementById('qo-file').value = '';
+      document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.remove('has-file');
       document.getElementById('qo-msg').textContent = '';
       _qoLat = null; _qoLon = null;
+      buildQoPlantGrid([]);
       quickObsBackdrop.style.display = 'flex';
     }
 
@@ -2331,10 +2377,15 @@
       _qoEditId = o.id;
       document.getElementById('qo-title').textContent = 'Bearbeiten';
       document.getElementById('qo-date').value = o.date ?? '';
+      document.getElementById('qo-type').value = o.type ?? 'foto';
+      if (o.garden) qoGarden.value = o.garden;
       document.getElementById('qo-text').value = o.text ?? '';
       document.getElementById('qo-file').value = '';
+      document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.remove('has-file');
       document.getElementById('qo-msg').textContent = '';
       _qoLat = o.lat ?? null; _qoLon = o.lon ?? null;
+      buildQoPlantGrid(o.slugs ?? []);
       quickObsBackdrop.style.display = 'flex';
     }
 
@@ -2342,13 +2393,14 @@
       if (!_currentUser) { openLoginModal(); return; }
       openQuickObsNew();
     });
-    document.getElementById('quick-obs-close').addEventListener('click', () => {
-      quickObsBackdrop.style.display = 'none';
-      _qoEditId = null;
-    });
+    function closeQuickObs() { quickObsBackdrop.style.display = 'none'; _qoEditId = null; }
+    document.getElementById('quick-obs-close').addEventListener('click', closeQuickObs);
+    document.getElementById('qo-cancel').addEventListener('click', closeQuickObs);
     let _qoLat = null, _qoLon = null;
     document.getElementById('qo-file').addEventListener('change', async e => {
       const file = e.target.files[0];
+      document.getElementById('qo-file-text').textContent = file?.name ?? 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.toggle('has-file', !!file);
       _qoLat = null; _qoLon = null;
       if (!file) return;
       try {
@@ -2363,18 +2415,22 @@
       } catch {}
     });
     quickObsBackdrop.addEventListener('click', e => {
-      if (e.target === quickObsBackdrop) { quickObsBackdrop.style.display = 'none'; _qoEditId = null; }
+      if (e.target === quickObsBackdrop) closeQuickObs();
     });
     document.getElementById('qo-submit').addEventListener('click', async () => {
       const file = document.getElementById('qo-file').files[0];
       const msg = document.getElementById('qo-msg');
       msg.textContent = '';
+      const slugs = [...document.querySelectorAll('#qo-plant-grid input:checked')].map(i => i.value);
       let filename = null;
       try {
         if (file) filename = await uploadToR2(file);
         const body = {
           date: document.getElementById('qo-date').value,
+          type: document.getElementById('qo-type').value,
+          garden: qoGarden.value,
           text: document.getElementById('qo-text').value,
+          slugs,
           ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
           ...(filename && { filename }),
         };
@@ -2387,10 +2443,10 @@
         } else {
           const obs = await authedFetch('/api/observations', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...body, type: 'foto', slugs: [] }),
+            body: JSON.stringify(body),
           }).then(r => r.json());
-          if (filename) {
-            document.getElementById('obs-carousel').prepend(buildCarouselItem({ ...obs, slugs: [] }));
+          if (body.type === 'foto' && filename) {
+            document.getElementById('obs-carousel').prepend(buildCarouselItem({ ...obs, slugs }));
           }
         }
         quickObsBackdrop.style.display = 'none';
