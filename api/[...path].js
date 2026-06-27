@@ -1,10 +1,10 @@
 import { supabase } from '../lib/supabase.js';
 import { getUser, requireUser } from '../lib/auth.js';
 import { logEdits } from '../lib/logEdit.js';
-import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2 } from '../lib/r2.js';
-import { R2_BUCKET } from '../lib/config.js';
+import { R2_BUCKET, R2_PUBLIC_URL } from '../lib/config.js';
 
 const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
@@ -52,20 +52,19 @@ export default async function handler(req, res) {
     const key = decodeURIComponent(segments.slice(1).join('/'));
     if (!key) return res.status(400).end();
     const thumbKey = key.replace(/\.[^.]+$/, '_thumb.jpg');
-    const readStream = async (k) => {
-      const { Body } = await r2.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: k }));
-      const chunks = [];
-      for await (const chunk of Body) chunks.push(chunk);
-      return Buffer.concat(chunks);
+    const fetchR2 = async (k) => {
+      const r = await fetch(`${R2_PUBLIC_URL}/${k}`);
+      if (!r.ok) throw new Error(`R2 ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
     };
     try {
-      const cached = await readStream(thumbKey);
+      const cached = await fetchR2(thumbKey);
       res.setHeader('Content-Type', 'image/jpeg');
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       return res.send(cached);
     } catch {}
     try {
-      const original = await readStream(key);
+      const original = await fetchR2(key);
       const { default: sharp } = await import('sharp');
       const thumb = await sharp(original)
         .rotate()
