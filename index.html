@@ -44,7 +44,7 @@
 
     /* ── Login modal ──────────────────────────────────────────────────── */
     #login-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 400;
+      display: none; position: fixed; inset: 0; z-index: 10000;
       background: rgba(0,0,0,0.4); align-items: center; justify-content: center;
     }
     #login-backdrop.open { display: flex; }
@@ -437,7 +437,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.4);
-      z-index: 100;
+      z-index: 400;
       align-items: center;
       justify-content: center;
     }
@@ -716,6 +716,8 @@
     .plant-info-value:hover { border-bottom-color: rgba(128,128,128,0.3); }
     .plant-info-value:focus { border-bottom-color: rgba(128,128,128,0.6); opacity: 0.8; }
     .plant-info-value::placeholder { opacity: 0.3; color: var(--modal-fg, #000); }
+    body:not(.logged-in) .plant-info-value { pointer-events: none; }
+    body:not(.logged-in) #modal-family { pointer-events: none; }
 
     .plant-info-unit {
       font-size: 11px;
@@ -1121,16 +1123,22 @@
   <div id="menu-backdrop"></div>
   <div id="menu-panel">
     <div id="menu-user-email"></div>
-    <button id="menu-login-btn" class="action-btn">Anmelden</button>
-    <button id="menu-logout-btn" class="action-btn" style="display:none">Abmelden</button>
+    <div id="menu-profile" style="display:none;margin-top:12px;">
+      <input id="menu-username" type="text" placeholder="Benutzername" autocomplete="off"
+        style="width:100%;border:none;border-bottom:1px solid #ccc;padding:4px 0;font-size:13px;font-family:inherit;outline:none;background:transparent;">
+      <button id="menu-username-save" class="action-btn" style="margin-top:8px;width:100%;">Speichern</button>
+    </div>
+    <button id="menu-login-btn" class="action-btn" style="margin-top:12px;">Anmelden</button>
+    <button id="menu-logout-btn" class="action-btn" style="display:none;margin-top:12px;">Abmelden</button>
   </div>
 
   <!-- ── Login modal (magic link) ──────────────────────────────────────── -->
   <div id="login-backdrop">
     <div id="login-modal">
       <button id="login-close">×</button>
-      <div id="login-title">Anmelden</div>
+      <div id="login-title">Anmelden / Registrieren</div>
       <div id="login-body">
+        <p style="font-size:13px;color:#555;margin:0 0 12px">E-Mail eingeben — wir schicken dir einen Link. Neues Konto wird automatisch erstellt.</p>
         <input id="login-email" type="email" placeholder="E-Mail-Adresse" autocomplete="email">
         <button id="login-submit" class="action-btn">Magic Link senden</button>
         <div id="login-msg"></div>
@@ -1336,7 +1344,9 @@
       const emailEl = document.getElementById('menu-user-email');
       const loginBtn = document.getElementById('menu-login-btn');
       const logoutBtn = document.getElementById('menu-logout-btn');
-      if (_currentUser) {
+      const loggedIn = !!_currentUser;
+      document.body.classList.toggle('logged-in', loggedIn);
+      if (loggedIn) {
         if (emailEl) emailEl.textContent = _currentUser.email;
         if (loginBtn) loginBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
@@ -1345,7 +1355,34 @@
         if (loginBtn) loginBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
       }
+      const ce = loggedIn ? 'true' : 'false';
+      document.getElementById('modal-name')?.setAttribute('contenteditable', ce);
+      document.getElementById('modal-de')?.setAttribute('contenteditable', ce);
+      const modalFamily = document.getElementById('modal-family');
+      if (modalFamily) modalFamily.readOnly = !loggedIn;
+      document.getElementById('menu-profile').style.display = loggedIn ? 'block' : 'none';
+      if (loggedIn) loadProfile();
     }
+
+    async function loadProfile() {
+      const data = await authedFetch('/api/profiles/me').then(r => r.json()).catch(() => null);
+      if (data?.username) document.getElementById('menu-username').value = data.username;
+    }
+
+    document.getElementById('menu-username-save').addEventListener('click', async () => {
+      const username = document.getElementById('menu-username').value.trim();
+      if (!username) return;
+      const btn = document.getElementById('menu-username-save');
+      btn.disabled = true;
+      await authedFetch('/api/profiles/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+      });
+      btn.disabled = false;
+      btn.textContent = '✓ Gespeichert';
+      setTimeout(() => { btn.textContent = 'Speichern'; }, 2000);
+    });
 
     // ── Hamburger menu ────────────────────────────────────────────────────────
     const menuPanel = document.getElementById('menu-panel');
@@ -1929,6 +1966,7 @@
     }
 
     obsToggle.addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
       const open = obsForm.classList.toggle('open');
       obsToggle.classList.toggle('open', open);
       obsToggle.textContent = open ? '× Abbrechen' : '+ Neue Beobachtung';
@@ -2191,6 +2229,7 @@
     }
 
     document.getElementById('edit-mode-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
       editMode = !editMode;
       document.body.classList.toggle('edit-mode', editMode);
       document.getElementById('edit-mode-btn').classList.toggle('active', editMode);
@@ -2376,6 +2415,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     addPlantBtn.addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
       const open = addPlantForm.classList.toggle('open');
       addPlantBtn.classList.toggle('open', open);
       addPlantBtn.textContent = open ? '× Abbrechen' : '+ Pflanze';

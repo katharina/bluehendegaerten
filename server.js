@@ -4,6 +4,10 @@ import Database from 'better-sqlite3';
 import { mkdirSync } from 'fs';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
+import gardensHandler from './api/gardens/index.js';
+import gardenByIdHandler from './api/gardens/[id].js';
+import profilesMeHandler from './api/profiles/me.js';
+import { requireUser } from './lib/auth.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const UPLOADS = join(__dirname, 'uploads');
@@ -94,7 +98,8 @@ app.get('/api/plans/:id', (req, res) => {
   res.json(row ? { data: row.data } : { data: null });
 });
 
-app.put('/api/plans/:id', (req, res) => {
+app.put('/api/plans/:id', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { data } = req.body;
   if (!data) return res.status(400).json({ error: 'missing data' });
   db.prepare(`
@@ -114,7 +119,8 @@ app.get('/api/custom-plants', (req, res) => {
   res.json(rows);
 });
 
-app.post('/api/custom-plants', (req, res) => {
+app.post('/api/custom-plants', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { slug, name, name_de, family, color, world_w, world_h, garden = 'betonbeete' } = req.body;
   if (!slug || !name) return res.status(400).json({ error: 'slug and name required' });
   try {
@@ -129,7 +135,8 @@ app.post('/api/custom-plants', (req, res) => {
   }
 });
 
-app.patch('/api/custom-plants/:slug', (req, res) => {
+app.patch('/api/custom-plants/:slug', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { name, name_de, family, color, world_w, world_h } = req.body;
   const fields = [];
   const values = [];
@@ -145,7 +152,8 @@ app.patch('/api/custom-plants/:slug', (req, res) => {
   res.json({ ok: true });
 });
 
-app.delete('/api/custom-plants/:slug', (req, res) => {
+app.delete('/api/custom-plants/:slug', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   db.prepare('DELETE FROM custom_plants WHERE slug = ?').run(req.params.slug);
   res.json({ ok: true });
 });
@@ -157,7 +165,8 @@ app.get('/api/bed-images', (req, res) => {
   res.json(db.prepare('SELECT * FROM bed_images WHERE garden = ?').all(garden));
 });
 
-app.post('/api/bed-images', upload.single('file'), (req, res) => {
+app.post('/api/bed-images', upload.single('file'), async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { garden = 'betonbeete', bed_index } = req.body;
   if (!req.file) return res.status(400).json({ error: 'file required' });
   db.prepare(`
@@ -168,14 +177,16 @@ app.post('/api/bed-images', upload.single('file'), (req, res) => {
   res.json({ ok: true, filename: req.file.filename });
 });
 
-app.delete('/api/bed-images/:id', (req, res) => {
+app.delete('/api/bed-images/:id', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   db.prepare('DELETE FROM bed_images WHERE id = ?').run(req.params.id);
   res.json({ ok: true });
 });
 
 // ── Plant info ────────────────────────────────────────────────────────────────
 
-app.patch('/api/plant-info/:slug', (req, res) => {
+app.patch('/api/plant-info/:slug', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const allowed = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
   const fields = [], values = [];
   for (const [k, v] of Object.entries(req.body)) {
@@ -199,7 +210,8 @@ app.get('/api/plant-info/:slug', (req, res) => {
   res.json(row ?? { slug: req.params.slug });
 });
 
-app.put('/api/plant-info/:slug', (req, res) => {
+app.put('/api/plant-info/:slug', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { art, wuchs, hoehe, breite, frost, wurzel, licht, boden, wasser, naehrstoff, ph, kuebel, bloom_months, invasiv } = req.body;
   db.prepare(`
     INSERT INTO plant_info (slug, art, wuchs, hoehe, breite, frost, wurzel, licht, boden, wasser, naehrstoff, ph, kuebel, bloom_months, invasiv)
@@ -245,7 +257,8 @@ app.get('/api/observations', (req, res) => {
 });
 
 // create observation (optional file attachment)
-app.post('/api/observations', upload.single('file'), (req, res) => {
+app.post('/api/observations', upload.single('file'), async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { garden = 'betonbeete', date, type = 'foto', text } = req.body;
   let slugs = req.body.slugs ?? [];
   if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
@@ -261,7 +274,8 @@ app.post('/api/observations', upload.single('file'), (req, res) => {
 });
 
 // update observation
-app.patch('/api/observations/:id', upload.single('file'), (req, res) => {
+app.patch('/api/observations/:id', upload.single('file'), async (req, res) => {
+  if (!await requireUser(req, res)) return;
   const { date, type, text } = req.body;
   let slugs = req.body.slugs ?? [];
   if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
@@ -281,9 +295,22 @@ app.patch('/api/observations/:id', upload.single('file'), (req, res) => {
 });
 
 // delete observation
-app.delete('/api/observations/:id', (req, res) => {
+app.delete('/api/observations/:id', async (req, res) => {
+  if (!await requireUser(req, res)) return;
   db.prepare('DELETE FROM observations WHERE id = ?').run(req.params.id);
   res.json({ ok: true });
+});
+
+// ── Profiles (Supabase) ───────────────────────────────────────────────────────
+
+app.all('/api/profiles/me', (req, res) => profilesMeHandler(req, res));
+
+// ── Gardens (Supabase) ────────────────────────────────────────────────────────
+
+app.all('/api/gardens', (req, res) => gardensHandler(req, res));
+app.all('/api/gardens/:id', (req, res) => {
+  req.query.id = req.params.id;
+  return gardenByIdHandler(req, res);
 });
 
 const PORT = 3001;
