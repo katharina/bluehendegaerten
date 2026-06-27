@@ -88,20 +88,8 @@
     }
     .open-btn:hover { border-color: #888; color: #222; }
 
-    #edit-mode-btn {
-      font-size: 11px;
-      font-family: inherit;
-      color: #888;
-      background: none;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      padding: 5px 14px;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    #edit-mode-btn:hover { border-color: #888; color: #222; }
-    #edit-mode-btn.active { background: #222; color: #fff; border-color: #222; }
+    #edit-mode-btn { opacity: 0.5; }
+    #edit-mode-btn.active { opacity: 1; }
 
     /* All observations modal */
     #all-obs-backdrop {
@@ -325,18 +313,7 @@
       color: #222;
     }
 
-    #add-plant-btn {
-      font-size: 11px;
-      font-family: inherit;
-      border: 1px solid #ccc;
-      padding: 4px 12px;
-      cursor: pointer;
-      background: #fff;
-      color: #666;
-      white-space: nowrap;
-    }
-    #add-plant-btn:hover { border-color: #000; color: #000; }
-    #add-plant-btn.open { background: #000; color: #fff; border-color: #000; }
+    #add-plant-btn.open { opacity: 0.7; }
 
     #add-plant-form {
       display: none;
@@ -378,24 +355,18 @@
       border-bottom: 1px solid #ccc;
     }
     .apf-actions { display: flex; gap: 8px; padding-top: 4px; }
-    #apf-submit {
-      font-size: 11px;
-      font-family: inherit;
-      border: 1px solid #000;
-      padding: 6px 18px;
-      cursor: pointer;
-      background: #000;
-      color: #fff;
-    }
     #apf-cancel {
       font-size: 11px;
       font-family: inherit;
       border: 1px solid #ccc;
-      padding: 6px 14px;
+      border-radius: 99px;
+      padding: 5px 14px;
       cursor: pointer;
       background: #fff;
       color: #666;
+      transition: border-color 0.15s, color 0.15s;
     }
+    #apf-cancel:hover { border-color: #888; color: #222; }
     #apf-error {
       font-size: 11px;
       color: #c00;
@@ -754,22 +725,7 @@
       border-bottom: 1px solid rgba(128,128,128,0.2);
     }
 
-    #obs-toggle-btn {
-      font-size: 10px;
-      font-family: inherit;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 99px;
-      padding: 6px 16px;
-      cursor: pointer;
-      background: var(--modal-fg, #000);
-      color: var(--modal-bg, #fff);
-      opacity: 0.85;
-    }
-    #obs-toggle-btn:hover { opacity: 1; }
-    #obs-toggle-btn.open { opacity: 1; }
+    #obs-toggle-btn { background: var(--modal-fg, #000); color: var(--modal-bg, #fff); border-color: var(--modal-fg, #000); }
 
     #obs-form {
       display: none;
@@ -854,24 +810,18 @@
 
     .obs-form-actions { display: flex; gap: 8px; }
 
-    #obs-submit {
-      font-size: 11px;
-      font-family: inherit;
-      border: 1px solid #000;
-      padding: 6px 18px;
-      cursor: pointer;
-      background: #000;
-      color: #fff;
-    }
     #obs-cancel {
       font-size: 11px;
       font-family: inherit;
       border: 1px solid #ccc;
-      padding: 6px 14px;
+      border-radius: 99px;
+      padding: 5px 14px;
       cursor: pointer;
       background: #fff;
       color: #666;
+      transition: border-color 0.15s, color 0.15s;
     }
+    #obs-cancel:hover { border-color: #888; color: #222; }
 
     #obs-list {
       flex: 1;
@@ -1096,7 +1046,7 @@
     <div id="observations">
       <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;">
         <h2 style="margin-bottom:0;font-family:var(--font-serif);letter-spacing:normal;font-weight:600;">Plan</h2>
-        <button id="edit-mode-btn">Bearbeiten</button>
+        <button id="edit-mode-btn" class="action-btn">Bearbeiten</button>
       </div>
       <div id="bed-plan-bar">
         <select id="version-select-plan"></select>
@@ -1117,7 +1067,7 @@
       <div id="plant-col-header">
         <div id="plant-col-header-row">
           <h2 id="plant-col-title">Pflanzen</h2>
-          <button id="add-plant-btn">+ Pflanze</button>
+          <button id="add-plant-btn" class="action-btn">+ Pflanze</button>
         </div>
         <input id="plant-filter" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
       </div>
@@ -1151,7 +1101,7 @@
           </div>
         </div>
         <div class="apf-actions">
-          <button id="apf-submit">Hinzufügen</button>
+          <button id="apf-submit" class="action-btn">Hinzufügen</button>
           <button id="apf-cancel">Abbrechen</button>
           <span id="apf-error"></span>
         </div>
@@ -1204,7 +1154,7 @@
         </div>
         <div id="modal-images">
           <div id="obs-toggle-bar">
-            <button id="obs-toggle-btn">+ Neue Beobachtung</button>
+            <button id="obs-toggle-btn" class="action-btn">+ Neue Beobachtung</button>
           </div>
 
           <div id="obs-form">
@@ -1242,7 +1192,7 @@
               </label>
             </div>
             <div class="obs-form-actions">
-              <button id="obs-submit">Speichern</button>
+              <button id="obs-submit" class="action-btn">Speichern</button>
               <button id="obs-cancel">Abbrechen</button>
             </div>
           </div>
