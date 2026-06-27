@@ -981,6 +981,7 @@
     .obs-card-label-date { font-weight: 600; }
 
     .obs-card-label-plants {
+      font-family: var(--font-serif);
       font-style: italic;
       opacity: 0.6;
     }
@@ -990,6 +991,12 @@
       color: var(--modal-fg, #000);
       padding: 6px 8px;
       line-height: 1.4;
+    }
+    .obs-card-gps {
+      font-size: 10px;
+      color: #888;
+      padding: 2px 8px 6px;
+      font-variant-numeric: tabular-nums;
     }
 
     .obs-card-edit {
@@ -1182,7 +1189,13 @@
       font-weight: 600;
       color: #222;
     }
+    .carousel-item-gps {
+      font-size: 10px;
+      color: #888;
+      font-variant-numeric: tabular-nums;
+    }
     .carousel-item-plants {
+      font-family: var(--font-serif);
       font-style: italic;
       color: #888;
       white-space: nowrap;
@@ -1251,6 +1264,10 @@
       transition: background 0.15s;
     }
     .landing-card:hover { background: #000; color: #fff; }
+    .card-name {
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
     .landing-card-name {
       font-family: var(--font-serif);
       font-size: 32px;
@@ -1882,10 +1899,12 @@
       const card = document.createElement('div');
       card.className = 'obs-card';
       const plantNames = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
+      const gps = o.lat != null ? `${o.lat.toFixed(5)}, ${o.lon.toFixed(5)}` : '';
       card.innerHTML = `
         ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
         ${plantNames ? `<div class="obs-card-label"><div class="obs-card-label-plants">${plantNames}</div></div>` : ''}
         ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+        ${gps ? `<div class="obs-card-gps">${gps}</div>` : ''}
         ${onEdit ? `<button class="obs-card-edit" title="Bearbeiten">✎</button>` : ''}
         ${onDelete ? `<button class="obs-card-delete" title="Löschen">×</button>` : ''}
       `;
@@ -3280,6 +3299,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         </div>
         <div class="carousel-item-meta">
           ${plantName ? `<div class="carousel-item-plants">${plantName}</div>` : ''}
+          ${o.lat != null ? `<div class="carousel-item-gps">${o.lat.toFixed(5)}, ${o.lon.toFixed(5)}</div>` : ''}
         </div>
         ${_currentUser ? `<div class="carousel-item-btns">
           <button class="carousel-item-edit" title="Bearbeiten">✎</button>
