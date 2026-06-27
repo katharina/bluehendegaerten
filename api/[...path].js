@@ -2,7 +2,6 @@ import { supabase } from '../lib/supabase.js';
 import { getUser, requireUser } from '../lib/auth.js';
 import { logEdits } from '../lib/logEdit.js';
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
-import sharp from 'sharp';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2 } from '../lib/r2.js';
 import { R2_BUCKET } from '../lib/config.js';
@@ -67,7 +66,9 @@ export default async function handler(req, res) {
     } catch {}
     try {
       const original = await readStream(key);
+      const { default: sharp } = await import('sharp');
       const thumb = await sharp(original)
+        .rotate()
         .resize({ width: 400, height: 600, fit: 'inside', withoutEnlargement: true })
         .jpeg({ quality: 82 })
         .toBuffer();
