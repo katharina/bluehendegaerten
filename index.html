@@ -1865,9 +1865,7 @@
           return;
         }
         data.results.forEach(r => {
-          const slug_ = r.name.toLowerCase().replace(/\s+/g, '_');
-          const slug2 = r.name.toLowerCase().replace(/\s+/g, '-');
-          const matched = bySlug.has(slug_) ? slug_ : bySlug.has(slug2) ? slug2 : null;
+          const matched = _plantNetToSlug(r.name);
           if (matched) {
             const cb = document.querySelector(`#qo-plant-grid input[value="${matched}"]`);
             if (cb && !cb.checked) { cb.checked = true; cb.closest('label').classList.add('checked'); }
@@ -1906,6 +1904,18 @@
       if (!bySlug.has(e.slug) || e.stage === 'bloom') bySlug.set(e.slug, e);
       if (!stagesBySlug.has(e.slug)) stagesBySlug.set(e.slug, []);
       stagesBySlug.get(e.slug).push(e);
+    }
+
+    // reverse lookup: scientific name / genus (lowercase) → slug
+    const _plantByScientific = new Map();
+    for (const [slug, p] of bySlug) {
+      _plantByScientific.set(p.name.toLowerCase(), slug);
+      const genus = p.name.split(' ')[0].toLowerCase();
+      if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, slug);
+    }
+    function _plantNetToSlug(name) {
+      const lower = name.toLowerCase();
+      return _plantByScientific.get(lower) ?? _plantByScientific.get(lower.split(' ')[0]) ?? null;
     }
 
     const MONTH_NAMES = {
