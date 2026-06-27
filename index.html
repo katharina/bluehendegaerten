@@ -1084,6 +1084,13 @@
 
     #obs-carousel-section { display: none; }
     body.index-mode #obs-carousel-section { display: block; }
+    #obs-carousel-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 48px;
+      margin-bottom: 16px;
+    }
     #obs-carousel-title {
       font-family: var(--font-serif);
       font-size: 22px;
@@ -1198,6 +1205,7 @@
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
       body.index-mode #garden-list { padding: 0 20px 20px 36px; }
+      #obs-carousel-header { padding: 0 20px; }
       body.index-mode #obs-carousel { padding: 0 20px 24px; }
       .carousel-item { width: 140px; height: 140px; }
 
@@ -1339,7 +1347,7 @@
     <div id="plant-col">
       <div id="index-heading">Blühende Gärten</div>
       <div id="obs-carousel-section">
-        <div style="display:flex;align-items:baseline;justify-content:space-between;padding:0 48px;margin-bottom:16px;">
+        <div id="obs-carousel-header">
           <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
           <button id="quick-obs-btn" class="action-btn">+ Beobachtung</button>
         </div>

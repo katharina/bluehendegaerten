@@ -135,10 +135,10 @@ export default async function handler(req, res) {
       }
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
-        const { garden = 'betonbeete', date, type = 'foto', text, slugs = [] } = req.body ?? {};
+        const { garden = 'betonbeete', date, type = 'foto', text, filename, slugs = [] } = req.body ?? {};
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: null })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)

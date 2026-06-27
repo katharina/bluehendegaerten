@@ -257,13 +257,13 @@ app.get('/api/observations', (req, res) => {
 // create observation (optional file attachment)
 app.post('/api/observations', upload.single('file'), async (req, res) => {
   if (!await requireUser(req, res)) return;
-  const { garden = 'betonbeete', date, type = 'foto', text } = req.body;
+  const { garden = 'betonbeete', date, type = 'foto', text, filename: bodyFilename } = req.body;
   let slugs = req.body.slugs ?? [];
   if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
 
   const obs = db.prepare(
     'INSERT INTO observations (garden, date, type, text, filename) VALUES (?, ?, ?, ?, ?) RETURNING *'
-  ).get(garden, date || null, type, text || null, req.file?.filename ?? null);
+  ).get(garden, date || null, type, text || null, req.file?.filename ?? bodyFilename ?? null);
 
   const ins = db.prepare('INSERT OR IGNORE INTO observation_plants (observation_id, slug) VALUES (?, ?)');
   db.transaction(() => slugs.forEach(s => ins.run(obs.id, s)))();
