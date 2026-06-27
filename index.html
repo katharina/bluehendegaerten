@@ -590,6 +590,19 @@
       gap: 8px;
     }
 
+    #modal-garden-badges {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px;
+    }
+    #modal-garden-badges:empty { display: none; }
+    .modal-garden-badge {
+      font-size: 11px; font-family: inherit; letter-spacing: 0.04em;
+      padding: 3px 10px; border-radius: 99px;
+      background: rgba(128,128,128,0.15); color: var(--modal-fg, #000);
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 150ms;
+    }
+    .modal-garden-badge:hover { background: rgba(128,128,128,0.3); }
+
     #modal-family {
       font-size: 11px;
       color: var(--modal-fg, #000);
@@ -1328,6 +1341,7 @@
               </div>
             </div>
           </div>
+          <div id="modal-garden-badges"></div>
           <button id="modal-info-toggle">Pflanzendaten <span id="modal-info-chevron">▾</span></button>
           <div id="modal-info-body">
             <div id="modal-bloom-bar"></div>
@@ -1743,6 +1757,11 @@
       document.getElementById('modal-family').value = p.family ?? '';
       document.getElementById('modal-color-swatch').style.background = bg;
       document.getElementById('modal-color-input').value = bg.length === 7 ? bg : '#ffffff';
+
+      const plantGardens = gardens.filter(g => (g.plants ?? []).includes(p.slug));
+      document.getElementById('modal-garden-badges').innerHTML = plantGardens.map(g =>
+        `<a class="modal-garden-badge" href="/${g.path ?? g.id}">${g.name}</a>`
+      ).join('');
 
       const stages = stagesBySlug.get(p.slug) ?? [];
       const manifestBloom = new Set(stages.find(s => s.stage === 'bloom')?.months ?? []);
