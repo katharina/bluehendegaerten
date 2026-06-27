@@ -21,7 +21,13 @@ async function withSlugs(rows) {
 }
 
 export default async function handler(req, res) {
-  const segments = req.url.split('?')[0].replace(/^\/api\//, '').split('/').filter(Boolean);
+  // Vercel sets req.query.path for [...path] catch-alls; fall back to URL parsing
+  let segments;
+  if (req.query.path) {
+    segments = Array.isArray(req.query.path) ? req.query.path : req.query.path.split('/').filter(Boolean);
+  } else {
+    segments = req.url.split('?')[0].replace(/^\/api\//, '').replace(/^\//, '').split('/').filter(Boolean);
+  }
   const [resource, id] = segments;
 
   // ── Health ──────────────────────────────────────────────────────────────────
@@ -329,5 +335,5 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'method not allowed' });
   }
 
-  res.status(404).json({ error: 'not found' });
+  res.status(404).json({ error: 'not found', resource, id, segments });
 }
