@@ -1073,7 +1073,8 @@
       #content    { overflow: visible; height: auto; }
       body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; }
       body.index-mode #plant-grid { overflow: visible; height: auto; }
-      body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 16px; }
+      body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
+      body.index-mode #index-heading + div { padding: 0 20px 16px; }
     }
   </style>
 </head>
@@ -2531,8 +2532,8 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       const gardenLinks = gardens.map(g =>
         `<a href="/${g.path}" style="font-size:11px;color:#888;border:1px solid #ddd;border-radius:20px;padding:5px 14px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='#888';this.style.color='#222'" onmouseout="this.style.borderColor='#ddd';this.style.color='#888'">${g.name}</a>`
       ).join('');
-      document.getElementById('plant-col-header-row').insertAdjacentHTML('afterend',
-        `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">${gardenLinks}</div>`);
+      document.getElementById('index-heading').insertAdjacentHTML('afterend',
+        `<div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 48px 24px;">${gardenLinks}</div>`);
     }
 
     const loader = document.getElementById('loader');
