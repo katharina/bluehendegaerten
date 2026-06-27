@@ -1441,14 +1441,20 @@
       if (!username) return;
       const btn = document.getElementById('menu-username-save');
       btn.disabled = true;
-      await authedFetch('/api/profiles/me', {
+      const res = await authedFetch('/api/profiles/me', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username }),
       });
+      const data = await res.json().catch(() => ({}));
       btn.disabled = false;
-      btn.textContent = '✓ Gespeichert';
-      setTimeout(() => { btn.textContent = 'Speichern'; }, 2000);
+      if (!res.ok) {
+        btn.textContent = data.error ?? 'Fehler';
+        setTimeout(() => { btn.textContent = 'Speichern'; }, 3000);
+      } else {
+        btn.textContent = '✓ Gespeichert';
+        setTimeout(() => { btn.textContent = 'Speichern'; }, 2000);
+      }
     });
 
     // ── Hamburger menu ────────────────────────────────────────────────────────
