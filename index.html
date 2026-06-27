@@ -1037,6 +1037,15 @@
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
       body.index-mode #garden-list { padding: 0 20px 20px 36px; }
+
+      /* Modal: stack info above observations */
+      #modal { width: 100vw; height: 100dvh; }
+      #modal-columns { flex-direction: column; overflow-y: auto; }
+      #modal-info { width: 100%; flex-shrink: 0; border-right: none; border-bottom: 1px solid rgba(128,128,128,0.2); padding: 32px 24px 24px; overflow-y: visible; }
+      #modal-images { overflow: visible; }
+      #obs-toggle-bar { padding: 24px 24px 16px; }
+      #obs-form { padding: 16px 24px; }
+      #obs-list { padding: 16px 24px; }
     }
   </style>
 </head>
