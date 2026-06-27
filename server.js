@@ -4,9 +4,7 @@ import Database from 'better-sqlite3';
 import { mkdirSync } from 'fs';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
-import gardensHandler from './api/gardens/index.js';
-import gardenByIdHandler from './api/gardens/[id].js';
-import profilesMeHandler from './api/profiles/me.js';
+import catchAll from './api/[...path].js';
 import { requireUser } from './lib/auth.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -301,16 +299,15 @@ app.delete('/api/observations/:id', async (req, res) => {
   res.json({ ok: true });
 });
 
-// ── Profiles (Supabase) ───────────────────────────────────────────────────────
+// ── Supabase catch-all (gardens, profiles, health, upload-url) ────────────────
 
-app.all('/api/profiles/me', (req, res) => profilesMeHandler(req, res));
-
-// ── Gardens (Supabase) ────────────────────────────────────────────────────────
-
-app.all('/api/gardens', (req, res) => gardensHandler(req, res));
-app.all('/api/gardens/:id', (req, res) => {
-  req.query.id = req.params.id;
-  return gardenByIdHandler(req, res);
+app.all('/api/*', (req, res, next) => {
+  const segments = req.path.replace(/^\/api\//, '').split('/').filter(Boolean);
+  const resource = segments[0];
+  // let SQLite routes above handle these
+  if (['plans','custom-plants','bed-images','plant-info','observations'].includes(resource)) return next();
+  req.query.path = segments;
+  return catchAll(req, res);
 });
 
 const PORT = 3001;
