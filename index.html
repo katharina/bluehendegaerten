@@ -1888,7 +1888,7 @@
           ).then(r => r.json());
           const a = d.address ?? {};
           const district = a.suburb || a.neighbourhood || a.quarter || a.city_district;
-          const city = a.city || a.town || a.village || a.county;
+          const city = a.city || a.town || a.village || a.county || a.state;
           const place = district && city ? `${district}, ${city}` : district || city || '';
           _placeCache.set(key, place);
           resolve(place);
