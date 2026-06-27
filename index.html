@@ -1839,19 +1839,18 @@
     }
 
     async function uploadToR2(file) {
-      const [medium, thumb] = await Promise.all([
-        resizeForWeb(file, 1600, 0.85),
-        resizeForWeb(file, 400, 0.82),
-      ]);
+      const medium = await resizeForWeb(file, 1600, 0.85);
       const { url, key, thumbUrl } = await authedFetch('/api/upload-url', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contentType: 'image/jpeg', filename: 'upload.jpg' }),
       }).then(r => r.json());
-      await Promise.all([
-        fetch(url, { method: 'PUT', body: medium, headers: { 'Content-Type': 'image/jpeg' } }),
-        fetch(thumbUrl, { method: 'PUT', body: thumb, headers: { 'Content-Type': 'image/jpeg' } }),
-      ]);
+      await fetch(url, { method: 'PUT', body: medium, headers: { 'Content-Type': 'image/jpeg' } });
+      if (thumbUrl) {
+        resizeForWeb(file, 400, 0.82)
+          .then(thumb => fetch(thumbUrl, { method: 'PUT', body: thumb, headers: { 'Content-Type': 'image/jpeg' } }))
+          .catch(() => {});
+      }
       return key;
     }
     const [all, gardens] = await Promise.all([
