@@ -905,12 +905,10 @@
     .obs-plant-chip.checked { border-color: #000; color: #000; background: #f9f9f9; }
     .obs-plant-chip input { display: none; }
 
-    #qo-plantnet { display:none; margin-top:8px; }
-    #qo-plantnet-label { font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#aaa; margin-bottom:6px; }
-    #qo-plantnet-chips { display:flex; flex-wrap:wrap; gap:6px; }
-    .pn-chip { font-size:11px; font-style:italic; padding:3px 7px; border:1px solid #eee; border-radius:2px; color:#777; }
-    .pn-chip-match { border-color:#000; color:#000; background:#f9f9f9; }
-    .pn-score { font-style:normal; font-size:10px; opacity:0.5; margin-left:3px; }
+    .obs-plant-chip.pn-suggested { border-color:#bbb; color:#333; }
+    .obs-plant-chip.pn-suggested.checked { border-color:#000; background:#f5f8f0; }
+    .pn-score { font-style:normal; font-size:10px; opacity:0.45; margin-left:3px; }
+    .obs-plant-chip.pn-identifying { color:#aaa; font-style:italic; border-color:#eee; cursor:default; pointer-events:none; }
 
     .obs-file-label {
       font-size: 11px;
@@ -1423,22 +1421,18 @@
         </div>
       </div>
       <div class="obs-field">
-        <label class="obs-label">Notiz</label>
-        <textarea id="qo-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+        <label class="obs-file-label" id="qo-file-label">
+          <span id="qo-file-text">Bild auswählen…</span>
+          <input id="qo-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
+        </label>
       </div>
       <div class="obs-field">
         <label class="obs-label">Pflanzen</label>
         <div id="qo-plant-grid"></div>
       </div>
       <div class="obs-field">
-        <label class="obs-file-label" id="qo-file-label">
-          <span id="qo-file-text">Bild auswählen…</span>
-          <input id="qo-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
-        </label>
-      </div>
-      <div id="qo-plantnet">
-        <div id="qo-plantnet-label">Erkannte Pflanzen</div>
-        <div id="qo-plantnet-chips"></div>
+        <label class="obs-label">Notiz</label>
+        <textarea id="qo-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
       </div>
       <div id="qo-msg" style="font-size:13px;color:#c00;min-height:18px;"></div>
       <div class="obs-form-actions">
@@ -1847,36 +1841,25 @@
     }
 
     async function identifyPlant(file) {
-      const pn = document.getElementById('qo-plantnet');
-      const chips = document.getElementById('qo-plantnet-chips');
-      pn.style.display = 'block';
-      chips.innerHTML = '<span style="font-size:11px;color:#aaa;font-style:italic;">Erkenne…</span>';
+      const grid = document.getElementById('qo-plant-grid');
+      const placeholder = document.createElement('label');
+      placeholder.className = 'obs-plant-chip pn-identifying';
+      placeholder.textContent = 'Erkenne…';
+      grid.prepend(placeholder);
       try {
         const dataUrl = await resizeToDataUrl(file);
-        if (!dataUrl) { pn.style.display = 'none'; return; }
+        if (!dataUrl) { placeholder.remove(); return; }
         const data = await authedFetch('/api/plantnet', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ dataUrl }),
         }).then(r => r.json());
-        chips.innerHTML = '';
-        if (!data.results?.length) {
-          chips.innerHTML = '<span style="font-size:11px;color:#aaa;font-style:italic;">Keine Treffer</span>';
-          return;
-        }
-        data.results.forEach(r => {
-          const matched = _plantNetToSlug(r.name);
-          if (matched) {
-            const cb = document.querySelector(`#qo-plant-grid input[value="${matched}"]`);
-            if (cb && !cb.checked) { cb.checked = true; cb.closest('label').classList.add('checked'); }
-          }
-          const chip = document.createElement('span');
-          chip.className = 'pn-chip' + (matched ? ' pn-chip-match' : '');
-          chip.title = r.common ?? '';
-          chip.innerHTML = `<em>${r.name}</em><span class="pn-score">${r.score}%</span>`;
-          chips.appendChild(chip);
-        });
-      } catch { pn.style.display = 'none'; }
+        const suggestions = (data.results ?? []).map(r => ({
+          name: r.name, score: r.score, slug: _plantNetToSlug(r.name),
+        }));
+        const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+        buildQoPlantGrid(preselected, suggestions);
+      } catch { placeholder.remove(); }
     }
 
     async function uploadToR2(file) {
@@ -2455,19 +2438,27 @@
       qoGarden.appendChild(opt.cloneNode(true));
     });
 
-    function buildQoPlantGrid(preselectedSlugs = []) {
+    function buildQoPlantGrid(preselectedSlugs = [], suggestions = []) {
       const grid = document.getElementById('qo-plant-grid');
       grid.innerHTML = '';
-      [...bySlug.values()]
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .forEach(p => {
-          const checked = preselectedSlugs.includes(p.slug);
-          const chip = document.createElement('label');
-          chip.className = 'obs-plant-chip' + (checked ? ' checked' : '');
-          chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}`;
-          chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
-          grid.appendChild(chip);
-        });
+      const suggestedSlugs = suggestions.map(s => s.slug).filter(Boolean);
+      const scoreMap = new Map(suggestions.filter(s => s.slug).map(s => [s.slug, s.score]));
+
+      const suggested = suggestedSlugs.map(sl => bySlug.get(sl)).filter(Boolean);
+      const rest = [...bySlug.values()]
+        .filter(p => !suggestedSlugs.includes(p.slug))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      [...suggested, ...rest].forEach(p => {
+        const isSuggested = suggestedSlugs.includes(p.slug);
+        const checked = preselectedSlugs.includes(p.slug) || (isSuggested && !preselectedSlugs.length);
+        const score = scoreMap.get(p.slug);
+        const chip = document.createElement('label');
+        chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (isSuggested ? ' pn-suggested' : '');
+        chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
+        chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
+        grid.appendChild(chip);
+      });
     }
 
     function buildPlantGrid(preselect) {
@@ -2509,7 +2500,6 @@
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
       document.getElementById('qo-file-label').classList.remove('has-file');
       document.getElementById('qo-msg').textContent = '';
-      document.getElementById('qo-plantnet').style.display = 'none';
       _qoLat = null; _qoLon = null;
       buildQoPlantGrid([]);
       quickObsBackdrop.style.display = 'flex';
@@ -2527,28 +2517,8 @@
       document.getElementById('qo-file-label').classList.remove('has-file');
       document.getElementById('qo-msg').textContent = '';
       _qoLat = o.lat ?? null; _qoLon = o.lon ?? null;
-      buildQoPlantGrid(o.slugs ?? []);
-      const pn = document.getElementById('qo-plantnet');
-      const pnChips = document.getElementById('qo-plantnet-chips');
       const suggestions = o.plantnet_suggestions ? JSON.parse(o.plantnet_suggestions) : [];
-      if (suggestions.length) {
-        pn.style.display = 'block';
-        pnChips.innerHTML = '';
-        suggestions.forEach(s => {
-          const chip = document.createElement('span');
-          chip.className = 'pn-chip' + (s.slug ? ' pn-chip-match' : '');
-          chip.title = s.slug ? 'Klicken zum Übernehmen' : 'Nicht in Pflanzenliste';
-          chip.innerHTML = `<em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
-          if (s.slug) chip.addEventListener('click', () => {
-            const cb = document.querySelector(`#qo-plant-grid input[value="${s.slug}"]`);
-            if (cb && !cb.checked) { cb.checked = true; cb.closest('label').classList.add('checked'); }
-            chip.style.opacity = '0.4';
-          });
-          pnChips.appendChild(chip);
-        });
-      } else {
-        pn.style.display = 'none';
-      }
+      buildQoPlantGrid(o.slugs ?? [], suggestions);
       quickObsBackdrop.style.display = 'flex';
     }
 
