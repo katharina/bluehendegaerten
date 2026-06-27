@@ -3338,7 +3338,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     fetch('/api/observations').then(r => r.json()).then(all => {
-      const photos = all.filter(o => o.filename && o.type === 'foto').slice(0, 10);
+      const photos = all.filter(o => o.filename && o.type === 'foto');
       if (!photos.length) return;
       const carousel = document.getElementById('obs-carousel');
       photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
