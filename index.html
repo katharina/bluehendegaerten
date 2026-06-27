@@ -1082,6 +1082,58 @@
     }
     body.index-mode #garden-list a:hover { text-decoration: underline; }
 
+    #obs-carousel-section { display: none; }
+    body.index-mode #obs-carousel-section { display: block; }
+    #obs-carousel-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: normal;
+      color: #222;
+    }
+    #obs-carousel {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 0 48px 32px;
+      scrollbar-width: none;
+    }
+    body.index-mode #obs-carousel::-webkit-scrollbar { display: none; }
+    .carousel-item {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      background: #f0f0f0;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .carousel-item:hover img { transform: scale(1.04); }
+    .carousel-item-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .carousel-item:hover .carousel-item-label { opacity: 1; }
+
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
     body.index-mode #panels-area { pointer-events: none; }
@@ -1146,6 +1198,8 @@
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
       body.index-mode #garden-list { padding: 0 20px 20px 36px; }
+      body.index-mode #obs-carousel { padding: 0 20px 24px; }
+      .carousel-item { width: 140px; height: 140px; }
 
       /* Modal: stack info above observations */
       #modal { width: 100vw; height: 100dvh; }
@@ -1226,6 +1280,29 @@
     </div>
   </div>
 
+  <div id="quick-obs-backdrop" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+    <div style="background:#fff;position:relative;width:min(400px,92vw);padding:48px 40px 40px;">
+      <button id="quick-obs-close" style="position:absolute;top:12px;right:16px;font-size:28px;line-height:1;background:none;border:none;cursor:pointer;color:#888;">×</button>
+      <div style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="agf-field">
+          <label class="agf-label">Foto</label>
+          <input id="qo-file" type="file" accept="image/*" style="font-size:13px;font-family:inherit;">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label">Datum</label>
+          <input id="qo-date" class="agf-input" type="date">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label">Notiz</label>
+          <textarea id="qo-text" class="agf-input agf-textarea" placeholder="Optional…"></textarea>
+        </div>
+        <div id="qo-msg" style="font-size:13px;color:#c00;min-height:18px;"></div>
+        <button id="qo-submit" class="action-btn">Speichern</button>
+      </div>
+    </div>
+  </div>
+
   <div id="loader"><span id="loader-text">Blühende Gärten</span></div>
   <div id="landing"></div>
   <div id="content">
@@ -1261,6 +1338,13 @@
     <input type="file" id="bed-img-input" accept="image/*" style="display:none">
     <div id="plant-col">
       <div id="index-heading">Blühende Gärten</div>
+      <div id="obs-carousel-section">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding:0 48px;margin-bottom:16px;">
+          <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
+          <button id="quick-obs-btn" class="action-btn">+ Beobachtung</button>
+        </div>
+        <div id="obs-carousel"></div>
+      </div>
       <div id="plant-col-header">
         <div id="plant-col-header-row">
           <h2 id="plant-col-title">Pflanzen</h2>
@@ -2123,6 +2207,55 @@
       _editingObsId = null;
     }
 
+    // ── Quick observation (index page) ────────────────────────────────────────
+    const quickObsBackdrop = document.getElementById('quick-obs-backdrop');
+    document.getElementById('quick-obs-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('qo-text').value = '';
+      document.getElementById('qo-file').value = '';
+      document.getElementById('qo-msg').textContent = '';
+      quickObsBackdrop.style.display = 'flex';
+    });
+    document.getElementById('quick-obs-close').addEventListener('click', () => {
+      quickObsBackdrop.style.display = 'none';
+    });
+    quickObsBackdrop.addEventListener('click', e => {
+      if (e.target === quickObsBackdrop) quickObsBackdrop.style.display = 'none';
+    });
+    document.getElementById('qo-submit').addEventListener('click', async () => {
+      const file = document.getElementById('qo-file').files[0];
+      const msg = document.getElementById('qo-msg');
+      msg.textContent = '';
+      let filename = null;
+      try {
+        if (file) filename = await uploadToR2(file);
+        const obs = await authedFetch('/api/observations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: document.getElementById('qo-date').value,
+            type: 'foto',
+            text: document.getElementById('qo-text').value,
+            slugs: [],
+            ...(filename && { filename }),
+          }),
+        }).then(r => r.json());
+        quickObsBackdrop.style.display = 'none';
+        // prepend to carousel
+        if (filename) {
+          const carousel = document.getElementById('obs-carousel');
+          const item = document.createElement('div');
+          item.className = 'carousel-item';
+          item.innerHTML = `<img src="${R2_URL}/${filename}" loading="lazy"><div class="carousel-item-label">${document.getElementById('qo-date').value}</div>`;
+          item.addEventListener('click', () => { lightboxImg.src = `${R2_URL}/${filename}`; lightbox.classList.add('open'); });
+          carousel.prepend(item);
+        }
+      } catch(e) {
+        msg.textContent = 'Fehler beim Speichern.';
+      }
+    });
+
     obsToggle.addEventListener('click', () => {
       if (!_currentUser) { openLoginModal(); return; }
       const open = obsForm.classList.toggle('open');
@@ -2914,6 +3047,26 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     document.body.classList.toggle('index-mode', !activeGarden);
     render();
     document.getElementById('content').classList.add('ready');
+
+    // ── Index photo carousel ──────────────────────────────────────────────────
+    fetch('/api/observations').then(r => r.json()).then(all => {
+      const photos = all.filter(o => o.filename).slice(0, 10);
+      if (!photos.length) return;
+      const carousel = document.getElementById('obs-carousel');
+      photos.forEach(o => {
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        const plantName = o.slugs.map(s => bySlug.get(s)?.name_de ?? bySlug.get(s)?.name ?? s).filter(Boolean).join(', ');
+        const dateStr = o.date ? new Date(o.date).toLocaleDateString('de-DE', { month: 'short', year: 'numeric' }) : '';
+        const label = [plantName, dateStr].filter(Boolean).join(' · ');
+        item.innerHTML = `<img src="${R2_URL}/${o.filename}" loading="lazy"><div class="carousel-item-label">${label}</div>`;
+        item.addEventListener('click', () => {
+          lightboxImg.src = `${R2_URL}/${o.filename}`;
+          lightbox.classList.add('open');
+        });
+        carousel.appendChild(item);
+      });
+    }).catch(() => {});
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
