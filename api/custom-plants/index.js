@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -10,6 +11,7 @@ export default async function handler(req, res) {
     res.json(data);
 
   } else if (req.method === 'POST') {
+    if (!await requireUser(req, res)) return;
     const { slug, name, name_de, family, color, world_w, world_h, garden = 'betonbeete' } = req.body ?? {};
     if (!slug || !name) return res.status(400).json({ error: 'slug and name required' });
     const { data, error } = await supabase

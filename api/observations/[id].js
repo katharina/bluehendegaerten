@@ -1,9 +1,11 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'PATCH') {
+    if (!await requireUser(req, res)) return;
     const { date, type, text, filename, slugs } = req.body ?? {};
     const fields = {};
     if (date     !== undefined) fields.date     = date || null;
@@ -24,6 +26,7 @@ export default async function handler(req, res) {
     res.json({ ok: true });
 
   } else if (req.method === 'DELETE') {
+    if (!await requireUser(req, res)) return;
     const { error } = await supabase.from('observations').delete().eq('id', id);
     if (error) return res.status(500).json({ error: error.message });
     res.json({ ok: true });

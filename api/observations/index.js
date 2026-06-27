@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 async function withSlugs(rows) {
   if (!rows.length) return rows;
@@ -41,6 +42,7 @@ export default async function handler(req, res) {
     res.json(await withSlugs(rows));
 
   } else if (req.method === 'POST') {
+    if (!await requireUser(req, res)) return;
     const { garden = 'betonbeete', date, type = 'foto', text, slugs = [] } = req.body ?? {};
     const { data: obs, error } = await supabase
       .from('observations')

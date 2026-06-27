@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 const ALLOWED = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
 
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
     res.json(data ?? { slug });
 
   } else if (req.method === 'PATCH' || req.method === 'PUT') {
+    if (!await requireUser(req, res)) return;
     const fields = {};
     for (const [k, v] of Object.entries(req.body ?? {})) {
       if (ALLOWED.includes(k)) fields[k] = v ?? null;

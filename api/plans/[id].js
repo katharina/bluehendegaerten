@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -13,6 +14,7 @@ export default async function handler(req, res) {
     res.json({ data: data?.data ?? null });
 
   } else if (req.method === 'PUT') {
+    if (!await requireUser(req, res)) return;
     const { data: body } = req.body ?? {};
     if (!body) return res.status(400).json({ error: 'missing data' });
     const { error } = await supabase

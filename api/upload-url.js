@@ -2,11 +2,13 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2 } from '../lib/r2.js';
 import { R2_BUCKET } from '../lib/config.js';
+import { requireUser } from '../lib/auth.js';
 
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif']);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
+  if (!await requireUser(req, res)) return;
 
   const { contentType, filename } = req.body ?? {};
   if (!contentType || !ALLOWED_TYPES.has(contentType)) {

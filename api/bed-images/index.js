@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase.js';
+import { requireUser } from '../../lib/auth.js';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -11,6 +12,7 @@ export default async function handler(req, res) {
     res.json(data);
 
   } else if (req.method === 'POST') {
+    if (!await requireUser(req, res)) return;
     const { garden = 'betonbeete', bed_index, filename } = req.body ?? {};
     if (!filename || bed_index === undefined) return res.status(400).json({ error: 'filename and bed_index required' });
     const { error } = await supabase
