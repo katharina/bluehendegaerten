@@ -953,14 +953,26 @@
     #content.ready { opacity: 1; transition: opacity 0.4s ease; }
 
     #index-heading { display: none; }
+    #garden-list   { display: none; }
     body.index-mode #index-heading {
       display: block;
       font-family: var(--font-serif);
       font-size: 100px;
       font-weight: 600;
       line-height: 1;
-      padding: 40px 48px 24px;
+      padding: 40px 48px 16px;
     }
+    body.index-mode #garden-list {
+      display: block;
+      list-style: disc;
+      padding: 0 48px 28px 68px;
+      font-size: 16px;
+    }
+    body.index-mode #garden-list a {
+      color: #222;
+      text-decoration: none;
+    }
+    body.index-mode #garden-list a:hover { text-decoration: underline; }
 
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
@@ -1024,7 +1036,7 @@
       body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; }
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
-      body.index-mode #index-heading + div { padding: 0 20px 16px; }
+      body.index-mode #garden-list { padding: 0 20px 20px 36px; }
     }
   </style>
 </head>
@@ -2479,11 +2491,8 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
-      const gardenLinks = gardens.map(g =>
-        `<a href="/${g.path}" style="font-size:11px;color:#888;border:1px solid #ddd;border-radius:20px;padding:5px 14px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='#888';this.style.color='#222'" onmouseout="this.style.borderColor='#ddd';this.style.color='#888'">${g.name}</a>`
-      ).join('');
       document.getElementById('index-heading').insertAdjacentHTML('afterend',
-        `<div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 48px 24px;">${gardenLinks}</div>`);
+        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path}">${g.name}</a></li>`).join('')}</ul>`);
     }
 
     const loader = document.getElementById('loader');

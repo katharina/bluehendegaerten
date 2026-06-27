@@ -69,8 +69,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 140px;
-  background: #000;
-  column-gap: 1px;
 }
 
 @media (min-width: 640px) {
@@ -88,10 +86,22 @@
   flex-direction: column;
   gap: 4px;
   padding: 16px 18px;
+  border-right: 1px solid #000;
   border-bottom: 1px solid #000;
-  background: #fff;
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
+}
+
+/* Remove right border from last card in each row */
+.plant-card:nth-child(2n) { border-right: none; }
+
+@media (min-width: 640px) {
+  .plant-card:nth-child(2n) { border-right: 1px solid #000; }
+  .plant-card:nth-child(3n) { border-right: none; }
+}
+
+@media (min-width: 768px) {
+  .plant-card:nth-child(3n) { border-right: 1px solid #000; }
 }
 .plant-card:hover {
   background-color: var(--dot-color);
