@@ -1579,7 +1579,7 @@
     ]);
 
     const _urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
-    const _activeGardenId = gardens.find(g => g.path === _urlPath)?.id ?? null;
+    const _activeGardenId = gardens.find(g => (g.path ?? g.id) === _urlPath)?.id ?? null;
 
     // one entry per slug (bloom stage preferred)
     const bySlug = new Map();
@@ -2852,7 +2852,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
       document.getElementById('index-heading').insertAdjacentHTML('afterend',
-        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path}">${g.name}</a></li>`).join('')}</ul>
+        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path ?? g.id}">${g.name}</a></li>`).join('')}</ul>
          <button id="add-garden-btn" class="action-btn" style="margin-top:16px;">+ Garten</button>`);
       document.getElementById('add-garden-btn').addEventListener('click', openAddGardenModal);
     }
