@@ -1426,7 +1426,7 @@
         const saved = _piData.bloom_months ? new Set(JSON.parse(_piData.bloom_months)) : null;
         renderBloomBar(saved ?? manifestBloom);
         renderPlantInfo(_piData, p);
-        document.getElementById('modal-invasiv-btn').classList.toggle('active', !!_piData.invasiv);
+        // document.getElementById('modal-invasiv-btn').classList.toggle('active', !!_piData.invasiv);
       }
       fetch(`/api/plant-info/${p.slug}`).then(r => r.json()).then(info => {
         plantInfoCache.set(p.slug, info);

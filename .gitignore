@@ -26,3 +26,5 @@ images.db
 uploads/
 public/plants/*_fixed.png
 scripts/fixed-canvas-test.js
+.vercel
+.env*
