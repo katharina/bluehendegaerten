@@ -82,6 +82,37 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── PlantNet identification ──────────────────────────────────────────────────
+  if (resource === 'plantnet') {
+    if (req.method !== 'POST') return res.status(405).end();
+    if (!await requireUser(req, res)) return;
+    const apiKey = process.env.PLANTNET_API_KEY;
+    if (!apiKey) return res.status(500).json({ error: 'not configured' });
+    const { dataUrl } = req.body ?? {};
+    if (!dataUrl) return res.status(400).json({ error: 'dataUrl required' });
+    const base64 = dataUrl.replace(/^data:[^;]+;base64,/, '');
+    const buf = Buffer.from(base64, 'base64');
+    const form = new FormData();
+    form.append('images', new Blob([buf], { type: 'image/jpeg' }), 'image.jpg');
+    form.append('organs', 'auto');
+    try {
+      const r = await fetch(
+        `https://my-api.plantnet.org/v2/identify/all?api-key=${apiKey}&lang=de&include-related-images=false`,
+        { method: 'POST', body: form }
+      );
+      if (!r.ok) return res.status(r.status).json({ error: 'plantnet error' });
+      const data = await r.json();
+      const results = (data.results ?? []).slice(0, 5).map(item => ({
+        name: item.species.scientificNameWithoutAuthor,
+        score: Math.round(item.score * 100),
+        common: item.species.commonNames?.[0] ?? null,
+      }));
+      return res.json({ results });
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
   // ── Gardens ─────────────────────────────────────────────────────────────────
   if (resource === 'gardens') {
     if (!id) {
