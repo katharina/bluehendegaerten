@@ -39,12 +39,14 @@ export default async function handler(req, res) {
     const { contentType, filename } = req.body ?? {};
     if (!contentType || !ALLOWED_UPLOAD_TYPES.has(contentType))
       return res.status(400).json({ error: 'invalid content type' });
-    const ext = filename?.split('.').pop() ?? 'jpg';
-    const key = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const url = await getSignedUrl(r2,
-      new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, ContentType: contentType }),
-      { expiresIn: 300 });
-    return res.json({ url, key });
+    const base = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const key = `${base}.jpg`;
+    const thumbKey = `${base}_thumb.jpg`;
+    const [url, thumbUrl] = await Promise.all([
+      getSignedUrl(r2, new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, ContentType: 'image/jpeg' }), { expiresIn: 300 }),
+      getSignedUrl(r2, new PutObjectCommand({ Bucket: R2_BUCKET, Key: thumbKey, ContentType: 'image/jpeg' }), { expiresIn: 300 }),
+    ]);
+    return res.json({ url, key, thumbUrl, thumbKey });
   }
 
   // ── Gardens ─────────────────────────────────────────────────────────────────
