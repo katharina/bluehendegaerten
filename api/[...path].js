@@ -60,11 +60,12 @@ export default async function handler(req, res) {
       if (req.method === 'POST') {
         const user = await requireUser(req, res);
         if (!user) return;
-        const { id: gid, path, name, description, plants } = req.body ?? {};
+        const { id: gid, path, name, description, plants, is_private, has_plan } = req.body ?? {};
         if (!gid || !path || !name) return res.status(400).json({ error: 'missing fields' });
         const { error } = await supabase.from('gardens').insert({
           id: gid, path, name, description: description ?? null,
           plants: plants ?? [], created_by: user.id,
+          is_private: is_private ?? false, has_plan: has_plan ?? false,
         });
         if (error) return res.status(500).json({ error: error.message });
         return res.json({ ok: true });

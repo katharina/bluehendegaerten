@@ -71,6 +71,41 @@
     #login-email:focus { border-bottom-color: #000; }
     #login-msg { font-size: 13px; color: #555; min-height: 18px; }
 
+    /* ── Add garden modal ─────────────────────────────────────────────── */
+    #add-garden-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.4); align-items: center; justify-content: center;
+    }
+    #add-garden-backdrop.open { display: flex; }
+    #add-garden-modal {
+      background: #fff; position: relative;
+      width: min(480px, 92vw); padding: 48px 40px 40px;
+    }
+    #add-garden-close {
+      position: absolute; top: 12px; right: 16px;
+      font-size: 28px; line-height: 1; background: none; border: none;
+      cursor: pointer; color: #888;
+    }
+    #add-garden-close:hover { color: #000; }
+    #add-garden-title {
+      font-family: var(--font-serif); font-size: 40px; font-weight: 600;
+      line-height: 1; margin-bottom: 32px;
+    }
+    #add-garden-form-body { display: flex; flex-direction: column; gap: 20px; }
+    .agf-field { display: flex; flex-direction: column; gap: 4px; }
+    .agf-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #888; }
+    .agf-input {
+      font-size: 14px; font-family: inherit; width: 100%;
+      border: none; border-bottom: 1px solid #ccc;
+      padding: 8px 0; outline: none; background: transparent; color: #222;
+    }
+    .agf-input:focus { border-bottom-color: #000; }
+    .agf-textarea { resize: vertical; min-height: 60px; }
+    .agf-check { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+    .agf-check input { width: 16px; height: 16px; cursor: pointer; accent-color: #000; }
+    #add-garden-msg { font-size: 13px; color: #c00; min-height: 18px; }
+    body:not(.logged-in) #add-garden-btn { display: none; }
+
     html, body {
       height: 100%;
       overflow: hidden;
@@ -1146,6 +1181,38 @@
     </div>
   </div>
 
+  <!-- ── Add garden modal ──────────────────────────────────────────────── -->
+  <div id="add-garden-backdrop">
+    <div id="add-garden-modal">
+      <button id="add-garden-close">×</button>
+      <div id="add-garden-title">Garten anlegen</div>
+      <div id="add-garden-form-body">
+        <div class="agf-field">
+          <label class="agf-label" for="agf-name">Name</label>
+          <input id="agf-name" class="agf-input" type="text" autocomplete="off" placeholder="Mein Garten">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label" for="agf-path">Pfad (URL)</label>
+          <input id="agf-path" class="agf-input" type="text" autocomplete="off" placeholder="mein-garten">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label" for="agf-desc">Beschreibung</label>
+          <textarea id="agf-desc" class="agf-input agf-textarea" placeholder="Optional…"></textarea>
+        </div>
+        <label class="agf-check">
+          <input id="agf-private" type="checkbox">
+          Privat (nur für mich sichtbar)
+        </label>
+        <label class="agf-check">
+          <input id="agf-plan" type="checkbox">
+          Mit Bettplan
+        </label>
+        <div id="add-garden-msg"></div>
+        <button id="add-garden-submit" class="action-btn">Garten erstellen</button>
+      </div>
+    </div>
+  </div>
+
   <div id="loader"><span id="loader-text">Blühende Gärten</span></div>
   <div id="landing"></div>
   <div id="content">
@@ -1435,6 +1502,66 @@
 
     document.getElementById('login-email').addEventListener('keydown', e => {
       if (e.key === 'Enter') document.getElementById('login-submit').click();
+    });
+
+    // ── Add garden modal ──────────────────────────────────────────────────────
+    function slugify(str) {
+      return str.toLowerCase()
+        .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    }
+
+    function openAddGardenModal() {
+      document.getElementById('agf-name').value = '';
+      document.getElementById('agf-path').value = '';
+      document.getElementById('agf-desc').value = '';
+      document.getElementById('agf-private').checked = false;
+      document.getElementById('agf-plan').checked = false;
+      document.getElementById('add-garden-msg').textContent = '';
+      document.getElementById('add-garden-backdrop').classList.add('open');
+      document.getElementById('agf-name').focus();
+    }
+    function closeAddGardenModal() {
+      document.getElementById('add-garden-backdrop').classList.remove('open');
+    }
+
+    document.getElementById('add-garden-close').addEventListener('click', closeAddGardenModal);
+    document.getElementById('add-garden-backdrop').addEventListener('click', e => {
+      if (e.target === document.getElementById('add-garden-backdrop')) closeAddGardenModal();
+    });
+
+    document.getElementById('agf-name').addEventListener('input', e => {
+      const pathEl = document.getElementById('agf-path');
+      pathEl.value = slugify(e.target.value);
+    });
+
+    document.getElementById('add-garden-submit').addEventListener('click', async () => {
+      const name = document.getElementById('agf-name').value.trim();
+      const path = document.getElementById('agf-path').value.trim();
+      const description = document.getElementById('agf-desc').value.trim();
+      const is_private = document.getElementById('agf-private').checked;
+      const has_plan = document.getElementById('agf-plan').checked;
+      const msg = document.getElementById('add-garden-msg');
+
+      if (!name) { msg.textContent = 'Name ist erforderlich.'; return; }
+      if (!path)  { msg.textContent = 'Pfad ist erforderlich.'; return; }
+
+      const btn = document.getElementById('add-garden-submit');
+      btn.disabled = true;
+      msg.textContent = '';
+
+      const id = crypto.randomUUID();
+      const res = await authedFetch('/api/gardens', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, path, name, description: description || null, is_private, has_plan, plants: [] }),
+      });
+      const data = await res.json();
+      btn.disabled = false;
+
+      if (!res.ok) { msg.textContent = data.error ?? 'Fehler beim Erstellen.'; return; }
+      closeAddGardenModal();
+      window.location.href = '/' + path;
     });
 
     async function uploadToR2(file) {
@@ -2725,7 +2852,9 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
       document.getElementById('index-heading').insertAdjacentHTML('afterend',
-        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path}">${g.name}</a></li>`).join('')}</ul>`);
+        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path}">${g.name}</a></li>`).join('')}</ul>
+         <button id="add-garden-btn" class="action-btn" style="margin-top:16px;">+ Garten</button>`);
+      document.getElementById('add-garden-btn').addEventListener('click', openAddGardenModal);
     }
 
     const loader = document.getElementById('loader');
