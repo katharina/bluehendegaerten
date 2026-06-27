@@ -1341,6 +1341,7 @@
       <button id="menu-username-save" class="action-btn" style="margin-top:8px;width:100%;">Speichern</button>
     </div>
     <button id="add-garden-btn" class="action-btn" style="margin-top:12px;width:100%;display:none;">+ Garten</button>
+    <button id="menu-my-obs-btn" class="action-btn" style="margin-top:12px;width:100%;">Meine Beobachtungen</button>
     <button id="menu-login-btn" class="action-btn" style="margin-top:12px;">Anmelden</button>
     <button id="menu-logout-btn" class="action-btn" style="display:none;margin-top:12px;">Abmelden</button>
   </div>
@@ -2613,14 +2614,19 @@
     // ── All observations modal ────────────────────────────────────────────────
     const allObsBackdrop = document.getElementById('all-obs-backdrop');
 
-    async function openAllObs(typeFilter = null) {
+    async function openAllObs(typeFilter = null, gardenOverride = activeGarden) {
       const list = document.getElementById('all-obs-list');
-      document.getElementById('all-obs-title').textContent = typeFilter === 'herbarbeleg' ? 'Herbarbelege' : 'Beobachtungen';
+      const titleEl = document.getElementById('all-obs-title');
+      if (typeFilter === 'herbarbeleg') titleEl.textContent = 'Herbarbelege';
+      else if (gardenOverride == null) titleEl.textContent = 'Meine Beobachtungen';
+      else titleEl.textContent = 'Beobachtungen';
       list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
+      list.style.cssText = '';
       allObsBackdrop.classList.add('open');
 
       try {
-        let obs = await fetch(`/api/observations?garden=${activeGarden}`).then(r => r.json());
+        const url = gardenOverride ? `/api/observations?garden=${gardenOverride}` : '/api/observations';
+        let obs = await fetch(url).then(r => r.json());
         if (typeFilter) obs = obs.filter(o => o.type === typeFilter);
         list.innerHTML = '';
 
@@ -2645,7 +2651,7 @@
           const onDelete = _currentUser ? async () => {
             if (!confirm('Eintrag wirklich löschen?')) return;
             await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
-            await openAllObs(typeFilter);
+            await openAllObs(typeFilter, gardenOverride);
           } : null;
 
           if (isHerbar) {
@@ -2682,6 +2688,11 @@
     document.getElementById('all-herbar-btn').addEventListener('click', () => openAllObs('herbarbeleg'));
     document.getElementById('all-obs-close').addEventListener('click', () => allObsBackdrop.classList.remove('open'));
     allObsBackdrop.addEventListener('click', e => { if (e.target === allObsBackdrop) allObsBackdrop.classList.remove('open'); });
+
+    document.getElementById('menu-my-obs-btn').addEventListener('click', () => {
+      closeMenu();
+      openAllObs(null, null);
+    });
 
 
     // ── Column lock ──────────────────────────────────────────────────────────
