@@ -1479,6 +1479,7 @@
       <div id="obs-carousel-section">
         <div id="obs-carousel-header">
           <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
+          <button id="all-fotos-btn" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer;padding-left:12px;margin-right:auto;font-family:inherit;">alle Fotos</button>
           <button id="quick-obs-btn" class="action-btn" style="font-size:28px;line-height:1;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
         </div>
         <div id="obs-carousel"></div>
@@ -3329,6 +3330,27 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       const carousel = document.getElementById('obs-carousel');
       photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
     }).catch(() => {});
+
+    document.getElementById('all-fotos-btn').addEventListener('click', async () => {
+      const list = document.getElementById('all-obs-list');
+      document.getElementById('all-obs-title').textContent = 'Alle Fotos';
+      list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
+      document.getElementById('all-obs-backdrop').classList.add('open');
+      const obs = await fetch('/api/observations').then(r => r.json());
+      const fotos = obs.filter(o => o.filename && o.type === 'foto');
+      list.innerHTML = '';
+      if (!fotos.length) { list.innerHTML = '<div class="all-obs-empty">Noch keine Fotos</div>'; return; }
+      fotos.forEach(o => {
+        const onEdit = _currentUser ? () => openQuickObsEdit(o) : null;
+        const onDelete = _currentUser ? async () => {
+          if (!confirm('Eintrag wirklich löschen?')) return;
+          await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+          document.getElementById('all-obs-backdrop').classList.remove('open');
+        } : null;
+        const card = buildObsCard(o, { onEdit, onDelete });
+        list.appendChild(card);
+      });
+    });
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
