@@ -135,10 +135,10 @@ export default async function handler(req, res) {
       }
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
-        const { garden = 'betonbeete', date, type = 'foto', text, filename, slugs = [] } = req.body ?? {};
+        const { garden = 'betonbeete', date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)
@@ -148,12 +148,14 @@ export default async function handler(req, res) {
     } else {
       if (req.method === 'PATCH') {
         if (!await requireUser(req, res)) return;
-        const { date, type, text, filename, slugs } = req.body ?? {};
+        const { date, type, text, filename, lat, lon, slugs } = req.body ?? {};
         const fields = {};
         if (date     !== undefined) fields.date     = date || null;
         if (type     !== undefined) fields.type     = type;
         if (text     !== undefined) fields.text     = text || null;
         if (filename !== undefined) fields.filename = filename || null;
+        if (lat      !== undefined) fields.lat      = lat ?? null;
+        if (lon      !== undefined) fields.lon      = lon ?? null;
         if (Object.keys(fields).length) {
           const { error } = await supabase.from('observations').update(fields).eq('id', id);
           if (error) return res.status(500).json({ error: error.message });

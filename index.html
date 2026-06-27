@@ -1291,7 +1291,7 @@
   <div id="quick-obs-backdrop" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
     <div style="background:#fff;position:relative;width:min(400px,92vw);padding:48px 40px 40px;">
       <button id="quick-obs-close" style="position:absolute;top:12px;right:16px;font-size:28px;line-height:1;background:none;border:none;cursor:pointer;color:#888;">×</button>
-      <div style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
+      <div id="qo-title" style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
       <div style="display:flex;flex-direction:column;gap:20px;">
         <div class="agf-field">
           <label class="agf-label">Foto</label>
@@ -1741,6 +1741,27 @@
     const obsCache = new Map();
     const plantInfoCache = new Map();
 
+    function buildObsCard(o, { onEdit, onDelete } = {}) {
+      const card = document.createElement('div');
+      card.className = 'obs-card';
+      const dateStr = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) : '';
+      const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+      const hasLabel = dateStr || plantNames;
+      card.innerHTML = `
+        ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
+        ${hasLabel ? `<div class="obs-card-label">
+          ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
+          ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
+        </div>` : ''}
+        ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+        ${onEdit ? `<button class="obs-card-edit" title="Bearbeiten">✎</button>` : ''}
+        ${onDelete ? `<button class="obs-card-delete" title="Löschen">×</button>` : ''}
+      `;
+      if (onEdit) card.querySelector('.obs-card-edit').addEventListener('click', onEdit);
+      if (onDelete) card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
+      return card;
+    }
+
     async function renderObservations(slug) {
       const list = document.getElementById('obs-list');
       list.innerHTML = '';
@@ -1753,50 +1774,35 @@
           list.innerHTML = '<div class="obs-empty">Noch keine Beobachtungen</div>';
           return;
         }
+        const cols = window.innerWidth < 768 ? 2 : 3;
         for (const o of obs) {
-          const card = document.createElement('div');
-          card.className = 'obs-card';
-          const dateStr = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) : '';
-          const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
-          const hasLabel = dateStr || plantNames;
-          card.innerHTML = `
-            ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
-            ${hasLabel ? `<div class="obs-card-label">
-              ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
-              ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
-            </div>` : ''}
-            ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
-            <button class="obs-card-edit" title="Bearbeiten">✎</button>
-            <button class="obs-card-delete" title="Löschen">×</button>
-          `;
-          if (o.filename) {
-            card.querySelector('img').addEventListener('load', () => masonryLayout(list, window.innerWidth < 768 ? 2 : 3));
-          }
-          card.querySelector('.obs-card-edit').addEventListener('click', () => {
-            _editingObsId = o.id;
-            document.getElementById('obs-date').value = o.date ?? '';
-            document.getElementById('obs-type').value = o.type ?? 'foto';
-            document.getElementById('obs-text').value = o.text ?? '';
-            buildPlantGrid(_modalSlug);
-            // pre-check linked plants
-            o.slugs.forEach(s => {
-              const cb = document.querySelector(`#obs-plant-grid input[value="${s}"]`);
-              if (cb) cb.checked = true;
-            });
-            obsForm.classList.add('open');
-            obsToggle.classList.add('open');
-            obsToggle.textContent = '× Abbrechen';
-            document.getElementById('obs-toggle-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const card = buildObsCard(o, {
+            onEdit: _currentUser ? () => {
+              _editingObsId = o.id;
+              document.getElementById('obs-date').value = o.date ?? '';
+              document.getElementById('obs-type').value = o.type ?? 'foto';
+              document.getElementById('obs-text').value = o.text ?? '';
+              buildPlantGrid(_modalSlug);
+              o.slugs.forEach(s => {
+                const cb = document.querySelector(`#obs-plant-grid input[value="${s}"]`);
+                if (cb) cb.checked = true;
+              });
+              obsForm.classList.add('open');
+              obsToggle.classList.add('open');
+              obsToggle.textContent = '× Abbrechen';
+              document.getElementById('obs-toggle-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } : null,
+            onDelete: _currentUser ? async () => {
+              if (!confirm('Eintrag wirklich löschen?')) return;
+              await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+              obsCache.delete(_modalSlug);
+              await renderObservations(_modalSlug);
+            } : null,
           });
-          card.querySelector('.obs-card-delete').addEventListener('click', async () => {
-            if (!confirm('Eintrag wirklich löschen?')) return;
-            await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
-            obsCache.delete(_modalSlug);
-            await renderObservations(_modalSlug);
-          });
+          if (o.filename) card.querySelector('img').addEventListener('load', () => masonryLayout(list, cols));
           list.appendChild(card);
         }
-        masonryLayout(list, window.innerWidth < 768 ? 2 : 3);
+        masonryLayout(list, cols);
       } catch {
         list.innerHTML = '<div class="obs-empty">Server nicht erreichbar</div>';
       }
@@ -2215,21 +2221,58 @@
       _editingObsId = null;
     }
 
-    // ── Quick observation (index page) ────────────────────────────────────────
+    // ── Quick observation (index page + edit from obs panel) ─────────────────
     const quickObsBackdrop = document.getElementById('quick-obs-backdrop');
-    document.getElementById('quick-obs-btn').addEventListener('click', () => {
-      if (!_currentUser) { openLoginModal(); return; }
+    let _qoEditId = null;
+
+    function openQuickObsNew() {
+      _qoEditId = null;
+      document.getElementById('qo-title').textContent = 'Beobachtung';
       document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
       document.getElementById('qo-text').value = '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-msg').textContent = '';
+      _qoLat = null; _qoLon = null;
       quickObsBackdrop.style.display = 'flex';
+    }
+
+    function openQuickObsEdit(o) {
+      _qoEditId = o.id;
+      document.getElementById('qo-title').textContent = 'Bearbeiten';
+      document.getElementById('qo-date').value = o.date ?? '';
+      document.getElementById('qo-text').value = o.text ?? '';
+      document.getElementById('qo-file').value = '';
+      document.getElementById('qo-msg').textContent = '';
+      _qoLat = o.lat ?? null; _qoLon = o.lon ?? null;
+      quickObsBackdrop.style.display = 'flex';
+    }
+
+    document.getElementById('quick-obs-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
     });
     document.getElementById('quick-obs-close').addEventListener('click', () => {
       quickObsBackdrop.style.display = 'none';
+      _qoEditId = null;
+    });
+    let _qoLat = null, _qoLon = null;
+    document.getElementById('qo-file').addEventListener('change', async e => {
+      const file = e.target.files[0];
+      _qoLat = null; _qoLon = null;
+      if (!file) return;
+      try {
+        const exifr = await import('exifr');
+        const [result, gps] = await Promise.all([
+          exifr.parse(file, ['DateTimeOriginal']),
+          exifr.gps(file),
+        ]);
+        if (result?.DateTimeOriginal)
+          document.getElementById('qo-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+        if (gps?.latitude != null) { _qoLat = gps.latitude; _qoLon = gps.longitude; }
+      } catch {}
     });
     quickObsBackdrop.addEventListener('click', e => {
-      if (e.target === quickObsBackdrop) quickObsBackdrop.style.display = 'none';
+      if (e.target === quickObsBackdrop) { quickObsBackdrop.style.display = 'none'; _qoEditId = null; }
     });
     document.getElementById('qo-submit').addEventListener('click', async () => {
       const file = document.getElementById('qo-file').files[0];
@@ -2238,27 +2281,33 @@
       let filename = null;
       try {
         if (file) filename = await uploadToR2(file);
-        const obs = await authedFetch('/api/observations', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            date: document.getElementById('qo-date').value,
-            type: 'foto',
-            text: document.getElementById('qo-text').value,
-            slugs: [],
-            ...(filename && { filename }),
-          }),
-        }).then(r => r.json());
-        quickObsBackdrop.style.display = 'none';
-        // prepend to carousel
-        if (filename) {
-          const carousel = document.getElementById('obs-carousel');
-          const item = document.createElement('div');
-          item.className = 'carousel-item';
-          item.innerHTML = `<img src="${R2_URL}/${filename}" loading="lazy"><div class="carousel-item-label">${document.getElementById('qo-date').value}</div>`;
-          item.addEventListener('click', () => { lightboxImg.src = `${R2_URL}/${filename}`; lightbox.classList.add('open'); });
-          carousel.prepend(item);
+        const body = {
+          date: document.getElementById('qo-date').value,
+          text: document.getElementById('qo-text').value,
+          ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
+          ...(filename && { filename }),
+        };
+        if (_qoEditId) {
+          await authedFetch(`/api/observations/${_qoEditId}`, {
+            method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          _qoEditId = null;
+        } else {
+          const obs = await authedFetch('/api/observations', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...body, type: 'foto', slugs: [] }),
+          }).then(r => r.json());
+          if (filename) {
+            const carousel = document.getElementById('obs-carousel');
+            const item = document.createElement('div');
+            item.className = 'carousel-item';
+            item.innerHTML = `<img src="${R2_URL}/${filename}" loading="lazy"><div class="carousel-item-label">${body.date}</div>`;
+            item.addEventListener('click', () => { lightboxImg.src = `${R2_URL}/${filename}`; lightbox.classList.add('open'); });
+            carousel.prepend(item);
+          }
         }
+        quickObsBackdrop.style.display = 'none';
       } catch(e) {
         msg.textContent = 'Fehler beim Speichern.';
       }
@@ -2272,10 +2321,24 @@
       if (open) buildPlantGrid(_modalSlug);
     });
 
-    obsFile.addEventListener('change', () => {
-      const name = obsFile.files[0]?.name;
-      document.getElementById('obs-file-text').textContent = name ?? 'Bild auswählen…';
-      obsFileLabel.classList.toggle('has-file', !!name);
+    let _obsLat = null, _obsLon = null;
+    obsFile.addEventListener('change', async () => {
+      const file = obsFile.files[0];
+      _obsLat = null; _obsLon = null;
+      document.getElementById('obs-file-text').textContent = file?.name ?? 'Bild auswählen…';
+      obsFileLabel.classList.toggle('has-file', !!file);
+      if (file) {
+        try {
+          const exifr = await import('exifr');
+          const [result, gps] = await Promise.all([
+            exifr.parse(file, ['DateTimeOriginal']),
+            exifr.gps(file),
+          ]);
+          if (result?.DateTimeOriginal)
+            document.getElementById('obs-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+          if (gps?.latitude != null) { _obsLat = gps.latitude; _obsLon = gps.longitude; }
+        } catch {}
+      }
     });
 
     document.getElementById('obs-cancel').addEventListener('click', closeObsForm);
@@ -2293,6 +2356,7 @@
         text:   document.getElementById('obs-text').value,
         slugs,
         ...(filename && { filename }),
+        ...(_obsLat != null && { lat: _obsLat, lon: _obsLon }),
       };
 
       if (_editingObsId) {
@@ -2372,47 +2436,35 @@
         }
 
         for (const o of obs) {
-          const card = document.createElement('div');
-          const dateStr = o.date
-            ? new Date(o.date).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' })
-            : '';
-          const plantNames = o.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+          let card;
+          const onDelete = _currentUser ? async () => {
+            if (!confirm('Eintrag wirklich löschen?')) return;
+            await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+            await openAllObs(typeFilter);
+          } : null;
 
           if (isHerbar) {
+            card = document.createElement('div');
             card.className = 'herbar-card';
             if (o.filename) {
               card.style.backgroundImage = `url('${R2_URL}/${o.filename}')`;
               card.style.cursor = 'zoom-in';
               card.addEventListener('click', e => {
                 if (e.target.closest('.obs-card-delete')) return;
-                const lb = document.getElementById('lightbox');
                 document.getElementById('lightbox-img').src = `${R2_URL}/${o.filename}`;
-                lb.classList.add('open');
+                document.getElementById('lightbox').classList.add('open');
               });
             }
-            card.innerHTML = `<button class="obs-card-delete" title="Löschen">×</button>`;
-          } else {
-            card.className = 'obs-card';
-            const hasLabel = dateStr || plantNames;
-            card.innerHTML = `
-              ${o.filename ? `<img class="obs-card-thumb" src="${R2_URL}/${o.filename}">` : ''}
-              ${hasLabel ? `<div class="obs-card-label">
-                ${dateStr ? `<div class="obs-card-label-date">${dateStr}</div>` : ''}
-                ${plantNames ? `<div class="obs-card-label-plants">${plantNames}</div>` : ''}
-              </div>` : ''}
-              ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
-              <button class="obs-card-delete" title="Löschen">×</button>
-            `;
-            if (o.filename) {
-              card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
+            if (onDelete) {
+              card.innerHTML = `<button class="obs-card-delete" title="Löschen">×</button>`;
+              card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
             }
+          } else {
+            const onEdit = _currentUser ? () => openQuickObsEdit(o) : null;
+            card = buildObsCard(o, { onEdit, onDelete });
+            if (o.filename) card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
           }
 
-          card.querySelector('.obs-card-delete').addEventListener('click', async () => {
-            if (!confirm('Eintrag wirklich löschen?')) return;
-            await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
-            await openAllObs(typeFilter);
-          });
           list.appendChild(card);
         }
         if (!isHerbar) masonryLayout(list, 6);

@@ -69,6 +69,9 @@ db.exec(`
 for (const col of ['licht', 'boden', 'wasser', 'naehrstoff', 'ph', 'kuebel', 'bloom_months', 'invasiv']) {
   try { db.exec(`ALTER TABLE plant_info ADD COLUMN ${col} TEXT`); } catch {}
 }
+for (const col of ['lat REAL', 'lon REAL']) {
+  try { db.exec(`ALTER TABLE observations ADD COLUMN ${col}`); } catch {}
+}
 
 const storage = multer.diskStorage({
   destination: UPLOADS,
@@ -257,13 +260,13 @@ app.get('/api/observations', (req, res) => {
 // create observation (optional file attachment)
 app.post('/api/observations', upload.single('file'), async (req, res) => {
   if (!await requireUser(req, res)) return;
-  const { garden = 'betonbeete', date, type = 'foto', text, filename: bodyFilename } = req.body;
+  const { garden = 'betonbeete', date, type = 'foto', text, filename: bodyFilename, lat, lon } = req.body;
   let slugs = req.body.slugs ?? [];
   if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
 
   const obs = db.prepare(
-    'INSERT INTO observations (garden, date, type, text, filename) VALUES (?, ?, ?, ?, ?) RETURNING *'
-  ).get(garden, date || null, type, text || null, req.file?.filename ?? bodyFilename ?? null);
+    'INSERT INTO observations (garden, date, type, text, filename, lat, lon) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *'
+  ).get(garden, date || null, type, text || null, req.file?.filename ?? bodyFilename ?? null, lat ?? null, lon ?? null);
 
   const ins = db.prepare('INSERT OR IGNORE INTO observation_plants (observation_id, slug) VALUES (?, ?)');
   db.transaction(() => slugs.forEach(s => ins.run(obs.id, s)))();
@@ -274,7 +277,7 @@ app.post('/api/observations', upload.single('file'), async (req, res) => {
 // update observation
 app.patch('/api/observations/:id', upload.single('file'), async (req, res) => {
   if (!await requireUser(req, res)) return;
-  const { date, type, text } = req.body;
+  const { date, type, text, lat, lon } = req.body;
   let slugs = req.body.slugs ?? [];
   if (typeof slugs === 'string') slugs = slugs.split(',').map(s => s.trim()).filter(Boolean);
   const fields = [], values = [];
@@ -282,6 +285,8 @@ app.patch('/api/observations/:id', upload.single('file'), async (req, res) => {
   if (type !== undefined) { fields.push('type = ?'); values.push(type); }
   if (text !== undefined) { fields.push('text = ?'); values.push(text || null); }
   if (req.file)           { fields.push('filename = ?'); values.push(req.file.filename); }
+  if (lat  !== undefined) { fields.push('lat = ?'); values.push(lat ?? null); }
+  if (lon  !== undefined) { fields.push('lon = ?'); values.push(lon ?? null); }
   if (fields.length) {
     values.push(req.params.id);
     db.prepare(`UPDATE observations SET ${fields.join(', ')} WHERE id = ?`).run(...values);
