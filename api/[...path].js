@@ -184,7 +184,7 @@ export default async function handler(req, res) {
     } else {
       if (req.method === 'PATCH') {
         if (!await requireUser(req, res)) return;
-        const { date, type, text, filename, lat, lon, slugs } = req.body ?? {};
+        const { date, type, text, filename, lat, lon, place, slugs } = req.body ?? {};
         const fields = {};
         if (date     !== undefined) fields.date     = date || null;
         if (type     !== undefined) fields.type     = type;
@@ -192,6 +192,7 @@ export default async function handler(req, res) {
         if (filename !== undefined) fields.filename = filename || null;
         if (lat      !== undefined) fields.lat      = lat ?? null;
         if (lon      !== undefined) fields.lon      = lon ?? null;
+        if (place    !== undefined) fields.place    = place || null;
         if (Object.keys(fields).length) {
           const { error } = await supabase.from('observations').update(fields).eq('id', id);
           if (error) return res.status(500).json({ error: error.message });

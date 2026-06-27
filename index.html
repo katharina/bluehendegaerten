@@ -1922,7 +1922,14 @@
         ${onEdit ? `<button class="obs-card-edit" title="Bearbeiten">✎</button>` : ''}
         ${onDelete ? `<button class="obs-card-delete" title="Löschen">×</button>` : ''}
       `;
-      if (o.lat != null) getPlace(o.lat, o.lon).then(p => { const el = card.querySelector('.obs-card-gps'); if (el && p) el.textContent = p; });
+      if (o.lat != null) {
+        const el = card.querySelector('.obs-card-gps');
+        if (o.place) { if (el) el.textContent = o.place; }
+        else getPlace(o.lat, o.lon).then(p => {
+          if (el && p) el.textContent = p;
+          if (p) authedFetch(`/api/observations/${o.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ place: p }) }).catch(() => {});
+        });
+      }
       if (onEdit) card.querySelector('.obs-card-edit').addEventListener('click', onEdit);
       if (onDelete) card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
       return card;
@@ -3321,7 +3328,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
           <button class="carousel-item-del" title="Löschen">×</button>
         </div>` : ''}
       `;
-      if (o.lat != null) getPlace(o.lat, o.lon).then(p => { const el = item.querySelector('.carousel-item-gps'); if (el && p) el.textContent = p; });
+      if (o.lat != null) {
+        const el = item.querySelector('.carousel-item-gps');
+        if (o.place) { if (el) el.textContent = o.place; }
+        else getPlace(o.lat, o.lon).then(p => {
+          if (el && p) el.textContent = p;
+          if (p) authedFetch(`/api/observations/${o.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ place: p }) }).catch(() => {});
+        });
+      }
       item.querySelector('.carousel-item-img').addEventListener('click', () => {
         lightboxImg.src = `${R2_URL}/${o.filename}`;
         lightbox.classList.add('open');
