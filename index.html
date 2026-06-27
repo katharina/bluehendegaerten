@@ -1082,8 +1082,51 @@
     }
     body.index-mode #garden-list a:hover { text-decoration: underline; }
 
+    #garden-section  { display: none; }
     #obs-carousel-section { display: none; }
+    body.index-mode #garden-section,
     body.index-mode #obs-carousel-section { display: block; }
+
+    /* Shared separator for all three index sections */
+    body.index-mode #garden-section::before,
+    body.index-mode #obs-carousel-section::before {
+      content: '';
+      display: block;
+      border-top: 1px solid #000;
+      margin: 0 48px 24px;
+    }
+    body.index-mode #plant-col-header::before {
+      content: '';
+      display: block;
+      border-top: 1px solid #000;
+      margin: 0 0 24px;
+    }
+
+    /* Shared section header structure */
+    #garden-section-header {
+      padding: 0 48px;
+      margin-bottom: 16px;
+    }
+    #garden-section-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+    }
+    body.index-mode #plant-col-header {
+      padding: 0 48px;
+    }
+    body.index-mode #plant-col-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    body.index-mode #plant-filter {
+      display: block;
+      width: calc(100% - 96px);
+      margin: 0 48px;
+    }
     #obs-carousel-header {
       display: flex;
       align-items: baseline;
@@ -1170,12 +1213,23 @@
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
     body.index-mode #panels-area { pointer-events: none; }
+    html:has(body.index-mode),
+    body.index-mode {
+      overflow-y: auto;
+      height: auto;
+    }
+    body.index-mode #content {
+      overflow: visible;
+      height: auto;
+    }
     body.index-mode #plant-col {
       width: 100vw;
       margin-left: 0;
       box-shadow: none;
       transform: none !important;
       pointer-events: auto;
+      overflow: visible;
+      height: auto;
     }
 
     #landing {
@@ -1231,8 +1285,13 @@
       body.index-mode #plant-grid { overflow: visible; height: auto; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
       body.index-mode #garden-list { padding: 0 20px 20px 36px; }
+      #garden-section-header { padding: 0 20px; }
       #obs-carousel-header { padding: 0 20px; }
       body.index-mode #obs-carousel { padding: 0 20px 24px; }
+      body.index-mode #garden-section::before,
+      body.index-mode #obs-carousel-section::before { margin: 0 20px 16px; }
+      body.index-mode #plant-col-header { padding: 0 20px; }
+      body.index-mode #plant-filter { width: calc(100% - 40px); margin: 0; }
       .carousel-item { width: 120px; }
       .carousel-item-img { width: 120px; height: 180px; }
 
@@ -1373,6 +1432,11 @@
     <input type="file" id="bed-img-input" accept="image/*" style="display:none">
     <div id="plant-col">
       <div id="index-heading">Blühende Gärten</div>
+      <div id="garden-section">
+        <div id="garden-section-header">
+          <h2 id="garden-section-title">Alle Gärten</h2>
+        </div>
+      </div>
       <div id="obs-carousel-section">
         <div id="obs-carousel-header">
           <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
@@ -3118,7 +3182,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
-      document.getElementById('index-heading').insertAdjacentHTML('afterend',
+      document.getElementById('garden-section').insertAdjacentHTML('beforeend',
         `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path ?? g.id}">${g.name}</a></li>`).join('')}</ul>`);
     }
 
