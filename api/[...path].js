@@ -57,12 +57,14 @@ export default async function handler(req, res) {
       if (!r.ok) throw new Error(`R2 ${r.status}`);
       return Buffer.from(await r.arrayBuffer());
     };
-    try {
-      const cached = await fetchR2(thumbKey);
-      res.setHeader('Content-Type', 'image/jpeg');
-      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-      return res.send(cached);
-    } catch {}
+    if (!req.query.regen) {
+      try {
+        const cached = await fetchR2(thumbKey);
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        return res.send(cached);
+      } catch {}
+    }
     try {
       const original = await fetchR2(key);
       const { default: sharp } = await import('sharp');
