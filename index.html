@@ -2790,17 +2790,13 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     });
 
     function render() {
-      const slugs = activeGarden
+      // index: all plants; garden + edit: all plants (pick any for plan); garden view: garden.plants
+      const slugs = (activeGarden && !editMode)
         ? new Set(gardens.find(g => g.id === activeGarden)?.plants ?? [])
         : null;
 
-      const placedSlugs = (editMode || !activeGarden)
-        ? null
-        : new Set((currentVersion().placements ?? []).map(p => p.slug));
-
       const plants = [...bySlug.values()]
         .filter(p => !slugs || slugs.has(p.slug))
-        .filter(p => !placedSlugs || placedSlugs.has(p.slug))
         .filter(p => !filterText ||
           p.name.toLowerCase().includes(filterText) ||
           (p.name_de ?? '').toLowerCase().includes(filterText) ||
