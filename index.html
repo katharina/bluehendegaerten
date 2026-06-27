@@ -104,7 +104,6 @@
     .agf-check { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
     .agf-check input { width: 16px; height: 16px; cursor: pointer; accent-color: #000; }
     #add-garden-msg { font-size: 13px; color: #c00; min-height: 18px; }
-    body:not(.logged-in) #add-garden-btn { display: none; }
 
     html, body {
       height: 100%;
@@ -1163,6 +1162,7 @@
         style="width:100%;border:none;border-bottom:1px solid #ccc;padding:4px 0;font-size:13px;font-family:inherit;outline:none;background:transparent;">
       <button id="menu-username-save" class="action-btn" style="margin-top:8px;width:100%;">Speichern</button>
     </div>
+    <button id="add-garden-btn" class="action-btn" style="margin-top:12px;width:100%;display:none;">+ Garten</button>
     <button id="menu-login-btn" class="action-btn" style="margin-top:12px;">Anmelden</button>
     <button id="menu-logout-btn" class="action-btn" style="display:none;margin-top:12px;">Abmelden</button>
   </div>
@@ -1428,6 +1428,7 @@
       const modalFamily = document.getElementById('modal-family');
       if (modalFamily) modalFamily.readOnly = !loggedIn;
       document.getElementById('menu-profile').style.display = loggedIn ? 'block' : 'none';
+      document.getElementById('add-garden-btn').style.display = loggedIn ? 'block' : 'none';
       if (loggedIn) loadProfile();
     }
 
@@ -1477,6 +1478,11 @@
     document.getElementById('menu-login-btn').addEventListener('click', () => {
       closeMenu();
       openLoginModal();
+    });
+
+    document.getElementById('add-garden-btn').addEventListener('click', () => {
+      closeMenu();
+      openAddGardenModal();
     });
 
     // ── Login modal ───────────────────────────────────────────────────────────
@@ -2858,9 +2864,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
       document.getElementById('index-heading').insertAdjacentHTML('afterend',
-        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path ?? g.id}">${g.name}</a></li>`).join('')}</ul>
-         <button id="add-garden-btn" class="action-btn" style="margin-top:16px;">+ Garten</button>`);
-      document.getElementById('add-garden-btn').addEventListener('click', openAddGardenModal);
+        `<ul id="garden-list">${gardens.map(g => `<li><a href="/${g.path ?? g.id}">${g.name}</a></li>`).join('')}</ul>`);
     }
 
     const loader = document.getElementById('loader');
