@@ -250,9 +250,9 @@ app.get('/api/observations', (req, res) => {
       ORDER BY o.date DESC, o.created DESC
     `).all(slug);
   } else if (garden) {
-    rows = db.prepare(`SELECT * FROM observations WHERE garden = ? ORDER BY date DESC, created DESC`).all(garden);
+    rows = db.prepare(`SELECT * FROM observations WHERE garden = ? ORDER BY created DESC`).all(garden);
   } else {
-    rows = db.prepare(`SELECT * FROM observations ORDER BY date DESC, created DESC`).all();
+    rows = db.prepare(`SELECT * FROM observations ORDER BY created DESC`).all();
   }
   res.json(withSlugs(rows));
 });

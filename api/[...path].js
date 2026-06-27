@@ -121,11 +121,11 @@ export default async function handler(req, res) {
           const ids = (links ?? []).map(l => l.observation_id);
           if (!ids.length) return res.json([]);
           const { data, error } = await supabase
-            .from('observations').select('*').in('id', ids).order('date', { ascending: false });
+            .from('observations').select('*').in('id', ids).order('created_at', { ascending: false });
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         } else {
-          let query = supabase.from('observations').select('*').order('date', { ascending: false });
+          let query = supabase.from('observations').select('*').order('created_at', { ascending: false });
           if (garden) query = query.eq('garden', garden);
           const { data, error } = await query;
           if (error) return res.status(500).json({ error: error.message });
