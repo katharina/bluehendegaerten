@@ -1882,10 +1882,13 @@
         if (_placeCache.has(key)) { resolve(_placeCache.get(key)); continue; }
         try {
           const d = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=de`,
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=13&accept-language=de`,
             { headers: { 'User-Agent': 'Bluehendegaerten/1.0' } }
           ).then(r => r.json());
-          const place = d.address?.city || d.address?.town || d.address?.village || d.address?.county || '';
+          const a = d.address ?? {};
+          const district = a.suburb || a.neighbourhood || a.quarter || a.city_district;
+          const city = a.city || a.town || a.village || a.county;
+          const place = district && city ? `${district}, ${city}` : district || city || '';
           _placeCache.set(key, place);
           resolve(place);
         } catch { resolve(''); }
