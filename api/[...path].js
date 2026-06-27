@@ -1,7 +1,8 @@
 import { supabase } from '../lib/supabase.js';
 import { getUser, requireUser } from '../lib/auth.js';
 import { logEdits } from '../lib/logEdit.js';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import sharp from 'sharp';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2 } from '../lib/r2.js';
 import { R2_BUCKET } from '../lib/config.js';
@@ -39,14 +40,44 @@ export default async function handler(req, res) {
     const { contentType, filename } = req.body ?? {};
     if (!contentType || !ALLOWED_UPLOAD_TYPES.has(contentType))
       return res.status(400).json({ error: 'invalid content type' });
-    const base = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const key = `${base}.jpg`;
-    const thumbKey = `${base}_thumb.jpg`;
-    const [url, thumbUrl] = await Promise.all([
-      getSignedUrl(r2, new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, ContentType: 'image/jpeg' }), { expiresIn: 300 }),
-      getSignedUrl(r2, new PutObjectCommand({ Bucket: R2_BUCKET, Key: thumbKey, ContentType: 'image/jpeg' }), { expiresIn: 300 }),
-    ]);
-    return res.json({ url, key, thumbUrl, thumbKey });
+    const ext = filename?.split('.').pop()?.toLowerCase() ?? 'jpg';
+    const key = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const url = await getSignedUrl(r2,
+      new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, ContentType: contentType }),
+      { expiresIn: 300 });
+    return res.json({ url, key });
+  }
+
+  // ── Thumbnail (generate on first request, cache in R2) ──────────────────────
+  if (resource === 'thumb') {
+    const key = decodeURIComponent(segments.slice(1).join('/'));
+    if (!key) return res.status(400).end();
+    const thumbKey = key.replace(/\.[^.]+$/, '_thumb.jpg');
+    const readStream = async (k) => {
+      const { Body } = await r2.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: k }));
+      const chunks = [];
+      for await (const chunk of Body) chunks.push(chunk);
+      return Buffer.concat(chunks);
+    };
+    try {
+      const cached = await readStream(thumbKey);
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      return res.send(cached);
+    } catch {}
+    try {
+      const original = await readStream(key);
+      const thumb = await sharp(original)
+        .resize({ width: 400, height: 600, fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 82 })
+        .toBuffer();
+      r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: thumbKey, Body: thumb, ContentType: 'image/jpeg' })).catch(() => {});
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      return res.send(thumb);
+    } catch {
+      return res.status(404).end();
+    }
   }
 
   // ── Gardens ─────────────────────────────────────────────────────────────────
