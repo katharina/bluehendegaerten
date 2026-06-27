@@ -1872,6 +1872,38 @@
     const obsCache = new Map();
     const plantInfoCache = new Map();
 
+    const _placeCache = new Map();
+    const _placeQueue = [];
+    let _placeRunning = false;
+    async function _runPlaceQueue() {
+      _placeRunning = true;
+      while (_placeQueue.length) {
+        const { key, lat, lon, resolve } = _placeQueue.shift();
+        if (_placeCache.has(key)) { resolve(_placeCache.get(key)); continue; }
+        try {
+          const d = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=de`,
+            { headers: { 'User-Agent': 'Bluehendegaerten/1.0' } }
+          ).then(r => r.json());
+          const place = d.address?.city || d.address?.town || d.address?.village || d.address?.county || '';
+          _placeCache.set(key, place);
+          resolve(place);
+        } catch { resolve(''); }
+        await new Promise(r => setTimeout(r, 1100));
+      }
+      _placeRunning = false;
+    }
+    function getPlace(lat, lon) {
+      const key = `${lat.toFixed(2)},${lon.toFixed(2)}`;
+      if (_placeCache.has(key)) return Promise.resolve(_placeCache.get(key));
+      return new Promise(resolve => {
+        const existing = _placeQueue.find(q => q.key === key);
+        if (existing) { const orig = existing.resolve; existing.resolve = v => { orig(v); resolve(v); }; return; }
+        _placeQueue.push({ key, lat, lon, resolve });
+        if (!_placeRunning) _runPlaceQueue();
+      });
+    }
+
     function thumbUrl(filename) {
       if (!filename) return null;
       return `/api/thumb/${filename}`;
@@ -1881,16 +1913,16 @@
       const card = document.createElement('div');
       card.className = 'obs-card';
       const plantNames = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
-      const gps = o.lat != null ? `${o.lat.toFixed(5)}, ${o.lon.toFixed(5)}` : '';
       const thumb = thumbUrl(o.filename);
       card.innerHTML = `
         ${o.filename ? `<img class="obs-card-thumb" src="${thumb}" onerror="this.src='${R2_URL}/${o.filename}'">` : ''}
         ${plantNames ? `<div class="obs-card-label"><div class="obs-card-label-plants">${plantNames}</div></div>` : ''}
         ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
-        ${gps ? `<div class="obs-card-gps">${gps}</div>` : ''}
+        ${o.lat != null ? `<div class="obs-card-gps"></div>` : ''}
         ${onEdit ? `<button class="obs-card-edit" title="Bearbeiten">✎</button>` : ''}
         ${onDelete ? `<button class="obs-card-delete" title="Löschen">×</button>` : ''}
       `;
+      if (o.lat != null) getPlace(o.lat, o.lon).then(p => { const el = card.querySelector('.obs-card-gps'); if (el && p) el.textContent = p; });
       if (onEdit) card.querySelector('.obs-card-edit').addEventListener('click', onEdit);
       if (onDelete) card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
       return card;
@@ -3282,13 +3314,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         </div>
         <div class="carousel-item-meta">
           ${plantName ? `<div class="carousel-item-plants">${plantName}</div>` : ''}
-          ${o.lat != null ? `<div class="carousel-item-gps">${o.lat.toFixed(5)}, ${o.lon.toFixed(5)}</div>` : ''}
+          ${o.lat != null ? `<div class="carousel-item-gps"></div>` : ''}
         </div>
         ${_currentUser ? `<div class="carousel-item-btns">
           <button class="carousel-item-edit" title="Bearbeiten">✎</button>
           <button class="carousel-item-del" title="Löschen">×</button>
         </div>` : ''}
       `;
+      if (o.lat != null) getPlace(o.lat, o.lon).then(p => { const el = item.querySelector('.carousel-item-gps'); if (el && p) el.textContent = p; });
       item.querySelector('.carousel-item-img').addEventListener('click', () => {
         lightboxImg.src = `${R2_URL}/${o.filename}`;
         lightbox.classList.add('open');
