@@ -2314,9 +2314,7 @@
     function buildQoPlantGrid(preselectedSlugs = []) {
       const grid = document.getElementById('qo-plant-grid');
       grid.innerHTML = '';
-      const gardenSlugs = new Set(gardens.find(g => g.id === qoGarden.value)?.plants ?? []);
       [...bySlug.values()]
-        .filter(p => gardenSlugs.has(p.slug))
         .sort((a, b) => a.name.localeCompare(b.name))
         .forEach(p => {
           const checked = preselectedSlugs.includes(p.slug);
@@ -2327,7 +2325,6 @@
           grid.appendChild(chip);
         });
     }
-    qoGarden.addEventListener('change', () => buildQoPlantGrid([]));
 
     function buildPlantGrid(preselect) {
       const grid = document.getElementById('obs-plant-grid');
