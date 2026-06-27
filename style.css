@@ -71,11 +71,12 @@
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
 }
-.plant-card:hover,
+.plant-card:hover {
+  background-color: var(--dot-color);
+}
 .plant-card:hover .card-name,
 .plant-card:hover .card-de,
 .plant-card:hover .card-family {
-  background-color: var(--dot-color);
   color: var(--card-fg);
 }
 .plant-card.selected {
@@ -85,9 +86,9 @@
 }
 
 .card-dot   { position: absolute; border-radius: 50%; bottom: 16px; right: 18px; }
-.card-name  { position: relative; z-index: 1; font-family: var(--font-bitter, "Bitter", serif); font-style: italic; font-size: 18px; color: #222; line-height: 1.3; }
-.card-de    { position: relative; z-index: 1; font-size: 12px; color: #555; }
-.card-family{ position: relative; z-index: 1; font-size: 11px; color: #aaa; }
+.card-name  { position: relative; z-index: 1; font-family: var(--font-bitter, "Bitter", serif); font-style: italic; font-size: 18px; color: #222; line-height: 1.3; transition: color 250ms; }
+.card-de    { position: relative; z-index: 1; font-size: 12px; color: #555; transition: color 250ms; }
+.card-family{ position: relative; z-index: 1; font-size: 11px; color: #aaa; transition: color 250ms; }
 .card-meta-row { display: flex; align-items: center; gap: 6px; }
 .card-invasiv {
   display: inline-flex; align-items: center; justify-content: center;

@@ -1002,6 +1002,16 @@
     #content { opacity: 0; }
     #content.ready { opacity: 1; transition: opacity 0.4s ease; }
 
+    #index-heading { display: none; }
+    body.index-mode #index-heading {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 100px;
+      font-weight: 600;
+      line-height: 1;
+      padding: 40px 48px 24px;
+    }
+
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
     body.index-mode #panels-area { pointer-events: none; }
@@ -1063,6 +1073,7 @@
       #content    { overflow: visible; height: auto; }
       body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; }
       body.index-mode #plant-grid { overflow: visible; height: auto; }
+      body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 16px; }
     }
   </style>
 </head>
@@ -1101,6 +1112,7 @@
     </div>
     <input type="file" id="bed-img-input" accept="image/*" style="display:none">
     <div id="plant-col">
+      <div id="index-heading">Blühende Gärten</div>
       <div id="plant-col-header">
         <div id="plant-col-header-row">
           <h2 id="plant-col-title">Pflanzen</h2>
