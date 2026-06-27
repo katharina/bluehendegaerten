@@ -21,11 +21,9 @@ async function withSlugs(rows) {
 }
 
 export default async function handler(req, res) {
-  console.log('RAW', req.method, JSON.stringify(req.url), 'qp:', JSON.stringify(req.query?.path));
   const pathname = new URL(req.url, 'http://x').pathname;
   const segments = pathname.replace(/^\/api\//, '').replace(/^\//, '').split('/').filter(Boolean);
   const [resource, id] = segments;
-  console.log('segments:', JSON.stringify(segments), 'resource:', resource, 'id:', id);
 
   // ── Health ──────────────────────────────────────────────────────────────────
   if (resource === 'health') {
