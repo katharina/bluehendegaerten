@@ -22,26 +22,27 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   return card;
 }
 
-export function renderObsCarousel(observations, gardenMap, plantMap) {
-  const fotos = observations
-    .filter(o => o.type === 'foto' && o.filename)
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-  const carousel = document.getElementById('obs-carousel');
+function renderCarousel(items, gardenMap, plantMap, containerId) {
+  const carousel = document.getElementById(containerId);
+  if (!carousel) return;
+  if (!items.length) {
+    carousel.hidden = true;
+    return;
+  }
   let offset = 0;
 
   const allCard = document.createElement('div');
   allCard.className = 'carousel-card carousel-card--all';
-  allCard.textContent = 'Alle Beobachtungen';
+  allCard.textContent = 'Alle';
 
   const sentinel = document.createElement('div');
   carousel.appendChild(sentinel);
 
   function loadMore() {
-    const batch = fotos.slice(offset, offset + PAGE);
-    batch.forEach(o => sentinel.before(buildObsCard(o, gardenMap, plantMap, fotos)));
+    const batch = items.slice(offset, offset + PAGE);
+    batch.forEach(o => sentinel.before(buildObsCard(o, gardenMap, plantMap, items)));
     offset += batch.length;
-    if (offset >= fotos.length) {
+    if (offset >= items.length) {
       sentinel.replaceWith(allCard);
       observer.disconnect();
     }
@@ -54,4 +55,18 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
 
   observer.observe(sentinel);
   loadMore();
+}
+
+export function renderObsCarousel(observations, gardenMap, plantMap) {
+  const fotos = observations
+    .filter(o => o.type === 'foto' && o.filename)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
+}
+
+export function renderHerbarCarousel(observations, gardenMap, plantMap) {
+  const belege = observations
+    .filter(o => o.type === 'herbarbeleg' && o.filename)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }

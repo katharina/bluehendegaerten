@@ -10,7 +10,11 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
 
   _dialog = document.getElementById('obs-modal');
   _dialog.addEventListener('click', () => _dialog.close());
-  _dialog.addEventListener('close', () => { _dialog.querySelector('.obs-modal-img img').src = ''; });
+  _dialog.addEventListener('close', () => {
+    const img = _dialog.querySelector('.obs-modal-img img');
+    img.onload = img.onerror = null;
+    img.src = '';
+  });
 
   _dialog.querySelector('.obs-nav--prev').addEventListener('click', e => {
     e.stopPropagation();

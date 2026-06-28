@@ -1,5 +1,5 @@
 import { parseCm } from './utils.js';
-import { renderObsCarousel } from './observations.js';
+import { renderObsCarousel, renderHerbarCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -85,6 +85,7 @@ if (!placements.length) {
 }
 
 renderObsCarousel(gardenObs, gardenMap, plantMap);
+renderHerbarCarousel(gardenObs, gardenMap, plantMap);
 renderPlantList(gardenPlants);
 renderBedPlan(document.getElementById('bed-plan'), {
   plants: allPlants,

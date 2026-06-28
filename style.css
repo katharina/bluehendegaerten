@@ -69,18 +69,21 @@ ul {
   padding-left: var(--hb-space-800);
 }
 
-#obs-carousel {
+#obs-carousel,
+#herbar-carousel {
   display: flex;
   gap: var(--hb-space-200);
   overflow-x: auto;
   scrollbar-width: none;
 }
 
-#obs-carousel .carousel-card:first-child {
+#obs-carousel .carousel-card:first-child,
+#herbar-carousel .carousel-card:first-child {
   margin-left: var(--hb-space-800);
 }
 
-#obs-carousel::-webkit-scrollbar {
+#obs-carousel::-webkit-scrollbar,
+#herbar-carousel::-webkit-scrollbar {
   display: none;
 }
 
