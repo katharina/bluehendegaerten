@@ -1319,18 +1319,25 @@
       min-height: 32px;
     }
     .carousel-item-date {
-      font-weight: 600;
-      color: #222;
-    }
-    .carousel-item-gps {
       font-size: 10px;
-      color: #888;
+      color: #aaa;
       font-variant-numeric: tabular-nums;
     }
+    .carousel-item-gps {
+      color: #888;
+    }
+    .carousel-item-garden {
+      color: #888;
+    }
+    #garden-obs-carousel .carousel-item-garden,
+    #garden-obs-carousel .carousel-item-gps,
+    #garden-herbar-carousel .carousel-item-garden,
+    #garden-herbar-carousel .carousel-item-gps { display: none; }
     .carousel-item-plants {
       font-family: var(--font-serif);
       font-style: italic;
-      color: #888;
+      font-size: 12px;
+      color: #222;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
