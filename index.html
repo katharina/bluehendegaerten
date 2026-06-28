@@ -131,6 +131,10 @@
         <button id="all-obs-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Beobachtungen</button>
       </div>
       <div id="garden-info"></div>
+      <div id="garden-obs-section">
+        <h3 id="garden-obs-title">Beobachtungen</h3>
+        <div id="garden-obs-carousel"></div>
+      </div>
     </div>
     <div id="panels-area">
     <div id="observations">
@@ -2083,6 +2087,18 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         b.classList.toggle('active', b.dataset.gardenId === gardenId));
       if (editMode) { editMode = false; document.body.classList.remove('edit-mode'); }
       render();
+      loadGardenObsCarousel(gardenId);
+    }
+
+    function loadGardenObsCarousel(gardenId) {
+      const carousel = document.getElementById('garden-obs-carousel');
+      carousel.innerHTML = '';
+      if (!gardenId) return;
+      fetch(`/api/observations?garden=${gardenId}`).then(r => r.json()).then(all => {
+        const photos = all.filter(o => o.filename && o.type === 'foto');
+        if (!photos.length) return;
+        photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
+      }).catch(() => {});
     }
 
     const gardenList = document.getElementById('garden-list');
@@ -2129,6 +2145,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
 
     document.body.classList.toggle('index-mode', !activeGarden);
     render();
+    loadGardenObsCarousel(activeGarden);
     document.getElementById('content').classList.add('ready');
 
     // ── Index photo carousel ──────────────────────────────────────────────────

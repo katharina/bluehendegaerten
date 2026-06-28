@@ -1356,6 +1356,25 @@
     .carousel-item-edit:hover { background: #222; color: #fff; border-color: #222; }
     .carousel-item-del:hover  { background: #c00; color: #fff; border-color: #c00; }
 
+    #garden-obs-section { margin-top: 32px; }
+    #garden-obs-section:has(#garden-obs-carousel:empty) { display: none; }
+    #garden-obs-title {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      font-weight: 600;
+      color: #222;
+      padding: 0 0 12px;
+    }
+    #garden-obs-carousel {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 16px 0 0;
+      scrollbar-width: none;
+    }
+    #garden-obs-carousel::-webkit-scrollbar { display: none; }
+    #garden-obs-carousel:empty { display: none; }
+
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
     body.index-mode #panels-area { pointer-events: none; }
@@ -1431,6 +1450,7 @@
       html, body  { height: auto; overflow: auto; }
       #content    { overflow: visible; height: auto; flex-direction: column; }
       #garden-description { width: 100%; overflow: visible; padding: 32px 20px 100px; }
+      #garden-obs-carousel { padding: 16px 0 0; }
       #garden-big-title { font-size: 52px; }
 
       /* Panels: fixed row at the bottom, showing only headers */
@@ -1481,6 +1501,7 @@
 
       /* Index mode overrides */
       #modal-name { font-size: 72px; }
+      body.index-mode #panels-area { position: static; box-shadow: none; flex-direction: column; align-items: stretch; }
       body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; position: static; }
       body.index-mode #plant-grid { overflow: visible; height: auto; display: grid; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
