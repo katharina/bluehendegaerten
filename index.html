@@ -1449,7 +1449,7 @@
   <div id="landing"></div>
   <div id="content">
     <div id="garden-description">
-      <div style="font-family:var(--font-serif);font-size:100px;font-weight:600;line-height:1;margin-bottom:40px;">Der Große Garten</div>
+      <div id="garden-big-title" style="font-family:var(--font-serif);font-size:100px;font-weight:600;line-height:1;margin-bottom:40px;">Der Große Garten</div>
       <div id="garden-title"></div>
       <div id="garden-bar"></div>
       <div style="display:flex;gap:8px;margin-bottom:16px;">
@@ -3386,7 +3386,8 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       document.body.classList.toggle('index-mode', !gardenId);
       if (g) {
         document.getElementById('plant-col-title').textContent = g.name;
-        document.getElementById('garden-title').innerHTML = `<h1>${g.name}</h1>`;
+        document.getElementById('garden-big-title').textContent = g.id === 'betonbeete' ? 'Der Große Garten' : g.name;
+        document.getElementById('garden-title').innerHTML = g.id === 'betonbeete' ? `<h1>${g.name}</h1>` : '';
         document.getElementById('garden-info').innerHTML = g.description ?? '';
       } else {
         document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
@@ -3423,7 +3424,8 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     const activeG = gardens.find(g => g.id === activeGarden);
     if (activeG) {
       document.getElementById('plant-col-title').textContent = activeG.name;
-      document.getElementById('garden-title').innerHTML = `<h1>${activeG.name}</h1>`;
+      document.getElementById('garden-big-title').textContent = activeG.id === 'betonbeete' ? 'Der Große Garten' : activeG.name;
+      document.getElementById('garden-title').innerHTML = activeG.id === 'betonbeete' ? `<h1>${activeG.name}</h1>` : '';
       document.getElementById('garden-info').innerHTML = activeG.description ?? '';
     } else {
       document.getElementById('plant-col-title').textContent = 'Alle Pflanzen';
