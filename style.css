@@ -167,6 +167,11 @@
       background: rgba(0,0,0,0.4); align-items: center; justify-content: center;
     }
     #login-backdrop.open { display: flex; }
+    #quick-obs-modal {
+      background: #fff; position: relative;
+      width: min(520px, 92vw); padding: 48px 40px 40px;
+      max-height: 90vh; overflow-y: auto;
+    }
     #login-modal {
       background: #fff; position: relative;
       width: min(420px, 92vw); padding: 48px 40px 40px;
@@ -1022,34 +1027,38 @@
     .obs-plant-chip {
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 11px;
+      gap: 6px;
+      font-size: 13px;
       font-style: italic;
       color: #777;
       cursor: pointer;
-      padding: 3px 7px;
+      padding: 8px 12px;
       border: 1px solid #eee;
-      border-radius: 2px;
+      border-radius: 4px;
       user-select: none;
     }
     .obs-plant-chip:hover { border-color: #bbb; color: #333; }
     .obs-plant-chip.checked { border-color: #000; color: #000; background: #f9f9f9; }
     .obs-plant-chip input { display: none; }
 
-    .obs-plant-chip.pn-suggested { border-color:#bbb; color:#333; }
-    .obs-plant-chip.pn-suggested.checked { border-color:#000; background:#f5f8f0; }
-    .pn-score { font-style:normal; font-size:10px; opacity:0.45; margin-left:3px; }
-    .chip-names { display:flex; flex-direction:column; gap:1px; }
-    .chip-sci { font-size:11px; }
-    .chip-de { font-size:10px; opacity:0.6; font-style:normal; }
+    .obs-plant-chip.pn-suggested { border-color: #bbb; color: #333; }
+    .obs-plant-chip.pn-suggested.checked { border-color: #000; background: #f5f8f0; }
+    .obs-plant-chip.pn-top { border-color: #000; background: #f5f8f0; color: #000; }
+    .pn-score { font-style:normal; font-size:11px; opacity:0.45; margin-left:4px; }
+    .chip-names { display:flex; flex-direction:column; gap:2px; }
+    .chip-sci { font-size:13px; }
+    .chip-de { font-size:11px; opacity:0.6; font-style:normal; }
     .obs-plant-chip.pn-identifying { color:#aaa; font-style:italic; border-color:#eee; cursor:default; pointer-events:none; }
-    .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:11px; font-family:inherit; }
+    .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:13px; font-family:inherit; padding: 8px 12px; }
     .obs-plant-chip.pn-new-plant:hover { border-color:#000; color:#000; }
     .obs-plant-chip.pn-new-plant:disabled { opacity:0.4; cursor:default; }
+    #qo-plant-grid {
+      display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+    }
     .qo-add-plant-btn {
-      font-size: 11px; font-family: inherit; color: #888;
+      font-size: 12px; font-family: inherit; color: #888;
       background: none; border: none; cursor: pointer;
-      padding: 4px 0; text-decoration: underline;
+      padding: 6px 0; text-decoration: underline;
       display: block; margin-top: 4px;
     }
     .qo-add-plant-btn:hover { color: #000; }
@@ -1560,6 +1569,14 @@
       body.index-mode #plant-col-header { padding: 0 20px; }
       .carousel-item { width: 120px; }
       .carousel-item-img { width: 120px; height: 180px; }
+
+      /* All modals full-screen on mobile */
+      #quick-obs-modal,
+      #login-modal {
+        width: 100vw; height: 100dvh; max-height: none;
+        padding: 48px 24px 40px; overflow-y: auto;
+      }
+      #quick-obs-backdrop { align-items: flex-start !important; }
 
       /* Modal: stack info above observations */
       #modal { width: 100vw; height: 100dvh; }

@@ -75,7 +75,7 @@
   </div>
 
   <div id="quick-obs-backdrop" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
-    <div style="background:#fff;position:relative;width:min(520px,92vw);padding:48px 40px 40px;max-height:90vh;overflow-y:auto;">
+    <div id="quick-obs-modal">
       <button id="quick-obs-close" style="position:absolute;top:12px;right:16px;font-size:28px;line-height:1;background:none;border:none;cursor:pointer;color:#888;">×</button>
       <div id="qo-title" style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
       <div class="obs-row">
@@ -1129,7 +1129,7 @@
       grid.innerHTML = '';
       const visible      = suggestions.filter(s => s.score > 0);
       const matched      = visible.filter(s => s.slug);
-      const unmatched    = visible.filter(s => !s.slug);
+      const unmatched    = visible.filter(s => !s.slug && s.score >= 5);
       // deduplicate: multiple PlantNet results can map to the same slug; keep highest score
       const scoreMap = new Map();
       for (const s of matched) {
@@ -1173,9 +1173,12 @@
           });
           grid.appendChild(btn);
         });
-        [...suggestedSlugs].sort((a, b) => scoreMap.get(b) - scoreMap.get(a)).forEach(slug => {
+        [...suggestedSlugs].sort((a, b) => scoreMap.get(b) - scoreMap.get(a)).forEach((slug, i) => {
           const p = bySlug.get(slug);
-          if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
+          if (!p) return;
+          const chip = makeChip(p, i === 0, scoreMap.get(slug), true);
+          if (i === 0) chip.classList.add('pn-top');
+          grid.appendChild(chip);
         });
       }
 
