@@ -1,4 +1,4 @@
-import { thumbUrl, contrastColor } from './utils.js';
+import { thumbUrl, fullUrl, contrastColor } from './utils.js';
 import { supabase } from './auth.js';
 
 const MONTHS_DE = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
@@ -34,6 +34,10 @@ export function initPlantModal({ gardens = [], observations = [] } = {}) {
   document.getElementById('plant-modal-close').addEventListener('click', () => _dialog.close());
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _dialog.close(); });
 
+  const lightbox = document.getElementById('lightbox');
+  lightbox.addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('close', () => { document.getElementById('lightbox-img').src = ''; });
+
   document.addEventListener('plant:open', e => openPlantModal(e.detail));
 }
 
@@ -58,17 +62,23 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
 
   const plantObs = observations
     .filter(o => o.slugs?.includes(plant.slug))
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    .sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at));
   const obsList = dialog.querySelector('.plant-modal-obs-list');
-  obsList.innerHTML = '';
+  const [colA, colB] = obsList.querySelectorAll('.obs-col');
+  colA.innerHTML = colB.innerHTML = '';
+  let i = 0;
+
+  function appendMasonry(card) {
+    (i++ % 2 === 0 ? colA : colB).appendChild(card);
+  }
 
   if (gardenId) {
     const here  = plantObs.filter(o => o.garden === gardenId);
     const other = plantObs.filter(o => o.garden !== gardenId);
-    if (here.length)  obsList.appendChild(buildObsGroup('Dieser Garten', here, gardens));
-    if (other.length) obsList.appendChild(buildObsGroup('Andere Gärten', other, gardens));
+    if (here.length)  buildObsGroup('Dieser Garten', here, gardens).forEach(appendMasonry);
+    if (other.length) buildObsGroup('Andere Gärten', other, gardens).forEach(appendMasonry);
   } else {
-    plantObs.forEach(o => obsList.appendChild(buildObsCard(o, gardens)));
+    plantObs.forEach(o => appendMasonry(buildObsCard(o, gardens)));
   }
 
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
@@ -103,14 +113,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
 }
 
 function buildObsGroup(title, obs, gardens) {
-  const group = document.createElement('div');
-  group.className = 'obs-group';
   const heading = document.createElement('div');
   heading.className = 'obs-group-title';
   heading.textContent = title;
-  group.appendChild(heading);
-  obs.forEach(o => group.appendChild(buildObsCard(o, gardens)));
-  return group;
+  return [heading, ...obs.map(o => buildObsCard(o, gardens))];
 }
 
 function buildObsCard(o, gardens) {
@@ -121,11 +127,16 @@ function buildObsCard(o, gardens) {
     ? new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
     : '';
   card.innerHTML = `
-    ${o.filename ? `<div class="modal-obs-img"><img src="${thumbUrl(o.filename)}" loading="lazy"></div>` : ''}
+    ${o.filename ? `<div class="modal-obs-img"><img src="${thumbUrl(o.filename)}" loading="lazy" data-full="${fullUrl(o.filename)}"></div>` : ''}
     <div class="modal-obs-meta">
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
     </div>
   `;
+  card.querySelector('img')?.addEventListener('click', e => {
+    const lightbox = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = e.target.dataset.full;
+    lightbox.showModal();
+  });
   return card;
 }

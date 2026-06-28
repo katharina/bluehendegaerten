@@ -68,16 +68,25 @@
         </div>
 
         <div class="plant-modal-observations">
-          <div class="section-header">
-            <h3>Vorherige Beobachtungen</h3>
-            <button class="action-btn-icon" id="plant-modal-close">×</button>
+          <div class="plant-modal-obs-header">
+            <div class="section-header">
+              <h3>Vorherige Beobachtungen</h3>
+              <button class="action-btn-icon" id="plant-modal-close">×</button>
+            </div>
+            <button class="action-btn" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
           </div>
-          <button class="action-btn" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
-          <div class="plant-modal-obs-list"></div>
+          <div class="plant-modal-obs-list">
+            <div class="obs-col"></div>
+            <div class="obs-col"></div>
+          </div>
         </div>
 
       </div>
     </div>
+  </dialog>
+
+  <dialog id="lightbox" tabindex="-1">
+    <img id="lightbox-img" src="" alt="">
   </dialog>
 
   <script type="module" src="/src/app.js"></script>

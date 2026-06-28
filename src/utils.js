@@ -4,6 +4,10 @@ export function thumbUrl(filename) {
   return `${R2_URL}/${filename.replace(/\.[^.]+$/, '_thumb.jpg')}`;
 }
 
+export function fullUrl(filename) {
+  return `${R2_URL}/${filename}`;
+}
+
 export function contrastColor(hex) {
   const c = hex?.replace('#', '') ?? 'ffffff';
   const r = parseInt(c.slice(0,2), 16), g = parseInt(c.slice(2,4), 16), b = parseInt(c.slice(4,6), 16);

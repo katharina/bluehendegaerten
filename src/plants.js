@@ -22,7 +22,7 @@ function buildPlantCard(p, maxW) {
 }
 
 export function renderPlantList(plants) {
-  const sorted = [...plants].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const sorted = [...plants].sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
   const maxW = Math.max(...plants.map(p => p.world_w ?? 0.3));
   const list = document.getElementById('plant-list');
 
