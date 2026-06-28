@@ -28,3 +28,4 @@ public/plants/*_fixed.png
 scripts/fixed-canvas-test.js
 .vercel
 .env*
+backups/

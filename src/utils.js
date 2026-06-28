@@ -8,6 +8,13 @@ export function fullUrl(filename) {
   return `${R2_URL}/${filename}`;
 }
 
+export function parseCm(val) {
+  if (!val) return null;
+  const parts = String(val).split('-').map(s => parseFloat(s)).filter(n => !isNaN(n));
+  if (!parts.length) return null;
+  return parts.reduce((a, b) => a + b, 0) / parts.length;
+}
+
 export function contrastColor(hex) {
   const c = hex?.replace('#', '') ?? 'ffffff';
   const r = parseInt(c.slice(0,2), 16), g = parseInt(c.slice(2,4), 16), b = parseInt(c.slice(4,6), 16);

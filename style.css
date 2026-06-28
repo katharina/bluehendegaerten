@@ -61,6 +61,10 @@ h1 {
   margin-right: 0;
 }
 
+.no-border {
+  border: 0px;
+}
+
 ul {
   padding-left: var(--hb-space-800);
 }
@@ -127,8 +131,9 @@ ul {
 
 #plant-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
+
 
 .plant-card {
   position: relative;

@@ -43,15 +43,32 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const { gardens, observations } = _ctx;
   const dialog = _dialog;
 
-  const color = plant.color ?? '#ffffff';
-  dialog.style.setProperty('--plant-color', color);
-  dialog.style.setProperty('--plant-fg', contrastColor(color));
+  const setColor = c => {
+    dialog.style.setProperty('--plant-color', c);
+    dialog.style.setProperty('--plant-fg', contrastColor(c));
+    dialog.querySelector('.plant-color-swatch').style.background = c;
+    dialog.querySelector('.plant-color-picker').value = c;
+  };
+
+  setColor(plant.color ?? '#ffffff');
 
   dialog.querySelector('.plant-modal-name').textContent = plant.name ?? '';
   dialog.querySelector('.plant-modal-de').textContent = plant.name_de ?? '';
   const familyInput = dialog.querySelector('.plant-modal-family');
   familyInput.value = plant.family ?? '';
   familyInput.readOnly = !_loggedIn;
+
+  const picker = dialog.querySelector('.plant-color-picker');
+  picker.disabled = !_loggedIn;
+  picker.oninput  = () => setColor(picker.value);
+  picker.onchange = () => {
+    if (!_loggedIn) return;
+    fetch(`/api/plant-info/${plant.slug}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ color: picker.value }),
+    });
+  };
 
   const plantGardens = gardens.filter(g => (g.plants ?? []).includes(plant.slug));
   dialog.querySelector('.plant-modal-gardens').innerHTML = plantGardens
@@ -87,6 +104,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     .then(r => r.ok ? r.json() : null)
     .then(info => {
       if (!info) return;
+
+      if (info.color) setColor(info.color);
 
       const blooms = JSON.parse(info.bloom_months ?? '[]');
       if (blooms.length) {

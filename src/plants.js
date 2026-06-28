@@ -3,7 +3,7 @@ import { contrastColor } from './utils.js';
 const PAGE = 20;
 
 function buildPlantCard(p, maxW) {
-  const dotSize = Math.round((p.world_w ?? 0.3) / maxW * 64);
+  const dotSize = Math.round((p.world_w ?? 0.3) / maxW * 48);
   const card = document.createElement('div');
   card.className = 'plant-card';
   card.style.setProperty('--plant-color', p.color ?? '#fff');

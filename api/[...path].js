@@ -6,7 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2 } from '../lib/r2.js';
 import { R2_BUCKET, R2_PUBLIC_URL } from '../lib/config.js';
 
-const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
+const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv','color','world_w'];
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
 async function addSlugsToGarden(gardenId, slugs) {

@@ -66,9 +66,10 @@ db.exec(`
 `);
 
 // migrate: add columns that may not exist in older DBs
-for (const col of ['licht', 'boden', 'wasser', 'naehrstoff', 'ph', 'kuebel', 'bloom_months', 'invasiv']) {
+for (const col of ['licht', 'boden', 'wasser', 'naehrstoff', 'ph', 'kuebel', 'bloom_months', 'invasiv', 'color']) {
   try { db.exec(`ALTER TABLE plant_info ADD COLUMN ${col} TEXT`); } catch {}
 }
+try { db.exec(`ALTER TABLE plant_info ADD COLUMN world_w REAL`); } catch {}
 for (const col of ['lat REAL', 'lon REAL', 'place TEXT', 'plantnet_suggestions TEXT']) {
   try { db.exec(`ALTER TABLE observations ADD COLUMN ${col}`); } catch {}
 }

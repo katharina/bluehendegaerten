@@ -48,7 +48,7 @@ export async function renderBedPlan(container, { gardenId, plants, bedImages, pl
 
   for (const p of placements) {
     const plant = plantBySlug[p.slug];
-    const r = (plant?.world_w ?? 0.4) / 2;
+    const r = (plant?.world_w ?? 0.2) / 2;
     const color = colorBySlug[p.slug] ?? '#ccc';
     svg += `<circle cx="${p.x}" cy="${p.z}" r="${r}" fill="${color}" opacity="0.85" data-slug="${p.slug}"/>`;
   }
