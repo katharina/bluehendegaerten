@@ -541,7 +541,7 @@
           body: JSON.stringify({ dataUrl }),
         }).then(r => r.json());
         const suggestions = (data.results ?? []).map(r => ({
-          name: r.name, score: r.score, family: r.family ?? null, slug: _plantNetToSlug(r.name),
+          name: r.name, score: r.score, family: r.family ?? null, common: r.common ?? null, slug: _plantNetToSlug(r.name),
         }));
         const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
         buildQoPlantGrid(preselected, suggestions);
@@ -1135,7 +1135,8 @@
       function makeChip(p, checked, score, suggested) {
         const chip = document.createElement('label');
         chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
-        chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
+        const chipCommon = suggested ? (suggestions.find(s => s.slug === p.slug)?.common ?? null) : null;
+        chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}><span class="chip-names"><span class="chip-sci">${p.name}</span>${(p.name_de || chipCommon) ? `<span class="chip-de">${p.name_de || chipCommon}</span>` : ''}</span>${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
         chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
         return chip;
       }
@@ -1158,7 +1159,7 @@
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'obs-plant-chip pn-new-plant';
-          btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+          btn.innerHTML = `+ <span class="chip-names"><span class="chip-sci">${s.name}</span>${s.common ? `<span class="chip-de">${s.common}</span>` : ''}</span><span class="pn-score">${s.score}%</span>`;
           btn.title = 'Als neue Pflanze hinzufügen';
           btn.addEventListener('click', async () => {
             btn.disabled = true; btn.textContent = 'Wird hinzugefügt…';
@@ -1193,12 +1194,12 @@
         const res = await authedFetch('/api/custom-plants', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null }),
+          body: JSON.stringify({ slug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null }),
         });
         const p = await res.json();
         if (!res.ok && p.error !== 'slug already exists') { alert(p.error); return; }
         const finalSlug = p.slug ?? slug;
-        const entry = { slug: finalSlug, name: suggestion.name, family: suggestion.family ?? null, _custom: true };
+        const entry = { slug: finalSlug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, _custom: true };
         bySlug.set(finalSlug, entry);
         if (!stagesBySlug.has(finalSlug)) stagesBySlug.set(finalSlug, []);
         _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);

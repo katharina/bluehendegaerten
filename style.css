@@ -1039,6 +1039,9 @@
     .obs-plant-chip.pn-suggested { border-color:#bbb; color:#333; }
     .obs-plant-chip.pn-suggested.checked { border-color:#000; background:#f5f8f0; }
     .pn-score { font-style:normal; font-size:10px; opacity:0.45; margin-left:3px; }
+    .chip-names { display:flex; flex-direction:column; gap:1px; }
+    .chip-sci { font-size:11px; }
+    .chip-de { font-size:10px; opacity:0.6; font-style:normal; }
     .obs-plant-chip.pn-identifying { color:#aaa; font-style:italic; border-color:#eee; cursor:default; pointer-events:none; }
     .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:11px; font-family:inherit; }
     .obs-plant-chip.pn-new-plant:hover { border-color:#000; color:#000; }
