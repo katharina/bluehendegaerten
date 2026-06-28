@@ -19,32 +19,24 @@ body:has(dialog[open]) {
 
 body {
   font-family: var(--font-mono);
-  padding-top: 40px;
 }
 
-/* ── Topbar ────────────────────────────────────────────────────────────────── */
+/* ── Chapeau + hamburger ───────────────────────────────────────────────────── */
 
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 500;
-  height: 40px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--page-pad);
-}
-
-.topbar-brand {
-  color: #fff;
-  text-decoration: none;
+.chapeau {
+  display: block;
   font-family: var(--font-serif);
-  font-size: var(--hb-font-size-02);
-  letter-spacing: 0.04em;
+  font-size: var(--hb-font-size-01);
+  color: #000;
+  text-decoration: none;
+  margin-bottom: var(--hb-space-100);
 }
 
-.topbar-menu-btn {
+.hamburger {
+  position: fixed;
+  top: var(--hb-space-400);
+  right: var(--page-pad);
+  z-index: 500;
   background: none;
   border: none;
   cursor: pointer;
@@ -52,19 +44,18 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-right: calc(-1 * var(--hb-space-200));
 }
 
-.topbar-menu-btn span {
+.hamburger span {
   display: block;
-  width: 18px;
-  height: 1.5px;
-  background: #fff;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
 }
 
 .topbar-dropdown {
   position: fixed;
-  top: 40px;
+  top: calc(var(--hb-space-400) + 28px);
   right: var(--page-pad);
   z-index: 500;
   background: #000;
@@ -671,7 +662,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
   flex: 1;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--plant-fg, #000);
   color: var(--plant-fg, #000);
   font-size: var(--hb-font-size-01);
   font-family: inherit;
