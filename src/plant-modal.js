@@ -89,13 +89,30 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     (i++ % 2 === 0 ? colA : colB).appendChild(card);
   }
 
+  function renderObsList(list) {
+    colA.innerHTML = colB.innerHTML = '';
+    i = 0;
+    list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs)));
+  }
+
+  const obsHeader = dialog.querySelector('.plant-modal-obs-header');
+  obsHeader.querySelector('.obs-all-toggle')?.remove();
+
   if (gardenId) {
     const here  = plantObs.filter(o => o.garden === gardenId);
     const other = plantObs.filter(o => o.garden !== gardenId);
-    if (here.length)  buildObsGroup('Dieser Garten', here, gardens, plantObs).forEach(appendMasonry);
-    if (other.length) buildObsGroup('Andere Gärten', other, gardens, plantObs).forEach(appendMasonry);
+    renderObsList(here);
+    if (other.length) {
+      const label = document.createElement('label');
+      label.className = 'obs-all-toggle';
+      label.innerHTML = `<input type="checkbox"> alle Gärten`;
+      label.querySelector('input').addEventListener('change', e =>
+        renderObsList(e.target.checked ? plantObs : here)
+      );
+      obsHeader.appendChild(label);
+    }
   } else {
-    plantObs.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs)));
+    renderObsList(plantObs);
   }
 
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');

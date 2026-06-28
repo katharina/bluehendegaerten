@@ -525,6 +525,33 @@ dialog#plant-modal .action-btn {
   background: var(--plant-color, #fff);
   z-index: 1;
   padding: var(--hb-space-800) var(--hb-space-800) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.plant-modal-obs-header .section-header {
+  flex-basis: 100%;
+}
+
+.obs-all-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--hb-space-200);
+  font-size: var(--hb-font-size-01);
+  color: var(--plant-fg, #000);
+  opacity: 0.6;
+  cursor: pointer;
+  margin-left: auto;
+  margin-bottom: var(--hb-space-500);
+  user-select: none;
+}
+
+.obs-all-toggle input[type="checkbox"] {
+  accent-color: var(--plant-fg, #000);
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
 }
 
 .plant-modal-obs-list {
@@ -743,6 +770,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   margin: 0 0 var(--hb-space-300);
   padding: var(--hb-space-300) 0;
   border-top: none;
+  flex-basis: 100%;
 }
 
 .plant-modal-observations .action-btn {
