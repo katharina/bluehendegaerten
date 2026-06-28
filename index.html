@@ -1321,7 +1321,7 @@
         const body = {
           date: document.getElementById('qo-date').value,
           type: document.getElementById('qo-type').value,
-          garden: qoGarden.value === 'none' ? null : qoGarden.value,
+          garden: qoGarden.value || 'none',
           text: document.getElementById('qo-text').value,
           slugs,
           ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
