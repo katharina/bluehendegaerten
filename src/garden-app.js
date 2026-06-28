@@ -80,8 +80,11 @@ const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
 const plantMap  = new Map(allPlants.map(p => [p.slug, p.name]));
 const bedImageMap = Object.fromEntries(bedImages.map(b => [b.bed_index, b.filename]));
 
-if (!placements.length) {
-  document.querySelector('.garden-layout').classList.add('no-bed');
+const layout = document.querySelector('.garden-layout');
+if (placements.length) {
+  layout.classList.add('has-bed');
+} else {
+  layout.classList.add('no-bed');
 }
 
 renderObsCarousel(gardenObs, gardenMap, plantMap);

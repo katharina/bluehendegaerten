@@ -1,5 +1,5 @@
 import { thumbUrl, fullUrl, contrastColor } from './utils.js';
-import { supabase } from './auth.js';
+import { supabase, authedFetch } from './auth.js';
 
 const MONTHS_DE = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
@@ -63,7 +63,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   picker.oninput  = () => setColor(picker.value);
   picker.onchange = () => {
     if (!_loggedIn) return;
-    fetch(`/api/plant-info/${plant.slug}`, {
+    authedFetch(`/api/plant-info/${plant.slug}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ color: picker.value }),
@@ -108,20 +108,68 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
       if (info.color) setColor(info.color);
 
       const blooms = JSON.parse(info.bloom_months ?? '[]');
-      if (blooms.length) {
-        bloomBar.innerHTML = MONTHS_DE.map((m, i) =>
-          `<div class="bloom-cell${blooms.includes(i + 1) ? ' active' : ''}">${m}</div>`
+      if (_loggedIn || blooms.length) {
+        bloomBar.innerHTML = MONTHS_DE.map((m, idx) =>
+          `<div class="bloom-cell${blooms.includes(idx + 1) ? ' active' : ''}" data-month="${idx + 1}">${m}</div>`
         ).join('');
+        if (_loggedIn) {
+          bloomBar.classList.add('bloom-bar--editable');
+          bloomBar.querySelectorAll('.bloom-cell').forEach(cell => {
+            cell.addEventListener('click', () => cell.classList.toggle('active'));
+          });
+        }
       }
 
-      const rows = CARE_FIELDS.filter(f => info[f.key]);
-      if (rows.length) {
-        infoRows.innerHTML = rows.map(f =>
-          `<div class="plant-info-row">
-            <span class="plant-info-label">${f.label}</span>
-            <span class="plant-info-value">${info[f.key]}</span>
-          </div>`
-        ).join('');
+      if (_loggedIn) {
+        infoRows.innerHTML = '';
+        for (const f of CARE_FIELDS) {
+          const row = document.createElement('div');
+          row.className = 'plant-info-row';
+          const label = document.createElement('label');
+          label.className = 'plant-info-label';
+          label.textContent = f.label;
+          const input = document.createElement('input');
+          input.className = 'plant-info-input';
+          input.dataset.field = f.key;
+          input.value = info[f.key] ?? '';
+          input.placeholder = '—';
+          row.append(label, input);
+          infoRows.appendChild(row);
+        }
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'action-btn plant-info-save';
+        saveBtn.textContent = 'Speichern';
+        saveBtn.addEventListener('click', async () => {
+          const fields = {};
+          infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
+            fields[inp.dataset.field] = inp.value.trim() || null;
+          });
+          fields.bloom_months = JSON.stringify(
+            [...bloomBar.querySelectorAll('.bloom-cell.active')].map(c => parseInt(c.dataset.month))
+          );
+          saveBtn.disabled = true;
+          saveBtn.textContent = '…';
+          const r = await authedFetch(`/api/plant-info/${plant.slug}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fields),
+          });
+          saveBtn.disabled = false;
+          saveBtn.textContent = r.ok ? 'Gespeichert ✓' : 'Fehler';
+          setTimeout(() => saveBtn.textContent = 'Speichern', 2000);
+        });
+        infoRows.after(saveBtn);
+      } else {
+        const rows = CARE_FIELDS.filter(f => info[f.key]);
+        if (rows.length) {
+          infoRows.innerHTML = rows.map(f =>
+            `<div class="plant-info-row">
+              <span class="plant-info-label">${f.label}</span>
+              <span class="plant-info-value">${info[f.key]}</span>
+            </div>`
+          ).join('');
+        }
       }
     });
 
