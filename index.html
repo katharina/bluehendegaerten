@@ -104,7 +104,7 @@
         </label>
       </div>
       <div class="obs-field">
-        <label class="obs-label">Pflanzen</label>
+        <label class="obs-label">Pflanzen</label> 
         <div id="qo-plant-grid"></div>
       </div>
       <div class="obs-field">
@@ -164,23 +164,26 @@
     <input type="file" id="bed-img-input" accept="image/*" style="display:none">
     <div id="plant-col">
       <div id="index-heading">Blühende Gärten</div>
-      <div id="garden-section">
-        <div id="garden-section-header">
+      <div id="garden-section" class="section">
+        <div id="garden-section-header" class="section-header">
           <h2 id="garden-section-title">Alle Gärten</h2>
         </div>
         <ul id="garden-list"></ul>
       </div>
-      <div id="obs-carousel-section">
-        <div id="obs-carousel-header">
+      <div id="obs-carousel-section" class="section">
+        <div id="obs-carousel-header" class="section-header">
           <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
-          <button id="quick-obs-btn" class="action-btn" style="font-size:28px;line-height:1;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
+          <button id="quick-obs-btn" class="action-btn" style="font-size:28px;line-height:1;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
         </div>
         <div id="obs-carousel"></div>
       </div>
-      <div id="plant-col-header" class="col-header">
-        <h2 id="plant-col-title" class="col-header-title">Pflanzen</h2>
-        <button id="add-plant-btn" class="action-btn col-header-action" style="font-size:28px;line-height:1;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
+      
+      <div class="section">
+      <div id="plant-col-header" class="col-header section-header">
+        <h2 id="plant-col-title" class="col-header-title">Alle Pflanzen</h2>
+        <button id="add-plant-btn" class="action-btn col-header-action" style="font-size:28px;line-height:1;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
       </div>
+      
       <input id="plant-filter" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
       <div id="add-plant-form">
         <div class="apf-row">
@@ -218,6 +221,8 @@
         </div>
       </div>
       <div id="plant-grid"></div>
+      </div>
+
     </div>
     </div><!-- /panels-area -->
   </div>

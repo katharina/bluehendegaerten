@@ -25,6 +25,8 @@
   border: 1px solid #000;
   border-radius: 99px;
   padding: 6px 16px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
   white-space: nowrap;
   transition: opacity 0.15s;
@@ -35,7 +37,7 @@
 /* ── Plant column header ─────────────────────────────────────────────────── */
 #plant-col-header {
   flex-shrink: 0;
-  padding: 24px 20px 16px;
+  
 }
 #plant-col-header-row {
   display: flex;
@@ -57,9 +59,6 @@
 #plant-filter::placeholder { color: #bbb; }
 #plant-filter:focus { border-bottom-color: #000; }
 
-@media (min-width: 640px) {
-  #plant-col-header { padding: 40px 48px 20px; }
-}
 
 /* ── Plant grid ──────────────────────────────────────────────────────────── */
 #plant-grid {
@@ -68,6 +67,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 140px;
+  border-top: 1px solid #000;
 }
 
 @media (min-width: 640px) {
@@ -84,9 +84,11 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  background-color: #fff;
   padding: 16px 18px;
-  border-left: 1px solid #000;
-  border-bottom: 1px solid #000;
+  border: 1px solid #000;
+  margin-left: -1px;
+  margin-top: -1px;
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
 }
@@ -1238,7 +1240,7 @@
     body.index-mode #garden-list {
       display: block;
       list-style: disc;
-      padding: 0 48px 28px 68px;
+      padding: 0 48px 0px 68px;
       font-size: 16px;
     }
     body.index-mode #garden-list a {
@@ -1253,45 +1255,30 @@
     body.index-mode #obs-carousel-section { display: block; }
 
     /* Shared separator for all three index sections */
-    body.index-mode #garden-section::before,
-    body.index-mode #obs-carousel-section::before {
-      content: '';
-      display: block;
-      border-top: 1px solid #000;
-      margin: 0 48px 24px;
-    }
+ 
     body.index-mode #plant-col-header::before {
       content: '';
       display: block;
-      border-top: 1px solid #000;
-      margin: 0 0 24px;
     }
 
     /* Shared section header structure */
-    #garden-section-header {
-      padding: 0 48px;
-      margin-bottom: 16px;
-    }
     #garden-section-title {
       font-family: var(--font-serif);
       font-size: 22px;
       font-weight: 600;
       color: #222;
     }
-    body.index-mode #plant-col-header {
-      padding: 0 48px;
-    }
+    
     body.index-mode #plant-filter {
       display: block;
       width: calc(100% - 96px);
-      margin: 0 48px;
+      margin: 0 0px 24px;
     }
     #obs-carousel-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 0 48px;
-      margin-bottom: 16px;
+      
     }
     #obs-carousel-title {
       font-family: var(--font-serif);
@@ -1304,7 +1291,7 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 0 48px 32px;
+      padding: 0 48px 0;
       scrollbar-width: none;
     }
     body.index-mode #obs-carousel::-webkit-scrollbar { display: none; }
@@ -1501,6 +1488,16 @@
       color: #ccc;
     }
 
+
+    .section {
+      padding: 24px 0px 12px;
+    }
+    .section-header {
+      padding: 24px 0px 12px;
+      margin: 0 48px;
+      border-top: 1px solid #000;
+    }
+
     @media (max-width: 767px) {
       html, body  { height: auto; overflow: auto; }
       #content    { overflow: visible; height: auto; flex-direction: column; }
@@ -1551,8 +1548,9 @@
       #plant-col.panel-open #plant-grid { display: grid; flex: 1; overflow-y: auto; height: auto; }
       #observations.panel-open .action-btn,
       #plant-col.panel-open .action-btn { display: inline-flex !important; }
-
-      .col-header { padding: 20px 20px 16px; }
+    }
+    
+      
 
       /* No-plan garden on mobile: full width, not 50vw */
       body.no-plan:not(.index-mode) #plant-col { width: 100vw !important; margin-left: 0 !important; }
@@ -1564,12 +1562,10 @@
       body.index-mode #plant-grid { overflow: visible; height: auto; display: grid; }
       body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
       body.index-mode #garden-list { padding: 0 20px 20px 36px; }
-      #garden-section-header { padding: 0 20px; }
-      #obs-carousel-header { padding: 0 20px; }
-      body.index-mode #obs-carousel { padding: 0 20px 24px; }
+      .section-header { margin: 0 20px; }
       body.index-mode #garden-section::before,
       body.index-mode #obs-carousel-section::before { margin: 0 20px 16px; }
-      body.index-mode #plant-col-header { padding: 0 20px; }
+      
       .carousel-item { width: 120px; }
       .carousel-item-img { width: 120px; height: 180px; }
 
@@ -1594,3 +1590,4 @@
       #obs-form { padding: 16px 24px; }
       #obs-list { padding: 16px 24px; }
     }
+
