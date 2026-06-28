@@ -2043,10 +2043,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     });
 
     function render() {
-      // index: all plants; garden + edit: all plants (pick any for plan); garden view: garden.plants
-      const slugs = (activeGarden && !editMode)
-        ? new Set(gardens.find(g => g.id === activeGarden)?.plants ?? [])
-        : null;
+      // index: all plants; garden + edit: all plants; garden view: garden.plants ∪ plan placements
+      let slugs = null;
+      if (activeGarden && !editMode) {
+        slugs = new Set(gardens.find(g => g.id === activeGarden)?.plants ?? []);
+        for (const ver of store.versions ?? []) {
+          for (const p of ver.placements ?? []) slugs.add(p.slug);
+        }
+      }
 
       const plants = [...bySlug.values()]
         .filter(p => !slugs || slugs.has(p.slug))
