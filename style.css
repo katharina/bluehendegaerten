@@ -392,6 +392,12 @@ dialog#obs-modal::backdrop {
   cursor: pointer;
 }
 
+.obs-modal-garden-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .obs-modal-info .observation-place,
 .obs-modal-info .observation-date {
   font-size: var(--hb-font-size-01);

@@ -4,6 +4,7 @@ import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
 import { renderBedPlan } from './bed-plan.js';
+import { supabase, authedFetch } from './auth.js';
 
 const path = window.location.pathname.split('/').filter(Boolean)[0] ?? '';
 
@@ -55,10 +56,11 @@ const plantBySlug = new Map(allPlants.map(p => [p.slug, p]));
 const planData = await fetch(`/api/plans/${garden.id}`).then(r => r.json()).catch(() => null);
 
 let placements = [];
+let planStore  = null;
 if (planData?.data) {
   try {
-    const store = JSON.parse(planData.data);
-    const ver = store.versions?.find(v => v.id === store.currentId) ?? store.versions?.[0];
+    planStore = JSON.parse(planData.data);
+    const ver = planStore.versions?.find(v => v.id === planStore.currentId) ?? planStore.versions?.[0];
     placements = ver?.placements ?? [];
   } catch {}
 }
@@ -86,6 +88,29 @@ if (placements.length) {
 } else {
   layout.classList.add('no-bed');
 }
+
+// Bed name — editable when logged in
+const bedNameEl = document.getElementById('bed-name');
+if (planStore?.bedName) bedNameEl.textContent = planStore.bedName;
+
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (!session?.user) return;
+  bedNameEl.contentEditable = 'true';
+  bedNameEl.addEventListener('blur', async () => {
+    const name = bedNameEl.textContent.trim() || 'Beete';
+    bedNameEl.textContent = name;
+    const store = planStore ?? { versions: [{ id: 'default', placements: [] }], currentId: 'default' };
+    store.bedName = name;
+    await authedFetch(`/api/plans/${garden.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: JSON.stringify(store) }),
+    });
+  });
+  bedNameEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); bedNameEl.blur(); }
+  });
+});
 
 renderObsCarousel(gardenObs, gardenMap, plantMap);
 renderHerbarCarousel(gardenObs, gardenMap, plantMap);

@@ -81,9 +81,16 @@ function renderObs(obs, onReady) {
     : '';
   const garden = gardenMap.get(obs.garden);
   const place  = obs.place || garden?.name || '';
+  const gardenPath = garden ? `/${garden.path ?? garden.id}` : null;
 
-  _dialog.querySelector('.obs-modal-date').textContent  = date;
-  _dialog.querySelector('.obs-modal-place').textContent = place;
+  _dialog.querySelector('.obs-modal-date').textContent = date;
+  const placeEl = _dialog.querySelector('.obs-modal-place');
+  if (gardenPath && !obs.place) {
+    placeEl.innerHTML = `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>`;
+    placeEl.querySelector('a').addEventListener('click', e => e.stopPropagation());
+  } else {
+    placeEl.textContent = place;
+  }
 
   const plantsEl = _dialog.querySelector('.obs-modal-plants');
   plantsEl.innerHTML = (obs.slugs ?? [])
