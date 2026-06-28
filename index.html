@@ -1127,10 +1127,15 @@
     function buildQoPlantGrid(preselectedSlugs = [], suggestions = [], showAll = false) {
       const grid = document.getElementById('qo-plant-grid');
       grid.innerHTML = '';
-      const matched      = suggestions.filter(s => s.slug);
-      const unmatched    = suggestions.filter(s => !s.slug);
-      const suggestedSlugs = matched.map(s => s.slug);
-      const scoreMap     = new Map(matched.map(s => [s.slug, s.score]));
+      const visible      = suggestions.filter(s => s.score > 0);
+      const matched      = visible.filter(s => s.slug);
+      const unmatched    = visible.filter(s => !s.slug);
+      // deduplicate: multiple PlantNet results can map to the same slug; keep highest score
+      const scoreMap = new Map();
+      for (const s of matched) {
+        if (!scoreMap.has(s.slug) || s.score > scoreMap.get(s.slug)) scoreMap.set(s.slug, s.score);
+      }
+      const suggestedSlugs = [...scoreMap.keys()];
 
       function makeChip(p, checked, score, suggested) {
         const chip = document.createElement('label');
@@ -1168,7 +1173,7 @@
           });
           grid.appendChild(btn);
         });
-        suggestedSlugs.forEach(slug => {
+        [...suggestedSlugs].sort((a, b) => scoreMap.get(b) - scoreMap.get(a)).forEach(slug => {
           const p = bySlug.get(slug);
           if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
         });
