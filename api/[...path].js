@@ -10,7 +10,7 @@ const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','lich
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
 async function addSlugsToGarden(gardenId, slugs) {
-  if (!gardenId || gardenId === 'none') return;
+  if (!gardenId) return;
   const { data: g } = await supabase.from('gardens').select('plants').eq('id', gardenId).maybeSingle();
   if (!g) return;
   const existing = new Set(g.plants ?? []);
@@ -198,11 +198,11 @@ export default async function handler(req, res) {
           const ids = (links ?? []).map(l => l.observation_id);
           if (!ids.length) return res.json([]);
           const { data, error } = await supabase
-            .from('observations').select('*').in('id', ids).order('id', { ascending: false });
+            .from('observations').select('*').in('id', ids).order('created_at', { ascending: false });
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         } else {
-          let query = supabase.from('observations').select('*').order('id', { ascending: false });
+          let query = supabase.from('observations').select('*').order('created_at', { ascending: false });
           if (garden) query = query.eq('garden', garden);
           const { data, error } = await query;
           if (error) return res.status(500).json({ error: error.message });
@@ -214,7 +214,7 @@ export default async function handler(req, res) {
         if (!await requireUser(req, res)) return;
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
-        const garden = 'garden' in (req.body ?? {}) ? (_g || 'none') : 'betonbeete';
+        const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
@@ -232,7 +232,7 @@ export default async function handler(req, res) {
         const fields = {};
         if (date                  !== undefined) fields.date                  = date || null;
         if (type                  !== undefined) fields.type                  = type;
-        if (garden                !== undefined) fields.garden                = garden || 'none';
+        if (garden                !== undefined) fields.garden                = garden || null;
         if (text                  !== undefined) fields.text                  = text || null;
         if (filename              !== undefined) fields.filename              = filename || null;
         if (lat                   !== undefined) fields.lat                   = lat ?? null;
@@ -326,7 +326,7 @@ export default async function handler(req, res) {
       }
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
-        const { slug, name, name_de, family, color, world_w, world_h, garden = 'none' } = req.body ?? {};
+        const { slug, name, name_de, family, color, world_w, world_h, garden = null } = req.body ?? {};
         if (!slug || !name) return res.status(400).json({ error: 'slug and name required' });
         const { data, error } = await supabase.from('custom_plants')
           .insert({ slug, name, name_de: name_de || null, family: family || null,

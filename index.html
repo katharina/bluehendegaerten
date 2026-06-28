@@ -1114,7 +1114,7 @@
     const obsGarden = document.getElementById('obs-garden');
     const qoGarden = document.getElementById('qo-garden');
     const qoBlank = document.createElement('option');
-    qoBlank.value = 'none'; qoBlank.textContent = '—';
+    qoBlank.value = ''; qoBlank.textContent = '—';
     qoGarden.appendChild(qoBlank);
     gardens.forEach(g => {
       const opt = document.createElement('option');
@@ -1243,7 +1243,7 @@
       document.getElementById('qo-title').textContent = 'Beobachtung';
       document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
       document.getElementById('qo-type').value = 'foto';
-      qoGarden.value = activeGarden ?? 'none';
+      qoGarden.value = activeGarden ?? '';
       document.getElementById('qo-text').value = '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
@@ -1259,7 +1259,7 @@
       document.getElementById('qo-title').textContent = 'Bearbeiten';
       document.getElementById('qo-date').value = o.date ?? '';
       document.getElementById('qo-type').value = o.type ?? 'foto';
-      qoGarden.value = o.garden ?? 'none';
+      qoGarden.value = o.garden ?? '';
       document.getElementById('qo-text').value = o.text ?? '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
@@ -1320,17 +1320,21 @@
         const body = {
           date: document.getElementById('qo-date').value,
           type: document.getElementById('qo-type').value,
-          garden: qoGarden.value || 'none',
+          garden: qoGarden.value || null,
           text: document.getElementById('qo-text').value,
           slugs,
           ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
           ...(filename && { filename }),
         };
         if (_qoEditId) {
-          await authedFetch(`/api/observations/${_qoEditId}`, {
+          const patchRes = await authedFetch(`/api/observations/${_qoEditId}`, {
             method: 'PATCH', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...body, plantnet_suggestions: null }),
           });
+          if (!patchRes.ok) {
+            const errData = await patchRes.json().catch(() => ({}));
+            throw new Error(errData.error || `HTTP ${patchRes.status}`);
+          }
           _qoEditId = null;
         } else {
           const obs = await authedFetch('/api/observations', {
@@ -1348,7 +1352,7 @@
           loadGardenHerbarCarousel(activeGarden);
         }
       } catch(e) {
-        msg.textContent = 'Fehler beim Speichern.';
+        msg.textContent = 'Fehler: ' + (e.message || 'Speichern fehlgeschlagen.');
       }
     });
 
@@ -2158,12 +2162,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       return all;
     }
 
+    const byCreatedAtDesc = (a, b) => new Date(b.created_at) - new Date(a.created_at);
+
     function loadGardenObsCarousel(gardenId) {
       const carousel = document.getElementById('garden-obs-carousel');
       carousel.innerHTML = '';
       if (!gardenId) return;
       fetchGardenObs(gardenId).then(all => {
-        const photos = all.filter(o => o.filename && o.type === 'foto');
+        const photos = all.filter(o => o.filename && o.type === 'foto').sort(byCreatedAtDesc);
         photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
       }).catch(() => {});
     }
@@ -2173,7 +2179,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       carousel.innerHTML = '';
       if (!gardenId) return;
       fetchGardenObs(gardenId).then(all => {
-        const herbar = all.filter(o => o.filename && o.type === 'herbarbeleg');
+        const herbar = all.filter(o => o.filename && o.type === 'herbarbeleg').sort(byCreatedAtDesc);
         herbar.forEach(o => carousel.appendChild(buildCarouselItem(o)));
       }).catch(() => {});
     }
@@ -2231,7 +2237,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       const item = document.createElement('div');
       item.className = 'carousel-item';
       const plantName = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
-      const gardenName = (o.garden && o.garden !== 'none') ? (gardens.find(g => g.id === o.garden)?.name ?? o.garden) : null;
+      const gardenName = o.garden ? (gardens.find(g => g.id === o.garden)?.name ?? o.garden) : null;
       item.innerHTML = `
         <div class="carousel-item-img">
           <img src="${thumbUrl(o.filename)}" onerror="this.src='${R2_URL}/${o.filename}'" loading="lazy">
@@ -2270,7 +2276,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     }
 
     fetch('/api/observations').then(r => r.json()).then(all => {
-      const photos = all.filter(o => o.filename && o.type === 'foto');
+      const photos = all.filter(o => o.filename && o.type === 'foto').sort(byCreatedAtDesc);
       if (!photos.length) return;
       const carousel = document.getElementById('obs-carousel');
       photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));

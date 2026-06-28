@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS custom_plants (
   color      TEXT,
   world_w    NUMERIC NOT NULL DEFAULT 0.5,
   world_h    NUMERIC NOT NULL DEFAULT 1.0,
-  garden     TEXT NOT NULL DEFAULT 'betonbeete' REFERENCES gardens(id),
+  garden     TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- ── Observations ──────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS observations (
   id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  garden     TEXT NOT NULL DEFAULT 'betonbeete' REFERENCES gardens(id),
+  garden     TEXT,
   date       DATE,
   type       TEXT NOT NULL DEFAULT 'foto',
   text       TEXT,
