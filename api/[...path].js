@@ -9,6 +9,15 @@ import { R2_BUCKET, R2_PUBLIC_URL } from '../lib/config.js';
 const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
+async function addSlugsToGarden(gardenId, slugs) {
+  const { data: g } = await supabase.from('gardens').select('plants').eq('id', gardenId).maybeSingle();
+  if (!g) return;
+  const existing = new Set(g.plants ?? []);
+  const toAdd = slugs.filter(s => !existing.has(s));
+  if (!toAdd.length) return;
+  await supabase.from('gardens').update({ plants: [...existing, ...toAdd] }).eq('id', gardenId);
+}
+
 async function withSlugs(rows) {
   if (!rows.length) return rows;
   const ids = rows.map(r => r.id);
@@ -211,6 +220,7 @@ export default async function handler(req, res) {
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)
           await supabase.from('observation_plants').insert(slugs.map(s => ({ observation_id: obs.id, slug: s })));
+        if (slugs.length && garden) await addSlugsToGarden(garden, slugs);
         return res.json({ ...obs, slugs });
       }
     } else {
@@ -236,6 +246,8 @@ export default async function handler(req, res) {
           if (slugs.length)
             await supabase.from('observation_plants').insert(slugs.map(s => ({ observation_id: Number(id), slug: s })));
         }
+        const effectiveGarden = garden ?? fields.garden;
+        if (slugs?.length && effectiveGarden) await addSlugsToGarden(effectiveGarden, slugs);
         return res.json({ ok: true });
       }
       if (req.method === 'DELETE') {
