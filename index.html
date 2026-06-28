@@ -1114,7 +1114,7 @@
     const obsGarden = document.getElementById('obs-garden');
     const qoGarden = document.getElementById('qo-garden');
     const qoBlank = document.createElement('option');
-    qoBlank.value = ''; qoBlank.textContent = '—';
+    qoBlank.value = 'none'; qoBlank.textContent = '—';
     qoGarden.appendChild(qoBlank);
     gardens.forEach(g => {
       const opt = document.createElement('option');
@@ -1223,7 +1223,7 @@
       document.getElementById('qo-title').textContent = 'Beobachtung';
       document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
       document.getElementById('qo-type').value = 'foto';
-      qoGarden.value = activeGarden ?? '';
+      qoGarden.value = activeGarden ?? 'none';
       document.getElementById('qo-text').value = '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
@@ -1239,7 +1239,7 @@
       document.getElementById('qo-title').textContent = 'Bearbeiten';
       document.getElementById('qo-date').value = o.date ?? '';
       document.getElementById('qo-type').value = o.type ?? 'foto';
-      if (o.garden) qoGarden.value = o.garden;
+      qoGarden.value = o.garden ?? 'none';
       document.getElementById('qo-text').value = o.text ?? '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
@@ -1300,7 +1300,7 @@
         const body = {
           date: document.getElementById('qo-date').value,
           type: document.getElementById('qo-type').value,
-          garden: qoGarden.value || null,
+          garden: qoGarden.value === 'none' ? null : qoGarden.value,
           text: document.getElementById('qo-text').value,
           slugs,
           ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),

@@ -212,7 +212,8 @@ export default async function handler(req, res) {
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
-        const garden = 'garden' in (req.body ?? {}) ? (req.body.garden || null) : 'betonbeete';
+        const _g = req.body?.garden;
+        const garden = 'garden' in (req.body ?? {}) ? (_g && _g !== 'none' ? _g : null) : 'betonbeete';
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
@@ -230,7 +231,7 @@ export default async function handler(req, res) {
         const fields = {};
         if (date                  !== undefined) fields.date                  = date || null;
         if (type                  !== undefined) fields.type                  = type;
-        if (garden                !== undefined) fields.garden                = garden || null;
+        if (garden                !== undefined) fields.garden                = (garden && garden !== 'none') ? garden : null;
         if (text                  !== undefined) fields.text                  = text || null;
         if (filename              !== undefined) fields.filename              = filename || null;
         if (lat                   !== undefined) fields.lat                   = lat ?? null;
