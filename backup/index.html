@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blühende Gärten — Pflanzenindex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- ── Hamburger menu ──────────────────────────────────────────────────── -->
+  <button id="hamburger-btn" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="menu-backdrop"></div>
+  <div id="menu-panel">
+    <div id="menu-user-email"></div>
+    <div id="menu-profile" style="display:none;margin-top:12px;">
+      <input id="menu-username" type="text" placeholder="Benutzername" autocomplete="off"
+        style="width:100%;border:none;border-bottom:1px solid #ccc;padding:4px 0;font-size:13px;font-family:inherit;outline:none;background:transparent;">
+      <button id="menu-username-save" class="action-btn" style="margin-top:8px;width:100%;">Speichern</button>
+    </div>
+    <button id="add-garden-btn" class="action-btn" style="margin-top:12px;width:100%;display:none;">+ Garten</button>
+    <button id="menu-my-obs-btn" class="action-btn" style="margin-top:12px;width:100%;">Meine Beobachtungen</button>
+    <button id="menu-login-btn" class="action-btn" style="margin-top:12px;">Anmelden</button>
+    <button id="menu-logout-btn" class="action-btn" style="display:none;margin-top:12px;">Abmelden</button>
+  </div>
+
+  <!-- ── Login modal (magic link) ──────────────────────────────────────── -->
+  <div id="login-backdrop">
+    <div id="login-modal">
+      <button id="login-close">×</button>
+      <div id="login-title">Anmelden / Registrieren</div>
+      <div id="login-body">
+        <p style="font-size:13px;color:#555;margin:0 0 12px">E-Mail eingeben — wir schicken dir einen Link. Neues Konto wird automatisch erstellt.</p>
+        <input id="login-email" type="email" placeholder="E-Mail-Adresse" autocomplete="email">
+        <button id="login-submit" class="action-btn">Magic Link senden</button>
+        <div id="login-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Add garden modal ──────────────────────────────────────────────── -->
+  <div id="add-garden-backdrop">
+    <div id="add-garden-modal">
+      <button id="add-garden-close">×</button>
+      <div id="add-garden-title">Garten anlegen</div>
+      <div id="add-garden-form-body">
+        <div class="agf-field">
+          <label class="agf-label" for="agf-name">Name</label>
+          <input id="agf-name" class="agf-input" type="text" autocomplete="off" placeholder="Mein Garten">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label" for="agf-path">Pfad (URL)</label>
+          <input id="agf-path" class="agf-input" type="text" autocomplete="off" placeholder="mein-garten">
+        </div>
+        <div class="agf-field">
+          <label class="agf-label" for="agf-desc">Beschreibung</label>
+          <textarea id="agf-desc" class="agf-input agf-textarea" placeholder="Optional…"></textarea>
+        </div>
+        <label class="agf-check">
+          <input id="agf-private" type="checkbox">
+          Privat (nur für mich sichtbar)
+        </label>
+        <label class="agf-check">
+          <input id="agf-plan" type="checkbox">
+          Mit Bettplan
+        </label>
+        <div id="add-garden-msg"></div>
+        <button id="add-garden-submit" class="action-btn">Garten erstellen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quick-obs-backdrop" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+    <div id="quick-obs-modal">
+      <button id="quick-obs-close" style="position:absolute;top:12px;right:16px;font-size:28px;line-height:1;background:none;border:none;cursor:pointer;color:#888;">×</button>
+      <div id="qo-title" style="font-family:var(--font-serif);font-size:40px;font-weight:600;line-height:1;margin-bottom:32px;">Beobachtung</div>
+      <div class="obs-row">
+        <div class="obs-field">
+          <label class="obs-label">Datum</label>
+          <input id="qo-date" class="obs-input" type="date">
+        </div>
+        <div class="obs-field">
+          <label class="obs-label">Typ</label>
+          <select id="qo-type" class="obs-select">
+            <option value="foto">Foto</option>
+            <option value="zeichnung">Zeichnung</option>
+            <option value="herbarbeleg">Herbarbeleg</option>
+            <option value="notiz">Notiz</option>
+          </select>
+        </div>
+        <div class="obs-field">
+          <label class="obs-label">Garten</label>
+          <select id="qo-garden" class="obs-select"></select>
+        </div>
+      </div>
+      <div class="obs-field">
+        <label class="obs-file-label" id="qo-file-label">
+          <span id="qo-file-text">Bild auswählen…</span>
+          <input id="qo-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
+        </label>
+      </div>
+      <div class="obs-field">
+        <label class="obs-label">Pflanzen</label> 
+        <div id="qo-plant-grid"></div>
+      </div>
+      <div class="obs-field">
+        <label class="obs-label">Notiz</label>
+        <textarea id="qo-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+      </div>
+      <div id="qo-msg" style="font-size:13px;color:#c00;min-height:18px;"></div>
+      <div class="obs-form-actions">
+        <button id="qo-submit" class="action-btn">Speichern</button>
+        <button id="qo-cancel">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loader"><span id="loader-text">Blühende Gärten</span></div>
+  <div id="landing"></div>
+  <div id="content">
+    <div id="garden-description">
+      <div id="garden-big-title">Der Große Garten</div>
+      <div id="garden-title"></div>
+      <div id="garden-bar"></div>
+      <div id="garden-info"></div>
+      <div id="garden-obs-section">
+        <div class="garden-section-header">
+          <h3 id="garden-obs-title">Beobachtungen</h3>
+          <button id="add-obs-btn" class="action-btn garden-section-add">+</button>
+        </div>
+        <div id="garden-obs-carousel"></div>
+      </div>
+      <div id="garden-herbar-section">
+        <div class="garden-section-header">
+          <h3 id="garden-herbar-title">Herbarbelege</h3>
+          <button id="add-herbar-btn" class="action-btn garden-section-add">+</button>
+        </div>
+        <div id="garden-herbar-carousel"></div>
+      </div>
+    </div>
+    <div id="panels-area">
+    <div id="observations">
+      <div class="col-header">
+        <h2 class="col-header-title">Plan</h2>
+        <button id="edit-mode-btn" class="action-btn col-header-action">Bearbeiten</button>
+      </div>
+      <div id="bed-plan-bar">
+        <select id="version-select-plan"></select>
+        <span id="selected-plant-label">Keine Pflanze gewählt</span>
+        <div id="density-ctrl" style="display:none;align-items:center;gap:6px;margin-left:8px;">
+          <button class="density-btn" id="density-dec" style="font-size:13px;line-height:1;border:1px solid #ccc;background:#fff;width:22px;height:22px;cursor:pointer;">−</button>
+          <span id="density-val" style="font-size:11px;min-width:16px;text-align:center;"></span>
+          <button class="density-btn" id="density-inc" style="font-size:13px;line-height:1;border:1px solid #ccc;background:#fff;width:22px;height:22px;cursor:pointer;">+</button>
+          <span style="font-size:10px;color:#aaa;letter-spacing:0.06em;text-transform:uppercase;">Anzahl</span>
+        </div>
+        <button id="clear-plan-btn" style="display:none;margin-left:auto;font-size:11px;font-family:inherit;border:1px solid #ccc;padding:3px 10px;cursor:pointer;background:#fff;color:#888;">Alles löschen</button>
+      </div>
+      <div id="bed-plan"></div>
+    </div>
+    <input type="file" id="bed-img-input" accept="image/*" style="display:none">
+    <div id="plant-col">
+      <div id="index-heading">Blühende Gärten</div>
+      <div id="garden-section" class="section">
+        <div id="garden-section-header" class="section-header">
+          <h2 id="garden-section-title">Alle Gärten</h2>
+        </div>
+        <ul id="garden-list"></ul>
+      </div>
+      <div id="obs-carousel-section" class="section">
+        <div id="obs-carousel-header" class="section-header">
+          <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
+          <button id="quick-obs-btn" class="action-btn" style="font-size:28px;line-height:1;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
+        </div>
+        <div id="obs-carousel"></div>
+      </div>
+      
+      <div class="section">
+      <div id="plant-col-header" class="col-header section-header">
+        <h2 id="plant-col-title" class="col-header-title">Alle Pflanzen</h2>
+        <button id="add-plant-btn" class="action-btn col-header-action" style="font-size:28px;line-height:1;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
+      </div>
+      
+      <input id="plant-filter" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+      <div id="add-plant-form">
+        <div class="apf-row">
+          <div class="apf-field">
+            <label class="apf-label">Botanischer Name</label>
+            <input id="apf-name" class="apf-input" type="text" placeholder="z.B. Lavandula angustifolia">
+          </div>
+          <div class="apf-field">
+            <label class="apf-label">Deutscher Name</label>
+            <input id="apf-name-de" class="apf-input" type="text" placeholder="z.B. Echter Lavendel">
+          </div>
+        </div>
+        <div class="apf-row">
+          <div class="apf-field">
+            <label class="apf-label">Familie</label>
+            <input id="apf-family" class="apf-input" type="text" placeholder="z.B. Lamiaceae">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Breite (cm)</label>
+            <input id="apf-width" class="apf-input" type="number" min="1" max="500" placeholder="40">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Höhe (cm)</label>
+            <input id="apf-height" class="apf-input" type="number" min="1" max="500" placeholder="60">
+          </div>
+          <div class="apf-field narrow">
+            <label class="apf-label">Farbe</label>
+            <input id="apf-color" class="apf-input" type="color" value="#a0c878">
+          </div>
+        </div>
+        <div class="apf-actions">
+          <button id="apf-submit" class="action-btn">Hinzufügen</button>
+          <button id="apf-cancel">Abbrechen</button>
+          <span id="apf-error"></span>
+        </div>
+      </div>
+      <div id="plant-grid"></div>
+      </div>
+
+    </div>
+    </div><!-- /panels-area -->
+  </div>
+
+  <div id="bed-tooltip"><span class="tt-name"></span><br><span class="tt-de"></span></div>
+
+  <div id="all-obs-backdrop">
+    <div id="all-obs-modal">
+      <button id="all-obs-close">×</button>
+      <div id="all-obs-title" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;padding:18px 24px 0;"></div>
+      <div id="all-obs-list"></div>
+    </div>
+  </div>
+
+  <div id="pif-datalists"></div>
+
+
+  <div id="lightbox"><img id="lightbox-img" src=""></div>
+
+  <div id="modal-backdrop">
+    <div id="modal">
+      <button id="modal-close">×</button>
+      <div id="modal-columns">
+        <div id="modal-info">
+          <div id="modal-name" contenteditable="true" spellcheck="false"></div>
+          <div id="modal-meta-row">
+            <!-- <button id="modal-invasiv-btn" title="Invasive Art">⚠</button> -->
+            <div>
+              <div id="modal-de" contenteditable="true" spellcheck="false"></div>
+              <div id="modal-family-row">
+                <input id="modal-family" type="text" spellcheck="false" autocomplete="off" list="family-datalist" placeholder="Familie">
+                <datalist id="family-datalist"></datalist>
+                <span id="modal-color-swatch"></span>
+                <input id="modal-color-input" type="color">
+              </div>
+            </div>
+          </div>
+          <div id="modal-garden-badges"></div>
+          <button id="modal-info-toggle">Pflanzendaten <span id="modal-info-chevron">▾</span></button>
+          <div id="modal-info-body">
+            <div id="modal-bloom-bar"></div>
+            <div id="modal-plant-info"></div>
+            <div id="modal-stages-section" class="collapsed">
+              <button id="modal-stages-toggle">Wachstum</button>
+              <div id="modal-stages"></div>
+              <div id="modal-generated"></div>
+            </div>
+          </div>
+        </div>
+        <div id="modal-images">
+          <div id="obs-toggle-bar" class="col-header">
+            <h2 class="col-header-title">Beobachtungen</h2>
+            <button id="obs-toggle-btn" class="action-btn col-header-action" style="font-size:28px;line-height:1;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
+          </div>
+
+          <div id="obs-form">
+            <div class="obs-row">
+              <div class="obs-field">
+                <label class="obs-label">Datum</label>
+                <input id="obs-date" class="obs-input" type="date">
+              </div>
+              <div class="obs-field">
+                <label class="obs-label">Typ</label>
+                <select id="obs-type" class="obs-select">
+                  <option value="foto">Foto</option>
+                  <option value="zeichnung">Zeichnung</option>
+                  <option value="herbarbeleg">Herbarbeleg</option>
+                  <option value="notiz">Notiz</option>
+                </select>
+              </div>
+              <div class="obs-field">
+                <label class="obs-label">Garten</label>
+                <select id="obs-garden" class="obs-select"></select>
+              </div>
+            </div>
+            <div class="obs-field">
+              <label class="obs-label">Notiz</label>
+              <textarea id="obs-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+            </div>
+            <div class="obs-field">
+              <label class="obs-label">Pflanzen</label>
+              <div id="obs-plant-grid"></div>
+            </div>
+            <div class="obs-field">
+              <label class="obs-file-label" id="obs-file-label">
+                <span id="obs-file-text">Bild auswählen…</span>
+                <input id="obs-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif" style="display:none">
+              </label>
+            </div>
+            <div class="obs-form-actions">
+              <button id="obs-submit" class="action-btn">Speichern</button>
+              <button id="obs-cancel">Abbrechen</button>
+            </div>
+          </div>
+
+          <div id="obs-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase, authedFetch } from '/src/auth.js';
+
+    const base = import.meta.env.BASE_URL;
+    const R2_URL = __R2_URL__;
+
+    // ── Auth state ────────────────────────────────────────────────────────────
+    let _currentUser = null;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      _currentUser = session?.user ?? null;
+      updateAuthUI();
+    });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      _currentUser = session?.user ?? null;
+      updateAuthUI();
+    });
+
+    function updateAuthUI() {
+      const emailEl = document.getElementById('menu-user-email');
+      const loginBtn = document.getElementById('menu-login-btn');
+      const logoutBtn = document.getElementById('menu-logout-btn');
+      const loggedIn = !!_currentUser;
+      document.body.classList.toggle('logged-in', loggedIn);
+      if (loggedIn) {
+        if (emailEl) emailEl.textContent = _currentUser.email;
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'block';
+      } else {
+        if (emailEl) emailEl.textContent = '';
+        if (loginBtn) loginBtn.style.display = 'block';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+      }
+      const ce = loggedIn ? 'true' : 'false';
+      document.getElementById('modal-name')?.setAttribute('contenteditable', ce);
+      document.getElementById('modal-de')?.setAttribute('contenteditable', ce);
+      const modalFamily = document.getElementById('modal-family');
+      if (modalFamily) modalFamily.readOnly = !loggedIn;
+      document.getElementById('menu-profile').style.display = loggedIn ? 'block' : 'none';
+      document.getElementById('add-garden-btn').style.display = loggedIn ? 'block' : 'none';
+      if (loggedIn) loadProfile();
+    }
+
+    async function loadProfile() {
+      const data = await authedFetch('/api/profiles/me').then(r => r.json()).catch(() => null);
+      if (data?.username) document.getElementById('menu-username').value = data.username;
+    }
+
+    document.getElementById('menu-username-save').addEventListener('click', async () => {
+      const username = document.getElementById('menu-username').value.trim();
+      if (!username) return;
+      const btn = document.getElementById('menu-username-save');
+      btn.disabled = true;
+      const res = await authedFetch('/api/profiles/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+      });
+      const data = await res.json().catch(() => ({}));
+      btn.disabled = false;
+      if (!res.ok) {
+        btn.textContent = data.error ?? 'Fehler';
+        setTimeout(() => { btn.textContent = 'Speichern'; }, 3000);
+      } else {
+        btn.textContent = '✓ Gespeichert';
+        setTimeout(() => { btn.textContent = 'Speichern'; }, 2000);
+      }
+    });
+
+    // ── Hamburger menu ────────────────────────────────────────────────────────
+    const menuPanel = document.getElementById('menu-panel');
+    const menuBackdrop = document.getElementById('menu-backdrop');
+
+    function openMenu() { menuPanel.classList.add('open'); menuBackdrop.classList.add('open'); }
+    function closeMenu() { menuPanel.classList.remove('open'); menuBackdrop.classList.remove('open'); }
+
+    document.getElementById('hamburger-btn').addEventListener('click', () =>
+      menuPanel.classList.contains('open') ? closeMenu() : openMenu()
+    );
+    menuBackdrop.addEventListener('click', closeMenu);
+
+    document.getElementById('menu-logout-btn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      closeMenu();
+    });
+
+    document.getElementById('menu-login-btn').addEventListener('click', () => {
+      closeMenu();
+      openLoginModal();
+    });
+
+    document.getElementById('add-garden-btn').addEventListener('click', () => {
+      closeMenu();
+      openAddGardenModal();
+    });
+
+    // ── Login modal ───────────────────────────────────────────────────────────
+    const loginBackdrop = document.getElementById('login-backdrop');
+
+    function openLoginModal() {
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-msg').textContent = '';
+      loginBackdrop.classList.add('open');
+      document.getElementById('login-email').focus();
+    }
+    function closeLoginModal() { loginBackdrop.classList.remove('open'); }
+
+    document.getElementById('login-close').addEventListener('click', closeLoginModal);
+    loginBackdrop.addEventListener('click', e => { if (e.target === loginBackdrop) closeLoginModal(); });
+
+    document.getElementById('login-submit').addEventListener('click', async () => {
+      const email = document.getElementById('login-email').value.trim();
+      const msg = document.getElementById('login-msg');
+      if (!email) { msg.textContent = 'Bitte E-Mail eingeben.'; return; }
+      const btn = document.getElementById('login-submit');
+      btn.disabled = true;
+      msg.textContent = '';
+      const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.href } });
+      btn.disabled = false;
+      if (error) { msg.textContent = error.message; }
+      else { msg.textContent = 'Link gesendet — bitte E-Mail prüfen.'; }
+    });
+
+    document.getElementById('login-email').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('login-submit').click();
+    });
+
+    // ── Add garden modal ──────────────────────────────────────────────────────
+    function slugify(str) {
+      return str.toLowerCase()
+        .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    }
+
+    function openAddGardenModal() {
+      document.getElementById('agf-name').value = '';
+      document.getElementById('agf-path').value = '';
+      document.getElementById('agf-desc').value = '';
+      document.getElementById('agf-private').checked = false;
+      document.getElementById('agf-plan').checked = false;
+      document.getElementById('add-garden-msg').textContent = '';
+      document.getElementById('add-garden-backdrop').classList.add('open');
+      document.getElementById('agf-name').focus();
+    }
+    function closeAddGardenModal() {
+      document.getElementById('add-garden-backdrop').classList.remove('open');
+    }
+
+    document.getElementById('add-garden-close').addEventListener('click', closeAddGardenModal);
+    document.getElementById('add-garden-backdrop').addEventListener('click', e => {
+      if (e.target === document.getElementById('add-garden-backdrop')) closeAddGardenModal();
+    });
+
+    document.getElementById('agf-name').addEventListener('input', e => {
+      const pathEl = document.getElementById('agf-path');
+      pathEl.value = slugify(e.target.value);
+    });
+
+    document.getElementById('add-garden-submit').addEventListener('click', async () => {
+      const name = document.getElementById('agf-name').value.trim();
+      const path = document.getElementById('agf-path').value.trim();
+      const description = document.getElementById('agf-desc').value.trim();
+      const is_private = document.getElementById('agf-private').checked;
+      const has_plan = document.getElementById('agf-plan').checked;
+      const msg = document.getElementById('add-garden-msg');
+
+      if (!name) { msg.textContent = 'Name ist erforderlich.'; return; }
+      if (!path)  { msg.textContent = 'Pfad ist erforderlich.'; return; }
+
+      const btn = document.getElementById('add-garden-submit');
+      btn.disabled = true;
+      msg.textContent = '';
+
+      const id = crypto.randomUUID();
+      const res = await authedFetch('/api/gardens', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, path, name, description: description || null, is_private, has_plan, plants: [] }),
+      });
+      const data = await res.json();
+      btn.disabled = false;
+
+      if (!res.ok) { msg.textContent = data.error ?? 'Fehler beim Erstellen.'; return; }
+      closeAddGardenModal();
+      window.location.href = '/' + path;
+    });
+
+    async function resizeToDataUrl(file, maxPx = 800) {
+      return new Promise(resolve => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          let { width: w, height: h } = img;
+          if (w > maxPx || h > maxPx) {
+            if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+            else { w = Math.round(w * maxPx / h); h = maxPx; }
+          }
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          URL.revokeObjectURL(url);
+          resolve(c.toDataURL('image/jpeg', 0.8));
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+        img.src = url;
+      });
+    }
+
+    async function identifyPlant(file) {
+      const grid = document.getElementById('qo-plant-grid');
+      const placeholder = document.createElement('label');
+      placeholder.className = 'obs-plant-chip pn-identifying';
+      placeholder.textContent = 'Erkenne…';
+      grid.prepend(placeholder);
+      try {
+        const dataUrl = await resizeToDataUrl(file);
+        if (!dataUrl) { placeholder.remove(); return; }
+        const data = await authedFetch('/api/plantnet', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dataUrl }),
+        }).then(r => r.json());
+        const suggestions = (data.results ?? []).map(r => ({
+          name: r.name, score: r.score, family: r.family ?? null, common: r.common ?? null, slug: _plantNetToSlug(r.name),
+        }));
+        const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+        buildQoPlantGrid(preselected, suggestions);
+      } catch { placeholder.remove(); }
+    }
+
+    async function uploadToR2(file) {
+      const { url, key } = await authedFetch('/api/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentType: file.type, filename: file.name }),
+      }).then(r => r.json());
+      await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+      fetch(`/api/thumb/${encodeURIComponent(key)}`).catch(() => {});
+      return key;
+    }
+    const [all, gardens] = await Promise.all([
+      fetch(base + 'plants/manifest.json').then(r => r.json()),
+      fetch('/api/gardens').then(r => r.json()),
+    ]);
+
+    const _urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    const _activeGardenId = gardens.find(g => (g.path ?? g.id) === _urlPath)?.id ?? null;
+
+    // one entry per slug (bloom stage preferred)
+    const bySlug = new Map();
+    // all stages per slug
+    const stagesBySlug = new Map();
+    for (const e of all) {
+      if (!bySlug.has(e.slug) || e.stage === 'bloom') bySlug.set(e.slug, e);
+      if (!stagesBySlug.has(e.slug)) stagesBySlug.set(e.slug, []);
+      stagesBySlug.get(e.slug).push(e);
+    }
+
+    // reverse lookup: scientific name / genus (lowercase) → slug
+    const _plantByScientific = new Map();
+    for (const [slug, p] of bySlug) {
+      _plantByScientific.set(p.name.toLowerCase(), slug);
+      const genus = p.name.split(' ')[0].toLowerCase();
+      if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, slug);
+    }
+    function _plantNetToSlug(name) {
+      const lower = name.toLowerCase();
+      return _plantByScientific.get(lower) ?? _plantByScientific.get(lower.split(' ')[0]) ?? null;
+    }
+
+    const MONTH_NAMES = {
+      january:'Jan', february:'Feb', march:'Mär', april:'Apr',
+      may:'Mai', june:'Jun', july:'Jul', august:'Aug',
+      september:'Sep', october:'Okt', november:'Nov', december:'Dez',
+    };
+
+    // ── Modal ─────────────────────────────────────────────────────────────────
+    const backdrop = document.getElementById('modal-backdrop');
+    let _modalSlug = null;
+
+    const STAGES = ['sprout', 'foliage', 'bloom', 'seed', 'dried'];
+
+    const TYPE_LABELS_OBS = { foto: 'Foto', zeichnung: 'Zeichnung', herbarbeleg: 'Herbarbeleg', notiz: 'Notiz' };
+
+    function renderGeneratedImages(slug) {
+      const gen = document.getElementById('modal-generated');
+      gen.innerHTML = '';
+      for (const stage of STAGES) {
+        const src = `${base}plants/${slug}_${stage}.png`;
+        const item = document.createElement('div');
+        item.className = 'modal-gen-item';
+        item.innerHTML = `
+          <img src="${src}" onerror="this.parentElement.style.display='none'">
+          <span class="modal-gen-caption">${stage}</span>
+        `;
+        gen.appendChild(item);
+      }
+    }
+
+    const obsCache = new Map();
+    const plantInfoCache = new Map();
+
+    const _placeCache = new Map();
+    const _placeQueue = [];
+    let _placeRunning = false;
+    async function _runPlaceQueue() {
+      _placeRunning = true;
+      while (_placeQueue.length) {
+        const { key, lat, lon, resolve } = _placeQueue.shift();
+        if (_placeCache.has(key)) { resolve(_placeCache.get(key)); continue; }
+        try {
+          const d = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=13&accept-language=de`,
+            { headers: { 'User-Agent': 'Bluehendegaerten/1.0' } }
+          ).then(r => r.json());
+          const a = d.address ?? {};
+          const district = a.suburb || a.neighbourhood || a.quarter || a.borough || a.city_district;
+          const city = a.city || a.town || a.village || a.county || a.state;
+          const place = district && city ? `${district}, ${city}` : district || city || '';
+          _placeCache.set(key, place);
+          resolve(place);
+        } catch { resolve(''); }
+        await new Promise(r => setTimeout(r, 1100));
+      }
+      _placeRunning = false;
+    }
+    function getPlace(lat, lon) {
+      const key = `${lat.toFixed(2)},${lon.toFixed(2)}`;
+      if (_placeCache.has(key)) return Promise.resolve(_placeCache.get(key));
+      return new Promise(resolve => {
+        const existing = _placeQueue.find(q => q.key === key);
+        if (existing) { const orig = existing.resolve; existing.resolve = v => { orig(v); resolve(v); }; return; }
+        _placeQueue.push({ key, lat, lon, resolve });
+        if (!_placeRunning) _runPlaceQueue();
+      });
+    }
+
+    function thumbUrl(filename) {
+      if (!filename) return null;
+      const thumbKey = filename.replace(/\.[^.]+$/, '_thumb.jpg');
+      return `${R2_URL}/${thumbKey}`;
+    }
+    function onThumbError(img, filename) {
+      const apiUrl = `/api/thumb/${encodeURIComponent(filename)}`;
+      if (img.src !== apiUrl) {
+        img.onerror = () => { img.onerror = null; img.src = `${R2_URL}/${filename}`; };
+        img.src = apiUrl;
+      } else {
+        img.onerror = null;
+        img.src = `${R2_URL}/${filename}`;
+      }
+    }
+
+    function buildObsCard(o, { onEdit, onDelete } = {}) {
+      const card = document.createElement('div');
+      card.className = 'obs-card';
+      const plantNames = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
+      const thumb = thumbUrl(o.filename);
+      card.innerHTML = `
+        ${o.filename ? `<img class="obs-card-thumb" src="${thumb}" onerror="onThumbError(this,'${o.filename}')">` : ''}
+        ${plantNames ? `<div class="obs-card-label"><div class="obs-card-label-plants">${plantNames}</div></div>` : ''}
+        ${o.text ? `<div class="obs-card-text">${o.text}</div>` : ''}
+        ${o.lat != null ? `<div class="obs-card-gps"></div>` : ''}
+        ${onEdit ? `<button class="obs-card-edit" title="Bearbeiten">✎</button>` : ''}
+        ${onDelete ? `<button class="obs-card-delete" title="Löschen">×</button>` : ''}
+      `;
+      if (o.lat != null) {
+        const el = card.querySelector('.obs-card-gps');
+        if (o.place) { if (el) el.textContent = o.place; }
+        else getPlace(o.lat, o.lon).then(p => {
+          if (el && p) el.textContent = p;
+          if (p) authedFetch(`/api/observations/${o.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ place: p }) }).catch(() => {});
+        });
+      }
+      if (onEdit) card.querySelector('.obs-card-edit').addEventListener('click', onEdit);
+      if (onDelete) card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
+      return card;
+    }
+
+    async function renderObservations(slug) {
+      const list = document.getElementById('obs-list');
+      list.innerHTML = '';
+      try {
+        const obs = obsCache.has(slug)
+          ? obsCache.get(slug)
+          : await fetch(`/api/observations?slug=${slug}`).then(r => r.json());
+        obsCache.set(slug, obs);
+        if (!obs.length) {
+          list.innerHTML = '<div class="obs-empty">Noch keine Beobachtungen</div>';
+          return;
+        }
+        const cols = window.innerWidth < 768 ? 2 : 3;
+        for (const o of obs) {
+          const card = buildObsCard(o, {
+            onEdit: _currentUser ? () => {
+              _editingObsId = o.id;
+              document.getElementById('obs-date').value = o.date ?? '';
+              document.getElementById('obs-type').value = o.type ?? 'foto';
+              document.getElementById('obs-text').value = o.text ?? '';
+              buildPlantGrid(_modalSlug);
+              o.slugs.forEach(s => {
+                const cb = document.querySelector(`#obs-plant-grid input[value="${s}"]`);
+                if (cb) cb.checked = true;
+              });
+              obsForm.classList.add('open');
+              obsToggle.classList.add('open');
+              obsToggle.textContent = '× Abbrechen';
+              document.getElementById('obs-toggle-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } : null,
+            onDelete: _currentUser ? async () => {
+              if (!confirm('Eintrag wirklich löschen?')) return;
+              await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+              obsCache.delete(_modalSlug);
+              await renderObservations(_modalSlug);
+            } : null,
+          });
+          if (o.filename) card.querySelector('img').addEventListener('load', () => masonryLayout(list, cols));
+          list.appendChild(card);
+        }
+        masonryLayout(list, cols);
+      } catch {
+        list.innerHTML = '<div class="obs-empty">Server nicht erreichbar</div>';
+      }
+    }
+
+    function masonryLayout(list, cols = 3) {
+      const cards = [...list.querySelectorAll('.obs-card')];
+      if (!cards.length) return;
+      const COLS = cols;
+      const GAP = 8;
+      const PAD = 16;
+      const colW = (list.clientWidth - PAD * 2 - GAP * (COLS - 1)) / COLS;
+      const colH = new Array(COLS).fill(0);
+      cards.forEach(card => {
+        card.style.width = colW + 'px';
+        const col = colH.indexOf(Math.min(...colH));
+        card.style.left = (PAD + col * (colW + GAP)) + 'px';
+        card.style.top = (PAD + colH[col]) + 'px';
+        colH[col] += card.offsetHeight + GAP;
+      });
+      // spacer drives scrollHeight — absolute cards don't contribute to it
+      let spacer = list.querySelector('.masonry-spacer');
+      if (!spacer) {
+        spacer = document.createElement('div');
+        spacer.className = 'masonry-spacer';
+        spacer.style.cssText = 'pointer-events:none';
+        list.appendChild(spacer);
+      }
+      spacer.style.height = (PAD + Math.max(...colH)) + 'px';
+    }
+
+    function contrastColor(hex) {
+      const c = hex?.replace('#', '') ?? 'ffffff';
+      const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
+      // WCAG relative luminance
+      const lum = ([r,g,b].map(v => { v /= 255; return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }));
+      return (0.2126*lum[0] + 0.7152*lum[1] + 0.0722*lum[2]) > 0.179 ? '#000' : '#fff';
+    }
+
+    async function openModal(p) {
+      _modalSlug = p.slug;
+      const bg  = (store.colorOverrides ?? {})[p.slug] ?? p.color ?? '#ffffff';
+      const fg  = contrastColor(bg);
+      const modal = document.getElementById('modal');
+      modal.style.background = bg;
+      modal.style.setProperty('--modal-fg', fg);
+      modal.style.setProperty('--modal-bg', bg);
+      document.getElementById('modal-name').textContent = p.name;
+      document.getElementById('modal-de').textContent = p.name_de ?? '';
+      document.getElementById('modal-family').value = p.family ?? '';
+      document.getElementById('modal-color-swatch').style.background = bg;
+      document.getElementById('modal-color-input').value = bg.length === 7 ? bg : '#ffffff';
+
+      const plantGardens = gardens.filter(g => (g.plants ?? []).includes(p.slug));
+      document.getElementById('modal-garden-badges').innerHTML = plantGardens.map(g =>
+        `<a class="modal-garden-badge" href="/${g.path ?? g.id}">${g.name}</a>`
+      ).join('');
+
+      const stages = stagesBySlug.get(p.slug) ?? [];
+      const manifestBloom = new Set(stages.find(s => s.stage === 'bloom')?.months ?? []);
+      renderBloomBar(manifestBloom);
+      renderGeneratedImages(p.slug);
+      // document.getElementById('modal-invasiv-btn').classList.remove('active');
+      renderPlantInfo({}, p);
+
+      document.getElementById('modal-stages').innerHTML = stages.map(s => `
+        <div class="modal-stage-row">
+          <span class="modal-stage-name">${s.stage}</span>
+          <span class="modal-stage-months">${s.months.map(m => MONTH_NAMES[m]).join(', ')}</span>
+        </div>
+      `).join('');
+
+      const _piData = plantInfoCache.get(p.slug);
+      if (_piData) {
+        const saved = _piData.bloom_months ? new Set(JSON.parse(_piData.bloom_months)) : null;
+        renderBloomBar(saved ?? manifestBloom);
+        renderPlantInfo(_piData, p);
+        // document.getElementById('modal-invasiv-btn').classList.toggle('active', !!_piData.invasiv);
+      }
+      fetch(`/api/plant-info/${p.slug}`).then(r => r.json()).then(info => {
+        plantInfoCache.set(p.slug, info);
+        const saved = info.bloom_months ? new Set(JSON.parse(info.bloom_months)) : null;
+        renderBloomBar(saved ?? manifestBloom);
+        renderPlantInfo(info, p);
+        // const invasiv = !!info.invasiv;
+        // document.getElementById('modal-invasiv-btn').classList.toggle('active', invasiv);
+        // const entry = bySlug.get(p.slug);
+        // if (entry) entry._invasiv = invasiv;
+      }).catch(() => {});
+      closeObsForm();
+      const card = document.querySelector(`.plant-card[data-slug="${p.slug}"]`);
+      if (card) {
+        const r = card.getBoundingClientRect();
+        modal.style.transformOrigin = `${r.left + r.width / 2}px ${r.top + r.height / 2}px`;
+      } else {
+        modal.style.transformOrigin = 'center center';
+      }
+      modal.classList.remove('closing');
+      modal.classList.add('opening');
+      modal.addEventListener('animationend', () => modal.classList.remove('opening'), { once: true });
+      backdrop.classList.add('open');
+      document.getElementById('modal-info-body').classList.remove('open');
+      document.getElementById('modal-info-chevron').textContent = '▾';
+      renderObservations(p.slug);
+    }
+
+    function parseCm(val) {
+      if (!val) return null;
+      const s = String(val).trim();
+      const range = s.match(/^(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)$/);
+      if (range) return (parseFloat(range[1]) + parseFloat(range[2])) / 2;
+      return parseFloat(s) || null;
+    }
+
+    const MONTH_INITIALS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+
+    function renderBloomBar(activeMonths) {
+      const bar = document.getElementById('modal-bloom-bar');
+      bar.innerHTML = `
+        <div id="modal-bloom-bar-label">Blütezeit</div>
+        <div class="bloom-bar-segments">
+          ${MONTH_INITIALS.map((_, i) => `<div class="bloom-seg${activeMonths.has(i) ? ' active' : ''}" data-month="${i}"></div>`).join('')}
+        </div>
+        <div class="bloom-bar-labels">
+          ${MONTH_INITIALS.map(l => `<span>${l}</span>`).join('')}
+        </div>
+      `;
+      bar.querySelectorAll('.bloom-seg').forEach(seg => {
+        seg.addEventListener('click', () => {
+          seg.classList.toggle('active');
+          saveBloomMonths();
+        });
+      });
+    }
+
+    function saveBloomMonths() {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const months = [...document.querySelectorAll('.bloom-seg.active')].map(s => +s.dataset.month);
+      authedFetch(`/api/plant-info/${slug}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bloom_months: JSON.stringify(months) }),
+      }).catch(() => {});
+      // keep stagesBySlug in sync
+      const existing = stagesBySlug.get(slug) ?? [];
+      const withoutBloom = existing.filter(s => s.stage !== 'bloom');
+      stagesBySlug.set(slug, months.length ? [...withoutBloom, { stage: 'bloom', months }] : withoutBloom);
+    }
+
+    const TEXT_INFO_KEYS = ['art','wuchs','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel'];
+
+    function loadPlantInfoSuggestions() {
+      fetch('/api/plant-info/all').then(r => r.json()).then(rows => {
+        const suggestions = {};
+        TEXT_INFO_KEYS.forEach(k => suggestions[k] = new Set());
+        rows.forEach(row => TEXT_INFO_KEYS.forEach(k => { if (row[k]) suggestions[k].add(row[k]); }));
+        const container = document.getElementById('pif-datalists');
+        container.innerHTML = TEXT_INFO_KEYS.map(k => `
+          <datalist id="pif-list-${k}">
+            ${[...suggestions[k]].map(v => `<option value="${v.replace(/"/g,'&quot;')}"></option>`).join('')}
+          </datalist>
+        `).join('');
+      }).catch(() => {});
+    }
+
+    const PLANT_INFO_FIELDS = [
+      { key: 'art',        label: 'Pflanzenart' },
+      { key: 'wuchs',      label: 'Wuchs' },
+      { key: 'hoehe',      label: 'Höhe',                plantProp: 'worldH' },
+      { key: 'breite',     label: 'Breite',              plantProp: 'worldW' },
+      { key: 'frost',      label: 'Frostverträglich' },
+      { key: 'wurzel',     label: 'Wurzelsystem' },
+      { key: 'licht',      label: 'Licht' },
+      { key: 'boden',      label: 'Boden' },
+      { key: 'wasser',     label: 'Wasser' },
+      { key: 'naehrstoff', label: 'Nährstoffe' },
+      { key: 'ph',         label: 'PH-Wert' },
+      { key: 'kuebel',     label: 'Kübel/Balkon' },
+    ];
+
+    function renderPlantInfo(info, plant) {
+      const container = document.getElementById('modal-plant-info');
+      container.innerHTML = PLANT_INFO_FIELDS.map(f => {
+        let val;
+        if (f.plantProp) {
+          val = (info[f.key] != null && info[f.key] !== '')
+            ? info[f.key]
+            : (plant?.[f.plantProp] ? Math.round(parseFloat(plant[f.plantProp]) * 100) : '');
+        } else {
+          val = info[f.key] ?? '';
+        }
+        const listAttr = f.plantProp ? '' : `list="pif-list-${f.key}"`;
+        return `
+          <div class="plant-info-row">
+            <span class="plant-info-label">${f.label}</span>
+            <input class="plant-info-value" ${listAttr} value="${String(val).replace(/"/g, '&quot;')}"
+              data-key="${f.key}" autocomplete="off" spellcheck="false" placeholder="—">
+            ${f.plantProp ? `<span class="plant-info-unit">cm</span>` : ''}
+          </div>`;
+      }).join('');
+
+      let saveTimer;
+      container.querySelectorAll('.plant-info-value').forEach(el => {
+        el.addEventListener('input', () => {
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(() => savePlantInfo(), 600);
+        });
+        el.addEventListener('blur', () => { clearTimeout(saveTimer); savePlantInfo(); });
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') el.blur(); });
+      });
+    }
+
+    function savePlantInfo() {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const body = {};
+      const dimPatch = {};
+      document.querySelectorAll('.plant-info-value').forEach(el => {
+        const key = el.dataset.key;
+        const val = el.value.trim();
+        body[key] = val;
+        if (key === 'hoehe')  { const cm = parseCm(val); dimPatch.world_h = cm ? cm / 100 : undefined; }
+        if (key === 'breite') { const cm = parseCm(val); dimPatch.world_w = cm ? cm / 100 : undefined; }
+      });
+
+      // update in-memory plant dimensions
+      const p = bySlug.get(slug);
+      if (p) {
+        if (dimPatch.world_h != null) p.worldH = dimPatch.world_h;
+        if (dimPatch.world_w != null) p.worldW = dimPatch.world_w;
+        if (dimPatch.world_h != null || dimPatch.world_w != null) renderBedPlan();
+        if (p._custom) {
+          authedFetch(`/api/custom-plants/${slug}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dimPatch),
+          }).catch(() => {});
+        }
+      }
+
+      authedFetch(`/api/plant-info/${slug}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then(() => loadPlantInfoSuggestions()).catch(() => {});
+    }
+
+    // ── Invasiv toggle (commented out) ───────────────────────────────────────
+    /*
+    document.getElementById('modal-invasiv-btn').addEventListener('click', () => {
+      const btn = document.getElementById('modal-invasiv-btn');
+      const active = btn.classList.toggle('active');
+      const slug = _modalSlug;
+      if (slug) {
+        const p = bySlug.get(slug);
+        if (p) p._invasiv = active;
+        fetch(`/api/plant-info/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ invasiv: active ? 1 : 0 }),
+        }).catch(() => {});
+        render();
+      }
+    });
+    */
+
+    // ── Plant info accordion (mobile) ────────────────────────────────────────
+
+    document.getElementById('modal-info-toggle').addEventListener('click', () => {
+      const body = document.getElementById('modal-info-body');
+      const chevron = document.getElementById('modal-info-chevron');
+      const open = body.classList.toggle('open');
+      chevron.textContent = open ? '▴' : '▾';
+    });
+
+    // ── Stages toggle ─────────────────────────────────────────────────────────
+
+    document.getElementById('modal-stages-toggle').addEventListener('click', () => {
+      document.getElementById('modal-stages-section').classList.toggle('collapsed');
+    });
+
+    // ── Color editing ─────────────────────────────────────────────────────────
+
+    document.getElementById('modal-color-swatch').addEventListener('click', () => {
+      document.getElementById('modal-color-input').click();
+    });
+
+    document.getElementById('modal-color-input').addEventListener('input', e => {
+      const color = e.target.value;
+      const slug = _modalSlug;
+      const fg = contrastColor(color);
+      const modal = document.getElementById('modal');
+      modal.style.background = color;
+      modal.style.setProperty('--modal-fg', fg);
+      modal.style.setProperty('--modal-bg', color);
+      document.getElementById('modal-color-swatch').style.background = color;
+      const p = bySlug.get(slug);
+      if (p) p.color = color;
+      store.colorOverrides = store.colorOverrides ?? {};
+      store.colorOverrides[slug] = color;
+      savePlan();
+      render();
+    });
+
+    function saveNameEdit(field, value) {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const p = bySlug.get(slug);
+      if (!p) return;
+      store.nameOverrides = store.nameOverrides ?? {};
+      store.nameOverrides[slug] = store.nameOverrides[slug] ?? {};
+      if (field === 'name') {
+        p.name = value;
+        store.nameOverrides[slug].name = value;
+      } else {
+        p.name_de = value;
+        store.nameOverrides[slug].name_de = value;
+      }
+      savePlan();
+      render();
+      if (p._custom) {
+        authedFetch(`/api/custom-plants/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ [field]: value }),
+        }).catch(() => {});
+      }
+    }
+
+    const modalName = document.getElementById('modal-name');
+    const modalDe   = document.getElementById('modal-de');
+
+    modalName.addEventListener('blur', () => saveNameEdit('name',    modalName.textContent.trim()));
+    modalDe  .addEventListener('blur', () => saveNameEdit('name_de', modalDe.textContent.trim()));
+
+    modalName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalName.blur(); } });
+    modalDe  .addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalDe.blur(); } });
+
+    const modalFamily = document.getElementById('modal-family');
+    modalFamily.addEventListener('blur', () => {
+      const slug = _modalSlug;
+      if (!slug) return;
+      const p = bySlug.get(slug);
+      if (!p) return;
+      const value = modalFamily.value.trim();
+      p.family = value;
+      store.nameOverrides = store.nameOverrides ?? {};
+      store.nameOverrides[slug] = store.nameOverrides[slug] ?? {};
+      store.nameOverrides[slug].family = value;
+      savePlan();
+      render();
+      if (p._custom) {
+        authedFetch(`/api/custom-plants/${slug}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ family: value }),
+        }).catch(() => {});
+      }
+      // refresh datalist
+      const dl = document.getElementById('family-datalist');
+      if (value && !dl.querySelector(`option[value="${CSS.escape(value)}"]`)) {
+        const opt = document.createElement('option'); opt.value = value; dl.appendChild(opt);
+      }
+    });
+    modalFamily.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); modalFamily.blur(); } });
+
+    // populate family datalist from known families
+    (function() {
+      const dl = document.getElementById('family-datalist');
+      const families = new Set([...bySlug.values()].map(p => p.family).filter(Boolean));
+      families.forEach(f => { const o = document.createElement('option'); o.value = f; dl.appendChild(o); });
+    })();
+
+    // ── Observation form ──────────────────────────────────────────────────────
+
+    const obsForm   = document.getElementById('obs-form');
+    const obsToggle = document.getElementById('obs-toggle-btn');
+    const obsFile   = document.getElementById('obs-file');
+    const obsFileLabel = document.getElementById('obs-file-label');
+
+    // prefill date with today
+    document.getElementById('obs-date').value = new Date().toISOString().slice(0, 10);
+
+    // populate garden select
+    const obsGarden = document.getElementById('obs-garden');
+    const qoGarden = document.getElementById('qo-garden');
+    const qoBlank = document.createElement('option');
+    qoBlank.value = ''; qoBlank.textContent = '—';
+    qoGarden.appendChild(qoBlank);
+    gardens.forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g.id;
+      opt.textContent = g.name;
+      obsGarden.appendChild(opt);
+      qoGarden.appendChild(opt.cloneNode(true));
+    });
+
+    function buildQoPlantGrid(preselectedSlugs = [], suggestions = [], showAll = false) {
+      const grid = document.getElementById('qo-plant-grid');
+      grid.innerHTML = '';
+      const visible      = suggestions.filter(s => s.score > 0);
+      const matched      = visible.filter(s => s.slug);
+      const unmatched    = visible.filter(s => !s.slug && s.score >= 5);
+      // deduplicate: multiple PlantNet results can map to the same slug; keep highest score
+      const scoreMap = new Map();
+      for (const s of matched) {
+        if (!scoreMap.has(s.slug) || s.score > scoreMap.get(s.slug)) scoreMap.set(s.slug, s.score);
+      }
+      const suggestedSlugs = [...scoreMap.keys()];
+
+      function makeChip(p, checked, score, suggested) {
+        const chip = document.createElement('label');
+        chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
+        const chipCommon = suggested ? (suggestions.find(s => s.slug === p.slug)?.common ?? null) : null;
+        chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}><span class="chip-names"><span class="chip-sci">${p.name}</span>${(p.name_de || chipCommon) ? `<span class="chip-de">${p.name_de || chipCommon}</span>` : ''}</span>${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
+        chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
+        return chip;
+      }
+
+      // Always show selected plants
+      preselectedSlugs.forEach(slug => {
+        const p = bySlug.get(slug);
+        if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), suggestedSlugs.includes(slug)));
+      });
+
+      if (showAll) {
+        // Full plant list (minus already shown selected)
+        [...bySlug.values()]
+          .filter(p => !preselectedSlugs.includes(p.slug))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(p => grid.appendChild(makeChip(p, false, null, false)));
+      } else if (suggestions.length && !preselectedSlugs.length) {
+        // PlantNet results only — unmatched "add" buttons first
+        unmatched.forEach(s => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'obs-plant-chip pn-new-plant';
+          btn.innerHTML = `+ <span class="chip-names"><span class="chip-sci">${s.name}</span>${s.common ? `<span class="chip-de">${s.common}</span>` : ''}</span><span class="pn-score">${s.score}%</span>`;
+          btn.title = 'Als neue Pflanze hinzufügen';
+          btn.addEventListener('click', async () => {
+            btn.disabled = true; btn.textContent = 'Wird hinzugefügt…';
+            const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+            await addPlantFromPlantNet(s, suggestions, current);
+          });
+          grid.appendChild(btn);
+        });
+        [...suggestedSlugs].sort((a, b) => scoreMap.get(b) - scoreMap.get(a)).forEach((slug, i) => {
+          const p = bySlug.get(slug);
+          if (!p) return;
+          const chip = makeChip(p, i === 0, scoreMap.get(slug), true);
+          if (i === 0) chip.classList.add('pn-top');
+          grid.appendChild(chip);
+        });
+      }
+
+      // Always show "add plant" button unless already in full-list mode
+      if (!showAll) {
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'qo-add-plant-btn';
+        addBtn.textContent = '+ Pflanze hinzufügen';
+        addBtn.addEventListener('click', () => {
+          const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+          buildQoPlantGrid(current, suggestions, true);
+        });
+        grid.appendChild(addBtn);
+      }
+    }
+
+    async function addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {
+      const slug = toSlug(suggestion.name);
+      try {
+        const res = await authedFetch('/api/custom-plants', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null }),
+        });
+        const p = await res.json();
+        if (!res.ok && p.error !== 'slug already exists') { alert(p.error); return; }
+        const finalSlug = p.slug ?? slug;
+        const entry = { slug: finalSlug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, _custom: true };
+        bySlug.set(finalSlug, entry);
+        if (!stagesBySlug.has(finalSlug)) stagesBySlug.set(finalSlug, []);
+        _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);
+        const genus = suggestion.name.split(' ')[0].toLowerCase();
+        if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
+        const updatedSuggestions = allSuggestions.map(s => s.name === suggestion.name ? { ...s, slug: finalSlug } : s);
+        buildQoPlantGrid([...currentPreselected, finalSlug], updatedSuggestions);
+      } catch (e) { alert('Fehler: ' + e.message); }
+    }
+
+    function buildPlantGrid(preselect) {
+      const grid = document.getElementById('obs-plant-grid');
+      grid.innerHTML = '';
+      const gardenSlugs = new Set(gardens.find(g => g.id === obsGarden.value)?.plants ?? []);
+      [...bySlug.values()]
+        .filter(p => gardenSlugs.has(p.slug))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(p => {
+          const chip = document.createElement('label');
+          chip.className = 'obs-plant-chip' + (p.slug === preselect ? ' checked' : '');
+          chip.innerHTML = `<input type="checkbox" value="${p.slug}"${p.slug === preselect ? ' checked' : ''}>${p.name}`;
+          chip.querySelector('input').addEventListener('change', e => {
+            chip.classList.toggle('checked', e.target.checked);
+          });
+          grid.appendChild(chip);
+        });
+    }
+
+    function closeObsForm() {
+      obsForm.classList.remove('open');
+      obsToggle.classList.remove('open');
+      obsToggle.textContent = '+ Neue Beobachtung';
+      _editingObsId = null;
+    }
+
+    // ── Quick observation (index page + edit from obs panel) ─────────────────
+    const quickObsBackdrop = document.getElementById('quick-obs-backdrop');
+    let _qoEditId = null;
+
+    function openQuickObsNew() {
+      _qoEditId = null;
+      document.getElementById('qo-title').textContent = 'Beobachtung';
+      document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('qo-type').value = 'foto';
+      qoGarden.value = activeGarden ?? '';
+      document.getElementById('qo-text').value = '';
+      document.getElementById('qo-file').value = '';
+      document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.remove('has-file');
+      document.getElementById('qo-msg').textContent = '';
+      _qoLat = null; _qoLon = null;
+      buildQoPlantGrid([]);
+      quickObsBackdrop.style.display = 'flex';
+    }
+
+    function openQuickObsEdit(o) {
+      _qoEditId = o.id;
+      document.getElementById('qo-title').textContent = 'Bearbeiten';
+      document.getElementById('qo-date').value = o.date ?? '';
+      document.getElementById('qo-type').value = o.type ?? 'foto';
+      qoGarden.value = o.garden ?? '';
+      document.getElementById('qo-text').value = o.text ?? '';
+      document.getElementById('qo-file').value = '';
+      document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.remove('has-file');
+      document.getElementById('qo-msg').textContent = '';
+      _qoLat = o.lat ?? null; _qoLon = o.lon ?? null;
+      const suggestions = o.plantnet_suggestions ? JSON.parse(o.plantnet_suggestions) : [];
+      buildQoPlantGrid(o.slugs ?? [], suggestions);
+      quickObsBackdrop.style.display = 'flex';
+    }
+
+    document.getElementById('quick-obs-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
+    });
+    document.getElementById('add-obs-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
+    });
+    document.getElementById('add-herbar-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
+      document.getElementById('qo-type').value = 'herbarbeleg';
+    });
+    function closeQuickObs() { quickObsBackdrop.style.display = 'none'; _qoEditId = null; }
+    document.getElementById('quick-obs-close').addEventListener('click', closeQuickObs);
+    document.getElementById('qo-cancel').addEventListener('click', closeQuickObs);
+    let _qoLat = null, _qoLon = null;
+    document.getElementById('qo-file').addEventListener('change', async e => {
+      const file = e.target.files[0];
+      document.getElementById('qo-file-text').textContent = file?.name ?? 'Bild auswählen…';
+      document.getElementById('qo-file-label').classList.toggle('has-file', !!file);
+      _qoLat = null; _qoLon = null;
+      if (!file) return;
+      try {
+        const exifr = await import('exifr');
+        const [result, gps] = await Promise.all([
+          exifr.parse(file, ['DateTimeOriginal']),
+          exifr.gps(file),
+        ]);
+        if (result?.DateTimeOriginal)
+          document.getElementById('qo-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+        if (gps?.latitude != null) {
+          _qoLat = gps.latitude; _qoLon = gps.longitude;
+        } else if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            pos => { _qoLat = pos.coords.latitude; _qoLon = pos.coords.longitude; },
+            () => {},
+            { maximumAge: 60000, timeout: 10000 }
+          );
+        }
+      } catch {}
+      identifyPlant(file);
+    });
+    quickObsBackdrop.addEventListener('click', e => {
+      if (e.target === quickObsBackdrop) closeQuickObs();
+    });
+    document.getElementById('qo-submit').addEventListener('click', async () => {
+      const file = document.getElementById('qo-file').files[0];
+      const msg = document.getElementById('qo-msg');
+      msg.textContent = '';
+      const slugs = [...document.querySelectorAll('#qo-plant-grid input:checked')].map(i => i.value);
+      let filename = null;
+      try {
+        if (file) filename = await uploadToR2(file);
+        const body = {
+          date: document.getElementById('qo-date').value,
+          type: document.getElementById('qo-type').value,
+          garden: qoGarden.value || null,
+          text: document.getElementById('qo-text').value,
+          slugs,
+          ...(_qoLat != null && { lat: _qoLat, lon: _qoLon }),
+          ...(filename && { filename }),
+        };
+        if (_qoEditId) {
+          const patchRes = await authedFetch(`/api/observations/${_qoEditId}`, {
+            method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...body, plantnet_suggestions: null }),
+          });
+          if (!patchRes.ok) {
+            const errData = await patchRes.json().catch(() => ({}));
+            throw new Error(errData.error || `HTTP ${patchRes.status}`);
+          }
+          _qoEditId = null;
+        } else {
+          const obs = await authedFetch('/api/observations', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          }).then(r => r.json());
+          if (body.type === 'foto' && filename) {
+            document.getElementById('obs-carousel').prepend(buildCarouselItem({ ...obs, slugs }));
+          }
+        }
+        quickObsBackdrop.style.display = 'none';
+        if (activeGarden) {
+          _gardenObsCache = null;
+          loadGardenObsCarousel(activeGarden);
+          loadGardenHerbarCarousel(activeGarden);
+        }
+      } catch(e) {
+        msg.textContent = 'Fehler: ' + (e.message || 'Speichern fehlgeschlagen.');
+      }
+    });
+
+    obsToggle.addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      const open = obsForm.classList.toggle('open');
+      obsToggle.classList.toggle('open', open);
+      obsToggle.textContent = open ? '× Abbrechen' : '+ Neue Beobachtung';
+      if (open) buildPlantGrid(_modalSlug);
+    });
+
+    let _obsLat = null, _obsLon = null;
+    obsFile.addEventListener('change', async () => {
+      const file = obsFile.files[0];
+      _obsLat = null; _obsLon = null;
+      document.getElementById('obs-file-text').textContent = file?.name ?? 'Bild auswählen…';
+      obsFileLabel.classList.toggle('has-file', !!file);
+      if (file) {
+        try {
+          const exifr = await import('exifr');
+          const [result, gps] = await Promise.all([
+            exifr.parse(file, ['DateTimeOriginal']),
+            exifr.gps(file),
+          ]);
+          if (result?.DateTimeOriginal)
+            document.getElementById('obs-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+          if (gps?.latitude != null) {
+            _obsLat = gps.latitude; _obsLon = gps.longitude;
+          } else if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              pos => { _obsLat = pos.coords.latitude; _obsLon = pos.coords.longitude; },
+              () => {},
+              { maximumAge: 60000, timeout: 10000 }
+            );
+          }
+        } catch {}
+      }
+    });
+
+    document.getElementById('obs-cancel').addEventListener('click', closeObsForm);
+
+    let _editingObsId = null;
+
+    document.getElementById('obs-submit').addEventListener('click', async () => {
+      const slugs = [...document.querySelectorAll('#obs-plant-grid input:checked')].map(i => i.value);
+      let filename = null;
+      if (obsFile.files[0]) filename = await uploadToR2(obsFile.files[0]);
+      const body = {
+        garden: obsGarden.value,
+        date:   document.getElementById('obs-date').value,
+        type:   document.getElementById('obs-type').value,
+        text:   document.getElementById('obs-text').value,
+        slugs,
+        ...(filename && { filename }),
+        ...(_obsLat != null && { lat: _obsLat, lon: _obsLon }),
+      };
+
+      if (_editingObsId) {
+        await authedFetch(`/api/observations/${_editingObsId}`, {
+          method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        _editingObsId = null;
+      } else {
+        await authedFetch('/api/observations', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+      }
+
+      // reset form fields
+      document.getElementById('obs-date').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('obs-text').value = '';
+      obsFile.value = '';
+      document.getElementById('obs-file-text').textContent = 'Bild auswählen…';
+      obsFileLabel.classList.remove('has-file');
+
+      closeObsForm();
+      obsCache.delete(_modalSlug);
+      await renderObservations(_modalSlug);
+    });
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('opening');
+      modal.classList.add('closing');
+      modal.addEventListener('animationend', () => {
+        modal.classList.remove('closing');
+        backdrop.classList.remove('open');
+      }, { once: true });
+    }
+
+    backdrop.addEventListener('click', e => {
+      if (e.target === backdrop) closeModal();
+    });
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeModal();
+        document.getElementById('all-obs-backdrop').classList.remove('open');
+      }
+    });
+
+    // ── All observations modal ────────────────────────────────────────────────
+    const allObsBackdrop = document.getElementById('all-obs-backdrop');
+
+    async function openAllObs(typeFilter = null, gardenOverride = activeGarden) {
+      const list = document.getElementById('all-obs-list');
+      const titleEl = document.getElementById('all-obs-title');
+      if (typeFilter === 'herbarbeleg') titleEl.textContent = 'Herbarbelege';
+      else if (gardenOverride == null) titleEl.textContent = 'Meine Beobachtungen';
+      else titleEl.textContent = 'Beobachtungen';
+      list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
+      list.style.cssText = '';
+      allObsBackdrop.classList.add('open');
+
+      try {
+        const url = gardenOverride ? `/api/observations?garden=${gardenOverride}` : '/api/observations';
+        let obs = await fetch(url).then(r => r.json());
+        if (typeFilter) obs = obs.filter(o => o.type === typeFilter);
+        list.innerHTML = '';
+
+        if (!obs.length) {
+          list.innerHTML = `<div class="all-obs-empty">Noch keine ${typeFilter === 'herbarbeleg' ? 'Herbarbelege' : 'Beobachtungen'}</div>`;
+          return;
+        }
+
+        const isHerbar = typeFilter === 'herbarbeleg';
+        list.classList.toggle('herbar-grid', isHerbar);
+
+        if (isHerbar) {
+          obs.sort((a, b) => {
+            const nameA = a.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+            const nameB = b.slugs.map(s => bySlug.get(s)?.name ?? s).join(', ');
+            return nameA.localeCompare(nameB);
+          });
+        }
+
+        for (const o of obs) {
+          let card;
+          const onDelete = _currentUser ? async () => {
+            if (!confirm('Eintrag wirklich löschen?')) return;
+            await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+            await openAllObs(typeFilter, gardenOverride);
+          } : null;
+
+          if (isHerbar) {
+            card = document.createElement('div');
+            card.className = 'herbar-card';
+            if (o.filename) {
+              card.style.backgroundImage = `url('${R2_URL}/${o.filename}')`;
+              card.style.cursor = 'zoom-in';
+              card.addEventListener('click', e => {
+                if (e.target.closest('.obs-card-delete')) return;
+                document.getElementById('lightbox-img').src = `${R2_URL}/${o.filename}`;
+                document.getElementById('lightbox').classList.add('open');
+              });
+            }
+            if (onDelete) {
+              card.innerHTML = `<button class="obs-card-delete" title="Löschen">×</button>`;
+              card.querySelector('.obs-card-delete').addEventListener('click', onDelete);
+            }
+          } else {
+            const onEdit = _currentUser ? () => openQuickObsEdit(o) : null;
+            card = buildObsCard(o, { onEdit, onDelete });
+            if (o.filename) card.querySelector('img').addEventListener('load', () => masonryLayout(list, 6));
+          }
+
+          list.appendChild(card);
+        }
+        if (!isHerbar) masonryLayout(list, 6);
+      } catch {
+        list.innerHTML = '<div class="all-obs-empty">Server nicht erreichbar</div>';
+      }
+    }
+
+    document.getElementById('all-obs-close').addEventListener('click', () => allObsBackdrop.classList.remove('open'));
+    allObsBackdrop.addEventListener('click', e => { if (e.target === allObsBackdrop) allObsBackdrop.classList.remove('open'); });
+
+    document.getElementById('menu-my-obs-btn').addEventListener('click', () => {
+      closeMenu();
+      openAllObs(null, null);
+    });
+
+
+    // ── Column lock ──────────────────────────────────────────────────────────
+    document.getElementById('panels-area').addEventListener('click', () => {
+      document.getElementById('panels-area').classList.add('panels-locked');
+    });
+    document.getElementById('garden-description').addEventListener('click', () => {
+      document.getElementById('panels-area').classList.remove('panels-locked');
+    });
+
+    // ── Planting store ────────────────────────────────────────────────────────
+    const STORAGE_KEY = 'bluehendegaerten';
+
+    let store = (() => {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? null; } catch { return null; }
+    })() ?? { versions: [{ id: 'default', name: 'Garten 1', placements: [] }], currentId: 'default' };
+
+    // kick off plan fetch immediately; resolved later in Promise.all
+    const _planPromise = _activeGardenId
+      ? fetch('/api/plans/' + _activeGardenId).then(r => r.ok ? r.json() : null).catch(() => null)
+      : Promise.resolve(null);
+
+    function currentVersion() {
+      return store.versions.find(v => v.id === store.currentId) ?? store.versions[0];
+    }
+
+    function savePlan() {
+      store._savedAt = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+      authedFetch('/api/plans/' + activeGarden, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: JSON.stringify(store) }),
+      }).catch(() => {});
+    }
+
+    function addPlacement(slug, x, z) {
+      const ver = currentVersion();
+      if (!ver.placements) ver.placements = [];
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+      ver.placements.push({ id, slug, x: +x.toFixed(3), z: +z.toFixed(3) });
+      savePlan();
+      renderBedPlan();
+    }
+
+    function removePlacement(id) {
+      const ver = currentVersion();
+      if (!ver.placements) return;
+      ver.placements = ver.placements.filter(p => p.id !== id);
+      savePlan();
+      renderBedPlan();
+    }
+
+    function renderVersionSelect() {
+      const sel = document.getElementById('version-select-plan');
+      sel.innerHTML = store.versions.map(v =>
+        `<option value="${v.id}"${v.id === store.currentId ? ' selected' : ''}>${v.name}</option>`
+      ).join('');
+    }
+
+    document.getElementById('version-select-plan').addEventListener('change', e => {
+      store.currentId = e.target.value;
+      savePlan();
+      renderBedPlan();
+    });
+
+    renderVersionSelect();
+
+    // ── Edit mode ─────────────────────────────────────────────────────────────
+    let editMode = false;
+    let selectedSlug = null;
+
+    function updateDensityCtrl() {
+      const ctrl = document.getElementById('density-ctrl');
+      if (!selectedSlug || !editMode) { ctrl.style.display = 'none'; return; }
+      ctrl.style.display = 'flex';
+      const density = currentVersion().densities?.[selectedSlug] ?? 1;
+      document.getElementById('density-val').textContent = density;
+    }
+
+    function setDensity(delta) {
+      const ver = currentVersion();
+      if (!ver.densities) ver.densities = {};
+      const cur = ver.densities[selectedSlug] ?? 1;
+      ver.densities[selectedSlug] = Math.max(1, Math.min(16, cur + delta));
+      savePlan();
+      updateDensityCtrl();
+    }
+
+    document.getElementById('density-dec').addEventListener('click', () => setDensity(-1));
+    document.getElementById('density-inc').addEventListener('click', () => setDensity(+1));
+
+    function setSelectedSlug(slug) {
+      selectedSlug = slug;
+      const label = document.getElementById('selected-plant-label');
+      label.textContent = slug ? (bySlug.get(slug)?.name ?? slug) : 'Keine Pflanze gewählt';
+      document.querySelectorAll('.plant-card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.slug === slug);
+      });
+      updateDensityCtrl();
+    }
+
+    document.getElementById('edit-mode-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      editMode = !editMode;
+      document.body.classList.toggle('edit-mode', editMode);
+      document.getElementById('edit-mode-btn').classList.toggle('active', editMode);
+      document.getElementById('edit-mode-btn').textContent = editMode ? 'Fertig' : 'Bearbeiten';
+      document.getElementById('bed-plan').classList.toggle('editable', editMode);
+      document.getElementById('clear-plan-btn').style.display = editMode ? '' : 'none';
+      if (!editMode) { setSelectedSlug(null); document.getElementById('density-ctrl').style.display = 'none'; }
+      renderBedPlan();
+      render();
+    });
+
+    document.getElementById('clear-plan-btn').addEventListener('click', () => {
+      if (!confirm('Alle Pflanzungen in dieser Version löschen?')) return;
+      currentVersion().placements = [];
+      savePlan();
+      renderBedPlan();
+    });
+
+    // ── Bed plan ─────────────────────────────────────────────────────────────────
+    const BED_L = 9, BED_GAP = 0.5;
+    const bedWidths = [1.5, 1.5, 1.5, 1.5, 3.0, 1.5, 1.5, 1.5, 3.0];
+    const totalZ = bedWidths.reduce((a, b) => a + b, 0) + BED_GAP * (bedWidths.length - 1);
+    const bedLayout = (() => {
+      let cursor = -totalZ / 2;
+      return bedWidths.map((w, i) => {
+        const z = cursor + w / 2;
+        cursor += w + BED_GAP;
+        return { w, z, i };
+      });
+    })();
+
+    function inBed(sx, sz) {
+      return Math.abs(sx) <= BED_L / 2 - 0.01 &&
+        bedLayout.some(bed => sz >= bed.z - bed.w / 2 + 0.01 && sz <= bed.z + bed.w / 2 - 0.01);
+    }
+
+    function svgWorldCoords(e) {
+      const svg = document.querySelector('#bed-plan svg');
+      if (!svg) return null;
+      const rect = svg.getBoundingClientRect();
+      const vb   = svg.viewBox.baseVal;
+      return {
+        x: (e.clientX - rect.left) / rect.width  * vb.width  + vb.x,
+        z: (e.clientY - rect.top)  / rect.height * vb.height + vb.y,
+      };
+    }
+
+const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.slug, p.color ?? '#ccc']));
+
+    let bedImages = {}; // bed_index → filename
+
+    async function loadBedImages() {
+      try {
+        const rows = await fetch(`/api/bed-images?garden=${activeGarden}`).then(r => r.json());
+        bedImages = Object.fromEntries(rows.map(r => [r.bed_index, r.filename]));
+      } catch {}
+    }
+
+    function renderBedPlan() {
+      const PAD = 0.15;
+      const vbX = -BED_L / 2 - PAD;
+      const vbY = -totalZ / 2 - PAD;
+      const vbW = BED_L + PAD * 2;
+      const vbH = totalZ + PAD * 2;
+      const colors = colorBySlug();
+
+      let svg = `<svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">`;
+
+      for (const bed of bedLayout) {
+        const x0 = -BED_L / 2;
+        const z0 = bed.z - bed.w / 2;
+        svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.02"/>`;
+
+        if (editMode && bedImages[bed.i]) {
+          svg += `<image href="${R2_URL}/${bedImages[bed.i]}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid meet" opacity="0.45"/>`;
+        }
+
+        svg += `<text x="${x0 + 0.1}" y="${z0 + 0.28}" font-size="0.22" fill="#aaa" font-family="system-ui">${bed.i + 1}</text>`;
+        svg += `<line x1="0" y1="${z0}" x2="0" y2="${z0 + bed.w}" stroke="#000" stroke-width="0.025" opacity="0.5"/>`;
+        if (editMode) {
+          const btnW = 0.6, btnH = 0.28, btnX = x0 + BED_L - btnW - 0.1, btnY = z0 + 0.08;
+          svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#555' : '#888'}" opacity="0.7" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
+          svg += `<text x="${btnX + btnW/2}" y="${btnY + 0.19}" font-size="0.16" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '🖼 Bild' : '+ Bild'}</text>`;
+        }
+      }
+
+      // placements
+      const ver = currentVersion();
+      const placements = ver?.placements ?? [];
+      const dotR = entry => (entry?.worldW ?? 0.4) / 2;
+
+      for (const p of placements) {
+        const entry = bySlug.get(p.slug);
+        const matches = !filterText || [entry?.name, entry?.name_de, entry?.family]
+          .some(s => s?.toLowerCase().includes(filterText));
+        const color   = colors[p.slug] ?? '#ccc';
+        const opacity = !filterText ? 0.85 : matches ? 0.85 : 0.15;
+        const r       = dotR(entry);
+        const isSelected = editMode && p.slug === selectedSlug;
+        svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r.toFixed(3)}"
+          fill="${color}" opacity="${opacity}"
+          stroke="${isSelected ? '#000' : 'none'}" stroke-width="0.04"
+          data-slug="${p.slug}" data-id="${p.id}"
+          data-name="${entry?.name ?? p.slug}" data-de="${entry?.name_de ?? ''}"/>`;
+      }
+
+      svg += '</svg>';
+      document.getElementById('bed-plan').innerHTML = svg;
+    }
+
+    let activeGarden = _activeGardenId;
+    let filterText = '';
+
+    // ── Custom plants ─────────────────────────────────────────────────────────
+
+    function toSlug(name) {
+      return name.toLowerCase()
+        .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+        .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    }
+
+    async function loadCustomPlants() {
+      try {
+        const plants = await fetch('/api/custom-plants').then(r => r.json());
+        for (const p of plants) {
+          bySlug.set(p.slug, {
+            slug: p.slug, name: p.name, name_de: p.name_de, family: p.family,
+            color: p.color, worldW: p.world_w, worldH: p.world_h,
+            _custom: true,
+          });
+          if (!stagesBySlug.has(p.slug)) stagesBySlug.set(p.slug, []);
+        }
+      } catch {}
+    }
+
+    const [_planData, , , _plantInfoRows] = await Promise.all([
+      _planPromise,
+      loadCustomPlants(),
+      loadBedImages(),
+      fetch('/api/plant-info/all').then(r => r.json()).catch(() => []),
+    ]);
+
+    let hasPlan = !!_planData?.data;
+    document.body.classList.toggle('no-plan', !hasPlan);
+
+    if (_planData?.data) {
+      try {
+        const srv = JSON.parse(_planData.data);
+        if (!store._savedAt || (srv._savedAt ?? 0) > store._savedAt) {
+          store = srv;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          renderVersionSelect();
+        }
+      } catch {}
+    }
+
+    for (const row of _plantInfoRows ?? []) {
+      const p = bySlug.get(row.slug);
+      if (!p) continue;
+      const w = parseCm(row.breite); if (w) p.worldW = w / 100;
+      const h = parseCm(row.hoehe);  if (h) p.worldH = h / 100;
+    }
+    loadPlantInfoSuggestions();
+
+    for (const [slug, color] of Object.entries(store.colorOverrides ?? {})) {
+      const p = bySlug.get(slug);
+      if (p) p.color = color;
+    }
+    for (const [slug, ov] of Object.entries(store.nameOverrides ?? {})) {
+      const p = bySlug.get(slug);
+      if (p) { if (ov.name) p.name = ov.name; if (ov.name_de) p.name_de = ov.name_de; if (ov.family) p.family = ov.family; }
+    }
+
+    const addPlantBtn  = document.getElementById('add-plant-btn');
+    const addPlantForm = document.getElementById('add-plant-form');
+
+    function closeAddPlantForm() {
+      addPlantForm.classList.remove('open');
+      addPlantBtn.classList.remove('open');
+      addPlantBtn.textContent = '+ Pflanze';
+      document.getElementById('apf-error').style.display = 'none';
+    }
+
+    addPlantBtn.addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      const open = addPlantForm.classList.toggle('open');
+      addPlantBtn.classList.toggle('open', open);
+      addPlantBtn.textContent = open ? '× Abbrechen' : '+ Pflanze';
+      if (open) document.getElementById('apf-name').focus();
+    });
+
+    document.getElementById('apf-cancel').addEventListener('click', closeAddPlantForm);
+
+    // ── GBIF taxonomy lookup ──────────────────────────────────────────────────
+    const FAMILY_COLORS = {
+      Asteraceae:     '#f5d040',
+      Lamiaceae:      '#9b7fc7',
+      Rosaceae:       '#f5a0b0',
+      Ranunculaceae:  '#6b9fd4',
+      Apiaceae:       '#d4c878',
+      Papaveraceae:   '#e85545',
+      Fabaceae:       '#d478c8',
+      Boraginaceae:   '#5878d4',
+      Solanaceae:     '#a060d0',
+      Brassicaceae:   '#e8d040',
+      Amaranthaceae:  '#c84848',
+      Primulaceae:    '#f5c040',
+      Paeoniaceae:    '#e878a0',
+      Tropaeolaceae:  '#f59020',
+      Plantaginaceae: '#6878d4',
+      Polygonaceae:   '#d4a878',
+      Campanulaceae:  '#7890d4',
+      Scrophulariaceae:'#a07fd4',
+      Caryophyllaceae:'#f0a0c8',
+      Violaceae:      '#7860c8',
+      Geraniaceae:    '#d47880',
+    };
+
+    function applyFamilyColor(family) {
+      const apfColor = document.getElementById('apf-color');
+      const color = FAMILY_COLORS[family];
+      if (color) apfColor.value = color;
+    }
+    let _gbifTimer = null;
+    const apfName   = document.getElementById('apf-name');
+    const apfFamily = document.getElementById('apf-family');
+    const apfLookupStatus = (() => {
+      const el = document.createElement('span');
+      el.style.cssText = 'font-size:10px;color:#aaa;margin-left:8px;';
+      apfFamily.parentElement.appendChild(el);
+      return el;
+    })();
+
+    const apfNameDe = document.getElementById('apf-name-de');
+    let _gbifDeTimer = null;
+
+    apfNameDe.addEventListener('input', () => {
+      clearTimeout(_gbifDeTimer);
+      const q = apfNameDe.value.trim();
+      if (q.length < 3) return;
+      _gbifDeTimer = setTimeout(async () => {
+        try {
+          apfLookupStatus.textContent = '…';
+          // Step 1: Wikidata search (handles aliases + case) → scientific name
+          // prefer species-rank hits over genus
+          const searchRes = await fetch(
+            `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=de&type=item&limit=8&format=json&origin=*`
+          ).then(r => r.json());
+
+          let sciName = null;
+          let sciNameGenus = null;
+          for (const hit of searchRes.search ?? []) {
+            const ent = await fetch(
+              `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${hit.id}&props=claims&format=json&origin=*`
+            ).then(r => r.json());
+            const claims = ent.entities?.[hit.id]?.claims ?? {};
+            const sci = claims.P225?.[0]?.mainsnak?.datavalue?.value;
+            if (!sci) continue;
+            const rankId = claims.P105?.[0]?.mainsnak?.datavalue?.value?.id;
+            if (rankId === 'Q7432') { sciName = sci; break; }          // species
+            if (!sciNameGenus) sciNameGenus = sci;                       // genus fallback
+          }
+          if (!sciName) sciName = sciNameGenus;
+          if (!sciName) { apfLookupStatus.textContent = 'nicht gefunden'; return; }
+
+          if (!apfName.value) apfName.value = sciName;
+
+          // Step 2: GBIF match → family
+          const gbif = await fetch(
+            `https://api.gbif.org/v1/species/match?kingdom=Plantae&name=${encodeURIComponent(sciName)}`
+          ).then(r => r.json());
+          if (gbif.family) {
+            if (!apfFamily.value) { apfFamily.value = gbif.family; applyFamilyColor(gbif.family); }
+            apfLookupStatus.textContent = gbif.family;
+          }
+        } catch { apfLookupStatus.textContent = ''; }
+      }, 600);
+    });
+
+    apfName.addEventListener('input', () => {
+      clearTimeout(_gbifTimer);
+      const q = apfName.value.trim();
+      if (q.length < 4) return;
+      apfLookupStatus.textContent = '…';
+      _gbifTimer = setTimeout(async () => {
+        try {
+          const data = await fetch(
+            `https://api.gbif.org/v1/species/match?kingdom=Plantae&name=${encodeURIComponent(q)}`
+          ).then(r => r.json());
+          if (data.family && (data.confidence ?? 0) >= 70) {
+            if (!apfFamily.value) { apfFamily.value = data.family; applyFamilyColor(data.family); }
+            apfLookupStatus.textContent = `${data.family} · ${data.confidence}%`;
+          } else {
+            apfLookupStatus.textContent = data.matchType === 'NONE' ? 'nicht gefunden' : '';
+          }
+        } catch {
+          apfLookupStatus.textContent = '';
+        }
+      }, 600);
+    });
+
+    document.getElementById('apf-submit').addEventListener('click', async () => {
+      const name    = document.getElementById('apf-name').value.trim();
+      const name_de = document.getElementById('apf-name-de').value.trim();
+      const family  = document.getElementById('apf-family').value.trim();
+      const width   = parseFloat(document.getElementById('apf-width').value) || 50;
+      const height  = parseFloat(document.getElementById('apf-height').value) || 100;
+      const color   = document.getElementById('apf-color').value;
+      const errEl   = document.getElementById('apf-error');
+
+      if (!name) { errEl.textContent = 'Botanischer Name fehlt.'; errEl.style.display = ''; return; }
+
+      const slug = toSlug(name);
+      const res = await authedFetch('/api/custom-plants', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slug, name, name_de, family, color,
+          world_w: width / 100, world_h: height / 100,
+          garden: activeGarden,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        errEl.textContent = err.error === 'slug already exists' ? 'Pflanze existiert bereits.' : err.error;
+        errEl.style.display = '';
+        return;
+      }
+
+      const p = await res.json();
+      const entry = {
+        slug: p.slug, name: p.name, name_de: p.name_de, family: p.family,
+        color: p.color, worldW: p.world_w, worldH: p.world_h, _custom: true,
+      };
+      bySlug.set(p.slug, entry);
+      if (!stagesBySlug.has(p.slug)) stagesBySlug.set(p.slug, []);
+      const g = gardens.find(g => g.id === p.garden);
+      if (g && !g.plants.includes(p.slug)) g.plants.push(p.slug);
+
+      // reset form
+      ['apf-name','apf-name-de','apf-family','apf-width','apf-height'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('apf-color').value = '#a0c878';
+      errEl.style.display = 'none';
+      closeAddPlantForm();
+      render();
+    });
+
+    renderBedPlan();
+
+    const tooltip = document.getElementById('bed-tooltip');
+    let _uploadBedIndex = null;
+    const bedImgInput = document.getElementById('bed-img-input');
+    bedImgInput.addEventListener('change', async () => {
+      const file = bedImgInput.files[0];
+      if (!file || _uploadBedIndex === null) return;
+      try {
+        const filename = await uploadToR2(file);
+        await authedFetch('/api/bed-images', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ garden: activeGarden, bed_index: _uploadBedIndex, filename }),
+        });
+        await loadBedImages();
+        renderBedPlan();
+      } catch {}
+      bedImgInput.value = '';
+      _uploadBedIndex = null;
+    });
+
+    let _lastTappedCircle = null;
+    document.getElementById('bed-plan').addEventListener('click', e => {
+      if (editMode) {
+        const uploadEl = e.target.closest('[data-upload-bed]');
+        if (uploadEl) {
+          _uploadBedIndex = parseInt(uploadEl.dataset.uploadBed);
+          bedImgInput.click();
+          return;
+        }
+        const el = e.target.closest('circle[data-id]');
+        if (el && el.dataset.slug === selectedSlug) {
+          removePlacement(el.dataset.id);
+          return;
+        }
+        if (!selectedSlug) return;
+        const coords = svgWorldCoords(e);
+        if (!coords) return;
+        if (inBed(coords.x, coords.z)) addPlacement(selectedSlug, coords.x, coords.z);
+      } else {
+        const el = e.target.closest('circle[data-slug]');
+        if (!el) { _lastTappedCircle = null; tooltip.style.display = 'none'; return; }
+        const p = bySlug.get(el.dataset.slug);
+        if (!p) return;
+        if (window.innerWidth <= 767) {
+          if (_lastTappedCircle === el) {
+            tooltip.style.display = 'none';
+            _lastTappedCircle = null;
+            openModal(p);
+          } else {
+            _lastTappedCircle = el;
+            tooltip.querySelector('.tt-name').textContent = el.dataset.name;
+            tooltip.querySelector('.tt-de').textContent = el.dataset.de;
+            tooltip.style.display = 'block';
+            tooltip.style.left = (e.clientX + 12) + 'px';
+            tooltip.style.top  = (e.clientY + 12) + 'px';
+          }
+        } else {
+          openModal(p);
+        }
+      }
+    });
+
+    document.getElementById('bed-plan').addEventListener('mousemove', e => {
+      const el = e.target.closest('circle[data-slug]');
+      if (el) {
+        tooltip.querySelector('.tt-name').textContent = el.dataset.name;
+        tooltip.querySelector('.tt-de').textContent = el.dataset.de;
+        tooltip.style.display = 'block';
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top  = (e.clientY + 12) + 'px';
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+    document.getElementById('bed-plan').addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+
+    document.getElementById('plant-filter').addEventListener('input', e => {
+      filterText = e.target.value.toLowerCase();
+      render();
+      renderBedPlan();
+    });
+
+    function render() {
+      // index: all plants; garden + edit: all plants; garden view: plan placements ∪ observed slugs
+      let slugs = null;
+      if (activeGarden && !editMode) {
+        slugs = new Set(_gardenObsSlugs);
+        if (hasPlan) {
+          for (const ver of store.versions ?? []) {
+            for (const p of ver.placements ?? []) slugs.add(p.slug);
+          }
+        }
+      }
+
+      const plants = [...bySlug.values()]
+        .filter(p => !slugs || slugs.has(p.slug))
+        .filter(p => !filterText ||
+          p.name.toLowerCase().includes(filterText) ||
+          (p.name_de ?? '').toLowerCase().includes(filterText) ||
+          (p.family ?? '').toLowerCase().includes(filterText))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      const globalMaxW = Math.max(...[...bySlug.values()].map(p => p.worldW ?? 0.3));
+
+      const grid = document.getElementById('plant-grid');
+      grid.innerHTML = '';
+      plants.forEach(p => {
+        const dotSize = Math.round((p.worldW ?? 0.3) / globalMaxW * 64);
+        const card = document.createElement('div');
+        card.className = 'plant-card' + (editMode && p.slug === selectedSlug ? ' selected' : '');
+        card.dataset.slug = p.slug;
+        card.style.setProperty('--dot-color', p.color ?? '#ccc');
+        card.style.setProperty('--card-fg', contrastColor(p.color ?? '#ccc'));
+        card.addEventListener('mouseenter', () => {
+          if (!obsCache.has(p.slug))
+            fetch(`/api/observations?slug=${p.slug}`).then(r => r.json()).then(d => obsCache.set(p.slug, d)).catch(() => {});
+        }, { once: true });
+        card.innerHTML = `
+          <span class="card-dot" style="background:${p.color ?? '#ccc'};width:${dotSize}px;height:${dotSize}px"></span>
+          <span class="card-name">${p.name}</span>
+          <div class="card-meta-row">
+            ${'' /* p._invasiv ? '<span class="card-invasiv">⚠</span>' : '' */}
+            <div>
+              <div class="card-de">${p.name_de ?? ''}</div>
+              <div class="card-family">${p.family ?? ''}</div>
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          if (editMode) { setSelectedSlug(p.slug === selectedSlug ? null : p.slug); renderBedPlan(); render(); }
+          else openModal(p);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function applyGarden(gardenId) {
+      activeGarden = gardenId;
+      const g = gardens.find(g => g.id === gardenId);
+      document.body.classList.toggle('index-mode', !gardenId);
+      if (g) {
+        document.getElementById('garden-big-title').textContent = g.name;
+        document.getElementById('garden-title').innerHTML = '';
+        document.getElementById('garden-info').innerHTML = g.description ?? '';
+      }
+      document.querySelectorAll('.garden-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.gardenId === gardenId));
+      if (editMode) { editMode = false; document.body.classList.remove('edit-mode'); }
+      render();
+      _gardenObsCache = null;
+      _gardenObsSlugs = new Set();
+      loadGardenObsCarousel(gardenId);
+      loadGardenHerbarCarousel(gardenId);
+      if (gardenId) {
+        fetch('/api/plans/' + gardenId).then(r => {
+          hasPlan = r.ok;
+          document.body.classList.toggle('no-plan', !hasPlan);
+        }).catch(() => {});
+      } else {
+        document.body.classList.add('no-plan');
+      }
+    }
+
+    let _gardenObsCache = null;
+    let _gardenObsCacheId = null;
+    let _gardenObsSlugs = new Set();
+
+    async function fetchGardenObs(gardenId) {
+      if (_gardenObsCacheId === gardenId && _gardenObsCache) return _gardenObsCache;
+      const all = await fetch(`/api/observations?garden=${gardenId}`).then(r => r.json());
+      _gardenObsCache = all;
+      _gardenObsCacheId = gardenId;
+      _gardenObsSlugs = new Set(all.flatMap(o => o.slugs ?? []));
+      render();
+      return all;
+    }
+
+    const byCreatedAtDesc = (a, b) => new Date(b.created_at) - new Date(a.created_at);
+
+    function loadGardenObsCarousel(gardenId) {
+      const carousel = document.getElementById('garden-obs-carousel');
+      carousel.innerHTML = '';
+      if (!gardenId) return;
+      fetchGardenObs(gardenId).then(all => {
+        const photos = all.filter(o => o.filename && o.type === 'foto').sort(byCreatedAtDesc);
+        photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
+      }).catch(() => {});
+    }
+
+    function loadGardenHerbarCarousel(gardenId) {
+      const carousel = document.getElementById('garden-herbar-carousel');
+      carousel.innerHTML = '';
+      if (!gardenId) return;
+      fetchGardenObs(gardenId).then(all => {
+        const herbar = all.filter(o => o.filename && o.type === 'herbarbeleg').sort(byCreatedAtDesc);
+        herbar.forEach(o => carousel.appendChild(buildCarouselItem(o)));
+      }).catch(() => {});
+    }
+
+    const gardenList = document.getElementById('garden-list');
+    gardens.forEach(g => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '/' + (g.path ?? g.id);
+      a.textContent = g.name;
+      li.appendChild(a);
+      gardenList.appendChild(li);
+    });
+
+    if (gardens.length > 1) {
+      gardens.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'garden-btn' + (g.id === activeGarden ? ' active' : '');
+        btn.dataset.gardenId = g.id;
+        btn.textContent = g.name;
+        btn.onclick = () => {
+          const path = '/' + (g.path ?? g.id);
+          history.pushState({ gardenId: g.id }, '', path);
+          applyGarden(g.id);
+        };
+        document.getElementById('garden-bar').appendChild(btn);
+      });
+    }
+
+    window.addEventListener('popstate', e => {
+      const urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
+      const g = gardens.find(g => (g.path ?? g.id) === urlPath);
+      applyGarden(g?.id ?? null);
+    });
+
+    const activeG = gardens.find(g => g.id === activeGarden);
+    if (activeG) {
+      document.getElementById('garden-big-title').textContent = activeG.name;
+      document.getElementById('garden-title').innerHTML = '';
+      document.getElementById('garden-info').innerHTML = activeG.description ?? '';
+    }
+
+    const loader = document.getElementById('loader');
+    loader.classList.add('hidden');
+    loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+
+    document.body.classList.toggle('index-mode', !activeGarden);
+    render();
+    loadGardenObsCarousel(activeGarden);
+    loadGardenHerbarCarousel(activeGarden);
+    document.getElementById('content').classList.add('ready');
+
+    // ── Index photo carousel ──────────────────────────────────────────────────
+    function buildCarouselItem(o) {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      const plantName = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
+      const gardenName = o.garden ? (gardens.find(g => g.id === o.garden)?.name ?? o.garden) : null;
+      item.innerHTML = `
+        <div class="carousel-item-img">
+          <img src="${thumbUrl(o.filename)}" onerror="onThumbError(this,'${o.filename}')" loading="lazy">
+        </div>
+        <div class="carousel-item-meta">
+          ${plantName ? `<div class="carousel-item-plants">${plantName}</div>` : ''}
+          ${gardenName ? `<div class="carousel-item-garden">${gardenName}</div>` : (o.lat != null ? `<div class="carousel-item-gps"></div>` : '')}
+          ${o.date ? `<div class="carousel-item-date">${o.date}</div>` : ''}
+        </div>
+        ${_currentUser ? `<div class="carousel-item-btns">
+          <button class="carousel-item-edit" title="Bearbeiten">✎</button>
+          <button class="carousel-item-del" title="Löschen">×</button>
+        </div>` : ''}
+      `;
+      if (o.lat != null && !gardenName) {
+        const el = item.querySelector('.carousel-item-gps');
+        if (o.place) { if (el) el.textContent = o.place; }
+        else getPlace(o.lat, o.lon).then(p => {
+          if (el && p) el.textContent = p;
+          if (p) authedFetch(`/api/observations/${o.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ place: p }) }).catch(() => {});
+        });
+      }
+      item.querySelector('.carousel-item-img').addEventListener('click', () => {
+        lightboxImg.src = `${R2_URL}/${o.filename}`;
+        lightbox.classList.add('open');
+      });
+      if (_currentUser) {
+        item.querySelector('.carousel-item-edit').addEventListener('click', () => openQuickObsEdit(o));
+        item.querySelector('.carousel-item-del').addEventListener('click', async () => {
+          if (!confirm('Eintrag wirklich löschen?')) return;
+          await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+          item.remove();
+        });
+      }
+      return item;
+    }
+
+    fetch('/api/observations').then(r => r.json()).then(all => {
+      const photos = all.filter(o => o.filename && o.type === 'foto').sort(byCreatedAtDesc);
+      if (!photos.length) return;
+      const carousel = document.getElementById('obs-carousel');
+      photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
+    }).catch(() => {});
+
+
+    // ── Lightbox ──────────────────────────────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('obs-card-thumb')) {
+        lightboxImg.src = e.target.src;
+        lightbox.classList.add('open');
+      }
+    });
+
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+    // ── Mobile panel expand/collapse ──────────────────────────────────────────
+    if (window.innerWidth <= 767) {
+      const obs = document.getElementById('observations');
+      const plantCol = document.getElementById('plant-col');
+      obs.querySelector('.col-header').addEventListener('click', () => {
+        const open = obs.classList.toggle('panel-open');
+        if (open) plantCol.classList.remove('panel-open');
+      });
+      plantCol.querySelector('#plant-col-header').addEventListener('click', () => {
+        const open = plantCol.classList.toggle('panel-open');
+        if (open) obs.classList.remove('panel-open');
+      });
+      document.getElementById('garden-description').addEventListener('click', () => {
+        obs.classList.remove('panel-open');
+        plantCol.classList.remove('panel-open');
+      });
+    }
+
+  </script>
+</body>
+</html>

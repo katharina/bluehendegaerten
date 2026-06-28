@@ -1,0 +1,356 @@
+/* ─── Typography primitives ──────────────────────────────────────────────────
+   Source: Mode 1.tokens-2.json
+   Usage:  text-hb-01 (12px) … text-hb-10 (72px)
+           font-hb-thin (100) … font-hb-black (900)
+─────────────────────────────────────────────────────────────────────────────── */
+:root {
+  --hb-font-size-01: 12px;
+  --hb-font-size-02: 14px;
+  --hb-font-size-03: 16px;
+  --hb-font-size-04: 20px;
+  --hb-font-size-05: 24px;
+  --hb-font-size-06: 32px;
+  --hb-font-size-07: 40px;
+  --hb-font-size-08: 48px;
+  --hb-font-size-09: 64px;
+  --hb-font-size-10: 100px;
+
+  --hb-font-weight-thin:        100;
+  --hb-font-weight-extralight:  200;
+  --hb-font-weight-light:       300;
+  --hb-font-weight-regular:     400;
+  --hb-font-weight-medium:      500;
+  --hb-font-weight-semibold:    600;
+  --hb-font-weight-bold:        700;
+  --hb-font-weight-extrabold:   800;
+  --hb-font-weight-black:       900;
+}
+
+/* ─── Spacing primitives ─────────────────────────────────────────────────────
+   Source: Default.tokens-1.json
+   Usage:  p-hb-100 (4px), gap-hb-600 (24px), -m-hb-n200 (-8px), etc.
+─────────────────────────────────────────────────────────────────────────────── */
+:root {
+  --hb-space-0:    0px;
+  --hb-space-050:  2px;
+  --hb-space-100:  4px;
+  --hb-space-150:  6px;
+  --hb-space-200:  8px;
+  --hb-space-300:  12px;
+  --hb-space-400:  16px;
+  --hb-space-500:  20px;
+  --hb-space-600:  24px;
+  --hb-space-700:  28px;
+  --hb-space-800:  32px;
+  --hb-space-900:  36px;
+  --hb-space-1100: 44px;
+  --hb-space-1200: 48px;
+  --hb-space-1600: 64px;
+  --hb-space-2000: 80px;
+  --hb-space-2400: 96px;
+  --hb-space-4000: 160px;
+
+  --hb-space-n100: -4px;
+  --hb-space-n200: -8px;
+  --hb-space-n300: -12px;
+  --hb-space-n400: -16px;
+  --hb-space-n600: -24px;
+}
+
+/* ─── Radius primitives ───────────────────────────────────────────────────────
+   Source: Default.tokens.json
+   Usage:  rounded-hb-100 (4px), rounded-hb-200 (8px), rounded-hb-400 (16px), rounded-hb-full (9999px)
+─────────────────────────────────────────────────────────────────────────────── */
+:root {
+  --hb-radius-100:  2px;
+  --hb-radius-200:  8px;
+  --hb-radius-400:  16px;
+  --hb-radius-full: 9999px;
+}
+
+/* ─── Color primitives ────────────────────────────────────────────────────────
+   Source: color-primitives.json
+   Usage:  bg-hb-black-200, text-hb-black-500, border-hb-white-300, etc.
+─────────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* hb-black */
+  --hb-black-100:  rgba(0, 0, 0, 0.05);
+  --hb-black-200:  rgba(0, 0, 0, 0.10);
+  --hb-black-300:  rgba(0, 0, 0, 0.20);
+  --hb-black-400:  rgba(0, 0, 0, 0.40);
+  --hb-black-500:  rgba(0, 0, 0, 0.70);
+  --hb-black-600:  rgba(0, 0, 0, 0.80);
+  --hb-black-700:  rgba(0, 0, 0, 0.85);
+  --hb-black-800:  rgba(0, 0, 0, 0.90);
+  --hb-black-900:  rgba(0, 0, 0, 0.95);
+  --hb-black-1000: rgba(0, 0, 0, 1);
+
+  /* error */
+  --hb-color-error: #cc0000;
+
+  /* hb-white */
+  --hb-white-100:  rgba(255, 255, 255, 0.05);
+  --hb-white-200:  rgba(255, 255, 255, 0.10);
+  --hb-white-300:  rgba(255, 255, 255, 0.20);
+  --hb-white-400:  rgba(255, 255, 255, 0.40);
+  --hb-white-500:  rgba(255, 255, 255, 0.70);
+  --hb-white-600:  rgba(255, 255, 255, 0.80);
+  --hb-white-700:  rgba(255, 255, 255, 0.85);
+  --hb-white-800:  rgba(255, 255, 255, 0.90);
+  --hb-white-900:  rgba(255, 255, 255, 0.95);
+  --hb-white-1000: rgba(255, 255, 255, 1);
+}
+
+/* ─── Semantic tokens ─────────────────────────────────────────────────────── */
+:root {
+  --hb-background:                var(--hb-white-1000);
+  --hb-text:                      var(--hb-black-1000);
+  --hb-card:                      var(--hb-black-100);
+  --hb-border:                    var(--hb-black-200);
+  --hb-muted:                     var(--hb-font-color-500);
+  --hb-color-error:               #dc2626;
+  --hb-button-radius:             var(--hb-radius-full);
+  --hb-input-radius:             var(--hb-radius-100);
+  --hb-button-primary-background: var(--hb-black-1000);
+  --hb-button-primary-color:      var(--hb-white-1000);
+  --hb-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(0%2C0%2C0%2C0.5)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hb-tab-active:                var(--hb-white-1000);
+}
+
+
+[data-theme="dark"] {
+  --hb-background: var(--hb-black-1000);
+  --hb-text:       var(--hb-white-1000);
+  --hb-card:       var(--hb-white-200);
+  --hb-border:       var(--hb-white-200);
+  --hb-color-error:  #f87171;
+
+  --hb-font-color-100:   var(--hb-white-100);
+  --hb-font-color-200:   var(--hb-white-200);
+  --hb-font-color-300:   var(--hb-white-300);
+  --hb-font-color-400:   var(--hb-white-400);
+  --hb-font-color-500:   var(--hb-white-500);
+  --hb-font-color-600:   var(--hb-white-600);
+  --hb-font-color-700:   var(--hb-white-700);
+  --hb-font-color-800:   var(--hb-white-800);
+  --hb-font-color-900:   var(--hb-white-900);
+  --hb-font-color-1000:  var(--hb-white-1000);
+
+  --hb-color-100:   var(--hb-white-100);
+  --hb-color-200:   var(--hb-white-200);
+  --hb-color-300:   var(--hb-white-300);
+  --hb-color-400:   var(--hb-white-400);
+  --hb-color-500:   var(--hb-white-500);
+  --hb-color-600:   var(--hb-white-600);
+  --hb-color-700:   var(--hb-white-700);
+  --hb-color-800:   var(--hb-white-800);
+  --hb-color-900:   var(--hb-white-900);
+  --hb-color-1000:  var(--hb-white-1000);
+
+  --hb-button-primary-background: var(--hb-white-1000);
+  --hb-button-primary-color:      var(--hb-black-1000);
+  
+  --hb-input-border-color:          var(--hb-white-400);
+  --hb-input-border-color-focus:    var(--hb-white-800);
+  --hb-input-border:                1px solid var(--hb-input-border-color);
+  --hb-input-border-focus:          1px solid var(--hb-input-border-color-focus);
+  --hb-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255%2C255%2C255%2C0.5)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hb-tab-active:                  var(--hb-white-400);
+}
+
+[data-theme="light"] {
+  --hb-background: var(--hb-white-1000);
+  --hb-text:       var(--hb-black-1000);
+  --hb-card:       var(--hb-black-200);
+  --hb-border:     var(--hb-black-200);
+
+  --hb-font-color-100:   var(--hb-black-300);
+  --hb-font-color-200:   var(--hb-black-200);
+  --hb-font-color-300:   var(--hb-black-300);
+  --hb-font-color-400:   var(--hb-black-400);
+  --hb-font-color-500:   var(--hb-black-500);
+  --hb-font-color-600:   var(--hb-black-600);
+  --hb-font-color-700:   var(--hb-black-700);
+  --hb-font-color-800:   var(--hb-black-800);
+  --hb-font-color-900:   var(--hb-black-900);
+  --hb-font-color-1000:  var(--hb-black-1000);
+
+  --hb-color-100:   var(--hb-black-100);
+  --hb-color-200:   var(--hb-black-200);
+  --hb-color-300:   var(--hb-black-300);
+  --hb-color-400:   var(--hb-black-400);
+  --hb-color-500:   var(--hb-black-500);
+  --hb-color-600:   var(--hb-black-600);
+  --hb-color-700:   var(--hb-black-700);
+  --hb-color-800:   var(--hb-black-800);
+  --hb-color-900:   var(--hb-black-900);
+  --hb-color-1000:  var(--hb-black-1000);
+
+
+  --hb-button-primary-background: var(--hb-black-1000);
+  --hb-button-primary-color:      var(--hb-white-1000);
+  
+  --hb-input-border-color:           var(--hb-black-400);
+  --hb-input-border-color-focus:      var(--hb-black-800);
+  --hb-input-border:                  1px solid var(--hb-input-border-color);
+  --hb-input-border-focus:            1px solid var(--hb-input-border-color-focus);
+  --hb-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(0%2C0%2C0%2C0.5)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hb-tab-active:                    var(--hb-white-1000);
+}
+
+/* ─── Tailwind bridge ─────────────────────────────────────────────────────── */
+@theme inline {
+  --color-hb-background: var(--hb-background);
+  --color-hb-text:       var(--hb-text);
+  --color-hb-card:       var(--hb-card);
+  --color-hb-border:     var(--hb-border);
+  --color-hb-muted:      var(--hb-muted);
+  --color-hb-black-100:  var(--hb-black-100);
+  --color-hb-black-200:  var(--hb-black-200);
+  --color-hb-black-300:  var(--hb-black-300);
+  --color-hb-black-400:  var(--hb-black-400);
+  --color-hb-black-500:  var(--hb-black-500);
+  --color-hb-black-600:  var(--hb-black-600);
+  --color-hb-black-700:  var(--hb-black-700);
+  --color-hb-black-800:  var(--hb-black-800);
+  --color-hb-black-900:  var(--hb-black-900);
+  --color-hb-black-1000: var(--hb-black-1000);
+
+  
+
+  --color-hb-white-100:  var(--hb-white-100);
+  --color-hb-white-200:  var(--hb-white-200);
+  --color-hb-white-300:  var(--hb-white-300);
+  --color-hb-white-400:  var(--hb-white-400);
+  --color-hb-white-500:  var(--hb-white-500);
+  --color-hb-white-600:  var(--hb-white-600);
+  --color-hb-white-700:  var(--hb-white-700);
+  --color-hb-white-800:  var(--hb-white-800);
+  --color-hb-white-900:  var(--hb-white-900);
+  --color-hb-white-1000: var(--hb-white-1000);
+
+  --radius-hb-100:  var(--hb-radius-100);
+  --radius-hb-200:  var(--hb-radius-200);
+  --radius-hb-400:  var(--hb-radius-400);
+  --radius-hb-full: var(--hb-radius-full);
+
+  --font-sans: var(--font-albert-sans);
+
+  --text-hb-01: var(--hb-font-size-01);
+  --text-hb-02: var(--hb-font-size-02);
+  --text-hb-03: var(--hb-font-size-03);
+  --text-hb-04: var(--hb-font-size-04);
+  --text-hb-05: var(--hb-font-size-05);
+  --text-hb-06: var(--hb-font-size-06);
+  --text-hb-07: var(--hb-font-size-07);
+  --text-hb-08: var(--hb-font-size-08);
+  --text-hb-09: var(--hb-font-size-09);
+  --text-hb-10: var(--hb-font-size-10);
+
+  --font-weight-hb-thin:        var(--hb-font-weight-thin);
+  --font-weight-hb-extralight:  var(--hb-font-weight-extralight);
+  --font-weight-hb-light:       var(--hb-font-weight-light);
+  --font-weight-hb-regular:     var(--hb-font-weight-regular);
+  --font-weight-hb-medium:      var(--hb-font-weight-medium);
+  --font-weight-hb-semibold:    var(--hb-font-weight-semibold);
+  --font-weight-hb-bold:        var(--hb-font-weight-bold);
+  --font-weight-hb-extrabold:   var(--hb-font-weight-extrabold);
+  --font-weight-hb-black:       var(--hb-font-weight-black);
+
+  --spacing-hb-0:    var(--hb-space-0);
+  --spacing-hb-050:  var(--hb-space-050);
+  --spacing-hb-100:  var(--hb-space-100);
+  --spacing-hb-150:  var(--hb-space-150);
+  --spacing-hb-200:  var(--hb-space-200);
+  --spacing-hb-300:  var(--hb-space-300);
+  --spacing-hb-400:  var(--hb-space-400);
+  --spacing-hb-500:  var(--hb-space-500);
+  --spacing-hb-600:  var(--hb-space-600);
+  --spacing-hb-700:  var(--hb-space-700);
+  --spacing-hb-800:  var(--hb-space-800);
+  --spacing-hb-900:  var(--hb-space-900);
+  --spacing-hb-1100: var(--hb-space-1100);
+  --spacing-hb-1200: var(--hb-space-1200);
+  --spacing-hb-1600: var(--hb-space-1600);
+  --spacing-hb-2000: var(--hb-space-2000);
+  --spacing-hb-2400: var(--hb-space-2400);
+  --spacing-hb-4000: var(--hb-space-4000);
+
+  --spacing-hb-n100: var(--hb-space-n100);
+  --spacing-hb-n200: var(--hb-space-n200);
+  --spacing-hb-n300: var(--hb-space-n300);
+  --spacing-hb-n400: var(--hb-space-n400);
+  --spacing-hb-n600: var(--hb-space-n600);
+}
+
+/* ── Inverted theme swap ─────────────────────────────────────────────────────
+   .inverted applies the opposite theme's color tokens to all descendants.
+   Default (light mode): swap to dark values.
+   [data-theme="dark"]: swap to light values.
+────────────────────────────────────────────────────────────────────────────── */
+.inverted {
+  --hb-background:              var(--hb-black-1000);
+  --hb-text:                    var(--hb-white-1000);
+  --hb-card:                    var(--hb-white-200);
+  --hb-border:                  var(--hb-white-200);
+  --hb-font-color-100:          var(--hb-white-100);
+  --hb-font-color-200:          var(--hb-white-200);
+  --hb-font-color-300:          var(--hb-white-300);
+  --hb-font-color-400:          var(--hb-white-400);
+  --hb-font-color-500:          var(--hb-white-500);
+  --hb-font-color-600:          var(--hb-white-600);
+  --hb-font-color-700:          var(--hb-white-700);
+  --hb-font-color-800:          var(--hb-white-800);
+  --hb-font-color-900:          var(--hb-white-900);
+  --hb-font-color-1000:         var(--hb-white-1000);
+  --hb-color-100:               var(--hb-white-100);
+  --hb-color-200:               var(--hb-white-200);
+  --hb-color-300:               var(--hb-white-300);
+  --hb-color-400:               var(--hb-white-400);
+  --hb-color-500:               var(--hb-white-500);
+  --hb-color-600:               var(--hb-white-600);
+  --hb-color-700:               var(--hb-white-700);
+  --hb-color-800:               var(--hb-white-800);
+  --hb-color-900:               var(--hb-white-900);
+  --hb-color-1000:              var(--hb-white-1000);
+  --hb-button-primary-background: var(--hb-white-1000);
+  --hb-button-primary-color:    var(--hb-black-1000);
+  --hb-input-border-color:      var(--hb-white-400);
+  --hb-input-border-color-focus: var(--hb-white-800);
+  --hb-input-border:            1px solid var(--hb-input-border-color);
+  --hb-input-border-focus:      1px solid var(--hb-input-border-color-focus);
+}
+
+[data-theme="dark"] .inverted {
+  --hb-background:              var(--hb-white-1000);
+  --hb-text:                    var(--hb-black-1000);
+  --hb-card:                    var(--hb-black-200);
+  --hb-border:                  var(--hb-black-200);
+  --hb-font-color-100:          var(--hb-black-300);
+  --hb-font-color-200:          var(--hb-black-200);
+  --hb-font-color-300:          var(--hb-black-300);
+  --hb-font-color-400:          var(--hb-black-400);
+  --hb-font-color-500:          var(--hb-black-500);
+  --hb-font-color-600:          var(--hb-black-600);
+  --hb-font-color-700:          var(--hb-black-700);
+  --hb-font-color-800:          var(--hb-black-800);
+  --hb-font-color-900:          var(--hb-black-900);
+  --hb-font-color-1000:         var(--hb-black-1000);
+  --hb-color-100:               var(--hb-black-100);
+  --hb-color-200:               var(--hb-black-200);
+  --hb-color-300:               var(--hb-black-300);
+  --hb-color-400:               var(--hb-black-400);
+  --hb-color-500:               var(--hb-black-500);
+  --hb-color-600:               var(--hb-black-600);
+  --hb-color-700:               var(--hb-black-700);
+  --hb-color-800:               var(--hb-black-800);
+  --hb-color-900:               var(--hb-black-900);
+  --hb-color-1000:              var(--hb-black-1000);
+  --hb-button-primary-background: var(--hb-black-1000);
+  --hb-button-primary-color:    var(--hb-white-1000);
+  --hb-input-border-color:      var(--hb-black-400);
+  --hb-input-border-color-focus: var(--hb-black-800);
+  --hb-input-border:            1px solid var(--hb-input-border-color);
+  --hb-input-border-focus:      1px solid var(--hb-input-border-color-focus);
+}
+

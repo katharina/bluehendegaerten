@@ -1,1593 +1,475 @@
-@import "tailwindcss";
-
-@theme {
-  --font-family-bitter: "Bitter", serif;
-  --font-family-mono: "Source Code Pro", monospace;
+:root {
+  --font-serif: "Bitter", serif;
+  --font-mono: "Source Code Pro", monospace;
 }
 
-/* ── Mobile index: let panels fill width and flow naturally ─────────────── */
-@media (max-width: 767px) {
-  body.index-mode #panels-area,
-  body.index-mode #plant-col  { height: auto; overflow: visible; width: 100%; }
-  body.index-mode #plant-grid { overflow: visible; height: auto; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ── Action button (pill, black bg, white text) ──────────────────────────── */
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-family: inherit;
-  font-weight: 500;
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
-  border-radius: 99px;
-  padding: 6px 16px;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity 0.15s;
-  text-decoration: none;
+body {
+  font-family: var(--font-mono);
 }
-.action-btn:hover { opacity: 0.7; }
 
-/* ── Plant column header ─────────────────────────────────────────────────── */
-#plant-col-header {
-  flex-shrink: 0;
-  
+a {
+  color: black;
 }
-#plant-col-header-row {
+
+.botanical-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: var(--hb-font-size-10);
+}
+
+.page-header {
+  margin: var(--hb-space-800) var(--hb-space-800) var(--hb-space-100) var(--hb-space-800);
+  padding: var(--hb-space-300) 0 0 0; 
+}
+
+.section-header {
+  margin: var(--hb-space-800) var(--hb-space-800) var(--hb-space-500) var(--hb-space-800);
+  padding: var(--hb-space-500) 0 0 0;
+  border-top: 1px solid var(--hb-black-1000);
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  align-items: center;
 }
-#plant-filter {
+
+.section-content {
+  margin: var(--hb-space-500) var(--hb-space-800);
+}
+
+.section-content.no-horizontal-padding {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+ul {
+  padding-left: var(--hb-space-800);
+}
+
+#obs-carousel {
+  display: flex;
+  gap: var(--hb-space-200);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#obs-carousel .carousel-card:first-child {
+  margin-left: var(--hb-space-800);
+}
+
+#obs-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-card {
+  flex-shrink: 0;
+  width: 160px;
+}
+
+.carousel-card-img {
   width: 100%;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  padding: 6px 0;
-  font-size: 13px;
-  font-family: inherit;
-  color: #222;
-  outline: none;
-  background: transparent;
-}
-#plant-filter::placeholder { color: #bbb; }
-#plant-filter:focus { border-bottom-color: #000; }
-
-
-/* ── Plant grid ──────────────────────────────────────────────────────────── */
-#plant-grid {
-  flex: 1;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 140px;
-  border-top: 1px solid #000;
+  aspect-ratio: 3 / 4;
+  background: var(--hb-black-100);
+  overflow: hidden;
 }
 
-@media (min-width: 640px) {
-  #plant-grid { grid-template-columns: repeat(3, 1fr); }
+.carousel-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@media (min-width: 768px) {
-  #plant-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-}
-
-/* ── Plant card ──────────────────────────────────────────────────────────── */
-.plant-card {
-  position: relative;
+.carousel-card-meta {
+  padding: var(--hb-space-200) 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  background-color: #fff;
-  padding: 16px 18px;
-  border: 1px solid #000;
-  margin-left: -1px;
-  margin-top: -1px;
-  cursor: pointer;
-  transition: background-color 250ms, color 250ms;
+  gap: var(--hb-space-100);
 }
 
-/* Hide the leftmost border so the grid has no outer left edge */
-.plant-card:nth-child(2n+1) { border-left: none; }
+/* ── Filter input ────────────────────────────────────────────────────────── */
 
-@media (min-width: 640px) {
-  .plant-card:nth-child(2n+1) { border-left: 1px solid #000; }
-  .plant-card:nth-child(3n+1) { border-left: none; }
+.filter-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--hb-black-400);
+  padding: var(--hb-space-200) 0;
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-02);
+  background: transparent;
+  outline: none;
+}
+
+.filter-input::placeholder {
+  color: var(--hb-black-400);
+}
+
+/* ── Plant cards ─────────────────────────────────────────────────────────── */
+
+#plant-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.plant-card {
+  position: relative;
+  aspect-ratio: 1;
+  padding: var(--hb-space-500);
+  border: 1px solid black;
+  margin: -1px 0 0 -1px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.plant-card:hover {
+  background: var(--plant-color, #fff);
+  color: var(--plant-fg, #000);
+}
+
+.plant-card .plant-dot {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  width: var(--plant-dot-size);
+  height: var(--plant-dot-size);
+  border-radius: 50%;
+  background: var(--plant-color);
+}
+
+.plant-card .botanical-name {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.plant-card .german-name {
+  font-size: var(--hb-font-size-01);
+}
+
+.plant-card .plant-family {
+  font-size: 11px;
+  color: var(--hb-black-400);
+}
+
+/* ── Carousel card meta ──────────────────────────────────────────────────── */
+
+.carousel-card-meta .botanical-name {
+  font-size: var(--hb-font-size-02);
+  color: var(--hb-black-1000);
+  white-space: normal;
+}
+
+.carousel-card-meta .observation-place {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-400);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.carousel-card-meta .observation-date {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-400);
+}
+
+.carousel-card--all {
+  aspect-ratio: 3 / 4;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-serif);
+  padding: var(--hb-space-300);
+}
+
+/* ── Plant modal ─────────────────────────────────────────────────────────── */
+
+dialog#plant-modal:focus {
+  outline: none;
+}
+
+dialog#plant-modal {
+  width: 90%;
+  height: 90%;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: var(--plant-color, #fff);
+  color: var(--plant-fg, #000);
+}
+
+dialog#plant-modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.plant-modal-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-btn {
+  background: black;
+  color: white;
+  border: none;
+  padding: 0 var(--hb-space-300);
+  height: 32px;
+  border-radius: 16px;
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#plant-modal-close {
+  background: transparent;
+  color: var(--plant-fg, #000);
+  border: 1px solid var(--plant-fg, #000);
+}
+
+dialog#plant-modal .action-btn {
+  background: var(--plant-fg, #000);
+  color: var(--plant-color, #fff);
+}
+
+
+.plant-modal-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+.plant-modal-info,
+.plant-modal-observations {
+  overflow-y: auto;
+  padding: var(--hb-space-800);
+}
+
+
+.plant-modal-observations {
+  border-left: 1px solid var(--plant-fg, #000);
+}
+
+.plant-modal-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+  margin-bottom: var(--hb-space-500);
+}
+
+.plant-modal-header .botanical-name {
+  font-size: var(--hb-font-size-10);
+  line-height: 1.1;
+}
+
+.plant-modal-header .german-name {
+  font-size: var(--hb-font-size-03);
+}
+
+.plant-modal-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--hb-space-200);
+  margin-top: var(--hb-space-200);
+}
+
+.plant-modal-family {
+  border: none;
+  background: transparent;
+  color: var(--plant-fg, #000);
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  outline: none;
+  padding: var(--hb-space-100) 0;
+}
+
+.plant-color-swatch {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--plant-color, #fff);
+  border: 1px solid var(--plant-fg, #000);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.plant-color-picker {
+  display: none;
+}
+
+dialog#plant-modal.authenticated .plant-color-swatch {
+  display: block;
+}
+
+dialog#plant-modal.authenticated .plant-color-picker {
+  display: block;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border: none;
+  padding: 0;
+}
+
+.plant-modal-gardens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hb-space-200);
+  margin-bottom: var(--hb-space-500);
+}
+
+.garden-badge {
+  font-size: var(--hb-font-size-01);
+  border: 1px solid var(--plant-fg, #000);
+  padding: var(--hb-space-100) var(--hb-space-200);
+  color: var(--plant-fg, #000);
+  text-decoration: none;
 }
 
 @media (min-width: 768px) {
-  .plant-card:nth-child(3n+1) { border-left: 1px solid #000; }
-  /* auto-fill: first card in each row can't be targeted by nth-child,
-     so we accept a left border on col 1 — it frames the grid cleanly */
-}
-.plant-card:hover {
-  background-color: var(--dot-color);
-}
-.plant-card:hover .card-name,
-.plant-card:hover .card-de,
-.plant-card:hover .card-family {
-  color: var(--card-fg);
-}
-.plant-card.selected {
-  background: #f0f0f0;
-  outline: 2px solid #000;
-  outline-offset: -2px;
+  .plant-modal-data summary {
+    display: none;
+  }
 }
 
-.card-dot   { position: absolute; border-radius: 50%; bottom: 16px; right: 18px; }
-.card-name  { position: relative; z-index: 1; font-family: var(--font-bitter, "Bitter", serif); font-style: italic; font-size: 18px; color: #222; line-height: 1.3; transition: color 250ms; }
-.card-de    { position: relative; z-index: 1; font-size: 12px; color: #555; transition: color 250ms; }
-.card-family{ position: relative; z-index: 1; font-size: 11px; color: #aaa; transition: color 250ms; }
-.card-meta-row { display: flex; align-items: center; gap: 6px; }
-.card-invasiv {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: #ff0000; color: #fff; font-size: 10px; flex-shrink: 0;
+.plant-modal-data summary {
+  font-size: var(--hb-font-size-01);
+  cursor: pointer;
+  padding: var(--hb-space-300) 0;
+  border-top: 1px solid var(--plant-fg, #000);
+  list-style: none;
 }
-    :root {
-      --font-serif: "Bitter", serif;
-    }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* ── Hamburger button ─────────────────────────────────────────────── */
-    #hamburger-btn {
-      position: fixed; top: 16px; right: 20px; z-index: 300;
-      background: none; border: none; cursor: pointer;
-      display: flex; flex-direction: column; gap: 5px; padding: 4px;
-    }
-    #hamburger-btn span {
-      display: block; width: 24px; height: 2px; background: #000;
-      transition: opacity 0.15s;
-    }
-    #hamburger-btn:hover span { opacity: 0.5; }
-
-    /* ── Menu panel ───────────────────────────────────────────────────── */
-    #menu-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 290;
-    }
-    #menu-backdrop.open { display: block; }
-    #menu-panel {
-      position: fixed; top: 0; right: -260px; width: 240px; height: 100%;
-      background: #fff; border-left: 1px solid #000; z-index: 295;
-      display: flex; flex-direction: column; gap: 12px;
-      padding: 56px 24px 32px;
-      transition: right 0.25s ease;
-    }
-    #menu-panel.open { right: 0; }
-    #menu-user-email { font-size: 12px; color: #888; min-height: 16px; }
-
-    /* ── Login modal ──────────────────────────────────────────────────── */
-    #login-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 10000;
-      background: rgba(0,0,0,0.4); align-items: center; justify-content: center;
-    }
-    #login-backdrop.open { display: flex; }
-    #quick-obs-modal {
-      background: #fff; position: relative;
-      width: min(520px, 92vw); padding: 48px 40px 40px;
-      max-height: 90vh; overflow-y: auto;
-    }
-    #login-modal {
-      background: #fff; position: relative;
-      width: min(420px, 92vw); padding: 48px 40px 40px;
-    }
-    #login-close {
-      position: absolute; top: 12px; right: 16px;
-      font-size: 28px; line-height: 1; background: none; border: none;
-      cursor: pointer; color: #888;
-    }
-    #login-close:hover { color: #000; }
-    #login-title {
-      font-family: var(--font-serif); font-size: 40px; font-weight: 600;
-      line-height: 1; margin-bottom: 32px;
-    }
-    #login-body { display: flex; flex-direction: column; gap: 16px; }
-    #login-email {
-      font-size: 14px; font-family: inherit; width: 100%;
-      border: none; border-bottom: 1px solid #ccc;
-      padding: 8px 0; outline: none; background: transparent; color: #222;
-    }
-    #login-email:focus { border-bottom-color: #000; }
-    #login-msg { font-size: 13px; color: #555; min-height: 18px; }
-
-    /* ── Add garden modal ─────────────────────────────────────────────── */
-    #add-garden-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 10000;
-      background: rgba(0,0,0,0.4); align-items: center; justify-content: center;
-    }
-    #add-garden-backdrop.open { display: flex; }
-    #add-garden-modal {
-      background: #fff; position: relative;
-      width: min(480px, 92vw); padding: 48px 40px 40px;
-    }
-    #add-garden-close {
-      position: absolute; top: 12px; right: 16px;
-      font-size: 28px; line-height: 1; background: none; border: none;
-      cursor: pointer; color: #888;
-    }
-    #add-garden-close:hover { color: #000; }
-    #add-garden-title {
-      font-family: var(--font-serif); font-size: 40px; font-weight: 600;
-      line-height: 1; margin-bottom: 32px;
-    }
-    #add-garden-form-body { display: flex; flex-direction: column; gap: 20px; }
-    .agf-field { display: flex; flex-direction: column; gap: 4px; }
-    .agf-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #888; }
-    .agf-input {
-      font-size: 14px; font-family: inherit; width: 100%;
-      border: none; border-bottom: 1px solid #ccc;
-      padding: 8px 0; outline: none; background: transparent; color: #222;
-    }
-    .agf-input:focus { border-bottom-color: #000; }
-    .agf-textarea { resize: vertical; min-height: 60px; }
-    .agf-check { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
-    .agf-check input { width: 16px; height: 16px; cursor: pointer; accent-color: #000; }
-    #add-garden-msg { font-size: 13px; color: #c00; min-height: 18px; }
-
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      background: #fff;
-      font-family: "Source Code Pro", monospace;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: #222;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      padding: 20px 48px;
-      border-bottom: 1px solid #000;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .wordmark {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-    }
-
-    #garden-label {
-      display: none;
-      font-size: 12px;
-      color: #888;
-    }
-
-    #garden-bar {
-      display: none;
-      gap: 6px;
-    }
-
-    .garden-btn {
-      font-size: 11px;
-      color: #888;
-      background: none;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      padding: 4px 12px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.15s;
-    }
-    .garden-btn:hover { border-color: #888; color: #222; }
-    .garden-btn.active { background: #222; color: #fff; border-color: #222; }
-
-    .open-btn {
-      font-size: 11px;
-      color: #888;
-      text-decoration: none;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      padding: 5px 14px;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .open-btn:hover { border-color: #888; color: #222; }
-
-    #edit-mode-btn { opacity: 0.5; }
-    #edit-mode-btn.active { opacity: 1; }
-
-    /* All observations modal */
-    #all-obs-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-    }
-    #all-obs-backdrop.open { display: block; }
-
-    #all-obs-modal {
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #all-obs-close {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      font-size: 24px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #000;
-      line-height: 1;
-      z-index: 10;
-    }
-    #all-obs-close:hover { color: #555; }
-
-    #all-obs-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      position: relative;
-    }
-    #all-obs-list.herbar-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      position: static;
-    }
-    .herbar-card {
-      /* 6 cols, 5 gaps of 8px, 2×16px padding = 72px total offset */
-      height: calc((100vw - 72px) / 6 * 4 / 3);
-      position: relative;
-      background-size: cover;
-      background-position: center;
-      background-color: #f0ede8;
-      overflow: hidden;
-    }
-    .herbar-card .obs-card-delete {
-      top: 6px;
-      right: 6px;
-      bottom: auto;
-    }
-
-    .all-obs-empty {
-      font-size: 13px;
-      color: #bbb;
-      padding: 40px 0;
-      text-align: center;
-    }
-
-    /* Edit mode layout */
-    body.edit-mode #garden-description { display: none; }
-    body.edit-mode #observations { width: 50%; }
-
-    /* Edit indicator above bed plan */
-    #bed-plan-bar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 48px 12px;
-      flex-shrink: 0;
-    }
-    #version-select-plan {
-      font-size: 11px;
-      font-family: inherit;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      padding: 3px 0;
-      outline: none;
-      background: transparent;
-      color: #555;
-      display: none;
-    }
-    body.edit-mode #version-select-plan { display: block; }
-    #selected-plant-label {
-      font-size: 12px;
-      font-style: italic;
-      color: #888;
-      display: none;
-    }
-    body.edit-mode #selected-plant-label { display: block; }
-
-    #bed-plan.editable { cursor: crosshair; }
-
-    /* Selected plant card */
-    .plant-card.selected {
-      background: #f0f0f0;
-      outline: 2px solid #000;
-      outline-offset: -2px;
-    }
-
-    #content {
-      display: flex;
-      align-items: stretch;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    #garden-description {
-      padding: 40px 48px;
-      width: 40vw;
-      flex-shrink: 0;
-      overflow-y: auto;
-    }
-
-    #garden-big-title {
-      font-family: var(--font-serif);
-      font-size: 100px;
-      font-weight: 600;
-      line-height: 1;
-      margin-bottom: 40px;
-    }
-    #garden-description h1 {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: normal;
-      color: #222;
-      margin-bottom: 20px;
-    }
-
-    #garden-description p {
-      font-size: 14px;
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 1em;
-    }
-    #garden-description p:last-child { margin-bottom: 0; }
-
-    #panels-area {
-      display: flex;
-      flex-shrink: 0;
-    }
-    #panels-area:hover #observations,
-    #panels-area.panels-locked #observations {
-      transform: translateX(-20vw);
-    }
-    #panels-area:hover #plant-col,
-    #panels-area.panels-locked #plant-col {
-      transform: translateX(-20vw);
-      margin-left: 0;
-      box-shadow: -4px 0 12px rgba(0,0,0,0.06);
-    }
-
-    #observations {
-      padding: 0;
-      width: 40vw;
-      flex-shrink: 0;
-      overflow-y: auto;
-      position: relative;
-      z-index: 1;
-      background: #fff;
-      box-shadow: -12px 0 40px rgba(0,0,0,0.14);
-      transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
-    }
-
-    #observations h2 {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: normal;
-      color: #222;
-    }
-
-    #bed-plan {
-      width: 100%;
-      padding: 0 48px;
-    }
-
-    #bed-plan svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    #bed-tooltip {
-      position: fixed;
-      pointer-events: none;
-      background: #fff;
-      border: 1px solid #000;
-      padding: 6px 10px;
-      font-size: 12px;
-      line-height: 1.4;
-      z-index: 200;
-      display: none;
-    }
-
-    #bed-tooltip .tt-name { font-family: var(--font-serif); font-style: italic; font-size: 15px; }
-    #bed-tooltip .tt-de { color: #555; }
-
-    #plant-col {
-      width: 40vw;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      position: relative;
-      margin-left: -10vw;
-      z-index: 2;
-      box-shadow: -12px 0 40px rgba(0,0,0,0.14);
-      background: #fff;
-      transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) 60ms, margin-left 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) 60ms, box-shadow 0.4s ease 60ms;
-    }
-
-    #add-plant-btn.open { opacity: 0.7; }
-
-    #add-plant-form {
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      padding: 20px 48px;
-      border-bottom: 1px solid #000;
-      background: #fafafa;
-    }
-    #add-plant-form.open { display: flex; }
-
-    .apf-row { display: flex; gap: 16px; }
-    .apf-field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-    .apf-field.narrow { flex: 0 0 100px; }
-    .apf-field > label { display: flex; align-items: baseline; gap: 6px; }
-    .apf-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #aaa;
-      text-transform: uppercase;
-    }
-    .apf-input {
-      font-size: 13px;
-      font-family: inherit;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      padding: 5px 0;
-      outline: none;
-      background: transparent;
-      color: #222;
-    }
-    .apf-input:focus { border-bottom-color: #000; }
-    .apf-input[type=color] {
-      padding: 0;
-      height: 28px;
-      cursor: pointer;
-      border: none;
-      border-bottom: 1px solid #ccc;
-    }
-    .apf-actions { display: flex; gap: 8px; padding-top: 4px; }
-    #apf-cancel {
-      font-size: 11px;
-      font-family: inherit;
-      border: 1px solid #ccc;
-      border-radius: 99px;
-      padding: 5px 14px;
-      cursor: pointer;
-      background: #fff;
-      color: #666;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    #apf-cancel:hover { border-color: #888; color: #222; }
-    #apf-error {
-      font-size: 11px;
-      color: #c00;
-      display: none;
-    }
-
-
-
-    /* Modal */
-    #modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 400;
-      align-items: center;
-      justify-content: center;
-    }
-    #modal-backdrop.open { display: flex; }
-
-    @keyframes modal-in {
-      from { transform: scale(0.04); opacity: 0; }
-      to   { transform: scale(1);    opacity: 1; }
-    }
-    @keyframes modal-out {
-      from { transform: scale(1);    opacity: 1; }
-      to   { transform: scale(0.04); opacity: 0; }
-    }
-
-    #modal {
-      background: #fff;
-      border: none;
-      width: 90vw;
-      height: 90vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-    #modal.opening { animation: modal-in  0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards; }
-    #modal.closing { animation: modal-out 0.22s ease-in forwards; }
-
-    #modal-close {
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      font-size: 32px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--modal-fg, #888);
-      opacity: 0.6;
-      line-height: 1;
-      z-index: 10;
-    }
-    #modal-close:hover { opacity: 1; }
-
-    #modal-columns {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    #modal-info-toggle { display: none; }
-    #modal-info-body { display: block; }
-
-    #modal-info {
-      width: 38%;
-      flex-shrink: 0;
-      padding: 40px 48px;
-      overflow-y: auto;
-      border-right: 1px solid rgba(128,128,128,0.2);
-    }
-
-    #modal-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    #modal-invasiv-btn {
-      background: none;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-      color: var(--modal-fg, #000);
-      opacity: 0.2;
-      padding: 4px;
-      flex-shrink: 0;
-      transition: opacity 0.15s, background 0.15s, color 0.15s;
-      line-height: 1;
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #modal-invasiv-btn:hover { opacity: 0.5; }
-    #modal-invasiv-btn.active { background: #ff0000; color: #fff; opacity: 1; }
-
-    #modal-name {
-      font-size: 100px;
-      font-style: italic;
-      font-weight: 600;
-      font-family: var(--font-serif);
-      color: var(--modal-fg, #000);
-      line-height: 0.9;
-      margin-bottom: 24px;
-      padding-right: 48px;
-      outline: none;
-      cursor: text;
-    }
-
-    #modal-name:focus, #modal-de:focus {
-      opacity: 0.8;
-    }
-
-    #modal-de {
-      font-size: 14px;
-      color: var(--modal-fg, #000);
-      margin-bottom: 2px;
-      outline: none;
-      cursor: text;
-    }
-
-    #modal-family-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #modal-garden-badges {
-      display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px;
-    }
-    #modal-garden-badges:empty { display: none; }
-    .modal-garden-badge {
-      font-size: 11px; font-family: inherit; letter-spacing: 0.04em;
-      padding: 3px 10px; border-radius: 99px;
-      background: rgba(128,128,128,0.15); color: var(--modal-fg, #000);
-      text-decoration: none; border: none; cursor: pointer;
-      transition: background 150ms;
-    }
-    .modal-garden-badge:hover { background: rgba(128,128,128,0.3); }
-
-    #modal-family {
-      font-size: 11px;
-      color: var(--modal-fg, #000);
-      opacity: 0.6;
-      background: none;
-      border: none;
-      outline: none;
-      font-family: inherit;
-      padding: 0;
-      width: 120px;
-    }
-    #modal-family:hover, #modal-family:focus {
-      opacity: 1;
-      border-bottom: 1px solid currentColor;
-    }
-
-    #modal-color-swatch {
-      width: 14px;
-      height: 14px;
-      border-radius: 2px;
-      border: 1px solid rgba(128,128,128,0.3);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    #modal-color-input {
-      opacity: 0;
-      position: absolute;
-      width: 0;
-      height: 0;
-      pointer-events: none;
-    }
-
-    #modal-bloom-bar {
-      margin-bottom: 28px;
-    }
-
-    #modal-bloom-bar-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--modal-fg, #000);
-      opacity: 0.5;
-      margin-bottom: 10px;
-    }
-
-    .bloom-bar-segments {
-      display: flex;
-      gap: 3px;
-      margin-bottom: 5px;
-    }
-
-    .bloom-seg {
-      flex: 1;
-      height: 10px;
-      border-radius: 99px;
-      background: rgba(128,128,128,0.25);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .bloom-seg:hover { background: rgba(128,128,128,0.45); }
-    .bloom-seg.active:hover { opacity: 0.7; }
-
-    .bloom-seg.active {
-      background: var(--modal-fg, #000);
-    }
-
-    .bloom-bar-labels {
-      display: flex;
-      gap: 3px;
-    }
-
-    .bloom-bar-labels span {
-      flex: 1;
-      text-align: center;
-      font-size: 10px;
-      color: var(--modal-fg, #000);
-      opacity: 0.45;
-    }
-
-    #modal-stages-section {
-      border-top: 1px solid rgba(128,128,128,0.2);
-      padding-top: 16px;
-      margin-bottom: 24px;
-    }
-
-    #modal-stages-toggle {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--modal-fg, #000);
-      opacity: 0.4;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 12px;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: inherit;
-    }
-    #modal-stages-toggle:hover { opacity: 0.7; }
-    #modal-stages-toggle::after { content: '▴'; font-size: 9px; }
-    #modal-stages-section.collapsed #modal-stages-toggle::after { content: '▾'; }
-    #modal-stages-section.collapsed #modal-stages,
-    #modal-stages-section.collapsed #modal-generated { display: none; }
-
-    #modal-stages {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    #modal-plant-info {
-      border-top: 1px solid rgba(128,128,128,0.2);
-      padding-top: 20px;
-      margin-bottom: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .plant-info-row {
-      display: flex;
-      gap: 12px;
-      align-items: baseline;
-    }
-
-    .plant-info-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--modal-fg, #000);
-      opacity: 0.5;
-      width: 120px;
-      flex-shrink: 0;
-    }
-
-    .plant-info-value {
-      font-size: 12px;
-      color: var(--modal-fg, #000);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid transparent;
-      outline: none;
-      font-family: inherit;
-      width: 100%;
-      min-width: 40px;
-      padding: 0;
-    }
-
-    .plant-info-value:hover { border-bottom-color: rgba(128,128,128,0.3); }
-    .plant-info-value:focus { border-bottom-color: rgba(128,128,128,0.6); opacity: 0.8; }
-    .plant-info-value::placeholder { opacity: 0.3; color: var(--modal-fg, #000); }
-    body:not(.logged-in) .plant-info-value { pointer-events: none; }
-    body:not(.logged-in) #modal-family { pointer-events: none; }
-
-    .plant-info-unit {
-      font-size: 11px;
-      color: var(--modal-fg, #000);
-      opacity: 0.4;
-    }
-
-    #modal-generated {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .modal-gen-item {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .modal-gen-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      background: #f5f5f3;
-      display: block;
-    }
-
-    .modal-gen-caption {
-      font-size: 10px;
-      color: #aaa;
-      text-align: center;
-    }
-
-    .modal-stage-row {
-      display: flex;
-      gap: 16px;
-      align-items: baseline;
-    }
-
-    .modal-stage-name {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--modal-fg, #000);
-      opacity: 0.5;
-      text-transform: uppercase;
-      width: 72px;
-      flex-shrink: 0;
-    }
-
-    .modal-stage-months {
-      font-size: 12px;
-      color: var(--modal-fg, #000);
-    }
-
-    #modal-images {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .col-header {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      padding: 40px 48px 16px;
-    }
-    .col-header-title {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-weight: 600;
-      color: #222;
-      flex: 1;
-    }
-
-    #obs-toggle-bar {
-      flex-shrink: 0;
-      border-bottom: 1px solid rgba(128,128,128,0.2);
-    }
-
-    .col-header-title { margin-bottom: 0; }
-
-    #obs-form {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      padding: 20px 48px;
-      border-bottom: 1px solid #eee;
-      flex-shrink: 0;
-    }
-    #obs-form.open { display: flex; }
-
-    .obs-row { display: flex; gap: 12px; }
-    .obs-field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-    .obs-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #aaa;
-      text-transform: uppercase;
-    }
-
-    .obs-input, .obs-select {
-      font-size: 12px;
-      font-family: inherit;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      padding: 4px 0;
-      outline: none;
-      background: transparent;
-      color: #222;
-    }
-    .obs-input:focus, .obs-select:focus { border-bottom-color: #000; }
-
-    .obs-textarea {
-      font-size: 12px;
-      font-family: inherit;
-      border: 1px solid #eee;
-      padding: 8px;
-      outline: none;
-      background: transparent;
-      color: #222;
-      resize: vertical;
-      min-height: 64px;
-    }
-    .obs-textarea:focus { border-color: #ccc; }
-
-    #obs-plant-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      max-height: 90px;
-      overflow-y: auto;
-    }
-
-    .obs-plant-chip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-style: italic;
-      color: #777;
-      cursor: pointer;
-      padding: 8px 12px;
-      border: 1px solid #eee;
-      border-radius: 4px;
-      user-select: none;
-    }
-    .obs-plant-chip:hover { border-color: #bbb; color: #333; }
-    .obs-plant-chip.checked { border-color: #000; color: #000; background: #f9f9f9; }
-    .obs-plant-chip input { display: none; }
-
-    .obs-plant-chip.pn-suggested { border-color: #bbb; color: #333; }
-    .obs-plant-chip.pn-suggested.checked { border-color: #000; background: #f5f8f0; }
-    .obs-plant-chip.pn-top { border-color: #000; background: #f5f8f0; color: #000; }
-    .pn-score { font-style:normal; font-size:11px; opacity:0.45; margin-left:4px; }
-    .chip-names { display:flex; flex-direction:column; gap:2px; }
-    .chip-sci { font-size:13px; }
-    .chip-de { font-size:11px; opacity:0.6; font-style:normal; }
-    .obs-plant-chip.pn-identifying { color:#aaa; font-style:italic; border-color:#eee; cursor:default; pointer-events:none; }
-    .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:13px; font-family:inherit; padding: 8px 12px; }
-    .obs-plant-chip.pn-new-plant:hover { border-color:#000; color:#000; }
-    .obs-plant-chip.pn-new-plant:disabled { opacity:0.4; cursor:default; }
-    #qo-plant-grid {
-      display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
-    }
-    .qo-add-plant-btn {
-      font-size: 12px; font-family: inherit; color: #888;
-      background: none; border: none; cursor: pointer;
-      padding: 6px 0; text-decoration: underline;
-      display: block; margin-top: 4px;
-    }
-    .qo-add-plant-btn:hover { color: #000; }
-
-    .obs-file-label {
-      font-size: 11px;
-      color: #888;
-      border: 1px dashed #ccc;
-      padding: 8px 12px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .obs-file-label:hover { border-color: #888; color: #444; }
-    .obs-file-label.has-file { border-color: #000; color: #222; border-style: solid; }
-
-    .obs-form-actions { display: flex; gap: 8px; }
-
-    #obs-cancel {
-      font-size: 11px;
-      font-family: inherit;
-      border: 1px solid #ccc;
-      border-radius: 99px;
-      padding: 5px 14px;
-      cursor: pointer;
-      background: #fff;
-      color: #666;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    #obs-cancel:hover { border-color: #888; color: #222; }
-
-    #obs-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 24px 48px;
-      position: relative;
-    }
-
-    .obs-card {
-      position: absolute;
-    }
-
-    .obs-card-thumb {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      cursor: zoom-in;
-    }
-
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 10001;
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-    }
-    #lightbox.open { display: flex; }
-
-    #lightbox img {
-      max-width: 95vw;
-      max-height: 95vh;
-      object-fit: contain;
-      display: block;
-    }
-
-    .obs-card-thumb-empty { display: none; }
-
-    .obs-card-label {
-      padding: 6px 8px;
-      font-size: 11px;
-      color: var(--modal-fg, #000);
-      line-height: 1.3;
-    }
-
-    .obs-card-label-date { font-weight: 600; }
-
-    .obs-card-label-plants {
-      font-family: var(--font-serif);
-      font-style: italic;
-      opacity: 0.6;
-    }
-
-    .obs-card-text {
-      font-size: 11px;
-      color: var(--modal-fg, #000);
-      padding: 6px 8px;
-      line-height: 1.4;
-    }
-    .obs-card-gps {
-      font-size: 10px;
-      color: #888;
-      padding: 2px 8px 6px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .obs-card-edit {
-      position: absolute;
-      bottom: 6px;
-      right: 34px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.55);
-      border: none;
-      color: #fff;
-      font-size: 12px;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-    .obs-card:hover .obs-card-edit { opacity: 1; }
-    .obs-card-edit:hover { background: rgba(0,0,0,0.8); }
-
-    .obs-card-delete {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.55);
-      border: none;
-      color: #fff;
-      font-size: 14px;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-    .obs-card:hover .obs-card-delete { opacity: 1; }
-    .obs-card-delete:hover { background: rgba(180,0,0,0.8); }
-
-    .obs-plant-tag {
-      font-size: 10px;
-      font-style: italic;
-      color: #888;
-      border: 1px solid #eee;
-      padding: 1px 5px;
-      border-radius: 2px;
-    }
-
-    .obs-empty {
-      font-size: 12px;
-      color: #bbb;
-      padding: 24px 0;
-      text-align: center;
-    }
-
-@media (max-width: 768px) {
-      #content { flex-direction: column; }
-      #garden-description, #observations { width: 100%; border-right: none; border-bottom: 1px solid #000; }
-    }
-
-    #content { opacity: 0; }
-    #content.ready { opacity: 1; transition: opacity 0.4s ease; }
-
-    #index-heading { display: none; }
-    #garden-list   { display: none; }
-    body.index-mode #index-heading {
-      display: block;
-      font-family: var(--font-serif);
-      font-size: 100px;
-      font-weight: 600;
-      line-height: 1;
-      padding: 40px 48px 16px;
-    }
-    body.index-mode #garden-list {
-      display: block;
-      list-style: disc;
-      padding: 0 48px 0px 68px;
-      font-size: 16px;
-    }
-    body.index-mode #garden-list a {
-      color: #222;
-      text-decoration: none;
-    }
-    body.index-mode #garden-list a:hover { text-decoration: underline; }
-
-    #garden-section  { display: none; }
-    #obs-carousel-section { display: none; }
-    body.index-mode #garden-section,
-    body.index-mode #obs-carousel-section { display: block; }
-
-    /* Shared separator for all three index sections */
- 
-    body.index-mode #plant-col-header::before {
-      content: '';
-      display: block;
-    }
-
-    /* Shared section header structure */
-    #garden-section-title {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-weight: 600;
-      color: #222;
-    }
-    
-    body.index-mode #plant-filter {
-      display: block;
-      width: calc(100% - 96px);
-      margin: 0 0px 24px;
-    }
-    #obs-carousel-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      
-    }
-    #obs-carousel-title {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: normal;
-      color: #222;
-    }
-    #obs-carousel {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 0 48px 0;
-      scrollbar-width: none;
-    }
-    body.index-mode #obs-carousel::-webkit-scrollbar { display: none; }
-    .carousel-item {
-      flex-shrink: 0;
-      width: 160px;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-    }
-    .carousel-item-img {
-      width: 160px;
-      height: 240px;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #f0f0f0;
-      cursor: zoom-in;
-    }
-    .carousel-item-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.2s ease;
-    }
-    .carousel-item:hover .carousel-item-img img { transform: scale(1.04); }
-    .carousel-item-meta {
-      padding: 6px 6px 4px;
-      font-size: 10px;
-      line-height: 1.35;
-      min-height: 32px;
-    }
-    .carousel-item-date {
-      font-size: 10px;
-      color: #aaa;
-      font-variant-numeric: tabular-nums;
-    }
-    .carousel-item-gps {
-      color: #888;
-    }
-    .carousel-item-garden {
-      color: #888;
-    }
-    #garden-obs-carousel .carousel-item-garden,
-    #garden-obs-carousel .carousel-item-gps,
-    #garden-herbar-carousel .carousel-item-garden,
-    #garden-herbar-carousel .carousel-item-gps { display: none; }
-    .carousel-item-plants {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 12px;
-      color: #222;
-    }
-    .carousel-item-garden,
-    .carousel-item-gps {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .carousel-item-btns {
-      display: flex;
-      gap: 4px;
-      padding: 0 6px 8px;
-    }
-    .carousel-item-edit, .carousel-item-del {
-      flex: 1;
-      height: 22px;
-      border: 1px solid #ddd;
-      background: #fff;
-      color: #666;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.12s, color 0.12s;
-    }
-    .carousel-item-edit:hover { background: #222; color: #fff; border-color: #222; }
-    .carousel-item-del:hover  { background: #c00; color: #fff; border-color: #c00; }
-
-    .garden-section-header {
-      display: flex;
-      align-items: center;
-    }
-    .garden-section-header h3 { flex: 1; }
-    .garden-section-add {
-      font-size: 20px;
-      line-height: 1;
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #garden-obs-section { margin-top: 32px; }
-    #garden-obs-section:has(#garden-obs-carousel:empty) { display: none; }
-    #garden-herbar-section { margin-top: 32px; }
-    #garden-herbar-section:has(#garden-herbar-carousel:empty) { display: none; }
-    #garden-obs-title,
-    #garden-herbar-title {
-      font-family: var(--font-serif);
-      font-size: 14px;
-      font-weight: 600;
-      color: #222;
-      padding: 0 0 12px;
-    }
-    #garden-obs-carousel,
-    #garden-herbar-carousel {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 16px 0 0;
-      scrollbar-width: none;
-    }
-    #garden-obs-carousel::-webkit-scrollbar,
-    #garden-herbar-carousel::-webkit-scrollbar { display: none; }
-    #garden-obs-carousel:empty,
-    #garden-herbar-carousel:empty { display: none; }
-
-    body.index-mode #garden-description,
-    body.index-mode #observations,
-    body.no-plan #observations { display: none; }
-    body.no-plan:not(.index-mode) #plant-col { width: 50vw; margin-left: 10vw; box-shadow: none; }
-    body.no-plan:not(.index-mode) #panels-area:hover #plant-col,
-    body.no-plan:not(.index-mode) #panels-area.panels-locked #plant-col { transform: none; margin-left: 10vw; box-shadow: none; }
-    body.index-mode #panels-area { pointer-events: none; }
-    html:has(body.index-mode),
-    body.index-mode {
-      overflow-y: auto;
-      height: auto;
-    }
-    body.index-mode #content {
-      overflow: visible;
-      height: auto;
-    }
-    body.index-mode #plant-col {
-      width: 100vw;
-      margin-left: 0;
-      box-shadow: none;
-      transform: none !important;
-      pointer-events: auto;
-      overflow: visible;
-      height: auto;
-    }
-
-    #landing {
-      display: none;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 80px 48px;
-      gap: 12px;
-      opacity: 0;
-    }
-    #landing.ready { display: flex; opacity: 1; transition: opacity 0.4s ease; }
-
-    .landing-card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      border: 1px solid #000;
-      padding: 24px 32px;
-      transition: background 0.15s;
-    }
-    .landing-card:hover { background: #000; color: #fff; }
-    .card-name {
-      font-family: var(--font-serif);
-      font-style: italic;
-    }
-    .landing-card-name {
-      font-family: var(--font-serif);
-      font-size: 32px;
-      font-weight: 600;
-      font-style: italic;
-    }
-
-    #loader {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      z-index: 9999;
-      transition: opacity 0.4s ease;
-    }
-    #loader.hidden { opacity: 0; pointer-events: none; }
-    #loader-text {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      font-style: italic;
-      font-weight: 600;
-      color: #ccc;
-    }
-
-
-    .section {
-      padding: 24px 0px 12px;
-    }
-    .section-header {
-      padding: 24px 0px 12px;
-      margin: 0 48px;
-      border-top: 1px solid #000;
-    }
-
-    @media (max-width: 767px) {
-      html, body  { height: auto; overflow: auto; }
-      #content    { overflow: visible; height: auto; flex-direction: column; }
-      #garden-description { width: 100%; overflow-y: auto; height: 100%; padding: 32px 20px 100px; }
-      #garden-obs-carousel, #garden-herbar-carousel { padding: 16px 0 0; }
-      #garden-big-title { font-size: 52px; }
-
-      /* Panels: fixed row at the bottom, showing only headers */
-      #panels-area {
-        position: fixed;
-        bottom: 0; left: 0; right: 0;
-        flex-direction: row;
-        align-items: flex-end;
-        z-index: 10;
-        box-shadow: 0 -2px 16px rgba(0,0,0,0.12);
-      }
-      #panels-area:hover #observations,
-      #panels-area.panels-locked #observations,
-      #panels-area:hover #plant-col,
-      #panels-area.panels-locked #plant-col { transform: none; box-shadow: none; }
-      #observations {
-        flex: 1; width: auto;
-        overflow: hidden; height: auto;
-        box-shadow: none; padding: 0;
-        border-right: 1px solid rgba(0,0,0,0.08);
-      }
-      #plant-col {
-        flex: 1; width: auto;
-        overflow: hidden; height: auto;
-        margin-left: 0; box-shadow: none;
-        transform: none !important; padding: 0;
-        display: block;
-      }
-      /* hide column content and actions — headers only */
-      #bed-plan-bar, #bed-plan, #obs-form,
-      #plant-filter, #add-plant-form, #plant-grid { display: none; }
-      body:not(.index-mode) #panels-area .col-header-action,
-      body:not(.index-mode) #panels-area .action-btn { display: none !important; }
-
-      /* Expanded panel */
-      #observations.panel-open,
-      #plant-col.panel-open { height: 90dvh; width: 100vw; position: fixed; bottom: 0; top: auto; left: 0; z-index: 20; }
-      #observations.panel-open { overflow-y: auto; }
-      #plant-col.panel-open { display: flex; flex-direction: column; overflow: hidden; }
-      #observations.panel-open #bed-plan-bar { display: flex; padding: 0 20px 12px; }
-      #observations.panel-open #bed-plan { display: block; padding: 0 20px; }
-      #plant-col.panel-open #plant-filter { display: block; width: calc(100% - 40px); margin: 0 20px; }
-      #plant-col.panel-open #plant-grid { display: grid; flex: 1; overflow-y: auto; height: auto; }
-      #observations.panel-open .action-btn,
-      #plant-col.panel-open .action-btn { display: inline-flex !important; }
-    }
-    
-      
-
-      /* No-plan garden on mobile: full width, not 50vw */
-      body.no-plan:not(.index-mode) #plant-col { width: 100vw !important; margin-left: 0 !important; }
-
-      /* Index mode overrides */
-      #modal-name { font-size: 72px; }
-      body.index-mode #panels-area { position: static; box-shadow: none; flex-direction: column; align-items: stretch; }
-      body.index-mode #plant-col { overflow: visible; height: auto; width: 100%; margin-left: 0; box-shadow: none; transform: none !important; position: static; }
-      body.index-mode #plant-grid { overflow: visible; height: auto; display: grid; }
-      body.index-mode #index-heading { font-size: 52px; padding: 32px 20px 12px; }
-      body.index-mode #garden-list { padding: 0 20px 20px 36px; }
-      .section-header { margin: 0 20px; }
-      body.index-mode #garden-section::before,
-      body.index-mode #obs-carousel-section::before { margin: 0 20px 16px; }
-      
-      .carousel-item { width: 120px; }
-      .carousel-item-img { width: 120px; height: 180px; }
-
-      /* All modals full-screen on mobile */
-      #quick-obs-modal,
-      #login-modal {
-        width: 100vw; height: 100dvh; max-height: none;
-        padding: 48px 24px 40px; overflow-y: auto;
-      }
-      #quick-obs-backdrop { align-items: flex-start !important; }
-
-      /* Modal: stack info above observations */
-      #modal { width: 100vw; height: 100dvh; }
-      #modal-columns { flex-direction: column; overflow-y: auto; }
-      #modal-info { width: 100%; flex-shrink: 0; border-right: none; border-bottom: 1px solid rgba(128,128,128,0.2); padding: 32px 24px 8px; overflow-y: visible; }
-      #modal-info-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; border-top: 1px solid rgba(128,128,128,0.15); padding: 14px 0; font-size: 12px; font-family: inherit; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--modal-fg, #000); opacity: 0.5; cursor: pointer; }
-      #modal-info-toggle:hover { opacity: 0.8; }
-      #modal-info-body { display: none; padding-bottom: 20px; }
-      #modal-info-body.open { display: block; }
-      #modal-images { overflow: visible; }
-      #obs-toggle-bar { padding: 24px 24px 16px; }
-      #obs-form { padding: 16px 24px; }
-      #obs-list { padding: 16px 24px; }
-    }
-
+.plant-modal-data summary::after {
+  content: ' ▾';
+}
+
+.plant-modal-data[open] summary::after {
+  content: ' ▴';
+}
+
+.plant-modal-bloom-bar {
+  display: flex;
+  gap: 2px;
+  margin: var(--hb-space-300) 0;
+}
+
+.bloom-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  padding: var(--hb-space-100) 0;
+  border: 1px solid var(--plant-fg, #000);
+  opacity: 0.3;
+}
+
+.bloom-cell.active {
+  opacity: 1;
+  background: var(--plant-fg, #000);
+  color: var(--plant-color, #fff);
+}
+
+.plant-info-row {
+  display: flex;
+  gap: var(--hb-space-300);
+  padding: var(--hb-space-100) 0;
+  border-bottom: 1px solid var(--plant-fg, #000);
+  font-size: var(--hb-font-size-01);
+}
+
+.plant-info-label {
+  width: 100px;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+
+.obs-group-title {
+  font-size: var(--hb-font-size-01);
+  opacity: 0.6;
+  padding: var(--hb-space-300) 0 var(--hb-space-200);
+  text-transform: uppercase;
+}
+
+.plant-modal-obs-list {
+  column-count: 2;
+  column-gap: var(--hb-space-400);
+}
+
+.modal-obs-card {
+  break-inside: avoid;
+  padding-bottom: var(--hb-space-300);
+  margin-bottom: var(--hb-space-300);
+  border-bottom: 1px solid var(--plant-fg, #000);
+}
+
+.modal-obs-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--hb-black-100);
+  margin-bottom: var(--hb-space-200);
+}
+
+.modal-obs-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-obs-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+  font-size: var(--hb-font-size-01);
+}
+
+.plant-modal-observations .section-header {
+  margin: 0 0 var(--hb-space-300);
+  padding: 0;
+  border-top: none;
+}
+
+.plant-modal-observations .action-btn {
+  margin-bottom: var(--hb-space-500);
+}
+
+/* ── Action button ───────────────────────────────────────────────────────── */
+
+.action-btn-icon {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
