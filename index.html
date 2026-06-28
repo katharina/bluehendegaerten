@@ -2231,7 +2231,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       const item = document.createElement('div');
       item.className = 'carousel-item';
       const plantName = o.slugs.map(s => bySlug.get(s)?.name).filter(Boolean).join(', ');
-      const gardenName = o.garden ? (gardens.find(g => g.id === o.garden)?.name ?? o.garden) : null;
+      const gardenName = (o.garden && o.garden !== 'none') ? (gardens.find(g => g.id === o.garden)?.name ?? o.garden) : null;
       item.innerHTML = `
         <div class="carousel-item-img">
           <img src="${thumbUrl(o.filename)}" onerror="this.src='${R2_URL}/${o.filename}'" loading="lazy">

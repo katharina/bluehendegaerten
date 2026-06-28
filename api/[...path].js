@@ -10,6 +10,7 @@ const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','lich
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
 async function addSlugsToGarden(gardenId, slugs) {
+  if (!gardenId || gardenId === 'none') return;
   const { data: g } = await supabase.from('gardens').select('plants').eq('id', gardenId).maybeSingle();
   if (!g) return;
   const existing = new Set(g.plants ?? []);
@@ -213,7 +214,7 @@ export default async function handler(req, res) {
         if (!await requireUser(req, res)) return;
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
-        const garden = 'garden' in (req.body ?? {}) ? (_g && _g !== 'none' ? _g : null) : 'betonbeete';
+        const garden = 'garden' in (req.body ?? {}) ? (_g || 'none') : 'betonbeete';
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
@@ -231,7 +232,7 @@ export default async function handler(req, res) {
         const fields = {};
         if (date                  !== undefined) fields.date                  = date || null;
         if (type                  !== undefined) fields.type                  = type;
-        if (garden                !== undefined) fields.garden                = (garden && garden !== 'none') ? garden : null;
+        if (garden                !== undefined) fields.garden                = garden || 'none';
         if (text                  !== undefined) fields.text                  = text || null;
         if (filename              !== undefined) fields.filename              = filename || null;
         if (lat                   !== undefined) fields.lat                   = lat ?? null;
