@@ -16,6 +16,9 @@ function buildObsCard(o, gardenMap, plantMap) {
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${o.date ? `<div class="observation-date">${new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
     </div>`;
+  card.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('obs:open', { detail: o }));
+  });
   return card;
 }
 

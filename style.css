@@ -9,6 +9,14 @@
   padding: 0;
 }
 
+dialog:not([open]) {
+  display: none;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-mono);
 }
@@ -201,6 +209,87 @@ ul {
 }
 
 /* ── Plant modal ─────────────────────────────────────────────────────────── */
+
+/* ── Observation modal ───────────────────────────────────────────────────── */
+
+dialog#obs-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  overflow: visible;
+}
+
+dialog#obs-modal[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+dialog#obs-modal:focus { outline: none; }
+
+dialog#obs-modal::backdrop {
+  background: transparent;
+}
+
+.obs-modal-inner {
+  display: contents;
+}
+
+.obs-modal-img {
+  position: relative;
+  display: inline-flex;
+}
+
+.obs-modal-img img {
+  max-width: 95vw;
+  max-height: 95dvh;
+  width: auto;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6));
+}
+
+.obs-modal-info {
+  position: absolute;
+  bottom: var(--hb-space-400);
+  right: var(--hb-space-400);
+  background: #fff;
+  padding: var(--hb-space-200);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+  max-width: 160px;
+}
+
+.obs-modal-plants {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+}
+
+.obs-modal-plant-link {
+  font-size: var(--hb-font-size-02);
+  cursor: pointer;
+}
+
+.obs-modal-info .observation-place,
+.obs-modal-info .observation-date {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-400);
+}
+
+.obs-modal-note {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-400);
+}
 
 /* ── Lightbox ────────────────────────────────────────────────────────────── */
 

@@ -34,9 +34,6 @@ export function initPlantModal({ gardens = [], observations = [] } = {}) {
   document.getElementById('plant-modal-close').addEventListener('click', () => _dialog.close());
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _dialog.close(); });
 
-  const lightbox = document.getElementById('lightbox');
-  lightbox.addEventListener('click', () => lightbox.close());
-  lightbox.addEventListener('close', () => { document.getElementById('lightbox-img').src = ''; });
 
   document.addEventListener('plant:open', e => openPlantModal(e.detail));
 }
@@ -133,10 +130,8 @@ function buildObsCard(o, gardens) {
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
     </div>
   `;
-  card.querySelector('img')?.addEventListener('click', e => {
-    const lightbox = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = e.target.dataset.full;
-    lightbox.showModal();
+  card.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('obs:open', { detail: o }));
   });
   return card;
 }

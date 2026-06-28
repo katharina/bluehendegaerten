@@ -2,6 +2,7 @@ import { renderGardenList } from './gardens.js';
 import { renderObsCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
+import { initObsModal } from './obs-modal.js';
 
 const [gardens, observations, customPlants, manifest] = await Promise.all([
   fetch('/api/gardens').then(r => r.json()),
@@ -28,3 +29,4 @@ renderGardenList(gardens);
 renderObsCarousel(observations, gardenMap, plantMap);
 renderPlantList(plants);
 initPlantModal({ gardens, observations });
+initObsModal({ gardens, plants });
