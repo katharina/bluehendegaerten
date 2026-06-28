@@ -216,10 +216,11 @@ export default async function handler(req, res) {
     } else {
       if (req.method === 'PATCH') {
         if (!await requireUser(req, res)) return;
-        const { date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs } = req.body ?? {};
+        const { date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden } = req.body ?? {};
         const fields = {};
         if (date                  !== undefined) fields.date                  = date || null;
         if (type                  !== undefined) fields.type                  = type;
+        if (garden                !== undefined) fields.garden                = garden || null;
         if (text                  !== undefined) fields.text                  = text || null;
         if (filename              !== undefined) fields.filename              = filename || null;
         if (lat                   !== undefined) fields.lat                   = lat ?? null;
