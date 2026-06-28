@@ -4,6 +4,10 @@
            font-hb-thin (100) … font-hb-black (900)
 ─────────────────────────────────────────────────────────────────────────────── */
 :root {
+  /* Responsive page-level horizontal padding — use everywhere content should
+     align to the page edge (sections, headers, carousels, topbar). */
+  --page-pad: clamp(16px, 4vw, 48px);
+
   --hb-font-size-01: 12px;
   --hb-font-size-02: 14px;
   --hb-font-size-03: 16px;

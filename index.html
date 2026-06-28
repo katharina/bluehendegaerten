@@ -11,6 +11,14 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <header class="topbar">
+    <a class="topbar-brand" href="/">Blühende Gärten</a>
+    <button class="topbar-menu-btn" id="topbar-btn" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="topbar-dropdown" id="topbar-dropdown" hidden></div>
+
   <section class="page-header">
     <h1>Blühende Gärten</h1>
   </section>
@@ -106,5 +114,6 @@
   </dialog>
 
   <script type="module" src="/src/app.js"></script>
+  <script type="module" src="/src/topbar.js"></script>
 </body>
 </html>

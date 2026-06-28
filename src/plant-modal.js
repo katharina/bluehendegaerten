@@ -99,6 +99,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
   const infoRows = dialog.querySelector('.plant-modal-info-rows');
   bloomBar.innerHTML = infoRows.innerHTML = '';
+  dialog.querySelector('.plant-info-save')?.remove();
 
   fetch(`/api/plant-info/${plant.slug}`)
     .then(r => r.ok ? r.json() : null)

@@ -29,3 +29,4 @@ scripts/fixed-canvas-test.js
 .vercel
 .env*
 backups/
+*.sqlite
