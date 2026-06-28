@@ -677,6 +677,30 @@ dialog#plant-modal.authenticated .plant-color-picker {
   margin-left: 0;
 }
 
+/* ── No-bed layout: col 1 + col 3 split 50/50 ───────────────────────────── */
+
+.garden-layout.no-bed .garden-col--garden {
+  width: 50vw;
+}
+
+.garden-layout.no-bed .garden-panels {
+  width: 50vw;
+}
+
+.garden-layout.no-bed .garden-col--bed {
+  display: none;
+}
+
+.garden-layout.no-bed .garden-col--plants {
+  width: 100%;
+  margin-left: 0;
+}
+
+.garden-layout.no-bed .garden-panels:hover .garden-col--plants,
+.garden-layout.no-bed .garden-panels.is-expanded .garden-col--plants {
+  transform: none;
+}
+
 /* ── Bed plan SVG ────────────────────────────────────────────────────────── */
 
 #bed-plan {
