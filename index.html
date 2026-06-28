@@ -1303,7 +1303,15 @@
         ]);
         if (result?.DateTimeOriginal)
           document.getElementById('qo-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
-        if (gps?.latitude != null) { _qoLat = gps.latitude; _qoLon = gps.longitude; }
+        if (gps?.latitude != null) {
+          _qoLat = gps.latitude; _qoLon = gps.longitude;
+        } else if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            pos => { _qoLat = pos.coords.latitude; _qoLon = pos.coords.longitude; },
+            () => {},
+            { maximumAge: 60000, timeout: 10000 }
+          );
+        }
       } catch {}
       identifyPlant(file);
     });
@@ -1380,7 +1388,15 @@
           ]);
           if (result?.DateTimeOriginal)
             document.getElementById('obs-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
-          if (gps?.latitude != null) { _obsLat = gps.latitude; _obsLon = gps.longitude; }
+          if (gps?.latitude != null) {
+            _obsLat = gps.latitude; _obsLon = gps.longitude;
+          } else if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              pos => { _obsLat = pos.coords.latitude; _obsLon = pos.coords.longitude; },
+              () => {},
+              { maximumAge: 60000, timeout: 10000 }
+            );
+          }
         } catch {}
       }
     });

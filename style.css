@@ -1348,6 +1348,9 @@
       font-style: italic;
       font-size: 12px;
       color: #222;
+    }
+    .carousel-item-garden,
+    .carousel-item-gps {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1523,7 +1526,7 @@
         display: block;
       }
       /* hide column content and actions — headers only */
-      #bed-plan-bar, #bed-plan, #obs-form, #obs-list,
+      #bed-plan-bar, #bed-plan, #obs-form,
       #plant-filter, #add-plant-form, #plant-grid { display: none; }
       body:not(.index-mode) #panels-area .col-header-action,
       body:not(.index-mode) #panels-area .action-btn { display: none !important; }

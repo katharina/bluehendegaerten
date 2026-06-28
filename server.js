@@ -308,7 +308,7 @@ app.delete('/api/observations/:id', async (req, res) => {
 
 // ── Supabase catch-all (gardens, profiles, health, upload-url) ────────────────
 
-app.all('/api/*', (req, res, next) => {
+app.all('/api/*path', (req, res, next) => {
   const segments = req.path.replace(/^\/api\//, '').split('/').filter(Boolean);
   const resource = segments[0];
   // let SQLite routes above handle these
