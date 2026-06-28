@@ -2,7 +2,7 @@ import { thumbUrl } from './utils.js';
 
 const PAGE = 20;
 
-function buildObsCard(o, gardenMap, plantMap) {
+function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');
   card.className = 'carousel-card';
   const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
@@ -17,7 +17,7 @@ function buildObsCard(o, gardenMap, plantMap) {
       ${o.date ? `<div class="observation-date">${new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
     </div>`;
   card.addEventListener('click', () => {
-    document.dispatchEvent(new CustomEvent('obs:open', { detail: o }));
+    document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
   });
   return card;
 }
@@ -39,7 +39,7 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
 
   function loadMore() {
     const batch = fotos.slice(offset, offset + PAGE);
-    batch.forEach(o => sentinel.before(buildObsCard(o, gardenMap, plantMap)));
+    batch.forEach(o => sentinel.before(buildObsCard(o, gardenMap, plantMap, fotos)));
     offset += batch.length;
     if (offset >= fotos.length) {
       sentinel.replaceWith(allCard);

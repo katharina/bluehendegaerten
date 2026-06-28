@@ -72,10 +72,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   if (gardenId) {
     const here  = plantObs.filter(o => o.garden === gardenId);
     const other = plantObs.filter(o => o.garden !== gardenId);
-    if (here.length)  buildObsGroup('Dieser Garten', here, gardens).forEach(appendMasonry);
-    if (other.length) buildObsGroup('Andere Gärten', other, gardens).forEach(appendMasonry);
+    if (here.length)  buildObsGroup('Dieser Garten', here, gardens, plantObs).forEach(appendMasonry);
+    if (other.length) buildObsGroup('Andere Gärten', other, gardens, plantObs).forEach(appendMasonry);
   } else {
-    plantObs.forEach(o => appendMasonry(buildObsCard(o, gardens)));
+    plantObs.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs)));
   }
 
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
@@ -109,14 +109,14 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   dialog.focus();
 }
 
-function buildObsGroup(title, obs, gardens) {
+function buildObsGroup(title, obs, gardens, list) {
   const heading = document.createElement('div');
   heading.className = 'obs-group-title';
   heading.textContent = title;
-  return [heading, ...obs.map(o => buildObsCard(o, gardens))];
+  return [heading, ...obs.map(o => buildObsCard(o, gardens, list))];
 }
 
-function buildObsCard(o, gardens) {
+function buildObsCard(o, gardens, list = [o]) {
   const card = document.createElement('div');
   card.className = 'modal-obs-card';
   const place = o.place || gardens.find(g => g.id === o.garden)?.name || '';
@@ -131,7 +131,7 @@ function buildObsCard(o, gardens) {
     </div>
   `;
   card.addEventListener('click', () => {
-    document.dispatchEvent(new CustomEvent('obs:open', { detail: o }));
+    document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
   });
   return card;
 }

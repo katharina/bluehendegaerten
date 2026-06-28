@@ -239,6 +239,24 @@ dialog#obs-modal::backdrop {
   background: transparent;
 }
 
+.obs-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  line-height: 1;
+  padding: var(--hb-space-400) var(--hb-space-500);
+  cursor: pointer;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+}
+.obs-nav--prev { left: 0; }
+.obs-nav--next { right: 0; }
+.obs-nav[hidden] { display: none; }
+
 .obs-modal-inner {
   display: contents;
 }
