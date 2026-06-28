@@ -167,7 +167,7 @@ ul {
 }
 
 .plant-card .german-name {
-  font-size: var(--hb-font-size-00);
+  font-size: var(--hb-font-size-01);
 }
 
 .plant-card .plant-family {
@@ -666,11 +666,13 @@ dialog#plant-modal.authenticated .plant-color-picker {
               margin-left 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) 60ms;
 }
 
-.garden-panels:hover .garden-col--bed {
+.garden-panels:hover .garden-col--bed,
+.garden-panels.is-expanded .garden-col--bed {
   transform: translateX(-20vw);
 }
 
-.garden-panels:hover .garden-col--plants {
+.garden-panels:hover .garden-col--plants,
+.garden-panels.is-expanded .garden-col--plants {
   transform: translateX(-20vw);
   margin-left: 0;
 }
@@ -685,6 +687,30 @@ dialog#plant-modal.authenticated .plant-color-picker {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.bed-plan-svg circle[data-slug] {
+  cursor: pointer;
+}
+
+.bed-tooltip {
+  position: fixed;
+  z-index: 200;
+  background: #fff;
+  border: 1px solid #000;
+  padding: var(--hb-space-200) var(--hb-space-300);
+  pointer-events: none;
+}
+
+.bed-tooltip-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--hb-font-size-02);
+}
+
+.bed-tooltip-de {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-600);
 }
 
 /* ── Action button ───────────────────────────────────────────────────────── */

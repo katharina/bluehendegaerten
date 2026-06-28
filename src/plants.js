@@ -36,6 +36,9 @@ export function renderPlantList(plants) {
         )
       : sorted;
     list.replaceChildren(...filtered.map(p => buildPlantCard(p, maxW)));
+    document.dispatchEvent(new CustomEvent('plant:filter', {
+      detail: { slugs: new Set(filtered.map(p => p.slug)), active: !!q },
+    }));
   }
 
   render('');

@@ -74,3 +74,9 @@ renderBedPlan(document.getElementById('bed-plan'), {
 
 initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
+
+// Lock panels open on click; release by clicking col 1
+const panels   = document.querySelector('.garden-panels');
+const gardenCol = document.querySelector('.garden-col--garden');
+panels.addEventListener('click', () => panels.classList.add('is-expanded'));
+gardenCol.addEventListener('click', () => panels.classList.remove('is-expanded'));

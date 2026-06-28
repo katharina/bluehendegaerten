@@ -50,9 +50,50 @@ export async function renderBedPlan(container, { gardenId, plants, bedImages, pl
     const plant = plantBySlug[p.slug];
     const r = (plant?.world_w ?? 0.4) / 2;
     const color = colorBySlug[p.slug] ?? '#ccc';
-    svg += `<circle cx="${p.x}" cy="${p.z}" r="${r}" fill="${color}" opacity="0.85"/>`;
+    svg += `<circle cx="${p.x}" cy="${p.z}" r="${r}" fill="${color}" opacity="0.85" data-slug="${p.slug}"/>`;
   }
 
   svg += `</svg>`;
   container.innerHTML = svg;
+
+  // Tooltip
+  const tooltip = document.createElement('div');
+  tooltip.className = 'bed-tooltip';
+  tooltip.hidden = true;
+  document.body.appendChild(tooltip);
+
+  const svgEl = container.querySelector('svg');
+
+  svgEl.addEventListener('mousemove', e => {
+    const circle = e.target.closest('circle[data-slug]');
+    if (circle) {
+      const plant = plantBySlug[circle.dataset.slug];
+      if (plant) {
+        tooltip.innerHTML =
+          `<div class="bed-tooltip-name">${plant.name ?? ''}</div>` +
+          (plant.name_de ? `<div class="bed-tooltip-de">${plant.name_de}</div>` : '');
+        tooltip.hidden = false;
+        tooltip.style.left = (e.clientX + 14) + 'px';
+        tooltip.style.top  = (e.clientY + 14) + 'px';
+      }
+    } else {
+      tooltip.hidden = true;
+    }
+  });
+
+  svgEl.addEventListener('mouseleave', () => { tooltip.hidden = true; });
+
+  svgEl.addEventListener('click', e => {
+    const circle = e.target.closest('circle[data-slug]');
+    if (!circle) return;
+    const plant = plantBySlug[circle.dataset.slug];
+    if (plant) document.dispatchEvent(new CustomEvent('plant:open', { detail: plant }));
+  });
+
+  document.addEventListener('plant:filter', e => {
+    const { slugs, active } = e.detail;
+    container.querySelectorAll('circle[data-slug]').forEach(el => {
+      el.style.opacity = active && !slugs.has(el.dataset.slug) ? '0.1' : '';
+    });
+  });
 }
