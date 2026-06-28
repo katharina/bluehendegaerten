@@ -3,6 +3,7 @@ import { renderObsCarousel, renderHerbarCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
+import { initObsForm } from './obs-form.js';
 import { renderBedPlan } from './bed-plan.js';
 import { supabase, authedFetch } from './auth.js';
 
@@ -123,6 +124,7 @@ renderBedPlan(document.getElementById('bed-plan'), {
 
 initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
+initObsForm({ gardens, plants: allPlants, gardenId: garden.id });
 
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');

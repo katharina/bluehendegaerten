@@ -18,7 +18,12 @@ const CARE_FIELDS = [
   { key: 'kuebel',     label: 'Kübel' },
 ];
 
-let _dialog, _ctx, _loggedIn = false, _gardenId = null;
+const FIELD_LABEL = {
+  ...Object.fromEntries(CARE_FIELDS.map(f => [f.key, f.label])),
+  color: 'Farbe', bloom_months: 'Blütemonate', family: 'Familie', world_w: 'Breite (m)',
+};
+
+let _dialog, _ctx, _loggedIn = false, _gardenId = null, _currentPlant = null;
 
 export function initPlantModal({ gardens = [], observations = [], gardenId = null } = {}) {
   _ctx = { gardens, observations };
@@ -34,12 +39,19 @@ export function initPlantModal({ gardens = [], observations = [], gardenId = nul
 
   document.getElementById('plant-modal-close').addEventListener('click', () => _dialog.close());
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _dialog.close(); });
+  document.getElementById('plant-modal-obs-btn').addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('obs:new', {
+      detail: { plantSlug: _currentPlant?.slug ?? null, gardenId: _gardenId },
+    }));
+    _dialog.close();
+  });
 
 
   document.addEventListener('plant:open', e => openPlantModal(e.detail, { gardenId: _gardenId }));
 }
 
 export async function openPlantModal(plant, { gardenId = null } = {}) {
+  _currentPlant = plant;
   const { gardens, observations } = _ctx;
   const dialog = _dialog;
 
@@ -191,6 +203,28 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           ).join('');
         }
       }
+
+      const changelogEl = dialog.querySelector('.plant-modal-changelog');
+      const changelogRows = dialog.querySelector('.plant-modal-changelog-rows');
+      changelogEl.hidden = true;
+      changelogRows.innerHTML = '';
+      fetch(`/api/plant-edits/${plant.slug}`)
+        .then(r => r.ok ? r.json() : [])
+        .then(edits => {
+          if (!edits.length) return;
+          changelogEl.hidden = false;
+          changelogRows.innerHTML = edits.map(e => {
+            const date = new Date(e.created_at).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' });
+            const label = FIELD_LABEL[e.field] ?? e.field;
+            const from = e.old_value != null ? `<span class="changelog-old">${e.old_value}</span> → ` : '';
+            const to   = e.new_value != null ? `<span class="changelog-new">${e.new_value}</span>` : '—';
+            return `<div class="changelog-row">
+              <span class="changelog-date">${date}</span>
+              <span class="changelog-field">${label}</span>
+              <span class="changelog-value">${from}${to}</span>
+            </div>`;
+          }).join('');
+        });
     });
 
   dialog.showModal();

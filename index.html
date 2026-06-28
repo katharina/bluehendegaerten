@@ -70,6 +70,10 @@
             <div class="plant-modal-bloom-bar"></div>
             <div class="plant-modal-info-rows"></div>
           </details>
+          <details class="plant-modal-changelog" hidden>
+            <summary>Änderungsprotokoll</summary>
+            <div class="plant-modal-changelog-rows"></div>
+          </details>
         </div>
 
         <div class="plant-modal-observations">
@@ -104,6 +108,45 @@
       </div>
     </div>
     <button class="obs-nav obs-nav--next">&#8250;</button>
+  </dialog>
+
+  <dialog id="obs-form-dialog" tabindex="-1">
+    <div class="obs-form-inner">
+      <div class="section-header">
+        <h2 class="obs-form-title" id="obs-form-title">Beobachtung</h2>
+        <button class="action-btn-icon" id="obs-form-close">×</button>
+      </div>
+      <label class="obs-file-label" id="obs-form-file-label">
+        <span id="obs-form-file-text">Bild auswählen…</span>
+        <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
+      </label>
+      <div class="obs-form-row">
+        <div class="obs-form-field">
+          <label class="obs-form-label">Datum</label>
+          <input id="obs-form-date" class="obs-input" type="date">
+        </div>
+        <div class="obs-form-field">
+          <label class="obs-form-label">Typ</label>
+          <select id="obs-form-type" class="obs-select">
+            <option value="foto">Foto</option>
+            <option value="zeichnung">Zeichnung</option>
+            <option value="herbarbeleg">Herbarbeleg</option>
+            <option value="notiz">Notiz</option>
+          </select>
+        </div>
+        <div class="obs-form-field">
+          <label class="obs-form-label">Garten</label>
+          <select id="obs-form-garden" class="obs-select"></select>
+        </div>
+      </div>
+      <div id="obs-form-plant-grid" class="obs-plant-grid"></div>
+      <textarea id="obs-form-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+      <div id="obs-form-msg" class="obs-form-msg"></div>
+      <div class="obs-form-actions">
+        <button id="obs-form-submit" class="action-btn">Speichern</button>
+        <button id="obs-form-cancel" class="action-btn-ghost">Abbrechen</button>
+      </div>
+    </div>
   </dialog>
 
   <dialog id="lightbox" tabindex="-1">

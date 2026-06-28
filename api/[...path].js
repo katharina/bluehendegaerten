@@ -286,10 +286,26 @@ export default async function handler(req, res) {
       fields.updated_at = new Date().toISOString();
       const { error } = await supabase.from('plant_info').upsert(fields);
       if (error) return res.status(500).json({ error: error.message });
-      await logEdits(id, user.id,
+      logEdits(id, user.id,
         Object.keys(fields).filter(k => PLANT_INFO_FIELDS.includes(k))
-          .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })));
+          .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))
+        .catch(e => console.error('[plant-info PATCH] logEdits threw:', e.message));
       return res.json({ ok: true });
+    }
+    return res.status(405).json({ error: 'method not allowed' });
+  }
+
+  // ── Plant edits (changelog) ───────────────────────────────────────────────────
+  if (resource === 'plant-edits') {
+    if (req.method === 'GET' && id) {
+      const { data, error } = await supabase
+        .from('plant_edits')
+        .select('field, old_value, new_value, created_at')
+        .eq('slug', id)
+        .order('created_at', { ascending: false })
+        .limit(100);
+      if (error) return res.status(500).json({ error: error.message });
+      return res.json(data ?? []);
     }
     return res.status(405).json({ error: 'method not allowed' });
   }

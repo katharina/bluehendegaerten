@@ -304,6 +304,180 @@ ul {
 
 /* ── Plant modal ─────────────────────────────────────────────────────────── */
 
+/* ── Obs form dialog ─────────────────────────────────────────────────────── */
+
+dialog#obs-form-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  width: min(520px, 92vw);
+  max-height: 90dvh;
+  overflow: visible;
+}
+
+dialog#obs-form-dialog[open] { display: flex; }
+dialog#obs-form-dialog:focus { outline: none; }
+
+dialog#obs-form-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.obs-form-inner {
+  background: #fff;
+  width: 100%;
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: var(--hb-space-800);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-400);
+}
+
+.obs-form-inner .section-header {
+  border-top: none;
+  padding: 0;
+  margin: 0;
+}
+
+.obs-form-title {
+  font-family: var(--font-serif);
+  font-size: var(--hb-font-size-08);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.obs-form-row {
+  display: flex;
+  gap: var(--hb-space-400);
+  flex-wrap: wrap;
+}
+
+.obs-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hb-space-100);
+  flex: 1;
+  min-width: 100px;
+}
+
+.obs-form-label {
+  font-size: var(--hb-font-size-01);
+  opacity: 0.6;
+}
+
+.obs-input,
+.obs-select,
+.obs-textarea {
+  font-family: var(--font-sans);
+  font-size: var(--hb-font-size-02);
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
+  padding: var(--hb-space-100) 0;
+  width: 100%;
+}
+
+.obs-textarea {
+  resize: vertical;
+  min-height: 72px;
+  border: 1px solid #ccc;
+  padding: var(--hb-space-200);
+}
+
+.obs-file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  padding: var(--hb-space-400);
+  cursor: pointer;
+  font-size: var(--hb-font-size-01);
+  color: #888;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.obs-file-label.has-file {
+  border-color: #000;
+  color: #000;
+}
+
+.obs-file-label input[type="file"] { display: none; }
+
+.obs-plant-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hb-space-200);
+}
+
+.obs-plant-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--hb-font-size-01);
+  font-style: italic;
+  padding: var(--hb-space-100) var(--hb-space-300);
+  border: 1px solid #ddd;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.1s, background 0.1s;
+}
+
+.obs-plant-chip input[type="checkbox"] { display: none; }
+
+.obs-plant-chip.checked {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.obs-plant-chip.pn-suggested { border-color: #777; }
+.obs-plant-chip.pn-identifying { font-style: italic; color: #999; border-style: dashed; }
+
+.obs-plant-chip.pn-new-plant {
+  background: none;
+  font-style: italic;
+  color: #555;
+  border-style: dashed;
+}
+
+.pn-score {
+  font-style: normal;
+  font-size: var(--hb-font-size-00);
+  opacity: 0.5;
+}
+
+.obs-add-plant-btn {
+  font-size: var(--hb-font-size-01);
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: var(--hb-space-100) 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.obs-form-msg {
+  font-size: var(--hb-font-size-01);
+  color: #c00;
+  min-height: 1em;
+}
+
+.obs-form-actions {
+  display: flex;
+  gap: var(--hb-space-300);
+  align-items: center;
+}
+
+.action-btn-ghost {
+  background: none;
+  border: none;
+  font-size: var(--hb-font-size-02);
+  color: #888;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* ── Observation modal ───────────────────────────────────────────────────── */
 
 dialog#obs-modal {
@@ -606,6 +780,9 @@ dialog#plant-modal .action-btn {
   display: none;
 }
 
+#plant-modal-obs-btn { display: none; }
+dialog#plant-modal.authenticated #plant-modal-obs-btn { display: inline-flex; }
+
 dialog#plant-modal.authenticated .plant-color-swatch {
   display: block;
 }
@@ -720,6 +897,47 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .bloom-bar--editable .bloom-cell {
   cursor: pointer;
+}
+
+.plant-modal-changelog {
+  margin-top: var(--hb-space-400);
+}
+
+.plant-modal-changelog summary {
+  font-size: var(--hb-font-size-01);
+  opacity: 0.6;
+  cursor: pointer;
+  list-style: none;
+  padding: var(--hb-space-200) 0;
+}
+
+.plant-modal-changelog summary::-webkit-details-marker { display: none; }
+
+.changelog-row {
+  display: grid;
+  grid-template-columns: 7rem 6rem 1fr;
+  gap: var(--hb-space-200);
+  align-items: baseline;
+  padding: var(--hb-space-100) 0;
+  font-size: var(--hb-font-size-01);
+  border-top: 1px solid color-mix(in srgb, var(--plant-fg, #000) 10%, transparent);
+}
+
+.changelog-date {
+  opacity: 0.5;
+}
+
+.changelog-field {
+  opacity: 0.7;
+}
+
+.changelog-old {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.changelog-new {
+  font-weight: 500;
 }
 
 

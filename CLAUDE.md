@@ -36,3 +36,7 @@ The same principle applies to `.observation-place`, `.observation-date`, and any
 - `globals.css` — design tokens, Tailwind bridge, theme variables
 - `style.css` — all component and layout styles
 - `index.html` — structure only, no inline styles
+
+## TODOs
+
+- **Plant changelog not showing**: `plant_edits` table inserts appear to fail silently. Server logs `[logEdits]` errors but root cause (table schema mismatch?) unresolved. `GET /api/plant-edits/:slug` returns `[]`. Investigate Supabase `plant_edits` table columns.
