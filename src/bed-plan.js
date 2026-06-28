@@ -27,7 +27,7 @@ export async function renderBedPlan(container, { gardenId, plants, bedImages, pl
   const colorBySlug  = Object.fromEntries(plants.map(p => [p.slug, p.color ?? '#ccc']));
   const plantBySlug  = Object.fromEntries(plants.map(p => [p.slug, p]));
 
-  const PAD = 0.15;
+  const PAD = 0.65;
   const vbX = -BED_L / 2 - PAD;
   const vbY = -TOTAL_Z / 2 - PAD;
   const vbW = BED_L + PAD * 2;
@@ -38,7 +38,7 @@ export async function renderBedPlan(container, { gardenId, plants, bedImages, pl
   for (const bed of bedLayout) {
     const x0 = -BED_L / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.02"/>`;
+    svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.01"/>`;
     if (bedImages[bed.i]) {
       svg += `<image href="/uploads/${bedImages[bed.i]}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
     }
