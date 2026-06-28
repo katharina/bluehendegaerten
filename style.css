@@ -1554,6 +1554,9 @@
 
       .col-header { padding: 20px 20px 16px; }
 
+      /* No-plan garden on mobile: full width, not 50vw */
+      body.no-plan:not(.index-mode) #plant-col { width: 100vw !important; margin-left: 0 !important; }
+
       /* Index mode overrides */
       #modal-name { font-size: 72px; }
       body.index-mode #panels-area { position: static; box-shadow: none; flex-direction: column; align-items: stretch; }
