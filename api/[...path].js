@@ -212,7 +212,7 @@ export default async function handler(req, res) {
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
-        const garden = req.body?.garden || 'betonbeete';
+        const garden = 'garden' in (req.body ?? {}) ? (req.body.garden || null) : 'betonbeete';
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
