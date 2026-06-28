@@ -1358,22 +1358,28 @@
 
     #garden-obs-section { margin-top: 32px; }
     #garden-obs-section:has(#garden-obs-carousel:empty) { display: none; }
-    #garden-obs-title {
+    #garden-herbar-section { margin-top: 32px; }
+    #garden-herbar-section:has(#garden-herbar-carousel:empty) { display: none; }
+    #garden-obs-title,
+    #garden-herbar-title {
       font-family: var(--font-serif);
       font-size: 14px;
       font-weight: 600;
       color: #222;
       padding: 0 0 12px;
     }
-    #garden-obs-carousel {
+    #garden-obs-carousel,
+    #garden-herbar-carousel {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       padding: 16px 0 0;
       scrollbar-width: none;
     }
-    #garden-obs-carousel::-webkit-scrollbar { display: none; }
-    #garden-obs-carousel:empty { display: none; }
+    #garden-obs-carousel::-webkit-scrollbar,
+    #garden-herbar-carousel::-webkit-scrollbar { display: none; }
+    #garden-obs-carousel:empty,
+    #garden-herbar-carousel:empty { display: none; }
 
     body.index-mode #garden-description,
     body.index-mode #observations { display: none; }
@@ -1450,7 +1456,7 @@
       html, body  { height: auto; overflow: auto; }
       #content    { overflow: visible; height: auto; flex-direction: column; }
       #garden-description { width: 100%; overflow: visible; padding: 32px 20px 100px; }
-      #garden-obs-carousel { padding: 16px 0 0; }
+      #garden-obs-carousel, #garden-herbar-carousel { padding: 16px 0 0; }
       #garden-big-title { font-size: 52px; }
 
       /* Panels: fixed row at the bottom, showing only headers */

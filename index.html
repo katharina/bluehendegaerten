@@ -135,6 +135,10 @@
         <h3 id="garden-obs-title">Beobachtungen</h3>
         <div id="garden-obs-carousel"></div>
       </div>
+      <div id="garden-herbar-section">
+        <h3 id="garden-herbar-title">Herbarbelege</h3>
+        <div id="garden-herbar-carousel"></div>
+      </div>
     </div>
     <div id="panels-area">
     <div id="observations">
@@ -167,7 +171,6 @@
       <div id="obs-carousel-section">
         <div id="obs-carousel-header">
           <h2 id="obs-carousel-title">Alle Beobachtungen</h2>
-          <button id="all-fotos-btn" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer;padding-left:12px;margin-right:auto;font-family:inherit;">alle Fotos</button>
           <button id="quick-obs-btn" class="action-btn" style="font-size:28px;line-height:1;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</button>
         </div>
         <div id="obs-carousel"></div>
@@ -2087,17 +2090,39 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
         b.classList.toggle('active', b.dataset.gardenId === gardenId));
       if (editMode) { editMode = false; document.body.classList.remove('edit-mode'); }
       render();
+      _gardenObsCache = null;
       loadGardenObsCarousel(gardenId);
+      loadGardenHerbarCarousel(gardenId);
+    }
+
+    let _gardenObsCache = null;
+    let _gardenObsCacheId = null;
+
+    async function fetchGardenObs(gardenId) {
+      if (_gardenObsCacheId === gardenId && _gardenObsCache) return _gardenObsCache;
+      const all = await fetch(`/api/observations?garden=${gardenId}`).then(r => r.json());
+      _gardenObsCache = all;
+      _gardenObsCacheId = gardenId;
+      return all;
     }
 
     function loadGardenObsCarousel(gardenId) {
       const carousel = document.getElementById('garden-obs-carousel');
       carousel.innerHTML = '';
       if (!gardenId) return;
-      fetch(`/api/observations?garden=${gardenId}`).then(r => r.json()).then(all => {
+      fetchGardenObs(gardenId).then(all => {
         const photos = all.filter(o => o.filename && o.type === 'foto');
-        if (!photos.length) return;
         photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
+      }).catch(() => {});
+    }
+
+    function loadGardenHerbarCarousel(gardenId) {
+      const carousel = document.getElementById('garden-herbar-carousel');
+      carousel.innerHTML = '';
+      if (!gardenId) return;
+      fetchGardenObs(gardenId).then(all => {
+        const herbar = all.filter(o => o.filename && o.type === 'herbarbeleg');
+        herbar.forEach(o => carousel.appendChild(buildCarouselItem(o)));
       }).catch(() => {});
     }
 
@@ -2146,6 +2171,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     document.body.classList.toggle('index-mode', !activeGarden);
     render();
     loadGardenObsCarousel(activeGarden);
+    loadGardenHerbarCarousel(activeGarden);
     document.getElementById('content').classList.add('ready');
 
     // ── Index photo carousel ──────────────────────────────────────────────────
@@ -2196,18 +2222,6 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       photos.forEach(o => carousel.appendChild(buildCarouselItem(o)));
     }).catch(() => {});
 
-    document.getElementById('all-fotos-btn').addEventListener('click', async () => {
-      const list = document.getElementById('all-obs-list');
-      document.getElementById('all-obs-title').textContent = 'Alle Fotos';
-      list.innerHTML = '<div class="all-obs-empty">Wird geladen…</div>';
-      document.getElementById('all-obs-backdrop').classList.add('open');
-      const obs = await fetch('/api/observations').then(r => r.json());
-      const fotos = obs.filter(o => o.filename && o.type === 'foto');
-      list.innerHTML = '';
-      list.style.cssText = 'display:flex;flex-wrap:wrap;gap:12px;align-content:flex-start;';
-      if (!fotos.length) { list.innerHTML = '<div class="all-obs-empty">Noch keine Fotos</div>'; return; }
-      fotos.forEach(o => list.appendChild(buildCarouselItem(o)));
-    });
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lightbox = document.getElementById('lightbox');
