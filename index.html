@@ -1322,6 +1322,11 @@
           }
         }
         quickObsBackdrop.style.display = 'none';
+        if (activeGarden) {
+          _gardenObsCache = null;
+          loadGardenObsCarousel(activeGarden);
+          loadGardenHerbarCarousel(activeGarden);
+        }
       } catch(e) {
         msg.textContent = 'Fehler beim Speichern.';
       }
@@ -2047,8 +2052,10 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       let slugs = null;
       if (activeGarden && !editMode) {
         slugs = new Set(_gardenObsSlugs);
-        for (const ver of store.versions ?? []) {
-          for (const p of ver.placements ?? []) slugs.add(p.slug);
+        if (hasPlan) {
+          for (const ver of store.versions ?? []) {
+            for (const p of ver.placements ?? []) slugs.add(p.slug);
+          }
         }
       }
 
