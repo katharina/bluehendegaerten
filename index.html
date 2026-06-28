@@ -1124,46 +1124,67 @@
       qoGarden.appendChild(opt.cloneNode(true));
     });
 
-    function buildQoPlantGrid(preselectedSlugs = [], suggestions = []) {
+    function buildQoPlantGrid(preselectedSlugs = [], suggestions = [], showAll = false) {
       const grid = document.getElementById('qo-plant-grid');
       grid.innerHTML = '';
-      const matched   = suggestions.filter(s => s.slug);
-      const unmatched = suggestions.filter(s => !s.slug);
+      const matched      = suggestions.filter(s => s.slug);
+      const unmatched    = suggestions.filter(s => !s.slug);
       const suggestedSlugs = matched.map(s => s.slug);
-      const scoreMap = new Map(matched.map(s => [s.slug, s.score]));
+      const scoreMap     = new Map(matched.map(s => [s.slug, s.score]));
 
-      // Unmatched suggestions — "add new plant" buttons
-      unmatched.forEach(s => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'obs-plant-chip pn-new-plant';
-        btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
-        btn.title = 'Als neue Pflanze hinzufügen';
-        btn.addEventListener('click', async () => {
-          btn.disabled = true;
-          btn.textContent = 'Wird hinzugefügt…';
-          const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
-          await addPlantFromPlantNet(s, suggestions, current);
-        });
-        grid.appendChild(btn);
-      });
-
-      // Matched suggestions first, then rest alphabetically
-      const suggestedPlants = suggestedSlugs.map(sl => bySlug.get(sl)).filter(Boolean);
-      const rest = [...bySlug.values()]
-        .filter(p => !suggestedSlugs.includes(p.slug))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      [...suggestedPlants, ...rest].forEach(p => {
-        const isSuggested = suggestedSlugs.includes(p.slug);
-        const checked = preselectedSlugs.includes(p.slug) || (isSuggested && !preselectedSlugs.length);
-        const score = scoreMap.get(p.slug);
+      function makeChip(p, checked, score, suggested) {
         const chip = document.createElement('label');
-        chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (isSuggested ? ' pn-suggested' : '');
+        chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
         chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
         chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
-        grid.appendChild(chip);
+        return chip;
+      }
+
+      // Always show selected plants
+      preselectedSlugs.forEach(slug => {
+        const p = bySlug.get(slug);
+        if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), suggestedSlugs.includes(slug)));
       });
+
+      if (showAll) {
+        // Full plant list (minus already shown selected)
+        [...bySlug.values()]
+          .filter(p => !preselectedSlugs.includes(p.slug))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(p => grid.appendChild(makeChip(p, false, null, false)));
+      } else if (suggestions.length && !preselectedSlugs.length) {
+        // PlantNet results only — unmatched "add" buttons first
+        unmatched.forEach(s => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'obs-plant-chip pn-new-plant';
+          btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+          btn.title = 'Als neue Pflanze hinzufügen';
+          btn.addEventListener('click', async () => {
+            btn.disabled = true; btn.textContent = 'Wird hinzugefügt…';
+            const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+            await addPlantFromPlantNet(s, suggestions, current);
+          });
+          grid.appendChild(btn);
+        });
+        suggestedSlugs.forEach(slug => {
+          const p = bySlug.get(slug);
+          if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
+        });
+      }
+
+      // Always show "add plant" button unless already in full-list mode
+      if (!showAll) {
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'qo-add-plant-btn';
+        addBtn.textContent = '+ Pflanze hinzufügen';
+        addBtn.addEventListener('click', () => {
+          const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+          buildQoPlantGrid(current, suggestions, true);
+        });
+        grid.appendChild(addBtn);
+      }
     }
 
     async function addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {

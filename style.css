@@ -1043,6 +1043,13 @@
     .obs-plant-chip.pn-new-plant { border-style:dashed; border-color:#bbb; color:#555; font-style:italic; background:none; font-size:11px; font-family:inherit; }
     .obs-plant-chip.pn-new-plant:hover { border-color:#000; color:#000; }
     .obs-plant-chip.pn-new-plant:disabled { opacity:0.4; cursor:default; }
+    .qo-add-plant-btn {
+      font-size: 11px; font-family: inherit; color: #888;
+      background: none; border: none; cursor: pointer;
+      padding: 4px 0; text-decoration: underline;
+      display: block; margin-top: 4px;
+    }
+    .qo-add-plant-btn:hover { color: #000; }
 
     .obs-file-label {
       font-size: 11px;
