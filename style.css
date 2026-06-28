@@ -1489,7 +1489,7 @@
     @media (max-width: 767px) {
       html, body  { height: auto; overflow: auto; }
       #content    { overflow: visible; height: auto; flex-direction: column; }
-      #garden-description { width: 100%; overflow: visible; padding: 32px 20px 100px; }
+      #garden-description { width: 100%; overflow-y: auto; height: 100%; padding: 32px 20px 100px; }
       #garden-obs-carousel, #garden-herbar-carousel { padding: 16px 0 0; }
       #garden-big-title { font-size: 52px; }
 
