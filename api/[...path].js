@@ -325,7 +325,7 @@ export default async function handler(req, res) {
       }
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
-        const { slug, name, name_de, family, color, world_w, world_h, garden = 'betonbeete' } = req.body ?? {};
+        const { slug, name, name_de, family, color, world_w, world_h, garden = null } = req.body ?? {};
         if (!slug || !name) return res.status(400).json({ error: 'slug and name required' });
         const { data, error } = await supabase.from('custom_plants')
           .insert({ slug, name, name_de: name_de || null, family: family || null,

@@ -1189,12 +1189,11 @@
 
     async function addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {
       const slug = toSlug(suggestion.name);
-      const garden = document.getElementById('qo-garden')?.value || activeGarden || 'betonbeete';
       try {
         const res = await authedFetch('/api/custom-plants', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null, garden }),
+          body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null }),
         });
         const p = await res.json();
         if (!res.ok && p.error !== 'slug already exists') { alert(p.error); return; }
@@ -1752,18 +1751,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
 
     async function loadCustomPlants() {
       try {
-        const plants = await fetch(`/api/custom-plants?garden=${activeGarden}`).then(r => r.json());
+        const plants = await fetch('/api/custom-plants').then(r => r.json());
         for (const p of plants) {
-          const entry = {
+          bySlug.set(p.slug, {
             slug: p.slug, name: p.name, name_de: p.name_de, family: p.family,
             color: p.color, worldW: p.world_w, worldH: p.world_h,
             _custom: true,
-          };
-          bySlug.set(p.slug, entry);
+          });
           if (!stagesBySlug.has(p.slug)) stagesBySlug.set(p.slug, []);
-          // also add to the garden's plant list
-          const g = gardens.find(g => g.id === p.garden);
-          if (g && !g.plants.includes(p.slug)) g.plants.push(p.slug);
         }
       } catch {}
     }
