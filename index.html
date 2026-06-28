@@ -126,10 +126,6 @@
       <div id="garden-big-title">Der Große Garten</div>
       <div id="garden-title"></div>
       <div id="garden-bar"></div>
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <button id="all-herbar-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Herbarbelege</button>
-        <button id="all-obs-btn" style="font-size:11px;font-family:inherit;color:#888;background:none;border:1px solid #ddd;border-radius:20px;padding:5px 14px;cursor:pointer;transition:all 0.15s;">Beobachtungen</button>
-      </div>
       <div id="garden-info"></div>
       <div id="garden-obs-section">
         <h3 id="garden-obs-title">Beobachtungen</h3>
@@ -1221,6 +1217,7 @@
       document.getElementById('qo-title').textContent = 'Beobachtung';
       document.getElementById('qo-date').value = new Date().toISOString().slice(0, 10);
       document.getElementById('qo-type').value = 'foto';
+      qoGarden.value = activeGarden ?? '';
       document.getElementById('qo-text').value = '';
       document.getElementById('qo-file').value = '';
       document.getElementById('qo-file-text').textContent = 'Bild auswählen…';
@@ -1480,8 +1477,6 @@
       }
     }
 
-    document.getElementById('all-obs-btn').addEventListener('click', () => openAllObs());
-    document.getElementById('all-herbar-btn').addEventListener('click', () => openAllObs('herbarbeleg'));
     document.getElementById('all-obs-close').addEventListener('click', () => allObsBackdrop.classList.remove('open'));
     allObsBackdrop.addEventListener('click', e => { if (e.target === allObsBackdrop) allObsBackdrop.classList.remove('open'); });
 
@@ -1738,6 +1733,9 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       loadBedImages(),
       fetch('/api/plant-info/all').then(r => r.json()).catch(() => []),
     ]);
+
+    let hasPlan = !!_planData?.data;
+    document.body.classList.toggle('no-plan', !hasPlan);
 
     if (_planData?.data) {
       try {
@@ -2093,6 +2091,14 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       _gardenObsCache = null;
       loadGardenObsCarousel(gardenId);
       loadGardenHerbarCarousel(gardenId);
+      if (gardenId) {
+        fetch('/api/plans/' + gardenId).then(r => {
+          hasPlan = r.ok;
+          document.body.classList.toggle('no-plan', !hasPlan);
+        }).catch(() => {});
+      } else {
+        document.body.classList.add('no-plan');
+      }
     }
 
     let _gardenObsCache = null;

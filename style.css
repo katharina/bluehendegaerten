@@ -1382,7 +1382,11 @@
     #garden-herbar-carousel:empty { display: none; }
 
     body.index-mode #garden-description,
-    body.index-mode #observations { display: none; }
+    body.index-mode #observations,
+    body.no-plan #observations { display: none; }
+    body.no-plan:not(.index-mode) #plant-col { width: 50vw; margin-left: 10vw; box-shadow: none; }
+    body.no-plan:not(.index-mode) #panels-area:hover #plant-col,
+    body.no-plan:not(.index-mode) #panels-area.panels-locked #plant-col { transform: none; margin-left: 10vw; box-shadow: none; }
     body.index-mode #panels-area { pointer-events: none; }
     html:has(body.index-mode),
     body.index-mode {
