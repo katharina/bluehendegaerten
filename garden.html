@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&family=Source+Code+Pro:wght@300;400&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/globals.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="garden-layout">
+
+    <!-- Column 1: Garden + Beobachtungen (static, left) -->
+    <div class="garden-col garden-col--garden">
+      <section>
+        <div class="page-header">
+          <h1 id="garden-name"></h1>
+          
+        </div>
+        <div class="section-content no-horizontal-padding">
+          <div id="obs-carousel"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sliding panels: Beete + Pflanzen -->
+    <div class="garden-panels">
+
+      <!-- Column 2: Beete -->
+      <div class="garden-col garden-col--bed">
+        <section>
+          <div class="section-header">
+            <h3>Beete</h3>
+          </div>
+          <div id="bed-plan"></div>
+        </section>
+      </div>
+
+      <!-- Column 3: Pflanzen -->
+      <div class="garden-col garden-col--plants">
+        <section>
+          <div class="section-header">
+            <h3>Pflanzen</h3>
+            <button id="add-plant-btn" class="action-btn-icon">+</button>
+          </div>
+          <div class="section-content">
+            <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+          </div>
+          <div id="plant-list"></div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+  <dialog id="plant-modal" tabindex="-1">
+    <div class="plant-modal-inner">
+      <div class="plant-modal-layout">
+
+        <div class="plant-modal-info">
+          <div class="plant-modal-header">
+            <div class="botanical-name plant-modal-name" spellcheck="false"></div>
+            <div class="german-name plant-modal-de" spellcheck="false"></div>
+            <div class="plant-modal-meta">
+              <input class="plant-modal-family" type="text" placeholder="Familie" spellcheck="false" autocomplete="off">
+              <span class="plant-color-swatch"></span>
+              <input class="plant-color-picker" type="color">
+            </div>
+          </div>
+          <div class="plant-modal-gardens"></div>
+          <details class="plant-modal-data" open>
+            <summary>Pflanzendaten</summary>
+            <div class="plant-modal-bloom-bar"></div>
+            <div class="plant-modal-info-rows"></div>
+          </details>
+        </div>
+
+        <div class="plant-modal-observations">
+          <div class="plant-modal-obs-header">
+            <div class="section-header">
+              <h3>Vorherige Beobachtungen</h3>
+              <button class="action-btn-icon" id="plant-modal-close">×</button>
+            </div>
+            <button class="action-btn" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
+          </div>
+          <div class="plant-modal-obs-list">
+            <div class="obs-col"></div>
+            <div class="obs-col"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="obs-modal" tabindex="-1">
+    <button class="obs-nav obs-nav--prev">&#8249;</button>
+    <div class="obs-modal-inner">
+      <div class="obs-modal-img">
+        <img src="" alt="">
+        <div class="obs-modal-info">
+          <div class="obs-modal-plants"></div>
+          <div class="obs-modal-place observation-place"></div>
+          <div class="obs-modal-date observation-date"></div>
+          <div class="obs-modal-note"></div>
+        </div>
+      </div>
+    </div>
+    <button class="obs-nav obs-nav--next">&#8250;</button>
+  </dialog>
+
+  <dialog id="lightbox" tabindex="-1">
+    <img id="lightbox-img" src="" alt="">
+  </dialog>
+
+  <script type="module" src="/src/garden-app.js"></script>
+</body>
+</html>

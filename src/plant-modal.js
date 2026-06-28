@@ -18,10 +18,11 @@ const CARE_FIELDS = [
   { key: 'kuebel',     label: 'Kübel' },
 ];
 
-let _dialog, _ctx, _loggedIn = false;
+let _dialog, _ctx, _loggedIn = false, _gardenId = null;
 
-export function initPlantModal({ gardens = [], observations = [] } = {}) {
+export function initPlantModal({ gardens = [], observations = [], gardenId = null } = {}) {
   _ctx = { gardens, observations };
+  _gardenId = gardenId;
   _dialog = document.getElementById('plant-modal');
 
   const onAuth = session => {
@@ -35,7 +36,7 @@ export function initPlantModal({ gardens = [], observations = [] } = {}) {
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _dialog.close(); });
 
 
-  document.addEventListener('plant:open', e => openPlantModal(e.detail));
+  document.addEventListener('plant:open', e => openPlantModal(e.detail, { gardenId: _gardenId }));
 }
 
 export async function openPlantModal(plant, { gardenId = null } = {}) {

@@ -4,7 +4,31 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      {
+        name: 'garden-router',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            const url = (req.url ?? '/').split('?')[0];
+            const isRoot     = url === '/';
+            const hasExt     = /\.[^/]+$/.test(url);
+            const isReserved = url.startsWith('/api') ||
+                               url.startsWith('/uploads') ||
+                               url.startsWith('/plants') ||
+                               url.startsWith('/@') ||
+                               url.startsWith('/src') ||
+                               url.startsWith('/node_modules') ||
+                               url.startsWith('/globals') ||
+                               url.startsWith('/style');
+            if (!isRoot && !hasExt && !isReserved) {
+              req.url = '/garden.html';
+            }
+            next();
+          });
+        },
+      },
+    ],
     base: '/',
     define: {
       '__R2_URL__':            JSON.stringify(env.R2_PUBLIC_URL ?? ''),
@@ -15,6 +39,14 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api':     'http://localhost:3001',
         '/uploads': 'http://localhost:3001',
+      },
+    },
+    build: {
+      rollupOptions: {
+        input: {
+          main:   'index.html',
+          garden: 'garden.html',
+        },
       },
     },
   };
