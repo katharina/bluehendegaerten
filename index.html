@@ -2043,10 +2043,10 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
     });
 
     function render() {
-      // index: all plants; garden + edit: all plants; garden view: garden.plants ∪ plan placements
+      // index: all plants; garden + edit: all plants; garden view: plan placements ∪ observed slugs
       let slugs = null;
       if (activeGarden && !editMode) {
-        slugs = new Set(gardens.find(g => g.id === activeGarden)?.plants ?? []);
+        slugs = new Set(_gardenObsSlugs);
         for (const ver of store.versions ?? []) {
           for (const p of ver.placements ?? []) slugs.add(p.slug);
         }
@@ -2108,6 +2108,7 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
       if (editMode) { editMode = false; document.body.classList.remove('edit-mode'); }
       render();
       _gardenObsCache = null;
+      _gardenObsSlugs = new Set();
       loadGardenObsCarousel(gardenId);
       loadGardenHerbarCarousel(gardenId);
       if (gardenId) {
@@ -2122,12 +2123,15 @@ const colorBySlug = () => Object.fromEntries([...bySlug.values()].map(p => [p.sl
 
     let _gardenObsCache = null;
     let _gardenObsCacheId = null;
+    let _gardenObsSlugs = new Set();
 
     async function fetchGardenObs(gardenId) {
       if (_gardenObsCacheId === gardenId && _gardenObsCache) return _gardenObsCache;
       const all = await fetch(`/api/observations?garden=${gardenId}`).then(r => r.json());
       _gardenObsCache = all;
       _gardenObsCacheId = gardenId;
+      _gardenObsSlugs = new Set(all.flatMap(o => o.slugs ?? []));
+      render();
       return all;
     }
 
