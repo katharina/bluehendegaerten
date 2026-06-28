@@ -128,11 +128,17 @@
       <div id="garden-bar"></div>
       <div id="garden-info"></div>
       <div id="garden-obs-section">
-        <h3 id="garden-obs-title">Beobachtungen</h3>
+        <div class="garden-section-header">
+          <h3 id="garden-obs-title">Beobachtungen</h3>
+          <button id="add-obs-btn" class="action-btn garden-section-add">+</button>
+        </div>
         <div id="garden-obs-carousel"></div>
       </div>
       <div id="garden-herbar-section">
-        <h3 id="garden-herbar-title">Herbarbelege</h3>
+        <div class="garden-section-header">
+          <h3 id="garden-herbar-title">Herbarbelege</h3>
+          <button id="add-herbar-btn" class="action-btn garden-section-add">+</button>
+        </div>
         <div id="garden-herbar-carousel"></div>
       </div>
     </div>
@@ -1248,6 +1254,15 @@
     document.getElementById('quick-obs-btn').addEventListener('click', () => {
       if (!_currentUser) { openLoginModal(); return; }
       openQuickObsNew();
+    });
+    document.getElementById('add-obs-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
+    });
+    document.getElementById('add-herbar-btn').addEventListener('click', () => {
+      if (!_currentUser) { openLoginModal(); return; }
+      openQuickObsNew();
+      document.getElementById('qo-type').value = 'herbarbeleg';
     });
     function closeQuickObs() { quickObsBackdrop.style.display = 'none'; _qoEditId = null; }
     document.getElementById('quick-obs-close').addEventListener('click', closeQuickObs);

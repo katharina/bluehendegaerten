@@ -1356,6 +1356,22 @@
     .carousel-item-edit:hover { background: #222; color: #fff; border-color: #222; }
     .carousel-item-del:hover  { background: #c00; color: #fff; border-color: #c00; }
 
+    .garden-section-header {
+      display: flex;
+      align-items: center;
+    }
+    .garden-section-header h3 { flex: 1; }
+    .garden-section-add {
+      font-size: 20px;
+      line-height: 1;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     #garden-obs-section { margin-top: 32px; }
     #garden-obs-section:has(#garden-obs-carousel:empty) { display: none; }
     #garden-herbar-section { margin-top: 32px; }
