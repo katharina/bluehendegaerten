@@ -412,12 +412,12 @@ function _startGeo() {
   };
 
   // JS-level fallback — browser timeout option is unreliable on Chrome iOS
-  const fallback = setTimeout(() => finish(null, null, 'Timeout'), 25000);
+  const fallback = setTimeout(() => { navigator.geolocation.clearWatch(watchId); finish(null, null, 'Timeout'); }, 25000);
 
-  navigator.geolocation.getCurrentPosition(
-    pos => { clearTimeout(fallback); finish(pos.coords.latitude, pos.coords.longitude, null); },
+  const watchId = navigator.geolocation.watchPosition(
+    pos => { clearTimeout(fallback); navigator.geolocation.clearWatch(watchId); finish(pos.coords.latitude, pos.coords.longitude, null); },
     err => {
-      clearTimeout(fallback);
+      clearTimeout(fallback); navigator.geolocation.clearWatch(watchId);
       const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
       finish(null, null, reason);
     },
