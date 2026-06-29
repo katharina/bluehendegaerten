@@ -260,7 +260,7 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     editBtn.textContent = editMode ? 'Fertig' : 'Bearbeiten';
     editBtn.classList.toggle('is-active', editMode);
     versionBar.hidden = !editMode;
-    document.getElementById('bed-config-btn').hidden = !editMode;
+    document.getElementById('bed-actions').hidden = !editMode;
     if (editMode) {
       renderVersionSelect();
     } else {
