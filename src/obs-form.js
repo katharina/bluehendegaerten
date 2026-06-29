@@ -40,6 +40,7 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-close').addEventListener('click', _close);
   _dialog.querySelector('#obs-form-cancel').addEventListener('click', _close);
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
+  _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
@@ -368,13 +369,16 @@ async function _uploadToR2(file) {
 
 async function _onFileChange(e) {
   const file = e.target.files[0];
-  const label = _dialog.querySelector('#obs-form-file-label');
-  label.querySelector('#obs-form-file-text').textContent = file?.name ?? 'Bild auswählen…';
+  const isCam = e.target.id === 'obs-form-camera';
+  const label = _dialog.querySelector(isCam ? '#obs-form-camera-label' : '#obs-form-file-label');
+  const span  = label.querySelector('span');
+  span.textContent = file ? file.name : (isCam ? 'Kamera' : 'Hochladen');
   label.classList.toggle('has-file', !!file);
   _lat = null; _lon = null;
   if (!file) return;
   try {
-    const exifr = await import('exifr');
+    const mod   = await import('exifr');
+    const exifr = mod.default ?? mod;
     const [meta, gps] = await Promise.all([
       exifr.parse(file, ['DateTimeOriginal']),
       exifr.gps(file),
@@ -382,7 +386,7 @@ async function _onFileChange(e) {
     if (meta?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = meta.DateTimeOriginal.toISOString().slice(0, 10);
     if (gps?.latitude != null) { _lat = gps.latitude; _lon = gps.longitude; }
-  } catch {}
+  } catch (err) { console.warn('exifr:', err); }
   _identifyPlant(file);
 }
 
@@ -390,12 +394,16 @@ async function _onSubmit() {
   const msg  = _dialog.querySelector('#obs-form-msg');
   const btn  = _dialog.querySelector('#obs-form-submit');
   if (!_loggedIn) { msg.textContent = 'Bitte zuerst einloggen.'; return; }
-  const file = _dialog.querySelector('#obs-form-file').files[0];
+  const file = _dialog.querySelector('#obs-form-file').files[0]
+            ?? _dialog.querySelector('#obs-form-camera').files[0];
   msg.textContent = '';
   btn.disabled = true;
   btn.textContent = '…';
 
-  const slugs = [..._dialog.querySelectorAll('#obs-form-plant-grid input:checked')].map(i => i.value);
+  const slugs = [
+    ..._dialog.querySelectorAll('#obs-form-identified input:checked'),
+    ..._dialog.querySelectorAll('#obs-form-plant-grid input:checked'),
+  ].map(i => i.value).filter((v, i, a) => a.indexOf(v) === i);
   let filename = null;
 
   try {

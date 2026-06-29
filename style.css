@@ -248,16 +248,18 @@ ul {
 .filter-input {
   width: 100%;
   border: none;
-  border-bottom: 1px solid var(--hb-black-400);
+  border-bottom: 1px solid #000;
   padding: var(--hb-space-200) 0;
   font-family: var(--font-mono);
   font-size: var(--hb-font-size-02);
   background: transparent;
   outline: none;
+  color: #000;
 }
 
 .filter-input::placeholder {
-  color: var(--hb-black-400);
+  color: #000;
+  opacity: 1;
 }
 
 .plant-filter-bed-label {
@@ -374,6 +376,18 @@ dialog#obs-form-dialog {
 dialog#obs-form-dialog[open] { display: flex; margin: auto; }
 dialog#obs-form-dialog:focus { outline: none; }
 
+@media (max-width: 640px) {
+  dialog#obs-form-dialog {
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+  }
+  .obs-form-inner {
+    padding: var(--hb-space-400);
+    border-radius: 0;
+  }
+}
+
 dialog#obs-form-dialog::backdrop {
   background: rgba(0, 0, 0, 0.45);
 }
@@ -411,9 +425,13 @@ dialog#obs-form-dialog::backdrop {
 
 .obs-form-title {
   font-family: var(--font-serif);
-  font-size: var(--hb-font-size-08);
+  font-size: var(--hb-font-size-06);
   font-weight: 600;
   line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .obs-form-title { font-size: var(--hb-font-size-05); }
 }
 
 .obs-form-row {
@@ -456,7 +474,13 @@ dialog#obs-form-dialog::backdrop {
   padding: var(--hb-space-200);
 }
 
+.obs-file-row {
+  display: flex;
+  gap: var(--hb-space-300);
+}
+
 .obs-file-label {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -474,6 +498,12 @@ dialog#obs-form-dialog::backdrop {
 }
 
 .obs-file-label input[type="file"] { display: none; }
+
+.obs-camera-label { display: none; }
+
+@media (max-width: 640px) {
+  .obs-camera-label { display: flex; }
+}
 
 .obs-plant-grid {
   display: flex;
@@ -689,7 +719,7 @@ dialog#obs-modal::backdrop {
   color: var(--hb-black-400);
 }
 
-.obs-delete-btn {
+.obs-delete-btn, .obs-edit-btn {
   background: none;
   border: none;
   font-size: var(--hb-font-size-01);
@@ -701,7 +731,7 @@ dialog#obs-modal::backdrop {
   text-underline-offset: 2px;
 }
 
-.obs-delete-btn:hover { opacity: 0.8; }
+.obs-delete-btn:hover, .obs-edit-btn:hover { opacity: 0.8; }
 
 /* ── Lightbox ────────────────────────────────────────────────────────────── */
 

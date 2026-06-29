@@ -116,10 +116,16 @@
         <h2 class="obs-form-title" id="obs-form-title">Beobachtung</h2>
         <button class="action-btn-icon" id="obs-form-close">×</button>
       </div>
-      <label class="obs-file-label" id="obs-form-file-label">
-        <span id="obs-form-file-text">Bild auswählen…</span>
-        <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
-      </label>
+      <div class="obs-file-row">
+        <label class="obs-file-label" id="obs-form-file-label">
+          <span id="obs-form-file-text">Hochladen</span>
+          <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
+        </label>
+        <label class="obs-file-label obs-camera-label" id="obs-form-camera-label">
+          <span>Kamera</span>
+          <input id="obs-form-camera" type="file" accept="image/*" capture="environment">
+        </label>
+      </div>
       <div class="obs-form-row">
         <div class="obs-form-field">
           <label class="obs-form-label">Datum</label>
