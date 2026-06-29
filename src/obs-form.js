@@ -431,6 +431,7 @@ async function _onSubmit() {
       ...(_lat != null && { lat: _lat, lon: _lon }),
       ...(filename     && { filename }),
     };
+    console.log('[submit] _lat:', _lat, '_lon:', _lon, 'body lat:', body.lat);
 
     if (_editId) {
       await authedFetch(`/api/observations/${_editId}`, {
