@@ -42,6 +42,8 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-cancel').addEventListener('click', _close);
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
+  // iOS requires geolocation to be triggered by a direct tap — start it when camera label is clicked
+  _dialog.querySelector('#obs-form-camera-label').addEventListener('click', () => _geolocateForCamera());
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
@@ -447,8 +449,7 @@ async function _onFileChange(e) {
   if (locEl) locEl.hidden = true;
   if (!file) return;
 
-  // For camera captures start geolocation immediately in parallel — iOS strips GPS from EXIF
-  if (isCam) _geolocateForCamera();
+  // For camera: geolocation was already started on label click (iOS requires direct tap gesture)
 
   try {
     const mod = await import('exifr');
