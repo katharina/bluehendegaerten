@@ -44,6 +44,7 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
+  _dialog.querySelector('#obs-form-camera-label').addEventListener('click', _onCameraLabelClick);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
   document.addEventListener('obs:new',  e => openObsForm(e.detail ?? {}));
@@ -63,31 +64,10 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
+  const locEl = _dialog.querySelector('#obs-form-location');
   if (_lat != null) {
     _renderLocationFound();
-  } else if (!_editId && navigator.geolocation) {
-    // Prime geolocation immediately — we're in the tap-gesture chain, so iOS will show the
-    // permission prompt now, before the camera ever opens. By the time the user takes a photo
-    // and returns to the browser the coordinates are already stored.
-    _geoPending = true;
-    const locEl = _dialog.querySelector('#obs-form-location');
-    if (locEl) { locEl.hidden = false; locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>'; }
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        _geoPending = false;
-        _geoLat = pos.coords.latitude;
-        _geoLon = pos.coords.longitude;
-        if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
-      },
-      () => {
-        _geoPending = false;
-        const el = _dialog?.querySelector('#obs-form-location');
-        if (el && _lat == null) { el.hidden = true; el.innerHTML = ''; }
-      },
-      { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
-    );
   } else {
-    const locEl = _dialog.querySelector('#obs-form-location');
     if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
   }
 
@@ -409,6 +389,42 @@ async function _uploadToR2(file) {
   return key;
 }
 
+
+function _onCameraLabelClick(e) {
+  if (!navigator.geolocation) return;
+  if (_geoLat != null || _geoPending) return; // already have geo — let camera open normally
+  e.preventDefault();
+  const cameraInput = _dialog.querySelector('#obs-form-camera');
+  const locEl = _dialog.querySelector('#obs-form-location');
+  if (!locEl) { cameraInput.click(); return; }
+  locEl.hidden = false;
+  locEl.innerHTML = '<span class="loc-missing">GPS für dieses Foto freigeben?</span>'
+    + '<button type="button" class="action-btn" id="geo-allow-btn">Erlauben</button>'
+    + '<button type="button" class="loc-clear" id="geo-skip-btn">Überspringen</button>';
+
+  locEl.querySelector('#geo-allow-btn').addEventListener('click', () => {
+    _geoPending = true;
+    locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>';
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        _geoPending = false;
+        _geoLat = pos.coords.latitude; _geoLon = pos.coords.longitude;
+        if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
+      },
+      () => {
+        _geoPending = false;
+        if (_lat == null) { locEl.hidden = true; locEl.innerHTML = ''; }
+      },
+      { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
+    );
+    cameraInput.click(); // direct gesture context — iOS allows this
+  });
+
+  locEl.querySelector('#geo-skip-btn').addEventListener('click', () => {
+    locEl.hidden = true; locEl.innerHTML = '';
+    cameraInput.click();
+  });
+}
 
 function _renderLocationFound() {
   const el = _dialog.querySelector('#obs-form-location');
