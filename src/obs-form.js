@@ -256,22 +256,17 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
       return (a.name_de || a.name).localeCompare(b.name_de || b.name);
     });
 
-  const chips = sorted.map((p, i) => {
+  const chips = sorted.map(p => {
     const chip = makeChip(p, false, null, false);
-    chip.hidden = i >= 5;
     grid.appendChild(chip);
     return { chip, p };
   });
 
   filterInput.addEventListener('input', () => {
     const q = filterInput.value.toLowerCase();
-    if (!q) {
-      chips.forEach(({ chip }, i) => { chip.hidden = i >= 5; });
-    } else {
-      chips.forEach(({ chip, p }) => {
-        chip.hidden = !p.name.toLowerCase().includes(q) && !(p.name_de || '').toLowerCase().includes(q);
-      });
-    }
+    chips.forEach(({ chip, p }) => {
+      chip.hidden = !!q && !p.name.toLowerCase().includes(q) && !(p.name_de || '').toLowerCase().includes(q);
+    });
   });
 }
 
