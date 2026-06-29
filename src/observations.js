@@ -1,4 +1,4 @@
-import { thumbUrl } from './utils.js';
+import { thumbUrl, fullUrl } from './utils.js';
 import { supabase, authedFetch } from './auth.js';
 
 const PAGE = 20;
@@ -30,6 +30,9 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   imgEl.addEventListener('load', () => {
     if (imgEl.naturalWidth > imgEl.naturalHeight) imgBox.classList.add('is-landscape');
   });
+  if (o.filename && !o._localUrl) {
+    imgEl.addEventListener('error', () => { imgEl.src = fullUrl(o.filename); }, { once: true });
+  }
 
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
