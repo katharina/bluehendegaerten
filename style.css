@@ -365,7 +365,7 @@ dialog#obs-form-dialog {
   padding: 0;
   background: transparent;
   width: min(520px, 92vw);
-  max-height: 90dvh;
+  max-height: 96dvh;
   overflow: visible;
 }
 
@@ -379,7 +379,7 @@ dialog#obs-form-dialog::backdrop {
 .obs-form-inner {
   background: #fff;
   width: 100%;
-  max-height: 90dvh;
+  max-height: 96dvh;
   overflow: hidden;
   padding: var(--hb-space-800);
   display: flex;
@@ -467,68 +467,69 @@ dialog#obs-form-dialog::backdrop {
 
 .obs-plant-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--hb-space-200);
+  flex-direction: column;
+  gap: 0;
 }
 
 .obs-plant-grid-header {
-  width: 100%;
   font-size: var(--hb-font-size-01);
   opacity: 0.45;
-  margin-bottom: var(--hb-space-050);
+  margin: var(--hb-space-300) 0 var(--hb-space-100);
 }
 
 .obs-plant-chip {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: var(--hb-font-size-01);
-  padding: var(--hb-space-100) var(--hb-space-300);
-  border: 1px solid #ddd;
+  gap: var(--hb-space-300);
+  font-size: var(--hb-font-size-02);
+  padding: var(--hb-space-200) 0;
+  border: none;
+  opacity: 0.35;
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.1s, background 0.1s;
 }
 
 .obs-plant-chip input[type="checkbox"] { display: none; }
 
-.chip-botanical { font-style: italic; font-family: var(--font-serif); }
+.obs-plant-chip.checked { opacity: 1; }
 
-.obs-plant-chip:not(.checked) .chip-remove { display: none; }
+.chip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #bbb;
+}
+
+.chip-botanical { font-style: italic; font-family: var(--font-serif); }
 
 .chip-de {
   font-style: normal;
   opacity: 0.65;
+  font-size: var(--hb-font-size-01);
 }
 
 .chip-remove {
+  display: none;
   background: none;
   border: none;
   color: inherit;
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: pointer;
   padding: 0;
   font-size: 1em;
   line-height: 1;
-  margin-left: 2px;
+  margin-left: auto;
 }
 
 .chip-remove:hover { opacity: 1; }
+.obs-plant-chip.checked .chip-remove { display: block; }
 
-.obs-plant-chip.checked {
-  border-color: #000;
-  background: #000;
-  color: #fff;
-}
-
-.obs-plant-chip.pn-suggested { border-color: #777; }
-.obs-plant-chip.pn-identifying { font-style: italic; color: #999; border-style: dashed; }
+.obs-plant-chip.pn-identifying { opacity: 0.35; font-style: italic; }
 
 .obs-plant-chip.pn-new-plant {
-  background: none;
+  opacity: 0.5;
   font-style: italic;
-  color: #555;
-  border-style: dashed;
 }
 
 .pn-score {
@@ -555,13 +556,13 @@ dialog#obs-form-dialog::backdrop {
 .obs-form-msg {
   font-size: var(--hb-font-size-01);
   color: #c00;
-  min-height: 1em;
 }
 
 .obs-form-actions {
   display: flex;
   gap: var(--hb-space-300);
   align-items: center;
+  margin-top: var(--hb-space-n200);
 }
 
 .action-btn-ghost {

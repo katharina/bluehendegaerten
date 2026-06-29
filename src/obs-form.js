@@ -153,10 +153,12 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
     chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
     chip.innerHTML = `
       <input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>
+      <span class="chip-dot"></span>
       <em class="chip-botanical">${p.name}</em>
       ${p.name_de ? `<span class="chip-de">${p.name_de}</span>` : ''}
       ${score != null ? `<span class="pn-score">${score}%</span>` : ''}
       <button type="button" class="chip-remove">×</button>`;
+    if (p.color) chip.querySelector('.chip-dot').style.background = p.color;
     chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
     chip.querySelector('.chip-remove').addEventListener('click', e => {
       e.preventDefault();
@@ -166,13 +168,25 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
     return chip;
   }
 
-  // Pre-selected chips (from edit or plant-modal open)
+  // 1. Filter input — always at top
+  const filterWrap = document.createElement('div');
+  filterWrap.className = 'obs-add-plant-wrap';
+  const filterInput = document.createElement('input');
+  filterInput.type = 'text';
+  filterInput.className = 'filter-input';
+  filterInput.placeholder = 'Pflanzen filtern…';
+  filterInput.autocomplete = 'off';
+  filterInput.spellcheck = false;
+  filterWrap.appendChild(filterInput);
+  grid.appendChild(filterWrap);
+
+  // 2. Pre-selected chips (from edit or plant-modal open)
   preselected.forEach(slug => {
     const p = _plantBySlug.get(slug);
     if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), suggestedSlugs.includes(slug)));
   });
 
-  // PlantNet: known plants
+  // 3. PlantNet results — only shown after image upload
   if (matched.length) {
     const hdr = document.createElement('div');
     hdr.className = 'obs-plant-grid-header';
@@ -183,8 +197,6 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
       if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
     });
   }
-
-  // PlantNet: new plants not yet in DB
   if (unmatched.length) {
     const hdr2 = document.createElement('div');
     hdr2.className = 'obs-plant-grid-header';
@@ -206,24 +218,8 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
     });
   }
 
-  // Always: full existing plant list, sorted by recent use
+  // 4. All plants sorted by recent use — 5 visible by default, filter shows all
   const shown = new Set([...preselected, ...suggestedSlugs]);
-  const hdrEx = document.createElement('div');
-  hdrEx.className = 'obs-plant-grid-header';
-  hdrEx.textContent = 'Vorhandene Pflanzen';
-  grid.appendChild(hdrEx);
-
-  const filterWrap = document.createElement('div');
-  filterWrap.className = 'obs-add-plant-wrap';
-  const filterInput = document.createElement('input');
-  filterInput.type = 'text';
-  filterInput.className = 'filter-input';
-  filterInput.placeholder = 'Filtern…';
-  filterInput.autocomplete = 'off';
-  filterInput.spellcheck = false;
-  filterWrap.appendChild(filterInput);
-  grid.appendChild(filterWrap);
-
   const sorted = [..._plantBySlug.values()]
     .filter(p => !shown.has(p.slug))
     .sort((a, b) => {
@@ -235,17 +231,22 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
       return (a.name_de || a.name).localeCompare(b.name_de || b.name);
     });
 
-  const chips = sorted.map(p => {
+  const chips = sorted.map((p, i) => {
     const chip = makeChip(p, false, null, false);
+    chip.hidden = i >= 5;
     grid.appendChild(chip);
     return { chip, p };
   });
 
   filterInput.addEventListener('input', () => {
     const q = filterInput.value.toLowerCase();
-    chips.forEach(({ chip, p }) => {
-      chip.hidden = !!q && !p.name.toLowerCase().includes(q) && !(p.name_de || '').toLowerCase().includes(q);
-    });
+    if (!q) {
+      chips.forEach(({ chip }, i) => { chip.hidden = i >= 5; });
+    } else {
+      chips.forEach(({ chip, p }) => {
+        chip.hidden = !p.name.toLowerCase().includes(q) && !(p.name_de || '').toLowerCase().includes(q);
+      });
+    }
   });
 }
 
