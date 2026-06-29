@@ -128,10 +128,11 @@ h1 {
 
 .page-header {
   margin: var(--hb-space-900) var(--page-pad) var(--hb-space-800) var(--page-pad);
-  padding: 0;
+  padding: var(--hb-space-300) 0 0 0;
 }
 
 .page-header.chapeau {
+  padding-top: 0;
   margin-top: 0;
   }
 
@@ -182,7 +183,29 @@ ul {
   flex-shrink: 0;
   width: 160px;
   cursor: zoom-in;
+  position: relative;
 }
+
+.carousel-card-delete {
+  position: absolute;
+  top: var(--hb-space-200);
+  right: var(--hb-space-200);
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: #fff;
+  font-size: var(--hb-font-size-03);
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.carousel-card:hover .carousel-card-delete { opacity: 1; }
 
 .carousel-card-img {
   width: 100%;

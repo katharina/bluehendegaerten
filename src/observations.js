@@ -1,6 +1,11 @@
 import { thumbUrl } from './utils.js';
+import { supabase, authedFetch } from './auth.js';
 
 const PAGE = 20;
+let _loggedIn = false;
+
+supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
+supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
 
 function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');
@@ -10,6 +15,7 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   card.innerHTML = `
     <div class="carousel-card-img">
       <img src="${thumbUrl(o.filename)}" loading="lazy">
+      ${_loggedIn ? `<button class="carousel-card-delete">×</button>` : ''}
     </div>
     <div class="carousel-card-meta">
       ${name  ? `<div class="botanical-name">${name}</div>` : ''}
@@ -18,6 +24,12 @@ function buildObsCard(o, gardenMap, plantMap, list) {
     </div>`;
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
+  });
+  card.querySelector('.carousel-card-delete')?.addEventListener('click', async e => {
+    e.stopPropagation();
+    if (!confirm('Beobachtung löschen?')) return;
+    await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+    card.remove();
   });
   return card;
 }
