@@ -1,7 +1,7 @@
 const R2_URL = __R2_URL__;
 
 export function thumbUrl(filename) {
-  return `${R2_URL}/${filename.replace(/\.[^.]+$/, '_thumb.jpg')}`;
+  return `/api/thumb/${encodeURIComponent(filename)}`;
 }
 
 export function fullUrl(filename) {
