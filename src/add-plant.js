@@ -10,6 +10,10 @@ export function initAddPlant({ onAdded } = {}) {
   const dialog = document.getElementById('add-plant-dialog');
   if (!dialog) return;
 
+  const familyInput = document.getElementById('apf-family');
+  familyInput.setAttribute('list', 'plant-family-list');
+  familyInput.removeAttribute('autocomplete');
+
   const open = () => {
     document.getElementById('apf-name').value = '';
     document.getElementById('apf-name-de').value = '';

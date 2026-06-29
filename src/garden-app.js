@@ -300,7 +300,7 @@ const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
 
-initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
+initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 initAddPlant({

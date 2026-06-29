@@ -25,10 +25,22 @@ const FIELD_LABEL = {
 
 let _dialog, _ctx, _loggedIn = false, _gardenId = null, _currentPlant = null;
 
-export function initPlantModal({ gardens = [], observations = [], gardenId = null } = {}) {
+export function initPlantModal({ gardens = [], observations = [], plants = [], gardenId = null } = {}) {
   _ctx = { gardens, observations };
   _gardenId = gardenId;
   _dialog = document.getElementById('plant-modal');
+
+  const families = [...new Set(plants.map(p => p.family).filter(Boolean))].sort();
+  let dl = document.getElementById('plant-family-list');
+  if (!dl) {
+    dl = document.createElement('datalist');
+    dl.id = 'plant-family-list';
+    document.body.appendChild(dl);
+  }
+  dl.innerHTML = families.map(f => `<option value="${f}">`).join('');
+  const familyInput = _dialog.querySelector('.plant-modal-family');
+  familyInput.setAttribute('list', 'plant-family-list');
+  familyInput.removeAttribute('autocomplete');
 
   const onAuth = session => {
     _loggedIn = !!session?.user;

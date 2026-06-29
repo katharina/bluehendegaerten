@@ -50,7 +50,7 @@ renderPlantList(plants);
 const obsWithImg = observations.filter(o => o.filename).length;
 document.getElementById('obs-count').textContent = obsWithImg;
 document.getElementById('plant-count').textContent = plants.length;
-initPlantModal({ gardens, observations });
+initPlantModal({ gardens, observations, plants });
 initObsModal({ gardens, plants });
 initObsForm({ gardens, plants, observations });
 initAddPlant({

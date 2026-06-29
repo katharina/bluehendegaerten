@@ -423,6 +423,22 @@ dialog#obs-form-dialog::backdrop {
   background: rgba(0, 0, 0, 0.45);
 }
 
+dialog#add-plant-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  width: min(680px, 96vw);
+  height: auto;
+  overflow: hidden;
+}
+
+dialog#add-plant-dialog[open] { display: flex; margin: auto; }
+dialog#add-plant-dialog:focus { outline: none; }
+
+dialog#add-plant-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
 .obs-form-inner {
   background: #fff;
   width: 100%;
@@ -477,6 +493,10 @@ dialog#obs-form-dialog::backdrop {
   gap: var(--hb-space-100);
   flex: 1;
   min-width: 100px;
+}
+
+.obs-form-field--shrink {
+  flex: 0 0 auto;
 }
 
 .obs-form-label {
