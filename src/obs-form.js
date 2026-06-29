@@ -139,6 +139,19 @@ function _plantNetToSlug(name) {
   return _plantByScientific.get(lower) ?? _plantByScientific.get(lower.split(' ')[0]) ?? null;
 }
 
+function _inferColor(name, family) {
+  const genus = name.split(' ')[0].toLowerCase();
+  for (const p of _plantBySlug.values()) {
+    if (p.color && p.name.toLowerCase().startsWith(genus + ' ')) return p.color;
+  }
+  if (family) {
+    for (const p of _plantBySlug.values()) {
+      if (p.color && p.family?.toLowerCase() === family.toLowerCase()) return p.color;
+    }
+  }
+  return null;
+}
+
 function _buildPlantGrid(preselected = [], suggestions = []) {
   const grid = _dialog.querySelector('#obs-form-plant-grid');
   grid.innerHTML = '';
@@ -251,18 +264,19 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
 }
 
 async function _addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {
-  const slug = suggestion.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  const slug  = suggestion.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  const color = _inferColor(suggestion.name, suggestion.family);
   const garden = _dialog.querySelector('#obs-form-garden').value || null;
   try {
     const res  = await authedFetch('/api/custom-plants', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null, garden }),
+      body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null, garden, ...(color && { color }) }),
     });
     const body = await res.json();
     if (!res.ok && body.error !== 'slug already exists') { alert(body.error); return; }
     const finalSlug = body.slug ?? slug;
-    _plantBySlug.set(finalSlug, { slug: finalSlug, name: suggestion.name, family: suggestion.family ?? null });
+    _plantBySlug.set(finalSlug, { slug: finalSlug, name: suggestion.name, family: suggestion.family ?? null, ...(color && { color }) });
     _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);
     const genus = suggestion.name.split(' ')[0].toLowerCase();
     if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
