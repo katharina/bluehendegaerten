@@ -137,23 +137,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
   obsHeader.querySelector('.obs-all-toggle')?.remove();
-
-  if (gardenId) {
-    const here  = plantObs.filter(o => o.garden === gardenId);
-    const other = plantObs.filter(o => o.garden !== gardenId);
-    renderObsList(here);
-    if (other.length) {
-      const label = document.createElement('label');
-      label.className = 'obs-all-toggle';
-      label.innerHTML = `<input type="checkbox"> alle Gärten`;
-      label.querySelector('input').addEventListener('change', e =>
-        renderObsList(e.target.checked ? plantObs : here)
-      );
-      obsHeader.appendChild(label);
-    }
-  } else {
-    renderObsList(plantObs);
-  }
+  renderObsList(plantObs);
 
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
   const infoRows = dialog.querySelector('.plant-modal-info-rows');
