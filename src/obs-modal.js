@@ -122,7 +122,6 @@ function renderList(list, startIndex) {
         ${plantLinks ? `<div class="obs-list-plants">${plantLinks}</div>` : ''}
         ${place ? `<div class="observation-place">${gardenPath && !obs.place ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
         ${date   ? `<div class="observation-date">${date}</div>` : ''}
-        ${mapUrl ? `<a class="obs-map-link" href="${mapUrl}" target="_blank" rel="noopener">📍</a>` : ''}
         ${obs.text ? `<div class="obs-list-note">${obs.text}</div>` : ''}
       </div>`;
 
@@ -193,7 +192,4 @@ function renderObs(obs, onReady) {
   noteEl.textContent = obs.text ?? '';
   noteEl.hidden = !obs.text;
 
-  const mapEl = _dialog.querySelector('.obs-modal-map');
-  if (mapUrl) { mapEl.href = mapUrl; mapEl.hidden = false; }
-  else mapEl.hidden = true;
 }
