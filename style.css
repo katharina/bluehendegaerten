@@ -364,9 +364,9 @@ dialog#obs-form-dialog {
   border: none;
   padding: 0;
   background: transparent;
-  width: min(520px, 92vw);
-  max-height: 96dvh;
-  overflow: visible;
+  width: min(680px, 96vw);
+  height: 98dvh;
+  overflow: hidden;
 }
 
 dialog#obs-form-dialog[open] { display: flex; margin: auto; }
@@ -379,7 +379,7 @@ dialog#obs-form-dialog::backdrop {
 .obs-form-inner {
   background: #fff;
   width: 100%;
-  max-height: 96dvh;
+  height: 100%;
   overflow: hidden;
   padding: var(--hb-space-800);
   display: flex;
@@ -442,6 +442,8 @@ dialog#obs-form-dialog::backdrop {
 .obs-textarea {
   resize: vertical;
   min-height: 72px;
+  max-height: 120px;
+  flex-shrink: 1;
   border: 1px solid #ccc;
   padding: var(--hb-space-200);
 }
