@@ -4,6 +4,7 @@ let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
 let _defaultGardenId = null;
 let _editId = null;
 let _lat = null, _lon = null, _place = null;
+let _geoLat = null, _geoLon = null, _geoPending = false;
 let _suggestions = [];
 let _currentPlantSlug = null;
 let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
@@ -42,8 +43,6 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-cancel').addEventListener('click', _close);
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
-  // iOS requires geolocation to be triggered by a direct tap — start it when camera label is clicked
-  _dialog.querySelector('#obs-form-camera-label').addEventListener('click', () => _geolocateForCamera());
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
@@ -59,12 +58,34 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _lat    = editObs?.lat ?? null;
   _lon    = editObs?.lon ?? null;
   _place  = editObs?.place ?? null;
+  _geoLat = null; _geoLon = null; _geoPending = false;
   _suggestions = editObs?.plantnet_suggestions ? JSON.parse(editObs.plantnet_suggestions) : [];
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
   if (_lat != null) {
     _renderLocationFound();
+  } else if (!_editId && navigator.geolocation) {
+    // Prime geolocation immediately — we're in the tap-gesture chain, so iOS will show the
+    // permission prompt now, before the camera ever opens. By the time the user takes a photo
+    // and returns to the browser the coordinates are already stored.
+    _geoPending = true;
+    const locEl = _dialog.querySelector('#obs-form-location');
+    if (locEl) { locEl.hidden = false; locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>'; }
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        _geoPending = false;
+        _geoLat = pos.coords.latitude;
+        _geoLon = pos.coords.longitude;
+        if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
+      },
+      () => {
+        _geoPending = false;
+        const el = _dialog?.querySelector('#obs-form-location');
+        if (el && _lat == null) { el.hidden = true; el.innerHTML = ''; }
+      },
+      { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
+    );
   } else {
     const locEl = _dialog.querySelector('#obs-form-location');
     if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
@@ -389,26 +410,6 @@ async function _uploadToR2(file) {
 }
 
 
-function _geolocateForCamera() {
-  const locEl = _dialog.querySelector('#obs-form-location');
-  const setMsg = msg => { if (locEl) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${msg}</span>`; } };
-  if (!navigator.geolocation) { setMsg('Standort: kein GPS-API'); _showCameraPlaceFallback(); return; }
-  setMsg('Standort wird angefragt…');
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      _lat = pos.coords.latitude;
-      _lon = pos.coords.longitude;
-      _renderLocationFound();
-    },
-    err => {
-      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
-      setMsg(`Standort: ${reason}`);
-      console.warn('geolocation error', err.code, err.message);
-    },
-    { timeout: 15000, maximumAge: 300000, enableHighAccuracy: false }
-  );
-}
-
 function _renderLocationFound() {
   const el = _dialog.querySelector('#obs-form-location');
   _place = null;
@@ -430,13 +431,6 @@ function _renderLocationFound() {
     }).catch(() => {});
 }
 
-function _showCameraPlaceFallback() {
-  const el = _dialog.querySelector('#obs-form-location');
-  if (!el) return;
-  el.innerHTML = `<input id="obs-form-place" class="obs-input obs-place-input" type="text" placeholder="Ort eingeben…">`;
-  el.hidden = false;
-}
-
 async function _onFileChange(e) {
   const file = e.target.files[0];
   const isCam = e.target.id === 'obs-form-camera';
@@ -446,26 +440,30 @@ async function _onFileChange(e) {
   label.classList.toggle('has-file', !!file);
   _lat = null; _lon = null;
   const locEl = _dialog.querySelector('#obs-form-location');
-  if (locEl) locEl.hidden = true;
+  // Keep showing "Standort wird angefragt…" if geo is still in flight
+  if (locEl && !_geoPending && _geoLat == null) locEl.hidden = true;
   if (!file) return;
-
-  // For camera: geolocation was already started on label click (iOS requires direct tap gesture)
 
   try {
     const mod = await import('exifr');
     const parse = mod.parse ?? mod.default?.parse ?? mod.default;
-    // parse(file, true) reads all segments including HEIC containers
     const result = await parse(file, true);
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
-    // EXIF GPS wins over geolocation if present
     if (result?.latitude != null) {
+      // EXIF GPS wins
       _lat = result.latitude;
       _lon = result.longitude;
       _renderLocationFound();
+    } else if (_geoLat != null) {
+      // Camera stripped GPS from EXIF — use geolocation acquired when form opened
+      _lat = _geoLat; _lon = _geoLon;
+      _renderLocationFound();
     }
+    // else: geo still pending — its callback will call _renderLocationFound() when it arrives
   } catch (err) {
     console.warn('exifr:', err);
+    if (_geoLat != null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
   }
   _identifyPlant(file);
 }
@@ -492,8 +490,6 @@ async function _onSubmit() {
   try {
     if (file) filename = await _uploadToR2(file);
 
-    const manualPlace = _dialog.querySelector('#obs-form-place')?.value.trim() || null;
-
     const body = {
       date:   _dialog.querySelector('#obs-form-date').value || null,
       type:   _dialog.querySelector('#obs-form-type').value,
@@ -501,8 +497,8 @@ async function _onSubmit() {
       text:   _dialog.querySelector('#obs-form-text').value || null,
       slugs,
       ...(_lat != null && { lat: _lat, lon: _lon }),
-      ...((manualPlace || _place) && { place: manualPlace || _place }),
-      ...(filename     && { filename }),
+      ...(_place && { place: _place }),
+      ...(filename && { filename }),
     };
 
     if (_editId) {
