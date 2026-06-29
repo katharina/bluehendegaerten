@@ -61,7 +61,7 @@ export default async function handler(req, res) {
   if (resource === 'thumb') {
     const key = decodeURIComponent(segments.slice(1).join('/'));
     if (!key) return res.status(400).end();
-    const thumbKey = key.replace(/\.[^.]+$/, '_thumb.jpg');
+    const thumbKey = key.replace(/\.[^.]+$/, '_thumb2.jpg');
     const fetchR2 = async (k) => {
       const r = await fetch(`${R2_PUBLIC_URL}/${k}`);
       if (!r.ok) throw new Error(`R2 ${r.status}`);
@@ -80,8 +80,8 @@ export default async function handler(req, res) {
       const { default: sharp } = await import('sharp');
       const thumb = await sharp(original)
         .rotate()
-        .resize({ width: 400, height: 600, fit: 'inside', withoutEnlargement: true })
-        .jpeg({ quality: 82 })
+        .resize({ width: 800, height: 1200, fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 88 })
         .toBuffer();
       r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: thumbKey, Body: thumb, ContentType: 'image/jpeg' })).catch(() => {});
       res.setHeader('Content-Type', 'image/jpeg');
