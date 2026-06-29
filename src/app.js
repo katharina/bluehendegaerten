@@ -46,4 +46,4 @@ renderObsCarousel(observations, gardenMap, plantMap);
 renderPlantList(plants);
 initPlantModal({ gardens, observations });
 initObsModal({ gardens, plants });
-initObsForm({ gardens, plants });
+initObsForm({ gardens, plants, observations });

@@ -7,8 +7,9 @@ let _lat = null, _lon = null;
 let _suggestions = [];
 let _currentPlantSlug = null;
 let _loggedIn = false;
+let _recentSlugs = [];
 
-export function initObsForm({ gardens = [], plants = [], gardenId = null } = {}) {
+export function initObsForm({ gardens = [], plants = [], gardenId = null, observations = [] } = {}) {
   _dialog = document.getElementById('obs-form-dialog');
   if (!_dialog) return;
 
@@ -21,6 +22,14 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null } = {})
     _plantByScientific.set(p.name.toLowerCase(), p.slug);
     const genus = p.name.split(' ')[0].toLowerCase();
     if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, p.slug);
+  }
+
+  const seen = new Set();
+  _recentSlugs = [];
+  for (const o of [...observations].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))) {
+    for (const slug of (o.slugs ?? [])) {
+      if (!seen.has(slug)) { seen.add(slug); _recentSlugs.push(slug); }
+    }
   }
 
   supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
@@ -112,33 +121,72 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
   });
 
   if (showAll) {
-    [..._plantBySlug.values()]
+    const filterWrap = document.createElement('div');
+    filterWrap.className = 'obs-add-plant-wrap';
+    const filterInput = document.createElement('input');
+    filterInput.type = 'text';
+    filterInput.className = 'filter-input';
+    filterInput.placeholder = 'Filtern…';
+    filterInput.autocomplete = 'off';
+    filterInput.spellcheck = false;
+    filterWrap.appendChild(filterInput);
+    grid.appendChild(filterWrap);
+
+    const sorted = [..._plantBySlug.values()]
       .filter(p => !preselected.includes(p.slug))
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .forEach(p => grid.appendChild(makeChip(p, false, null, false)));
-  } else if (suggestions.length && !preselected.length) {
-    const hdr = document.createElement('div');
-    hdr.className = 'obs-plant-grid-header';
-    hdr.textContent = 'Identifizierte Pflanzen';
-    grid.appendChild(hdr);
-    suggestedSlugs.forEach(slug => {
-      const p = _plantBySlug.get(slug);
-      if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
-    });
-    unmatched.forEach(s => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'obs-plant-chip pn-new-plant';
-      btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
-      btn.title = 'Als neue Pflanze hinzufügen';
-      btn.addEventListener('click', async () => {
-        btn.disabled = true;
-        btn.textContent = 'Wird hinzugefügt…';
-        const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
-        await _addPlantFromPlantNet(s, suggestions, current);
+      .sort((a, b) => {
+        const ai = _recentSlugs.indexOf(a.slug);
+        const bi = _recentSlugs.indexOf(b.slug);
+        if (ai !== -1 && bi !== -1) return ai - bi;
+        if (ai !== -1) return -1;
+        if (bi !== -1) return 1;
+        return (a.name_de || a.name).localeCompare(b.name_de || b.name);
       });
-      grid.appendChild(btn);
+
+    const chips = sorted.map(p => {
+      const chip = makeChip(p, false, null, false);
+      grid.appendChild(chip);
+      return { chip, p };
     });
+
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.toLowerCase();
+      chips.forEach(({ chip, p }) => {
+        chip.hidden = !!q && !p.name.toLowerCase().includes(q) && !(p.name_de || '').toLowerCase().includes(q);
+      });
+    });
+    setTimeout(() => filterInput.focus(), 50);
+  } else if (suggestions.length && !preselected.length) {
+    if (matched.length) {
+      const hdr = document.createElement('div');
+      hdr.className = 'obs-plant-grid-header';
+      hdr.textContent = 'Identifizierte Pflanzen';
+      grid.appendChild(hdr);
+      suggestedSlugs.forEach(slug => {
+        const p = _plantBySlug.get(slug);
+        if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
+      });
+    }
+    if (unmatched.length) {
+      const hdr2 = document.createElement('div');
+      hdr2.className = 'obs-plant-grid-header';
+      hdr2.textContent = 'Neu identifiziert';
+      grid.appendChild(hdr2);
+      unmatched.forEach(s => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'obs-plant-chip pn-new-plant';
+        btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+        btn.title = 'Als neue Pflanze hinzufügen';
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          btn.textContent = 'Wird hinzugefügt…';
+          const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
+          await _addPlantFromPlantNet(s, suggestions, current);
+        });
+        grid.appendChild(btn);
+      });
+    }
   }
 
   if (!showAll) {
@@ -150,7 +198,10 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
       const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
       _buildPlantGrid(current, suggestions, true);
     });
-    grid.appendChild(addBtn);
+    const wrap = document.createElement('div');
+    wrap.className = 'obs-add-plant-wrap';
+    wrap.appendChild(addBtn);
+    grid.appendChild(wrap);
   }
 }
 

@@ -126,7 +126,7 @@ renderBedPlan(document.getElementById('bed-plan'), {
 
 initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
-initObsForm({ gardens, plants: allPlants, gardenId: garden.id });
+initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 
 
 // Lock panels open on click; release by clicking col 1

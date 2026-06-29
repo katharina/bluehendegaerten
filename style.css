@@ -376,11 +376,19 @@ dialog#obs-form-dialog::backdrop {
   background: #fff;
   width: 100%;
   max-height: 90dvh;
-  overflow-y: auto;
+  overflow: hidden;
   padding: var(--hb-space-800);
   display: flex;
   flex-direction: column;
   gap: var(--hb-space-400);
+}
+
+.obs-form-inner > * { flex-shrink: 0; }
+
+#obs-form-plant-grid {
+  flex: 1 1 0;
+  min-height: 60px;
+  overflow-y: auto;
 }
 
 .obs-form-inner .section-header {
@@ -480,7 +488,9 @@ dialog#obs-form-dialog::backdrop {
 
 .obs-plant-chip input[type="checkbox"] { display: none; }
 
-.chip-botanical { font-style: italic; }
+.chip-botanical { font-style: italic; font-family: var(--font-serif); }
+
+.obs-plant-chip:not(.checked) .chip-remove { display: none; }
 
 .chip-de {
   font-style: normal;
@@ -521,6 +531,10 @@ dialog#obs-form-dialog::backdrop {
   font-style: normal;
   font-size: var(--hb-font-size-00);
   opacity: 0.5;
+}
+
+.obs-add-plant-wrap {
+  width: 100%;
 }
 
 .obs-add-plant-btn {
