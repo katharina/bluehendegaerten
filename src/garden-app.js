@@ -127,6 +127,7 @@ initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id });
 
+
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');
 const gardenCol = document.querySelector('.garden-col--garden');

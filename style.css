@@ -161,12 +161,17 @@ ul {
   padding-left: var(--page-pad);
 }
 
+#garden-list {
+  min-height: 3em;
+}
+
 #obs-carousel,
 #herbar-carousel {
   display: flex;
   gap: var(--hb-space-200);
   overflow-x: auto;
   scrollbar-width: none;
+  min-height: 245px;
 }
 
 #obs-carousel .carousel-card:first-child,
@@ -181,7 +186,6 @@ ul {
 
 .carousel-card {
   flex-shrink: 0;
-  width: 160px;
   cursor: zoom-in;
   position: relative;
 }
@@ -208,10 +212,14 @@ ul {
 .carousel-card:hover .carousel-card-delete { opacity: 1; }
 
 .carousel-card-img {
-  width: 100%;
+  height: 213px;
   aspect-ratio: 3 / 4;
   background: var(--hb-black-100);
   overflow: hidden;
+}
+
+.carousel-card-img.is-landscape {
+  aspect-ratio: 4 / 3;
 }
 
 .carousel-card-img img {
@@ -225,6 +233,8 @@ ul {
   display: flex;
   flex-direction: column;
   gap: var(--hb-space-100);
+  width: 0;
+  min-width: 100%;
 }
 
 /* ── Filter input ────────────────────────────────────────────────────────── */
