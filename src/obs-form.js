@@ -388,11 +388,12 @@ async function _onFileChange(e) {
   _lat = null; _lon = null;
   if (!file) return;
   try {
-    const mod   = await import('exifr');
-    const exifr = mod.default ?? mod;
+    const mod = await import('exifr');
+    const parse = mod.parse ?? mod.default?.parse ?? mod.default;
+    const gps_fn = mod.gps ?? mod.default?.gps;
     const [meta, gps] = await Promise.all([
-      exifr.parse(file, ['DateTimeOriginal']),
-      exifr.gps(file),
+      parse(file, ['DateTimeOriginal']),
+      gps_fn?.(file),
     ]);
     if (meta?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = meta.DateTimeOriginal.toISOString().slice(0, 10);
