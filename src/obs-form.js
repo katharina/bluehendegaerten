@@ -3,7 +3,7 @@ import { authedFetch, supabase } from './auth.js';
 let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
 let _defaultGardenId = null;
 let _editId = null;
-let _lat = null, _lon = null;
+let _lat = null, _lon = null, _place = null;
 let _suggestions = [];
 let _currentPlantSlug = null;
 let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
@@ -56,6 +56,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _editId = editObs?.id ?? null;
   _lat    = editObs?.lat ?? null;
   _lon    = editObs?.lon ?? null;
+  _place  = editObs?.place ?? null;
   _suggestions = editObs?.plantnet_suggestions ? JSON.parse(editObs.plantnet_suggestions) : [];
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
@@ -403,16 +404,23 @@ function _geolocateForCamera() {
 
 function _renderLocationFound() {
   const el = _dialog.querySelector('#obs-form-location');
+  _place = null;
   if (!el) return;
-  el.innerHTML = `
-    <span class="loc-found">Standort erfasst</span>
-    <button type="button" class="loc-clear">×</button>`;
+  el.innerHTML = `<span class="loc-found">Standort erfasst…</span><button type="button" class="loc-clear">×</button>`;
   el.querySelector('.loc-clear').addEventListener('click', () => {
-    _lat = null; _lon = null;
-    el.hidden = true;
-    el.innerHTML = '';
+    _lat = null; _lon = null; _place = null;
+    el.hidden = true; el.innerHTML = '';
   });
   el.hidden = false;
+  fetch(`/api/reverse-geocode?lat=${_lat}&lon=${_lon}`)
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data?.place) {
+        _place = data.place;
+        const span = el.querySelector('.loc-found');
+        if (span) span.textContent = data.place;
+      }
+    }).catch(() => {});
 }
 
 function _showCameraPlaceFallback() {
@@ -487,7 +495,7 @@ async function _onSubmit() {
       text:   _dialog.querySelector('#obs-form-text').value || null,
       slugs,
       ...(_lat != null && { lat: _lat, lon: _lon }),
-      ...(manualPlace  && { place: manualPlace }),
+      ...((manualPlace || _place) && { place: manualPlace || _place }),
       ...(filename     && { filename }),
     };
 

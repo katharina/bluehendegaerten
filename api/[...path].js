@@ -243,10 +243,10 @@ export default async function handler(req, res) {
       }
       if (req.method === 'POST') {
         if (!await requireUser(req, res)) return;
-        const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
+        const { date, type = 'foto', text, filename, lat, lon, place: clientPlace, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
-        const place = lat != null ? await reverseGeocode(lat, lon) : null;
+        const place = clientPlace || (lat != null ? await reverseGeocode(lat, lon) : null);
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place })
@@ -524,6 +524,15 @@ export default async function handler(req, res) {
       return res.json({ ok: true });
     }
     return res.status(405).json({ error: 'method not allowed' });
+  }
+
+  // ── Reverse geocode a lat/lon (client-side preview) ──────────────────────────
+  if (resource === 'reverse-geocode') {
+    const lat = parseFloat(req.query?.lat ?? req.body?.lat);
+    const lon = parseFloat(req.query?.lon ?? req.body?.lon);
+    if (isNaN(lat) || isNaN(lon)) return res.status(400).json({ error: 'lat/lon required' });
+    const place = await reverseGeocode(lat, lon);
+    return res.json({ place: place ?? null });
   }
 
   // ── Geocode single obs on demand ─────────────────────────────────────────────
