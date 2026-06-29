@@ -407,6 +407,7 @@ async function _onSubmit() {
   msg.textContent = '';
   btn.disabled = true;
   btn.textContent = '…';
+  const resetBtn = () => { btn.disabled = false; btn.textContent = 'Speichern'; };
 
   await Promise.allSettled([..._pendingAdds.values()]);
 
@@ -435,6 +436,7 @@ async function _onSubmit() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      resetBtn();
       _dialog.close();
       window.location.reload();
     } else {
@@ -446,12 +448,12 @@ async function _onSubmit() {
       const saved = await res.json();
       const localUrl = file ? URL.createObjectURL(file) : null;
       const _plants = (saved.slugs ?? []).map(s => _plantBySlug.get(s)).filter(Boolean);
+      resetBtn();
       _dialog.close();
       document.dispatchEvent(new CustomEvent('obs:saved', { detail: { ...saved, _localUrl: localUrl, _plants } }));
     }
   } catch (e) {
     msg.textContent = 'Fehler: ' + (e.message ?? 'unbekannt');
-    btn.disabled = false;
-    btn.textContent = 'Speichern';
+    resetBtn();
   }
 }
