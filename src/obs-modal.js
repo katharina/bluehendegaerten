@@ -117,19 +117,30 @@ function renderObs(obs, onReady) {
   noteEl.textContent = obs.text ?? '';
   noteEl.hidden = !obs.text;
 
-  const existing = _dialog.querySelector('.obs-delete-btn');
-  if (existing) existing.remove();
+  _dialog.querySelectorAll('.obs-delete-btn, .obs-edit-btn').forEach(b => b.remove());
   if (_loggedIn && obs.id) {
-    const btn = document.createElement('button');
-    btn.className = 'obs-delete-btn';
-    btn.textContent = 'Löschen';
-    btn.addEventListener('click', async e => {
+    const editBtn = document.createElement('button');
+    editBtn.className = 'obs-edit-btn';
+    editBtn.textContent = 'Bearbeiten';
+    editBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      _dialog.close();
+      document.dispatchEvent(new CustomEvent('obs:edit', { detail: obs }));
+    });
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'obs-delete-btn';
+    delBtn.textContent = 'Löschen';
+    delBtn.addEventListener('click', async e => {
       e.stopPropagation();
       if (!confirm('Beobachtung wirklich löschen?')) return;
       await authedFetch(`/api/observations/${obs.id}`, { method: 'DELETE' });
       _dialog.close();
       window.location.reload();
     });
-    _dialog.querySelector('.obs-modal-inner').appendChild(btn);
+
+    const info = _dialog.querySelector('.obs-modal-info');
+    info.appendChild(editBtn);
+    info.appendChild(delBtn);
   }
 }
