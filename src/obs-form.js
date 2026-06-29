@@ -207,12 +207,19 @@ async function _identifyPlant(file) {
 }
 
 async function _uploadToR2(file) {
-  const { url, key } = await authedFetch('/api/upload-url', {
+  const contentType = file.type || 'image/jpeg';
+  const urlRes = await authedFetch('/api/upload-url', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ contentType: file.type, filename: file.name }),
-  }).then(r => r.json());
-  await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+    body: JSON.stringify({ contentType, filename: file.name }),
+  });
+  if (!urlRes.ok) {
+    const err = await urlRes.json().catch(() => ({}));
+    throw new Error(err.error ?? `upload-url ${urlRes.status}`);
+  }
+  const { url, key } = await urlRes.json();
+  const putRes = await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': contentType } });
+  if (!putRes.ok) throw new Error(`R2 PUT ${putRes.status}`);
   return key;
 }
 
@@ -277,8 +284,8 @@ async function _onSubmit() {
 
     _dialog.close();
     window.location.reload();
-  } catch {
-    msg.textContent = 'Fehler beim Speichern.';
+  } catch (e) {
+    msg.textContent = 'Fehler: ' + (e.message ?? 'unbekannt');
     btn.disabled = false;
     btn.textContent = 'Speichern';
   }
