@@ -83,7 +83,10 @@ export function prependObsToCarousel(obs, gardenMap, plantMap) {
     carousel.hidden = false;
     carousel.innerHTML = '';
   }
-  const card = buildObsCard(obs, gardenMap, plantMap, [obs]);
+  const mergedPlantMap = obs._plants?.length
+    ? new Map([...plantMap, ...obs._plants.map(p => [p.slug, p.name])])
+    : plantMap;
+  const card = buildObsCard(obs, gardenMap, mergedPlantMap, [obs]);
   carousel.prepend(card);
 }
 

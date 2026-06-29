@@ -440,8 +440,9 @@ async function _onSubmit() {
       });
       const saved = await res.json();
       const localUrl = file ? URL.createObjectURL(file) : null;
+      const _plants = (saved.slugs ?? []).map(s => _plantBySlug.get(s)).filter(Boolean);
       _dialog.close();
-      document.dispatchEvent(new CustomEvent('obs:saved', { detail: { ...saved, _localUrl: localUrl } }));
+      document.dispatchEvent(new CustomEvent('obs:saved', { detail: { ...saved, _localUrl: localUrl, _plants } }));
     }
   } catch (e) {
     msg.textContent = 'Fehler: ' + (e.message ?? 'unbekannt');
