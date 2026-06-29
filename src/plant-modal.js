@@ -124,10 +124,15 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     window.location.reload();
   } : null;
 
+  const onEdit = _loggedIn ? obs => {
+    dialog.close();
+    document.dispatchEvent(new CustomEvent('obs:edit', { detail: obs }));
+  } : null;
+
   function renderObsList(list) {
     colA.innerHTML = colB.innerHTML = '';
     i = 0;
-    list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs, onDelete)));
+    list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs, onDelete, onEdit)));
   }
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
@@ -261,7 +266,7 @@ function buildObsGroup(title, obs, gardens, list) {
   return [heading, ...obs.map(o => buildObsCard(o, gardens, list))];
 }
 
-function buildObsCard(o, gardens, list = [o], onDelete = null) {
+function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
   const card = document.createElement('div');
   card.className = 'modal-obs-card';
   const place = o.place || gardens.find(g => g.id === o.garden)?.name || '';
@@ -274,11 +279,20 @@ function buildObsCard(o, gardens, list = [o], onDelete = null) {
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
     </div>
-    ${onDelete ? `<button class="modal-obs-delete">×</button>` : ''}
+    ${onEdit || onDelete ? `<div class="modal-obs-actions">
+      ${onEdit   ? `<button class="modal-obs-edit">Bearbeiten</button>` : ''}
+      ${onDelete ? `<button class="modal-obs-delete">Löschen</button>` : ''}
+    </div>` : ''}
   `;
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
   });
+  if (onEdit) {
+    card.querySelector('.modal-obs-edit').addEventListener('click', e => {
+      e.stopPropagation();
+      onEdit(o);
+    });
+  }
   if (onDelete) {
     card.querySelector('.modal-obs-delete').addEventListener('click', e => {
       e.stopPropagation();
