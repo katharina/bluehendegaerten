@@ -225,12 +225,12 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           if (!edits.length) return;
           changelogEl.hidden = false;
           changelogRows.innerHTML = edits.map(e => {
-            const date = new Date(e.created_at).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' });
+            const date = new Date(e.created_at).toLocaleString('de-DE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             const label = FIELD_LABEL[e.field] ?? e.field;
             const from = e.old_value != null ? `<span class="changelog-old">${e.old_value}</span> → ` : '';
             const to   = e.new_value != null ? `<span class="changelog-new">${e.new_value}</span>` : '—';
             return `<div class="changelog-row">
-              <span class="changelog-date">${date}</span>
+              <span class="changelog-date">${date}${e.user_name ? ` · ${e.user_name}` : ''}</span>
               <span class="changelog-field">${label}</span>
               <span class="changelog-value">${from}${to}</span>
             </div>`;

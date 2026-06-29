@@ -286,7 +286,9 @@ export default async function handler(req, res) {
       fields.updated_at = new Date().toISOString();
       const { error } = await supabase.from('plant_info').upsert(fields);
       if (error) return res.status(500).json({ error: error.message });
-      logEdits(id, user.id,
+      const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
+      const userName = profile?.username || user.email;
+      logEdits(id, user.id, userName,
         Object.keys(fields).filter(k => PLANT_INFO_FIELDS.includes(k))
           .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))
         .catch(e => console.error('[plant-info PATCH] logEdits threw:', e.message));
@@ -300,7 +302,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET' && id) {
       const { data, error } = await supabase
         .from('plant_edits')
-        .select('field, old_value, new_value, created_at')
+        .select('field, old_value, new_value, created_at, user_name')
         .eq('slug', id)
         .order('created_at', { ascending: false })
         .limit(100);
@@ -369,7 +371,9 @@ export default async function handler(req, res) {
         const { data: current } = await supabase.from('custom_plants').select('*').eq('slug', id).maybeSingle();
         const { error } = await supabase.from('custom_plants').update(fields).eq('slug', id);
         if (error) return res.status(500).json({ error: error.message });
-        await logEdits(id, user.id,
+        const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
+        const userName = profile?.username || user.email;
+        await logEdits(id, user.id, userName,
           Object.keys(fields).map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })));
         return res.json({ ok: true });
       }
