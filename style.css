@@ -1421,6 +1421,29 @@ dialog#plant-modal.authenticated .plant-color-picker {
   cursor: pointer;
 }
 
+#bed-plan.is-editable .bed-plan-svg {
+  cursor: crosshair;
+}
+
+#bed-plan.is-editable .bed-plan-svg circle[data-slug] {
+  cursor: pointer;
+}
+
+.bed-edit-hint {
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-600);
+  padding: 0 var(--hb-space-600) var(--hb-space-300);
+}
+
+.plant-card.is-selected {
+  box-shadow: inset 0 0 0 2px #000;
+}
+
+.action-btn.is-active {
+  background: #000;
+  color: #fff;
+}
+
 .bed-tooltip {
   position: fixed;
   z-index: 200;

@@ -12,6 +12,7 @@ function buildPlantCard(p, maxW) {
   const dotSize = Math.round((p.world_w ?? 0.3) / maxW * 48);
   const card = document.createElement('div');
   card.className = 'plant-card';
+  card.dataset.slug = p.slug;
   card.style.setProperty('--plant-color', p.color ?? '#fff');
   card.style.setProperty('--plant-fg', contrastColor(p.color ?? '#fff'));
   card.style.setProperty('--plant-dot-size', `${dotSize}px`);

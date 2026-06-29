@@ -96,23 +96,132 @@ layout.addEventListener('mousemove', () => layout.classList.add('is-interactive'
 const bedNameEl = document.getElementById('bed-name');
 if (planStore?.bedName) bedNameEl.textContent = planStore.bedName;
 
+// ── Edit mode ─────────────────────────────────────────────────────────────────
+let editMode = false;
+let selectedSlug = null;
+
+function getStore() {
+  if (!planStore) planStore = { versions: [{ id: 'default', placements: [] }], currentId: 'default' };
+  return planStore;
+}
+function getActivePlacements() {
+  const store = getStore();
+  const ver = store.versions?.find(v => v.id === store.currentId) ?? store.versions?.[0];
+  if (!ver.placements) ver.placements = [];
+  return ver.placements;
+}
+
+async function savePlan() {
+  const store = getStore();
+  await authedFetch(`/api/plans/${garden.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: JSON.stringify(store) }),
+  }).catch(() => {});
+}
+
+function rerenderBedPlan() {
+  renderBedPlan(document.getElementById('bed-plan'), {
+    plants: allPlants,
+    bedImages: bedImageMap,
+    placements: getActivePlacements(),
+    editMode,
+    selectedSlug,
+    onPlace(slug, x, z) {
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+      getActivePlacements().push({ id, slug, x: +x.toFixed(3), z: +z.toFixed(3) });
+      savePlan();
+      rerenderBedPlan();
+    },
+    onRemove(id) {
+      const arr = getActivePlacements();
+      const idx = arr.findIndex(p => p.id === id);
+      if (idx !== -1) arr.splice(idx, 1);
+      savePlan();
+      rerenderBedPlan();
+    },
+    async onUploadBed(bedIndex) {
+      _uploadBedIndex = bedIndex;
+      document.getElementById('bed-img-input').click();
+    },
+  });
+}
+
+function setSelectedSlug(slug) {
+  selectedSlug = slug;
+  document.querySelectorAll('.plant-card').forEach(c => {
+    c.classList.toggle('is-selected', c.dataset.slug === slug);
+  });
+  const hint = document.getElementById('bed-edit-hint');
+  hint.textContent = slug
+    ? `${allPlants.find(p => p.slug === slug)?.name ?? slug} — ins Beet klicken zum Setzen, nochmals klicken zum Entfernen`
+    : 'Pflanze auswählen, dann ins Beet klicken';
+  rerenderBedPlan();
+}
+
+let _uploadBedIndex = null;
+const bedImgInput = document.getElementById('bed-img-input');
+bedImgInput.addEventListener('change', async () => {
+  const file = bedImgInput.files[0];
+  if (!file || _uploadBedIndex === null) return;
+  try {
+    const { url, key } = await authedFetch('/api/upload-url', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contentType: file.type, filename: file.name }),
+    }).then(r => r.json());
+    await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+    await authedFetch('/api/bed-images', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ garden: garden.id, bed_index: _uploadBedIndex, filename: key }),
+    });
+    bedImageMap[_uploadBedIndex] = key;
+    rerenderBedPlan();
+  } catch {}
+  bedImgInput.value = '';
+  _uploadBedIndex = null;
+});
+
 supabase.auth.getSession().then(({ data: { session } }) => {
   if (!session?.user) return;
+
+  // Bed name editable
   bedNameEl.contentEditable = 'true';
   bedNameEl.addEventListener('blur', async () => {
     const name = bedNameEl.textContent.trim() || 'Beete';
     bedNameEl.textContent = name;
-    const store = planStore ?? { versions: [{ id: 'default', placements: [] }], currentId: 'default' };
-    store.bedName = name;
-    await authedFetch(`/api/plans/${garden.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: JSON.stringify(store) }),
-    });
+    getStore().bedName = name;
+    await savePlan();
   });
   bedNameEl.addEventListener('keydown', e => {
     if (e.key === 'Enter') { e.preventDefault(); bedNameEl.blur(); }
   });
+
+  // Edit mode toggle
+  const editBtn = document.getElementById('bed-edit-btn');
+  editBtn.hidden = false;
+  editBtn.addEventListener('click', () => {
+    editMode = !editMode;
+    editBtn.textContent = editMode ? 'Fertig' : 'Bearbeiten';
+    editBtn.classList.toggle('is-active', editMode);
+    const hint = document.getElementById('bed-edit-hint');
+    hint.hidden = !editMode;
+    if (editMode) {
+      hint.textContent = 'Pflanze auswählen, dann ins Beet klicken';
+    } else {
+      selectedSlug = null;
+      document.querySelectorAll('.plant-card.is-selected').forEach(c => c.classList.remove('is-selected'));
+    }
+    rerenderBedPlan();
+  });
+
+  // In edit mode, intercept plant:open to select the plant instead of opening the modal
+  document.addEventListener('plant:open', e => {
+    if (!editMode) return;
+    e.stopImmediatePropagation();
+    setSelectedSlug(selectedSlug === e.detail.slug ? null : e.detail.slug);
+  }, true);
 });
 
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
@@ -120,11 +229,7 @@ renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
-renderBedPlan(document.getElementById('bed-plan'), {
-  plants: allPlants,
-  bedImages: bedImageMap,
-  placements,
-});
+rerenderBedPlan();
 
 initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
