@@ -106,7 +106,7 @@
         <div class="plant-modal-observations">
           <div class="plant-modal-obs-header">
             <div class="section-header">
-              <h3>Vorherige Beobachtungen</h3>
+              <h3>Beobachtungen</h3>
               <button class="action-btn-icon" id="plant-modal-close">×</button>
             </div>
             <button class="action-btn" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
@@ -127,10 +127,16 @@
         <h2 class="obs-form-title" id="obs-form-title">Beobachtung</h2>
         <button class="action-btn-icon" id="obs-form-close">×</button>
       </div>
-      <label class="obs-file-label" id="obs-form-file-label">
-        <span id="obs-form-file-text">Bild auswählen…</span>
-        <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
-      </label>
+      <div class="obs-file-row">
+        <label class="obs-file-label" id="obs-form-file-label">
+          <span id="obs-form-file-text">Hochladen</span>
+          <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
+        </label>
+        <label class="obs-file-label obs-camera-label" id="obs-form-camera-label">
+          <span>Kamera</span>
+          <input id="obs-form-camera" type="file" accept="image/*" capture="environment">
+        </label>
+      </div>
       <div class="obs-form-row">
         <div class="obs-form-field">
           <label class="obs-form-label">Datum</label>
@@ -150,6 +156,7 @@
           <select id="obs-form-garden" class="obs-select"></select>
         </div>
       </div>
+      <div id="obs-form-identified" hidden></div>
       <div id="obs-form-plant-grid" class="obs-plant-grid"></div>
       <textarea id="obs-form-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
       <div id="obs-form-msg" class="obs-form-msg"></div>
@@ -174,6 +181,7 @@
       </div>
     </div>
     <button class="obs-nav obs-nav--next">&#8250;</button>
+    <div class="obs-modal-list" hidden></div>
   </dialog>
 
   <dialog id="lightbox" tabindex="-1">

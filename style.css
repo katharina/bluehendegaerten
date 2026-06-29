@@ -1279,6 +1279,43 @@ dialog#plant-modal.authenticated .plant-color-picker {
   display: flex;
   height: 100dvh;
   overflow: hidden;
+  visibility: hidden;
+}
+
+.garden-layout.has-bed,
+.garden-layout.no-bed {
+  visibility: visible;
+}
+
+@media (max-width: 640px) {
+  .garden-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .garden-col {
+    width: 100% !important;
+    height: auto;
+    overflow-y: visible;
+  }
+  .garden-panels {
+    flex-direction: column;
+    width: 100% !important;
+  }
+  .garden-col--plants {
+    margin-left: 0 !important;
+    transition: none !important;
+  }
+  .garden-col--bed {
+    transition: none !important;
+  }
+  .garden-panels:hover .garden-col--bed,
+  .garden-panels.is-expanded .garden-col--bed,
+  .garden-panels:hover .garden-col--plants,
+  .garden-panels.is-expanded .garden-col--plants {
+    transform: none !important;
+    margin-left: 0 !important;
+  }
 }
 
 .garden-col {
@@ -1306,7 +1343,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
   position: relative;
   z-index: 1;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
 .garden-layout.has-bed .garden-col--bed {
@@ -1319,16 +1355,20 @@ dialog#plant-modal.authenticated .plant-color-picker {
   z-index: 2;
   margin-left: -10vw;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) 60ms,
-              margin-left 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) 60ms;
 }
 
-.garden-panels:hover .garden-col--bed,
+.garden-layout.is-interactive .garden-col--bed,
+.garden-layout.is-interactive .garden-col--plants {
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+              margin-left 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+.garden-layout.is-interactive .garden-panels:hover .garden-col--bed,
 .garden-panels.is-expanded .garden-col--bed {
   transform: translateX(-20vw);
 }
 
-.garden-panels:hover .garden-col--plants,
+.garden-layout.is-interactive .garden-panels:hover .garden-col--plants,
 .garden-panels.is-expanded .garden-col--plants {
   transform: translateX(-20vw);
   margin-left: 0;
@@ -1350,7 +1390,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   margin-left: 0;
 }
 
-.garden-layout.no-bed .garden-panels:hover .garden-col--plants,
+.garden-layout.no-bed.is-interactive .garden-panels:hover .garden-col--plants,
 .garden-layout.no-bed .garden-panels.is-expanded .garden-col--plants {
   transform: none;
 }

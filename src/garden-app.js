@@ -90,6 +90,7 @@ if (placements.length) {
 } else {
   layout.classList.add('no-bed');
 }
+layout.addEventListener('mousemove', () => layout.classList.add('is-interactive'), { once: true });
 
 // Bed name — editable when logged in
 const bedNameEl = document.getElementById('bed-name');
