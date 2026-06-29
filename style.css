@@ -355,7 +355,7 @@ dialog#obs-form-dialog {
   overflow: visible;
 }
 
-dialog#obs-form-dialog[open] { display: flex; }
+dialog#obs-form-dialog[open] { display: flex; margin: auto; }
 dialog#obs-form-dialog:focus { outline: none; }
 
 dialog#obs-form-dialog::backdrop {
