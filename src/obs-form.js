@@ -4,8 +4,6 @@ let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
 let _defaultGardenId = null;
 let _editId = null;
 let _lat = null, _lon = null, _place = null;
-let _geoLat = null, _geoLon = null, _geoPending = false;
-let _geoPermission = null; // null = unknown, 'granted', 'prompt', 'denied'
 let _suggestions = [];
 let _currentPlantSlug = null;
 let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
@@ -38,11 +36,6 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
 
   supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
   supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
-
-  navigator.permissions?.query({ name: 'geolocation' }).then(result => {
-    _geoPermission = result.state;
-    result.addEventListener('change', () => { _geoPermission = result.state; });
-  }).catch(() => {});
 
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _close(); });
   _dialog.querySelector('#obs-form-close').addEventListener('click', _close);
@@ -394,49 +387,6 @@ async function _uploadToR2(file) {
 }
 
 
-function _startGeo() {
-  _geoPending = true;
-  let done = false;
-
-  const finish = (lat, lon, errMsg) => {
-    if (done) return;
-    done = true;
-    _geoPending = false;
-    if (lat != null) {
-      _geoLat = lat; _geoLon = lon;
-      if (_lat == null) { _lat = lat; _lon = lon; _renderLocationFound(); }
-    } else {
-      const locEl = _dialog?.querySelector('#obs-form-location');
-      if (locEl && _lat == null) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${errMsg}</span>`; }
-    }
-  };
-
-  // JS-level fallback — browser timeout option is unreliable on Chrome iOS
-  const fallback = setTimeout(() => { navigator.geolocation.clearWatch(watchId); finish(null, null, 'Timeout'); }, 25000);
-
-  const watchId = navigator.geolocation.watchPosition(
-    pos => { clearTimeout(fallback); navigator.geolocation.clearWatch(watchId); finish(pos.coords.latitude, pos.coords.longitude, null); },
-    err => {
-      clearTimeout(fallback); navigator.geolocation.clearWatch(watchId);
-      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
-      finish(null, null, reason);
-    },
-    { enableHighAccuracy: true }
-  );
-}
-
-function _offerGeoForCamera() {
-  if (_geoPermission === 'denied' || !navigator.geolocation) return;
-  const locEl = _dialog.querySelector('#obs-form-location');
-  if (!locEl) return;
-  locEl.hidden = false;
-  locEl.innerHTML = '<button type="button" class="action-btn" id="geo-now-btn">Standort hinzufügen</button>';
-  locEl.querySelector('#geo-now-btn').addEventListener('click', () => {
-    locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>';
-    _startGeo();
-  });
-}
-
 function _renderLocationFound() {
   const el = _dialog.querySelector('#obs-form-location');
   _place = null;
@@ -479,12 +429,9 @@ async function _onFileChange(e) {
     if (result?.latitude != null) {
       _lat = result.latitude; _lon = result.longitude;
       _renderLocationFound();
-    } else if (isCam) {
-      _offerGeoForCamera();
     }
   } catch (err) {
     console.warn('exifr:', err);
-    if (isCam) _offerGeoForCamera();
   }
   _identifyPlant(file);
 }
