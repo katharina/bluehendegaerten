@@ -14,7 +14,7 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   const place = o.place || gardenMap.get(o.garden) || '';
   card.innerHTML = `
     <div class="carousel-card-img">
-      <img src="${thumbUrl(o.filename)}" loading="lazy">
+      <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
       ${_loggedIn ? `<button class="carousel-card-delete">×</button>` : ''}
     </div>
     <div class="carousel-card-meta">

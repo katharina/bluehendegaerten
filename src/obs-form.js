@@ -439,8 +439,9 @@ async function _onSubmit() {
         body: JSON.stringify(body),
       });
       const saved = await res.json();
+      const localUrl = file ? URL.createObjectURL(file) : null;
       _dialog.close();
-      document.dispatchEvent(new CustomEvent('obs:saved', { detail: saved }));
+      document.dispatchEvent(new CustomEvent('obs:saved', { detail: { ...saved, _localUrl: localUrl } }));
     }
   } catch (e) {
     msg.textContent = 'Fehler: ' + (e.message ?? 'unbekannt');
