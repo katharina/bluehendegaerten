@@ -2,6 +2,12 @@ import { contrastColor } from './utils.js';
 
 const PAGE = 20;
 
+const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+
+function isNew(p) {
+  return p.created_at && (Date.now() - new Date(p.created_at).getTime()) < THREE_DAYS;
+}
+
 function buildPlantCard(p, maxW) {
   const dotSize = Math.round((p.world_w ?? 0.3) / maxW * 48);
   const card = document.createElement('div');
@@ -10,6 +16,7 @@ function buildPlantCard(p, maxW) {
   card.style.setProperty('--plant-fg', contrastColor(p.color ?? '#fff'));
   card.style.setProperty('--plant-dot-size', `${dotSize}px`);
   card.innerHTML = `
+    ${isNew(p) ? `<span class="plant-new">NEU</span>` : ''}
     ${p.name    ? `<div class="botanical-name">${p.name}</div>` : ''}
     ${p.name_de ? `<div class="german-name">${p.name_de}</div>` : ''}
     ${p.family  ? `<div class="plant-family">${p.family}</div>` : ''}
@@ -22,7 +29,13 @@ function buildPlantCard(p, maxW) {
 }
 
 export function renderPlantList(plants, { bedSlugs = null } = {}) {
-  const sorted = [...plants].sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
+  const sorted = [...plants].sort((a, b) => {
+    const aN = isNew(a), bN = isNew(b);
+    if (aN && !bN) return -1;
+    if (!aN && bN) return 1;
+    if (aN && bN) return new Date(b.created_at) - new Date(a.created_at);
+    return (a.name ?? '').localeCompare(b.name ?? '');
+  });
   const maxW = Math.max(...plants.map(p => p.world_w ?? 0.3));
   const list = document.getElementById('plant-list');
   const filterInput = document.getElementById('plant-filter');

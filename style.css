@@ -338,6 +338,19 @@ ul {
   color: var(--hb-black-400);
 }
 
+.plant-new {
+  position: absolute;
+  bottom: var(--hb-space-400);
+  left: var(--hb-space-400);
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
 /* ── Carousel card meta ──────────────────────────────────────────────────── */
 
 .carousel-card-meta .botanical-name {
