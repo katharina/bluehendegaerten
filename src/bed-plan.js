@@ -37,7 +37,7 @@ export function renderBedPlan(container, {
   const colorBySlug = Object.fromEntries(plants.map(p => [p.slug, p.color ?? '#ccc']));
   const plantBySlug = Object.fromEntries(plants.map(p => [p.slug, p]));
 
-  const PAD = 0.65;
+  const PAD = 0.4;
   const vbX = -BED_L / 2 - PAD;
   const vbY = -TOTAL_Z / 2 - PAD;
   const vbW = BED_L + PAD * 2;
@@ -45,22 +45,17 @@ export function renderBedPlan(container, {
 
   let svg = `<svg class="bed-plan-svg" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
 
+  // Background layer: bed rectangles + images + dividers
   for (const bed of bedLayout) {
     const x0 = -BED_L / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="#f5f5f3" stroke="#000" stroke-width="0.01"/>`;
+    svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="none" stroke="#000" stroke-width="0.01"/>`;
     if (bedImages[bed.i]) {
       svg += `<image href="${fullUrl(bedImages[bed.i])}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
     }
-    svg += `<text x="${x0 + 0.1}" y="${z0 + 0.28}" font-size="0.22" fill="#999" font-family="system-ui">${bed.i + 1}</text>`;
-    svg += `<line x1="0" y1="${z0}" x2="0" y2="${z0 + bed.w}" stroke="#000" stroke-width="0.025" opacity="0.3"/>`;
-    if (editMode) {
-      const btnW = 0.6, btnH = 0.26, btnX = x0 + BED_L - btnW - 0.1, btnY = z0 + 0.08;
-      svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#444' : '#888'}" opacity="0.75" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
-      svg += `<text x="${btnX + btnW / 2}" y="${btnY + 0.175}" font-size="0.155" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '✎ Bild' : '+ Bild'}</text>`;
-    }
   }
 
+  // Plant circles
   for (const p of placements) {
     const plant = plantBySlug[p.slug];
     const r = (plant?.world_w ?? 0.2) / 2;
@@ -70,6 +65,18 @@ export function renderBedPlan(container, {
       ` stroke="${isSelected ? '#000' : 'none'}" stroke-width="0.05"` +
       ` data-slug="${p.slug}" data-id="${p.id ?? ''}"` +
       ` data-name="${(plant?.name ?? '').replace(/"/g, '&quot;')}" data-de="${(plant?.name_de ?? '').replace(/"/g, '&quot;')}"/>`;
+  }
+
+  // Foreground layer: bed numbers + edit buttons (always on top)
+  for (const bed of bedLayout) {
+    const x0 = -BED_L / 2;
+    const z0 = bed.z - bed.w / 2;
+    svg += `<text class="bed-number" x="${x0 + 0.1}" y="${z0 + 0.28}">${bed.i + 1}</text>`;
+    if (editMode) {
+      const btnW = 0.6, btnH = 0.26, btnX = x0 + BED_L - btnW - 0.1, btnY = z0 + 0.08;
+      svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#444' : '#888'}" opacity="0.75" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
+      svg += `<text x="${btnX + btnW / 2}" y="${btnY + 0.175}" font-size="0.155" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '✎ Bild' : '+ Bild'}</text>`;
+    }
   }
 
   svg += `</svg>`;

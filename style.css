@@ -1408,7 +1408,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 /* ── Bed plan SVG ────────────────────────────────────────────────────────── */
 
 #bed-plan {
-  padding: var(--hb-space-600);
+  padding: 0 var(--hb-space-600) var(--hb-space-600);
 }
 
 .bed-plan-svg {
@@ -1419,6 +1419,13 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .bed-plan-svg circle[data-slug] {
   cursor: pointer;
+}
+
+.bed-plan-svg .bed-number {
+  font-family: var(--font-mono);
+  font-size: 0.22px;
+  font-weight: 700;
+  fill: #000;
 }
 
 #bed-plan.is-editable .bed-plan-svg {
