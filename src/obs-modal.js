@@ -133,6 +133,14 @@ function renderList(list, startIndex) {
     });
     item.querySelector('.obs-modal-garden-link')?.addEventListener('click', e => e.stopPropagation());
 
+    const imgEl = item.querySelector('.obs-list-img');
+    const wrap  = item.querySelector('.obs-list-img-wrap');
+    if (imgEl && wrap) {
+      imgEl.addEventListener('load', () => {
+        if (imgEl.naturalWidth > imgEl.naturalHeight) wrap.classList.add('is-landscape');
+      });
+    }
+
     item.addEventListener('click', e => e.stopPropagation());
     listEl.appendChild(item);
   });
@@ -142,7 +150,7 @@ function renderList(list, startIndex) {
   requestAnimationFrame(() => {
     // +1 because closeBtn is children[0]
     const target = listEl.children[startIndex + 1];
-    target?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    target?.scrollIntoView({ behavior: 'instant', block: 'center' });
   });
 }
 

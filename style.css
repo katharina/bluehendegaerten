@@ -778,9 +778,13 @@ dialog#obs-modal::backdrop {
 
 .obs-list-img-wrap {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   background: #111;
   overflow: hidden;
+}
+
+.obs-list-img-wrap.is-landscape {
+  aspect-ratio: 4 / 3;
 }
 
 .obs-list-img {

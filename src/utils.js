@@ -15,6 +15,19 @@ export function parseCm(val) {
   return parts.reduce((a, b) => a + b, 0) / parts.length;
 }
 
+export function preventPageZoom() {
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length > 1 && !e.target.closest('img')) e.preventDefault();
+  }, { passive: false });
+  let _lastTap = 0;
+  document.addEventListener('touchend', e => {
+    if (e.target.closest('img')) return;
+    const now = Date.now();
+    if (now - _lastTap < 300) e.preventDefault();
+    _lastTap = now;
+  }, { passive: false });
+}
+
 export function contrastColor(hex) {
   const c = hex?.replace('#', '') ?? 'ffffff';
   const r = parseInt(c.slice(0,2), 16), g = parseInt(c.slice(2,4), 16), b = parseInt(c.slice(4,6), 16);

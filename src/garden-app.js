@@ -1,4 +1,5 @@
-import { parseCm } from './utils.js';
+import { parseCm, preventPageZoom } from './utils.js';
+preventPageZoom();
 import { renderObsCarousel, renderHerbarCarousel, prependObsToCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
