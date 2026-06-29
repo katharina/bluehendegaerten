@@ -1444,6 +1444,10 @@ dialog#plant-modal.authenticated .plant-color-picker {
   color: #fff;
 }
 
+#bed-edit-btn {
+  margin-left: auto;
+}
+
 .bed-tooltip {
   position: fixed;
   z-index: 200;
