@@ -385,6 +385,21 @@ async function _uploadToR2(file) {
   return key;
 }
 
+function _tryGeolocate() {
+  if (!navigator.geolocation) { _renderLocationPreview(null, false); return; }
+  const locEl = _dialog.querySelector('#obs-form-location');
+  if (locEl) { locEl.hidden = false; locEl.innerHTML = '<span class="loc-missing">Standort wird ermittelt…</span>'; }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      _lat = pos.coords.latitude;
+      _lon = pos.coords.longitude;
+      _renderLocationPreview({ lat: _lat, lon: _lon }, false);
+    },
+    () => { _renderLocationPreview(null, false); },
+    { timeout: 10000, maximumAge: 60000 }
+  );
+}
+
 function _renderLocationPreview(coords, fromExif) {
   const el = _dialog.querySelector('#obs-form-location');
   if (!el) return;
@@ -429,11 +444,11 @@ async function _onFileChange(e) {
       _lon = result.longitude;
       _renderLocationPreview({ lat: _lat, lon: _lon }, true);
     } else {
-      _renderLocationPreview(null, false);
+      _tryGeolocate();
     }
   } catch (err) {
     console.warn('exifr:', err);
-    _renderLocationPreview(null, false);
+    _tryGeolocate();
   }
   _identifyPlant(file);
 }
