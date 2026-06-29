@@ -44,4 +44,3 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants); }
 });
 
-fetch('/api/geocode-missing', { method: 'POST' }).catch(() => {});

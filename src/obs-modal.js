@@ -81,8 +81,8 @@ function buildObsInfo(obs) {
     ? new Date(obs.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
     : '';
   const garden     = gardenMap.get(obs.garden);
-  const place      = obs.place || garden?.name || '';
   const gardenPath = garden ? `/${garden.path ?? garden.id}` : null;
+  const place      = garden ? garden.name : (obs.place || '');
   const plantNames = (obs.slugs ?? []).map(s => plantMap.get(s)).filter(Boolean);
   const mapUrl = obs.lat != null ? `https://www.openstreetmap.org/?mlat=${obs.lat}&mlon=${obs.lon}&zoom=16` : null;
   return { date, place, gardenPath, garden, plantNames, mapUrl };
@@ -120,7 +120,7 @@ function renderList(list, startIndex) {
       ${obs.filename ? `<div class="obs-list-img-wrap"><img class="obs-list-img" src="${fullUrl(obs.filename)}" loading="lazy"></div>` : ''}
       <div class="obs-list-meta">
         ${plantLinks ? `<div class="obs-list-plants">${plantLinks}</div>` : ''}
-        ${place ? `<div class="observation-place">${gardenPath && !obs.place ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
+        ${place ? `<div class="observation-place">${gardenPath ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
         ${date   ? `<div class="observation-date">${date}</div>` : ''}
         ${obs.text ? `<div class="obs-list-note">${obs.text}</div>` : ''}
       </div>`;
@@ -136,6 +136,28 @@ function renderList(list, startIndex) {
 
     item.addEventListener('click', e => e.stopPropagation());
     listEl.appendChild(item);
+
+    if (obs.lat != null) {
+      fetch('/api/geocode-obs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: obs.id, lat: obs.lat, lon: obs.lon }),
+      }).then(r => r.json()).then(({ place: p }) => {
+        if (p && p !== obs.place) {
+          obs.place = p;
+          const placeEl = item.querySelector('.observation-place');
+          if (placeEl) {
+            placeEl.textContent = p;
+          } else {
+            const span = document.createElement('div');
+            span.className = 'observation-place';
+            span.textContent = p;
+            const dateEl = item.querySelector('.observation-date');
+            dateEl ? item.querySelector('.obs-list-meta').insertBefore(span, dateEl) : item.querySelector('.obs-list-meta').prepend(span);
+          }
+        }
+      }).catch(() => {});
+    }
   });
 
   if (!_dialog.open) { _dialog.showModal(); _dialog.focus(); }
@@ -169,11 +191,24 @@ function renderObs(obs, onReady) {
 
   _dialog.querySelector('.obs-modal-date').textContent = date;
   const placeEl = _dialog.querySelector('.obs-modal-place');
-  if (gardenPath && !obs.place) {
+  if (gardenPath) {
     placeEl.innerHTML = `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>`;
     placeEl.querySelector('a').addEventListener('click', e => e.stopPropagation());
   } else {
     placeEl.textContent = place;
+  }
+
+  if (obs.lat != null) {
+    fetch('/api/geocode-obs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: obs.id, lat: obs.lat, lon: obs.lon }),
+    }).then(r => r.json()).then(({ place: p }) => {
+      if (p && p !== obs.place) {
+        obs.place = p;
+        if (!gardenPath) placeEl.textContent = p;
+      }
+    }).catch(() => {});
   }
 
   const plantsEl = _dialog.querySelector('.obs-modal-plants');

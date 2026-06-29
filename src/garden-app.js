@@ -279,7 +279,6 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
 });
 
-fetch('/api/geocode-missing', { method: 'POST' }).catch(() => {});
 
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');

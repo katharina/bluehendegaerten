@@ -246,10 +246,7 @@ export default async function handler(req, res) {
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
-        let place = null;
-        if (lat != null && !garden) {
-          place = await reverseGeocode(lat, lon);
-        }
+        const place = lat != null ? await reverseGeocode(lat, lon) : null;
         const { data: obs, error } = await supabase
           .from('observations')
           .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place })
@@ -529,7 +526,17 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'method not allowed' });
   }
 
-  // ── Geocode missing places ────────────────────────────────────────────────────
+  // ── Geocode single obs on demand ─────────────────────────────────────────────
+  if (resource === 'geocode-obs') {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
+    const { id, lat, lon } = req.body ?? {};
+    if (!id || lat == null || lon == null) return res.status(400).json({ error: 'id, lat, lon required' });
+    const place = await reverseGeocode(lat, lon);
+    if (place) await supabase.from('observations').update({ place }).eq('id', id);
+    return res.json({ place: place ?? null });
+  }
+
+  // ── Geocode missing places (bulk backfill) ────────────────────────────────────
   if (resource === 'geocode-missing') {
     if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
     const { data: rows, error: e1 } = await supabase
@@ -537,7 +544,8 @@ export default async function handler(req, res) {
       .select('id, lat, lon')
       .not('lat', 'is', null)
       .lt('created_at', new Date().toISOString())
-      .limit(40);
+      .order('place', { ascending: true, nullsFirst: true })
+      .limit(50);
     if (e1) return res.status(500).json({ error: e1.message });
     let updated = 0;
     for (const row of rows) {
