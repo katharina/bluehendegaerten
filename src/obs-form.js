@@ -75,6 +75,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   gardenSelect.value = editObs?.garden ?? gardenId ?? _defaultGardenId ?? '';
 
   const preselected = editObs?.slugs ?? (plantSlug ? [plantSlug] : []);
+  _buildIdentifiedSection(_suggestions);
   _buildPlantGrid(preselected, _suggestions);
 
   _dialog.showModal();
@@ -152,34 +153,77 @@ function _inferColor(name, family) {
   return null;
 }
 
+function makeChip(p, checked, score, suggested) {
+  const chip = document.createElement('label');
+  chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
+  chip.innerHTML = `
+    <input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>
+    <span class="chip-dot"></span>
+    <em class="chip-botanical">${p.name}</em>
+    ${p.name_de ? `<span class="chip-de">${p.name_de}</span>` : ''}
+    ${score != null ? `<span class="pn-score">${score}%</span>` : ''}
+    <button type="button" class="chip-remove">×</button>`;
+  if (p.color) chip.querySelector('.chip-dot').style.background = p.color;
+  chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
+  chip.querySelector('.chip-remove').addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    chip.remove();
+  });
+  return chip;
+}
+
+function _buildIdentifiedSection(suggestions) {
+  const section = _dialog.querySelector('#obs-form-identified');
+  section.innerHTML = '';
+  const matched   = suggestions.filter(s => s.slug);
+  const unmatched = suggestions.filter(s => !s.slug);
+  if (!matched.length && !unmatched.length) { section.hidden = true; return; }
+
+  if (matched.length) {
+    const hdr = document.createElement('div');
+    hdr.className = 'obs-plant-grid-header';
+    hdr.textContent = 'Identifizierte Pflanzen';
+    section.appendChild(hdr);
+    matched.forEach(s => {
+      const p = _plantBySlug.get(s.slug);
+      if (p) section.appendChild(makeChip(p, true, s.score, true));
+    });
+  }
+  if (unmatched.length) {
+    const hdr2 = document.createElement('div');
+    hdr2.className = 'obs-plant-grid-header';
+    hdr2.textContent = 'Neu identifiziert';
+    section.appendChild(hdr2);
+    unmatched.forEach(s => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'obs-plant-chip pn-new-plant';
+      btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+      btn.title = 'Als neue Pflanze hinzufügen';
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.textContent = 'Wird hinzugefügt…';
+        const grid = _dialog.querySelector('#obs-form-plant-grid');
+        const current = [
+          ...[...section.querySelectorAll('input:checked')].map(i => i.value),
+          ...[...grid.querySelectorAll('input:checked')].map(i => i.value),
+        ];
+        await _addPlantFromPlantNet(s, suggestions, current);
+      });
+      section.appendChild(btn);
+    });
+  }
+  section.hidden = false;
+}
+
 function _buildPlantGrid(preselected = [], suggestions = []) {
   const grid = _dialog.querySelector('#obs-form-plant-grid');
   grid.innerHTML = '';
 
   const matched        = suggestions.filter(s => s.slug);
-  const unmatched      = suggestions.filter(s => !s.slug);
   const suggestedSlugs = matched.map(s => s.slug);
   const scoreMap       = new Map(matched.map(s => [s.slug, s.score]));
-
-  function makeChip(p, checked, score, suggested) {
-    const chip = document.createElement('label');
-    chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
-    chip.innerHTML = `
-      <input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>
-      <span class="chip-dot"></span>
-      <em class="chip-botanical">${p.name}</em>
-      ${p.name_de ? `<span class="chip-de">${p.name_de}</span>` : ''}
-      ${score != null ? `<span class="pn-score">${score}%</span>` : ''}
-      <button type="button" class="chip-remove">×</button>`;
-    if (p.color) chip.querySelector('.chip-dot').style.background = p.color;
-    chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
-    chip.querySelector('.chip-remove').addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      chip.remove();
-    });
-    return chip;
-  }
 
   // 1. Filter input — always at top
   const filterWrap = document.createElement('div');
@@ -199,39 +243,7 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
     if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), suggestedSlugs.includes(slug)));
   });
 
-  // 3. PlantNet results — only shown after image upload
-  if (matched.length) {
-    const hdr = document.createElement('div');
-    hdr.className = 'obs-plant-grid-header';
-    hdr.textContent = 'Identifizierte Pflanzen';
-    grid.appendChild(hdr);
-    suggestedSlugs.forEach(slug => {
-      const p = _plantBySlug.get(slug);
-      if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
-    });
-  }
-  if (unmatched.length) {
-    const hdr2 = document.createElement('div');
-    hdr2.className = 'obs-plant-grid-header';
-    hdr2.textContent = 'Neu identifiziert';
-    grid.appendChild(hdr2);
-    unmatched.forEach(s => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'obs-plant-chip pn-new-plant';
-      btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
-      btn.title = 'Als neue Pflanze hinzufügen';
-      btn.addEventListener('click', async () => {
-        btn.disabled = true;
-        btn.textContent = 'Wird hinzugefügt…';
-        const current = [...grid.querySelectorAll('input:checked')].map(i => i.value);
-        await _addPlantFromPlantNet(s, suggestions, current);
-      });
-      grid.appendChild(btn);
-    });
-  }
-
-  // 4. All plants sorted by recent use — 5 visible by default, filter shows all
+  // 3. All plants sorted by recent use — 5 visible by default, filter shows all
   const shown = new Set([...preselected, ...suggestedSlugs]);
   const sorted = [..._plantBySlug.values()]
     .filter(p => !shown.has(p.slug))
@@ -281,6 +293,8 @@ async function _addPlantFromPlantNet(suggestion, allSuggestions, currentPreselec
     const genus = suggestion.name.split(' ')[0].toLowerCase();
     if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
     const updated = allSuggestions.map(s => s.name === suggestion.name ? { ...s, slug: finalSlug } : s);
+    _suggestions = updated;
+    _buildIdentifiedSection(updated);
     _buildPlantGrid([...currentPreselected, finalSlug], updated);
   } catch (e) { alert('Fehler: ' + e.message); }
 }
@@ -327,6 +341,7 @@ async function _identifyPlant(file) {
       .filter(s => { const key = s.slug ?? s.name; if (seen.has(key)) return false; seen.add(key); return true; });
     const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
     _suggestions = suggestions;
+    _buildIdentifiedSection(suggestions);
     _buildPlantGrid(preselected, suggestions);
   } catch { placeholder.remove(); }
 }
