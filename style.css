@@ -293,6 +293,12 @@ ul {
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
+@media (max-width: 640px) {
+  #plant-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 
 .plant-card {
   position: relative;
