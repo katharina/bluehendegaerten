@@ -21,26 +21,32 @@ function buildPlantCard(p, maxW) {
   return card;
 }
 
-export function renderPlantList(plants) {
+export function renderPlantList(plants, { bedSlugs = null } = {}) {
   const sorted = [...plants].sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
   const maxW = Math.max(...plants.map(p => p.world_w ?? 0.3));
   const list = document.getElementById('plant-list');
+  const filterInput = document.getElementById('plant-filter');
+  const bedLabel    = document.getElementById('plant-filter-bed-label');
+  const bedCheckbox = document.getElementById('plant-filter-bed');
 
-  function render(query) {
-    const q = query.toLowerCase();
-    const filtered = q
-      ? sorted.filter(p =>
-          (p.name    ?? '').toLowerCase().includes(q) ||
-          (p.name_de ?? '').toLowerCase().includes(q) ||
-          (p.family  ?? '').toLowerCase().includes(q)
-        )
-      : sorted;
+  if (bedLabel && bedSlugs?.size) bedLabel.hidden = false;
+
+  function render() {
+    const q       = filterInput.value.toLowerCase();
+    const bedOnly = bedCheckbox?.checked && bedSlugs?.size;
+    let filtered  = bedOnly ? sorted.filter(p => bedSlugs.has(p.slug)) : sorted;
+    if (q) filtered = filtered.filter(p =>
+      (p.name    ?? '').toLowerCase().includes(q) ||
+      (p.name_de ?? '').toLowerCase().includes(q) ||
+      (p.family  ?? '').toLowerCase().includes(q)
+    );
     list.replaceChildren(...filtered.map(p => buildPlantCard(p, maxW)));
     document.dispatchEvent(new CustomEvent('plant:filter', {
-      detail: { slugs: new Set(filtered.map(p => p.slug)), active: !!q },
+      detail: { slugs: new Set(filtered.map(p => p.slug)), active: !!(q || bedOnly) },
     }));
   }
 
-  render('');
-  document.getElementById('plant-filter').addEventListener('input', e => render(e.target.value));
+  render();
+  filterInput.addEventListener('input', render);
+  bedCheckbox?.addEventListener('change', render);
 }

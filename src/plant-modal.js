@@ -101,10 +101,17 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     (i++ % 2 === 0 ? colA : colB).appendChild(card);
   }
 
+  const onDelete = _loggedIn ? async obs => {
+    if (!confirm('Beobachtung löschen?')) return;
+    await authedFetch(`/api/observations/${obs.id}`, { method: 'DELETE' });
+    dialog.close();
+    window.location.reload();
+  } : null;
+
   function renderObsList(list) {
     colA.innerHTML = colB.innerHTML = '';
     i = 0;
-    list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs)));
+    list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs, onDelete)));
   }
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
@@ -238,7 +245,7 @@ function buildObsGroup(title, obs, gardens, list) {
   return [heading, ...obs.map(o => buildObsCard(o, gardens, list))];
 }
 
-function buildObsCard(o, gardens, list = [o]) {
+function buildObsCard(o, gardens, list = [o], onDelete = null) {
   const card = document.createElement('div');
   card.className = 'modal-obs-card';
   const place = o.place || gardens.find(g => g.id === o.garden)?.name || '';
@@ -251,9 +258,16 @@ function buildObsCard(o, gardens, list = [o]) {
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
     </div>
+    ${onDelete ? `<button class="modal-obs-delete">×</button>` : ''}
   `;
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
   });
+  if (onDelete) {
+    card.querySelector('.modal-obs-delete').addEventListener('click', e => {
+      e.stopPropagation();
+      onDelete(o);
+    });
+  }
   return card;
 }

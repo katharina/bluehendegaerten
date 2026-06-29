@@ -115,7 +115,8 @@ supabase.auth.getSession().then(({ data: { session } }) => {
 
 renderObsCarousel(gardenObs, gardenMap, plantMap);
 renderHerbarCarousel(gardenObs, gardenMap, plantMap);
-renderPlantList(gardenPlants);
+const bedSlugs = new Set(placements.map(p => p.slug));
+renderPlantList(gardenPlants, { bedSlugs });
 renderBedPlan(document.getElementById('bed-plan'), {
   plants: allPlants,
   bedImages: bedImageMap,
