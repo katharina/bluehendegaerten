@@ -756,6 +756,12 @@ dialog#obs-modal::backdrop {
   color: var(--hb-black-400);
 }
 
+.obs-modal-map,
+.obs-map-link {
+  font-size: var(--hb-font-size-02);
+  text-decoration: none;
+}
+
 
 /* ── Obs modal mobile list ───────────────────────────────────────────────── */
 

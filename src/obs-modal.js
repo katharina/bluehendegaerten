@@ -84,7 +84,8 @@ function buildObsInfo(obs) {
   const place      = obs.place || garden?.name || '';
   const gardenPath = garden ? `/${garden.path ?? garden.id}` : null;
   const plantNames = (obs.slugs ?? []).map(s => plantMap.get(s)).filter(Boolean);
-  return { date, place, gardenPath, garden, plantNames };
+  const mapUrl = obs.lat != null ? `https://www.openstreetmap.org/?mlat=${obs.lat}&mlon=${obs.lon}&zoom=16` : null;
+  return { date, place, gardenPath, garden, plantNames, mapUrl };
 }
 
 function renderList(list, startIndex) {
@@ -106,7 +107,7 @@ function renderList(list, startIndex) {
   listEl.appendChild(closeBtn);
 
   list.forEach((obs, i) => {
-    const { date, place, gardenPath, garden, plantNames } = buildObsInfo(obs);
+    const { date, place, gardenPath, garden, plantNames, mapUrl } = buildObsInfo(obs);
     const item = document.createElement('div');
     item.className = 'obs-list-item';
     item.dataset.index = i;
@@ -120,7 +121,8 @@ function renderList(list, startIndex) {
       <div class="obs-list-meta">
         ${plantLinks ? `<div class="obs-list-plants">${plantLinks}</div>` : ''}
         ${place ? `<div class="observation-place">${gardenPath && !obs.place ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
-        ${date  ? `<div class="observation-date">${date}</div>` : ''}
+        ${date   ? `<div class="observation-date">${date}</div>` : ''}
+        ${mapUrl ? `<a class="obs-map-link" href="${mapUrl}" target="_blank" rel="noopener">📍</a>` : ''}
         ${obs.text ? `<div class="obs-list-note">${obs.text}</div>` : ''}
       </div>`;
 
@@ -164,7 +166,7 @@ function renderObs(obs, onReady) {
     onReady?.();
   }
 
-  const { date, place, gardenPath, plantNames } = buildObsInfo(obs);
+  const { date, place, gardenPath, plantNames, mapUrl } = buildObsInfo(obs);
 
   _dialog.querySelector('.obs-modal-date').textContent = date;
   const placeEl = _dialog.querySelector('.obs-modal-place');
@@ -190,4 +192,8 @@ function renderObs(obs, onReady) {
   const noteEl = _dialog.querySelector('.obs-modal-note');
   noteEl.textContent = obs.text ?? '';
   noteEl.hidden = !obs.text;
+
+  const mapEl = _dialog.querySelector('.obs-modal-map');
+  if (mapUrl) { mapEl.href = mapUrl; mapEl.hidden = false; }
+  else mapEl.hidden = true;
 }
