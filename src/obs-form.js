@@ -91,7 +91,8 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
   function makeChip(p, checked, score, suggested) {
     const chip = document.createElement('label');
     chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
-    chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${p.name}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
+    const displayName = p.name_de || p.name;
+    chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${displayName}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
     chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
     return chip;
   }
@@ -107,6 +108,10 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(p => grid.appendChild(makeChip(p, false, null, false)));
   } else if (suggestions.length && !preselected.length) {
+    suggestedSlugs.forEach(slug => {
+      const p = _plantBySlug.get(slug);
+      if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
+    });
     unmatched.forEach(s => {
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -120,10 +125,6 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
         await _addPlantFromPlantNet(s, suggestions, current);
       });
       grid.appendChild(btn);
-    });
-    suggestedSlugs.forEach(slug => {
-      const p = _plantBySlug.get(slug);
-      if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));
     });
   }
 
@@ -196,10 +197,11 @@ async function _identifyPlant(file) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ dataUrl }),
     }).then(r => r.json());
-    const suggestions = (data.results ?? []).map(r => ({
-      name: r.name, score: r.score, family: r.family ?? null,
-      slug: _plantNetToSlug(r.name),
-    }));
+    const seen = new Set();
+    const suggestions = (data.results ?? [])
+      .map(r => ({ name: r.name, score: r.score, family: r.family ?? null, slug: _plantNetToSlug(r.name) }))
+      .filter(s => s.score >= 10)
+      .filter(s => { const key = s.slug ?? s.name; if (seen.has(key)) return false; seen.add(key); return true; });
     const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
     _suggestions = suggestions;
     _buildPlantGrid(preselected, suggestions);
