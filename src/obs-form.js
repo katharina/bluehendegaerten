@@ -388,16 +388,21 @@ async function _uploadToR2(file) {
 
 
 function _geolocateForCamera() {
-  if (!navigator.geolocation) { _showCameraPlaceFallback(); return; }
   const locEl = _dialog.querySelector('#obs-form-location');
-  if (locEl) { locEl.hidden = false; locEl.innerHTML = '<span class="loc-missing">Standort wird ermittelt…</span>'; }
+  const setMsg = msg => { if (locEl) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${msg}</span>`; } };
+  if (!navigator.geolocation) { setMsg('Standort: kein GPS-API'); _showCameraPlaceFallback(); return; }
+  setMsg('Standort wird angefragt…');
   navigator.geolocation.getCurrentPosition(
     pos => {
       _lat = pos.coords.latitude;
       _lon = pos.coords.longitude;
       _renderLocationFound();
     },
-    err => { console.warn('geolocation:', err.code, err.message); _showCameraPlaceFallback(); },
+    err => {
+      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
+      setMsg(`Standort: ${reason}`);
+      console.warn('geolocation error', err.code, err.message);
+    },
     { timeout: 15000, maximumAge: 300000, enableHighAccuracy: false }
   );
 }
