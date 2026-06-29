@@ -526,6 +526,34 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'method not allowed' });
   }
 
+  // ── Forward geocode search (location picker) ─────────────────────────────────
+  if (resource === 'geocode-search') {
+    const q = (req.query?.q ?? '').trim();
+    if (q.length < 2) return res.json([]);
+    try {
+      const r = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&addressdetails=1&limit=5&accept-language=de`,
+        { headers: { 'User-Agent': 'Bluehendegaerten/1.0 (k.birkenbach@gmail.com)' } }
+      );
+      if (!r.ok) return res.json([]);
+      const items = await r.json();
+      const results = items.map(item => {
+        const a = item.address ?? {};
+        const raw = [
+          a.hamlet,
+          a.suburb ?? a.quarter ?? a.neighbourhood ?? a.city_district,
+          a.village, a.town, a.city,
+          a.county ?? a.state_district,
+          a.state, a.country,
+        ].filter(Boolean);
+        const levels = raw.filter((v, i) => i === 0 || v !== raw[i - 1]);
+        const place = levels.length >= 2 ? `${levels[0]}, ${levels[1]}` : (levels[0] ?? null);
+        return place ? { lat: parseFloat(item.lat), lon: parseFloat(item.lon), place, display: item.display_name } : null;
+      }).filter(Boolean);
+      return res.json(results);
+    } catch (e) { return res.json([]); }
+  }
+
   // ── Reverse geocode a lat/lon (client-side preview) ──────────────────────────
   if (resource === 'reverse-geocode') {
     const lat = parseFloat(req.query?.lat ?? req.body?.lat);

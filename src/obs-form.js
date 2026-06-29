@@ -61,10 +61,14 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
-  const locEl = _dialog.querySelector('#obs-form-location');
   if (_lat != null) {
-    _renderLocationFound();
+    _renderLocationFound(_place ?? null);
+  } else if (!_editId) {
+    const last = _loadLastLocation();
+    if (last) { _lat = last.lat; _lon = last.lon; _place = last.place; _renderLocationFound(last.place); }
+    else _showLocationSearch();
   } else {
+    const locEl = _dialog.querySelector('#obs-form-location');
     if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
   }
 
@@ -387,25 +391,78 @@ async function _uploadToR2(file) {
 }
 
 
-function _renderLocationFound() {
+const _GEO_KEY = 'hb_last_location';
+
+function _loadLastLocation() {
+  try { const s = localStorage.getItem(_GEO_KEY); return s ? JSON.parse(s) : null; } catch { return null; }
+}
+
+function _saveLastLocation() {
+  if (_lat == null || !_place) return;
+  try { localStorage.setItem(_GEO_KEY, JSON.stringify({ lat: _lat, lon: _lon, place: _place })); } catch {}
+}
+
+function _showLocationSearch(initialText = '') {
+  const locEl = _dialog.querySelector('#obs-form-location');
+  if (!locEl) return;
+  locEl.hidden = false;
+  locEl.innerHTML = `<input type="text" class="obs-input obs-place-input" id="obs-location-search" placeholder="Ort suchen…" autocomplete="off" spellcheck="false">`;
+  const input = locEl.querySelector('#obs-location-search');
+  input.value = initialText;
+  let dropEl = null;
+  let timer;
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    dropEl?.remove(); dropEl = null;
+    const q = input.value.trim();
+    if (q.length < 2) return;
+    timer = setTimeout(async () => {
+      try {
+        const data = await fetch(`/api/geocode-search?q=${encodeURIComponent(q)}`).then(r => r.json());
+        if (!data.length) return;
+        dropEl = document.createElement('div');
+        dropEl.className = 'location-results';
+        data.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'location-result';
+          row.textContent = item.display;
+          row.addEventListener('mousedown', e => {
+            e.preventDefault();
+            _lat = item.lat; _lon = item.lon; _place = item.place;
+            dropEl?.remove(); dropEl = null;
+            _renderLocationFound(item.place);
+          });
+          dropEl.appendChild(row);
+        });
+        locEl.appendChild(dropEl);
+      } catch {}
+    }, 350);
+  });
+  input.addEventListener('blur', () => setTimeout(() => { dropEl?.remove(); dropEl = null; }, 150));
+}
+
+function _renderLocationFound(knownPlace = null) {
   const el = _dialog.querySelector('#obs-form-location');
-  _place = null;
   if (!el) return;
-  el.innerHTML = `<span class="loc-found">Standort erfasst…</span><button type="button" class="loc-clear">×</button>`;
+  if (knownPlace) _place = knownPlace;
+  else _place = null;
+  el.innerHTML = `<span class="loc-found">${_place || 'Standort erfasst…'}</span><button type="button" class="loc-clear">×</button>`;
   el.querySelector('.loc-clear').addEventListener('click', () => {
     _lat = null; _lon = null; _place = null;
-    el.hidden = true; el.innerHTML = '';
+    _showLocationSearch();
   });
   el.hidden = false;
-  fetch(`/api/reverse-geocode?lat=${_lat}&lon=${_lon}`)
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {
-      if (data?.place) {
-        _place = data.place;
-        const span = el.querySelector('.loc-found');
-        if (span) span.textContent = data.place;
-      }
-    }).catch(() => {});
+  if (!_place) {
+    fetch(`/api/reverse-geocode?lat=${_lat}&lon=${_lon}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.place) {
+          _place = data.place;
+          const span = el.querySelector('.loc-found');
+          if (span) span.textContent = data.place;
+        }
+      }).catch(() => {});
+  }
 }
 
 async function _onFileChange(e) {
@@ -415,9 +472,6 @@ async function _onFileChange(e) {
   const span  = label.querySelector('span');
   span.textContent = file ? file.name : (isCam ? 'Kamera' : 'Hochladen');
   label.classList.toggle('has-file', !!file);
-  _lat = null; _lon = null;
-  const locEl = _dialog.querySelector('#obs-form-location');
-  if (locEl) locEl.hidden = true;
   if (!file) return;
 
   try {
@@ -427,7 +481,7 @@ async function _onFileChange(e) {
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
     if (result?.latitude != null) {
-      _lat = result.latitude; _lon = result.longitude;
+      _lat = result.latitude; _lon = result.longitude; _place = null;
       _renderLocationFound();
     }
   } catch (err) {
@@ -489,6 +543,7 @@ async function _onSubmit() {
       const saved = await res.json();
       const localUrl = file ? URL.createObjectURL(file) : null;
       const _plants = (saved.slugs ?? []).map(s => _plantBySlug.get(s)).filter(Boolean);
+      _saveLastLocation();
       resetBtn();
       _dialog.close();
       document.dispatchEvent(new CustomEvent('obs:saved', { detail: { ...saved, _localUrl: localUrl, _plants } }));
