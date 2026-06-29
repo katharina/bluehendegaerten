@@ -223,8 +223,9 @@ export default async function handler(req, res) {
             });
             if (geo.ok) {
               const { address } = await geo.json();
-              place = address?.suburb ?? address?.quarter ?? address?.neighbourhood
-                   ?? address?.city_district ?? address?.city ?? address?.town ?? address?.village ?? null;
+              const borough = address?.suburb ?? address?.quarter ?? address?.neighbourhood ?? address?.city_district ?? null;
+              const city    = address?.city ?? address?.town ?? address?.village ?? null;
+              place = borough && city ? `${borough}, ${city}` : borough ?? city ?? null;
             }
           } catch {}
         }
