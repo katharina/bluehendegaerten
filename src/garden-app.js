@@ -113,8 +113,9 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   });
 });
 
-renderObsCarousel(gardenObs, gardenMap, plantMap);
-renderHerbarCarousel(gardenObs, gardenMap, plantMap);
+const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
+renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
+renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
 renderBedPlan(document.getElementById('bed-plan'), {
