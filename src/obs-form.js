@@ -188,10 +188,10 @@ function _addPlantSilent(s) {
     const slug  = s.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
     const color = _inferColor(s.name, s.family);
     const garden = _dialog.querySelector('#obs-form-garden').value || null;
-    const res  = await authedFetch('/api/custom-plants', {
+    const res  = await authedFetch('/api/plants', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug, name: s.name, name_de: s.common ?? null, family: s.family ?? null, garden, ...(color && { color }) }),
+      body: JSON.stringify({ slug, name: s.name, name_de: s.common ?? null, family: s.family ?? null, ...(color && { color }) }),
     });
     const body = await res.json();
     const finalSlug = body.slug ?? slug;

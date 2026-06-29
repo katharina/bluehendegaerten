@@ -7,6 +7,7 @@ import { r2 } from '../lib/r2.js';
 import { R2_BUCKET, R2_PUBLIC_URL } from '../lib/config.js';
 
 const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv','color','world_w'];
+const PLANTS_FIELDS = ['name','name_de','family','color','world_w','art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
 async function addSlugsToGarden(gardenId, slugs) {
@@ -322,6 +323,55 @@ export default async function handler(req, res) {
         .limit(100);
       if (error) return res.status(500).json({ error: error.message });
       return res.json(data ?? []);
+    }
+    return res.status(405).json({ error: 'method not allowed' });
+  }
+
+  // ── Plants (unified) ─────────────────────────────────────────────────────────
+  if (resource === 'plants') {
+    if (!id) {
+      if (req.method === 'GET') {
+        const { data, error } = await supabase.from('plants').select('*').order('name');
+        if (error) return res.status(500).json({ error: error.message });
+        return res.json(data ?? []);
+      }
+      if (req.method === 'POST') {
+        if (!await requireUser(req, res)) return;
+        const { slug, name, name_de, family, color } = req.body ?? {};
+        if (!slug || !name) return res.status(400).json({ error: 'slug and name required' });
+        const { data, error } = await supabase.from('plants')
+          .insert({ slug, name, name_de: name_de || null, family: family || null, color: color || null })
+          .select().single();
+        if (error?.code === '23505') return res.status(409).json({ error: 'slug already exists', slug });
+        if (error) return res.status(500).json({ error: error.message });
+        return res.json(data);
+      }
+    } else {
+      if (req.method === 'GET') {
+        const { data, error } = await supabase.from('plants').select('*').eq('slug', id).maybeSingle();
+        if (error) return res.status(500).json({ error: error.message });
+        if (!data) return res.status(404).json({ error: 'not found' });
+        return res.json(data);
+      }
+      if (req.method === 'PATCH') {
+        const user = await requireUser(req, res);
+        if (!user) return;
+        const fields = {};
+        for (const [k, v] of Object.entries(req.body ?? {}))
+          if (PLANTS_FIELDS.includes(k)) fields[k] = v ?? null;
+        if (!Object.keys(fields).length) return res.status(400).json({ error: 'nothing to update' });
+        const { data: current } = await supabase.from('plants').select('*').eq('slug', id).maybeSingle();
+        fields.updated_at = new Date().toISOString();
+        const { error } = await supabase.from('plants').update(fields).eq('slug', id);
+        if (error) return res.status(500).json({ error: error.message });
+        const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
+        const userName = profile?.username || user.email;
+        logEdits(id, user.id, userName,
+          Object.keys(fields).filter(k => PLANTS_FIELDS.includes(k))
+            .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))
+          .catch(e => console.error('[plants PATCH] logEdits threw:', e.message));
+        return res.json({ ok: true });
+      }
     }
     return res.status(405).json({ error: 'method not allowed' });
   }

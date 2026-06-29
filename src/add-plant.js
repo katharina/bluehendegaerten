@@ -44,7 +44,7 @@ export function initAddPlant({ onAdded } = {}) {
     msg.textContent = '';
 
     const slug = toSlug(name);
-    const res = await authedFetch('/api/custom-plants', {
+    const res = await authedFetch('/api/plants', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ slug, name, name_de: nameDe || null, family: family || null, color }),

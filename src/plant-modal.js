@@ -83,15 +83,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   familyInput.value = plant.family ?? '';
   familyInput.readOnly = !_loggedIn;
 
-  fetch(`/api/custom-plants/${plant.slug}`)
-    .then(r => r.ok ? r.json() : null)
-    .then(cp => {
-      if (!cp || _currentPlant?.slug !== plant.slug) return;
-      dialog.querySelector('.plant-modal-name').textContent = cp.name ?? '';
-      dialog.querySelector('.plant-modal-de').textContent = cp.name_de ?? '';
-      familyInput.value = cp.family ?? '';
-    });
-
   const swatch = dialog.querySelector('.plant-color-swatch');
   const picker = dialog.querySelector('.plant-color-picker');
   picker.disabled = !_loggedIn;
@@ -99,7 +90,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   picker.oninput  = () => setColor(picker.value);
   picker.onchange = () => {
     if (!_loggedIn) return;
-    authedFetch(`/api/plant-info/${plant.slug}`, {
+    authedFetch(`/api/plants/${plant.slug}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ color: picker.value }),
@@ -169,11 +160,14 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   bloomBar.innerHTML = infoRows.innerHTML = '';
   dialog.querySelector('.plant-info-save')?.remove();
 
-  fetch(`/api/plant-info/${plant.slug}`)
+  fetch(`/api/plants/${plant.slug}`)
     .then(r => r.ok ? r.json() : null)
     .then(info => {
-      if (!info) return;
+      if (!info || _currentPlant?.slug !== plant.slug) return;
 
+      dialog.querySelector('.plant-modal-name').textContent = info.name ?? '';
+      dialog.querySelector('.plant-modal-de').textContent = info.name_de ?? '';
+      familyInput.value = info.family ?? '';
       if (info.color) setColor(info.color);
 
       const blooms = JSON.parse(info.bloom_months ?? '[]');
@@ -210,7 +204,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         saveBtn.className = 'action-btn plant-info-save';
         saveBtn.textContent = 'Speichern';
         saveBtn.addEventListener('click', async () => {
-          const fields = {};
+          const fields = { family: familyInput.value.trim() || null };
           infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
             fields[inp.dataset.field] = inp.value.trim() || null;
           });
@@ -219,7 +213,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           );
           saveBtn.disabled = true;
           saveBtn.textContent = '…';
-          const r = await authedFetch(`/api/plant-info/${plant.slug}`, {
+          const r = await authedFetch(`/api/plants/${plant.slug}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(fields),
