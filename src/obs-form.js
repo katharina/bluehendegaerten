@@ -61,14 +61,14 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
+  const locEl = _dialog.querySelector('#obs-form-location');
   if (_lat != null) {
     _renderLocationFound(_place ?? null);
-  } else if (!_editId) {
-    const last = _loadLastLocation();
-    if (last) { _lat = last.lat; _lon = last.lon; _place = last.place; _renderLocationFound(last.place); }
-    else _showLocationSearch();
   } else {
-    const locEl = _dialog.querySelector('#obs-form-location');
+    if (!_editId) {
+      const last = _loadLastLocation();
+      if (last) { _lat = last.lat; _lon = last.lon; _place = last.place; }
+    }
     if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
   }
 
@@ -446,7 +446,7 @@ function _renderLocationFound(knownPlace = null) {
   if (!el) return;
   if (knownPlace) _place = knownPlace;
   else _place = null;
-  el.innerHTML = `<span class="loc-found">${_place || 'Standort erfasst…'}</span><button type="button" class="loc-clear">×</button>`;
+  el.innerHTML = `<span class="loc-pill"><span class="loc-found">${_place || '…'}</span><button type="button" class="loc-clear">×</button></span>`;
   el.querySelector('.loc-clear').addEventListener('click', () => {
     _lat = null; _lon = null; _place = null;
     _showLocationSearch();
@@ -483,9 +483,15 @@ async function _onFileChange(e) {
     if (result?.latitude != null) {
       _lat = result.latitude; _lon = result.longitude; _place = null;
       _renderLocationFound();
+    } else if (_lat != null) {
+      _renderLocationFound(_place ?? null);
+    } else {
+      _showLocationSearch();
     }
   } catch (err) {
     console.warn('exifr:', err);
+    if (_lat != null) _renderLocationFound(_place ?? null);
+    else _showLocationSearch();
   }
   _identifyPlant(file);
 }

@@ -590,6 +590,15 @@ dialog#add-plant-dialog::backdrop {
 .location-result:last-child { border-bottom: none; }
 .location-result:hover, .location-result:active { background: #f5f5f5; }
 
+.loc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hb-space-100);
+  background: var(--hb-black-100, #f0f0f0);
+  border-radius: 20px;
+  padding: var(--hb-space-100) var(--hb-space-200) var(--hb-space-100) var(--hb-space-300);
+}
+
 .loc-found {
   color: #333;
 }
