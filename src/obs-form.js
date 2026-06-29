@@ -5,6 +5,7 @@ let _defaultGardenId = null;
 let _editId = null;
 let _lat = null, _lon = null, _place = null;
 let _geoLat = null, _geoLon = null, _geoPending = false;
+let _geoPermission = null; // null = unknown, 'granted', 'prompt', 'denied'
 let _suggestions = [];
 let _currentPlantSlug = null;
 let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
@@ -37,6 +38,11 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
 
   supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
   supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
+
+  navigator.permissions?.query({ name: 'geolocation' }).then(result => {
+    _geoPermission = result.state;
+    result.addEventListener('change', () => { _geoPermission = result.state; });
+  }).catch(() => {});
 
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _close(); });
   _dialog.querySelector('#obs-form-close').addEventListener('click', _close);
@@ -390,9 +396,30 @@ async function _uploadToR2(file) {
 }
 
 
+function _startGeo() {
+  _geoPending = true;
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      _geoPending = false;
+      _geoLat = pos.coords.latitude; _geoLon = pos.coords.longitude;
+      if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
+    },
+    () => {
+      _geoPending = false;
+      const locEl = _dialog?.querySelector('#obs-form-location');
+      if (locEl && _lat == null) { locEl.hidden = true; locEl.innerHTML = ''; }
+    },
+    { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
+  );
+}
+
 function _onCameraLabelClick(e) {
   if (!navigator.geolocation) return;
   if (_geoLat != null || _geoPending) return; // already have geo — let camera open normally
+  if (_geoPermission === 'denied') return;    // no geo possible — let camera open normally
+  if (_geoPermission === 'granted') { _startGeo(); return; } // silent, no overlay needed
+
+  // permission is 'prompt' or unknown — show consent overlay
   e.preventDefault();
   const cameraInput = _dialog.querySelector('#obs-form-camera');
   const locEl = _dialog.querySelector('#obs-form-location');
@@ -403,20 +430,8 @@ function _onCameraLabelClick(e) {
     + '<button type="button" class="loc-clear" id="geo-skip-btn">Überspringen</button>';
 
   locEl.querySelector('#geo-allow-btn').addEventListener('click', () => {
-    _geoPending = true;
     locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>';
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        _geoPending = false;
-        _geoLat = pos.coords.latitude; _geoLon = pos.coords.longitude;
-        if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
-      },
-      () => {
-        _geoPending = false;
-        if (_lat == null) { locEl.hidden = true; locEl.innerHTML = ''; }
-      },
-      { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
-    );
+    _startGeo();
     cameraInput.click(); // direct gesture context — iOS allows this
   });
 
