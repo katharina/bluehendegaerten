@@ -6,6 +6,7 @@ let _editId = null;
 let _lat = null, _lon = null;
 let _suggestions = [];
 let _currentPlantSlug = null;
+let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
 let _loggedIn = false;
 let _recentSlugs = [];
 
@@ -56,6 +57,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _lat    = editObs?.lat ?? null;
   _lon    = editObs?.lon ?? null;
   _suggestions = editObs?.plantnet_suggestions ? JSON.parse(editObs.plantnet_suggestions) : [];
+  _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
@@ -180,52 +182,79 @@ function makeChip(p, checked, score, suggested) {
   return chip;
 }
 
+function _addPlantSilent(s) {
+  if (_pendingAdds.has(s.name)) return _pendingAdds.get(s.name);
+  const p = (async () => {
+    const slug  = s.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    const color = _inferColor(s.name, s.family);
+    const garden = _dialog.querySelector('#obs-form-garden').value || null;
+    const res  = await authedFetch('/api/custom-plants', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, name: s.name, name_de: s.common ?? null, family: s.family ?? null, garden, ...(color && { color }) }),
+    });
+    const body = await res.json();
+    const finalSlug = body.slug ?? slug;
+    _plantBySlug.set(finalSlug, { slug: finalSlug, name: s.name, name_de: s.common ?? null, family: s.family ?? null, ...(color && { color }) });
+    _plantByScientific.set(s.name.toLowerCase(), finalSlug);
+    const genus = s.name.split(' ')[0].toLowerCase();
+    if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
+    return finalSlug;
+  })();
+  _pendingAdds.set(s.name, p);
+  return p;
+}
+
+function _makeUnmatchedChip(s, autoCheck) {
+  const chip = document.createElement('label');
+  chip.className = 'obs-plant-chip pn-new-plant' + (autoCheck ? ' checked' : '');
+  chip.innerHTML = `
+    <input type="checkbox" value=""${autoCheck ? ' checked' : ''}>
+    <span class="chip-dot"></span>
+    <em class="chip-botanical">${s.name}</em>
+    ${s.common ? `<span class="chip-de">${s.common}</span>` : ''}
+    <span class="pn-score">${s.score}%</span>
+    <span class="chip-new">neu</span>
+    <button type="button" class="chip-remove">×</button>`;
+  const checkbox = chip.querySelector('input');
+  chip.querySelector('input').addEventListener('change', async e => {
+    chip.classList.toggle('checked', e.target.checked);
+    if (e.target.checked) {
+      const slug = await _addPlantSilent(s);
+      checkbox.value = slug;
+    }
+  });
+  chip.querySelector('.chip-remove').addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    chip.remove();
+  });
+  if (autoCheck) _addPlantSilent(s).then(slug => { checkbox.value = slug; });
+  return chip;
+}
+
 function _buildIdentifiedSection(suggestions) {
   const section = _dialog.querySelector('#obs-form-identified');
   section.innerHTML = '';
-  const matched   = suggestions.filter(s => s.slug);
-  const unmatched = suggestions.filter(s => !s.slug);
-  if (!matched.length && !unmatched.length) { section.hidden = true; return; }
+  if (!suggestions.length) { section.hidden = true; return; }
 
-  if (matched.length) {
-    const hdr = document.createElement('div');
-    hdr.className = 'obs-plant-grid-header';
-    hdr.textContent = 'Identifizierte Pflanzen';
-    section.appendChild(hdr);
-    matched.forEach(s => {
+  const hdr = document.createElement('div');
+  hdr.className = 'obs-plant-grid-header';
+  hdr.textContent = 'Identifizierte Pflanzen';
+  section.appendChild(hdr);
+
+  // Best suggestion overall (index 0, highest score)
+  const bestIsUnmatched = !suggestions[0].slug;
+
+  suggestions.forEach((s, i) => {
+    const autoCheck = i === 0;
+    if (s.slug) {
       const p = _plantBySlug.get(s.slug);
-      if (p) section.appendChild(makeChip({ ...p, name_de: p.name_de || s.common || null }, true, s.score, true));
-    });
-  }
-  if (unmatched.length) {
-    const hdr2 = document.createElement('div');
-    hdr2.className = 'obs-plant-grid-header';
-    hdr2.textContent = 'Neu identifiziert';
-    section.appendChild(hdr2);
-    unmatched.forEach(s => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'obs-plant-chip pn-new-plant';
-      btn.innerHTML = `
-        <span class="chip-dot"></span>
-        <em class="chip-botanical">${s.name}</em>
-        ${s.common ? `<span class="chip-de">${s.common}</span>` : ''}
-        <span class="pn-score">${s.score}%</span>
-        <span class="chip-new">neu</span>`;
-      btn.title = 'Als neue Pflanze hinzufügen';
-      btn.addEventListener('click', async () => {
-        btn.disabled = true;
-        btn.textContent = 'Wird hinzugefügt…';
-        const grid = _dialog.querySelector('#obs-form-plant-grid');
-        const current = [
-          ...[...section.querySelectorAll('input:checked')].map(i => i.value),
-          ...[...grid.querySelectorAll('input:checked')].map(i => i.value),
-        ];
-        await _addPlantFromPlantNet(s, suggestions, current);
-      });
-      section.appendChild(btn);
-    });
-  }
+      if (p) section.appendChild(makeChip({ ...p, name_de: p.name_de || s.common || null }, autoCheck, s.score, true));
+    } else {
+      section.appendChild(_makeUnmatchedChip(s, autoCheck));
+    }
+  });
+
   section.hidden = false;
 }
 
@@ -282,29 +311,6 @@ function _buildPlantGrid(preselected = [], suggestions = []) {
   });
 }
 
-async function _addPlantFromPlantNet(suggestion, allSuggestions, currentPreselected) {
-  const slug  = suggestion.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-  const color = _inferColor(suggestion.name, suggestion.family);
-  const garden = _dialog.querySelector('#obs-form-garden').value || null;
-  try {
-    const res  = await authedFetch('/api/custom-plants', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, garden, ...(color && { color }) }),
-    });
-    const body = await res.json();
-    if (!res.ok && body.error !== 'slug already exists') { alert(body.error); return; }
-    const finalSlug = body.slug ?? slug;
-    _plantBySlug.set(finalSlug, { slug: finalSlug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, ...(color && { color }) });
-    _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);
-    const genus = suggestion.name.split(' ')[0].toLowerCase();
-    if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
-    const updated = allSuggestions.map(s => s.name === suggestion.name ? { ...s, slug: finalSlug } : s);
-    _suggestions = updated;
-    _buildIdentifiedSection(updated);
-    _buildPlantGrid([...currentPreselected, finalSlug], updated);
-  } catch (e) { alert('Fehler: ' + e.message); }
-}
 
 async function _resizeToDataUrl(file, maxPx = 800) {
   return new Promise(resolve => {
@@ -404,6 +410,8 @@ async function _onSubmit() {
   msg.textContent = '';
   btn.disabled = true;
   btn.textContent = '…';
+
+  await Promise.allSettled([..._pendingAdds.values()]);
 
   const slugs = [
     ..._dialog.querySelectorAll('#obs-form-identified input:checked'),
