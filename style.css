@@ -126,6 +126,10 @@ h1 {
   font-size: var(--hb-font-size-10);
 }
 
+@media (max-width: 640px) {
+  h1 { font-size: var(--hb-font-size-08); }
+}
+
 .page-header {
   margin: var(--hb-space-900) var(--page-pad) var(--hb-space-800) var(--page-pad);
   padding: var(--hb-space-300) 0 0 0;
