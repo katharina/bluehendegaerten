@@ -168,10 +168,6 @@ function setSelectedSlug(slug) {
   document.querySelectorAll('.plant-card').forEach(c => {
     c.classList.toggle('is-selected', c.dataset.slug === slug);
   });
-  const hint = document.getElementById('bed-edit-hint');
-  hint.textContent = slug
-    ? `${allPlants.find(p => p.slug === slug)?.name ?? slug} — ins Beet klicken zum Setzen, nochmals klicken zum Entfernen`
-    : 'Pflanze auswählen, dann ins Beet klicken';
   rerenderBedPlan();
 }
 
@@ -229,10 +225,10 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   document.getElementById('version-copy-btn').addEventListener('click', () => {
     const store = getStore();
     const current = getActiveVersion();
-    const n = store.versions.length + 1;
+    const date = new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'numeric', year: 'numeric' });
     const newVer = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
-      name: `Version ${n}`,
+      name: `Kopie ${date}`,
       placements: JSON.parse(JSON.stringify(current.placements ?? [])),
     };
     store.versions.push(newVer);
@@ -240,15 +236,6 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     savePlan();
     renderVersionSelect();
     rerenderBedPlan();
-  });
-
-  document.getElementById('version-rename-btn').addEventListener('click', () => {
-    const ver = getActiveVersion();
-    const name = prompt('Version umbenennen:', ver.name ?? 'Version');
-    if (name === null) return;
-    ver.name = name.trim() || ver.name;
-    savePlan();
-    renderVersionSelect();
   });
 
   document.getElementById('bed-config-btn').addEventListener('click', () => {
@@ -273,11 +260,9 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     editBtn.textContent = editMode ? 'Fertig' : 'Bearbeiten';
     editBtn.classList.toggle('is-active', editMode);
     versionBar.hidden = !editMode;
-    const hint = document.getElementById('bed-edit-hint');
-    hint.hidden = !editMode;
+    document.getElementById('bed-config-btn').hidden = !editMode;
     if (editMode) {
       renderVersionSelect();
-      hint.textContent = 'Pflanze auswählen, dann ins Beet klicken';
     } else {
       selectedSlug = null;
       document.querySelectorAll('.plant-card.is-selected').forEach(c => c.classList.remove('is-selected'));
