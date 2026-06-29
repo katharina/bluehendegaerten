@@ -12,7 +12,7 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   card.className = 'carousel-card';
   if (o.id) card.dataset.obsId = o.id;
   const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
-  const place = o.place || gardenMap.get(o.garden) || '';
+  const place = gardenMap.get(o.garden) || o.place || '';
   card.innerHTML = `
     <div class="carousel-card-img">
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
