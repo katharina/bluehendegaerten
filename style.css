@@ -24,12 +24,14 @@ body {
 /* ── Chapeau + hamburger ───────────────────────────────────────────────────── */
 
 .chapeau {
-  display: block;
+  display: flex;
+  align-items: center;
   font-family: var(--font-serif);
   font-size: var(--hb-font-size-01);
   color: #000;
   text-decoration: none;
-  margin-bottom: var(--hb-space-100);
+  margin: var(--hb-space-800) var(--page-pad) var(--hb-space-500) var(--page-pad);
+  padding: var(--hb-space-500) 0 0 0;
 }
 
 .hamburger {
@@ -125,11 +127,15 @@ h1 {
 }
 
 .page-header {
-  margin: var(--hb-space-800) var(--page-pad) var(--hb-space-100) var(--page-pad);
-  padding: var(--hb-space-300) 0 0 0;
+  margin: var(--hb-space-900) var(--page-pad) var(--hb-space-800) var(--page-pad);
+  padding: 0;
 }
 
-.section-header {
+.page-header.chapeau {
+  margin-top: 0;
+  }
+
+  .section-header {
   margin: var(--hb-space-800) var(--page-pad) var(--hb-space-500) var(--page-pad);
   padding: var(--hb-space-500) 0 0 0;
   border-top: 1px solid var(--hb-black-1000);
