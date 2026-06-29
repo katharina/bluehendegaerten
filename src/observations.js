@@ -59,10 +59,6 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
   }
   let offset = 0;
 
-  const allCard = document.createElement('div');
-  allCard.className = 'carousel-card carousel-card--all';
-  allCard.textContent = 'Alle';
-
   const sentinel = document.createElement('div');
   carousel.appendChild(sentinel);
 
@@ -71,7 +67,7 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
     batch.forEach(o => sentinel.before(buildObsCard(o, gardenMap, plantMap, items)));
     offset += batch.length;
     if (offset >= items.length) {
-      sentinel.replaceWith(allCard);
+      sentinel.remove();
       observer.disconnect();
     }
   }

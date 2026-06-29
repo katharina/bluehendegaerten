@@ -1423,7 +1423,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .bed-plan-svg .bed-number {
   font-family: var(--font-mono);
-  font-size: 0.22px;
   font-weight: 700;
   fill: #000;
 }
@@ -1435,6 +1434,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 #bed-plan.is-editable .bed-plan-svg circle[data-slug] {
   cursor: pointer;
 }
+
 
 .bed-version-bar {
   display: flex;

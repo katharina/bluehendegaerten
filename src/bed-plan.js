@@ -49,13 +49,19 @@ export function renderBedPlan(container, {
   const vbW = bedL + PAD * 2;
   const vbH = totalZ + PAD * 2;
 
+  // Scale strokes and text proportionally so they look the same regardless of bed size
+  const strokeW  = (vbW * 0.001).toFixed(4);
+  const fontSize = (vbW * 0.022).toFixed(4);
+  const numOffX  = vbW * 0.01;
+  const numOffY  = vbW * 0.028;
+
   let svg = `<svg class="bed-plan-svg" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
 
   // Background layer: bed rectangles + images
   for (const bed of beds) {
     const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<rect x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" fill="none" stroke="#000" stroke-width="0.01"/>`;
+    svg += `<rect x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" fill="none" stroke="#000" stroke-width="${strokeW}"/>`;
     if (bedImages[bed.i]) {
       svg += `<image href="${fullUrl(bedImages[bed.i])}" x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
     }
@@ -68,7 +74,7 @@ export function renderBedPlan(container, {
     const color = colorBySlug[p.slug] ?? '#ccc';
     const isSelected = editMode && p.slug === selectedSlug;
     svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r}" fill="${color}" opacity="0.85"` +
-      ` stroke="${isSelected ? '#000' : 'none'}" stroke-width="0.05"` +
+      ` stroke="${isSelected ? '#000' : 'none'}" stroke-width="${(vbW * 0.005).toFixed(4)}"` +
       ` data-slug="${p.slug}" data-id="${p.id ?? ''}"` +
       ` data-name="${(plant?.name ?? '').replace(/"/g, '&quot;')}" data-de="${(plant?.name_de ?? '').replace(/"/g, '&quot;')}"/>`;
   }
@@ -77,11 +83,14 @@ export function renderBedPlan(container, {
   for (const bed of beds) {
     const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<text class="bed-number" x="${x0 + 0.1}" y="${z0 + 0.28}">${bed.i + 1}</text>`;
+    if (beds.length > 1) {
+      svg += `<text class="bed-number" font-size="${fontSize}" x="${x0 + numOffX}" y="${z0 + numOffY}">${bed.i + 1}</text>`;
+    }
     if (editMode) {
-      const btnW = 0.6, btnH = 0.26, btnX = x0 + bedL - btnW - 0.1, btnY = z0 + 0.08;
-      svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#444' : '#888'}" opacity="0.75" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
-      svg += `<text x="${btnX + btnW / 2}" y="${btnY + 0.175}" font-size="0.155" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '✎ Bild' : '+ Bild'}</text>`;
+      const btnW = vbW * 0.062, btnH = vbW * 0.027;
+      const btnX = x0 + bedL - btnW - vbW * 0.01, btnY = z0 + vbW * 0.008;
+      svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="${vbW * 0.006}" fill="${bedImages[bed.i] ? '#444' : '#888'}" opacity="0.75" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
+      svg += `<text x="${btnX + btnW / 2}" y="${btnY + btnH * 0.7}" font-size="${(vbW * 0.016).toFixed(4)}" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '✎ Bild' : '+ Bild'}</text>`;
     }
   }
 

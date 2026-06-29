@@ -45,6 +45,10 @@ const plantMap  = new Map(plants.map(p => [p.slug, p.name]));
 renderGardenList(gardens);
 renderObsCarousel(observations, gardenMap, plantMap);
 renderPlantList(plants);
+
+const obsWithImg = observations.filter(o => o.filename).length;
+document.getElementById('obs-count').textContent = obsWithImg;
+document.getElementById('plant-count').textContent = plants.length;
 initPlantModal({ gardens, observations });
 initObsModal({ gardens, plants });
 initObsForm({ gardens, plants, observations });
