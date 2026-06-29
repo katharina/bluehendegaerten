@@ -206,7 +206,12 @@ function _buildIdentifiedSection(suggestions) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'obs-plant-chip pn-new-plant';
-      btn.innerHTML = `+ <em>${s.name}</em>${s.common ? `<span class="chip-de">${s.common}</span>` : ''}<span class="pn-score">${s.score}%</span>`;
+      btn.innerHTML = `
+        <span class="chip-dot"></span>
+        <em class="chip-botanical">${s.name}</em>
+        ${s.common ? `<span class="chip-de">${s.common}</span>` : ''}
+        <span class="pn-score">${s.score}%</span>
+        <span class="chip-new">neu</span>`;
       btn.title = 'Als neue Pflanze hinzufügen';
       btn.addEventListener('click', async () => {
         btn.disabled = true;

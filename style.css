@@ -575,8 +575,18 @@ dialog#obs-form-dialog::backdrop {
 .obs-plant-chip.pn-identifying { opacity: 0.35; font-style: italic; }
 
 .obs-plant-chip.pn-new-plant {
-  opacity: 0.5;
-  font-style: italic;
+  opacity: 1;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.chip-new {
+  margin-left: auto;
+  font-size: var(--hb-font-size-00);
+  font-family: var(--font-mono);
+  opacity: 0.4;
+  letter-spacing: 0.05em;
 }
 
 .pn-score {
