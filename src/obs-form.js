@@ -390,14 +390,10 @@ async function _onFileChange(e) {
   try {
     const mod = await import('exifr');
     const parse = mod.parse ?? mod.default?.parse ?? mod.default;
-    const gps_fn = mod.gps ?? mod.default?.gps;
-    const [meta, gps] = await Promise.all([
-      parse(file, ['DateTimeOriginal']),
-      gps_fn?.(file),
-    ]);
-    if (meta?.DateTimeOriginal)
-      _dialog.querySelector('#obs-form-date').value = meta.DateTimeOriginal.toISOString().slice(0, 10);
-    if (gps?.latitude != null) { _lat = gps.latitude; _lon = gps.longitude; }
+    const result = await parse(file, { gps: true, tiff: true, exif: true });
+    if (result?.DateTimeOriginal)
+      _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+    if (result?.latitude != null) { _lat = result.latitude; _lon = result.longitude; }
   } catch (err) { console.warn('exifr:', err); }
   _identifyPlant(file);
 }
