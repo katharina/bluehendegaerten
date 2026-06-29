@@ -37,6 +37,18 @@ The same principle applies to `.observation-place`, `.observation-date`, and any
 - `style.css` — all component and layout styles
 - `index.html` — structure only, no inline styles
 
+## Rules — check before every commit
+
+### Display rules
+
+- **Garden obs always show garden name.** If `obs.garden` is set, display the garden name — never `obs.place`, never a geocoded string. Everywhere: obs cards, modal, list view, edit form. Pattern: `gardenMap.get(obs.garden) || obs.place || ''`. Garden wins. No exceptions.
+
+### HTML rules
+
+- HTML must be lean and structural — no presentational markup, no redundant wrappers.
+- Class names must be semantic and reusable: they describe what something *is* (`.observation-place`, `.loc-pill`), not where it sits or what it looks like right now.
+- Every class should be defined once in `style.css` and reused across contexts. Never create a class for a single one-off use — find or extend an existing one.
+
 ## TODOs
 
 - **Plant changelog not showing**: `plant_edits` table inserts appear to fail silently. Server logs `[logEdits]` errors but root cause (table schema mismatch?) unresolved. `GET /api/plant-edits/:slug` returns `[]`. Investigate Supabase `plant_edits` table columns.
