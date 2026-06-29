@@ -585,8 +585,8 @@ dialog#add-plant-dialog::backdrop {
 
 .loc-clear:hover { color: #333; }
 
-.obs-loc-input {
-  width: 8rem;
+.obs-place-input {
+  flex: 1;
   font-size: var(--hb-font-size-01);
 }
 

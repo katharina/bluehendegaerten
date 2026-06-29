@@ -61,10 +61,10 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _currentPlantSlug = plantSlug;
 
   if (_lat != null) {
-    _renderLocationPreview({ lat: _lat, lon: _lon }, true);
+    _renderLocationFound();
   } else {
     const locEl = _dialog.querySelector('#obs-form-location');
-    if (locEl) locEl.hidden = true;
+    if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
   }
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
@@ -387,40 +387,39 @@ async function _uploadToR2(file) {
 
 
 function _geolocateForCamera() {
-  if (!navigator.geolocation) { _renderLocationPreview(null, false); return; }
+  if (!navigator.geolocation) { _showCameraPlaceFallback(); return; }
   const locEl = _dialog.querySelector('#obs-form-location');
   if (locEl) { locEl.hidden = false; locEl.innerHTML = '<span class="loc-missing">Standort wird ermittelt…</span>'; }
   navigator.geolocation.getCurrentPosition(
     pos => {
       _lat = pos.coords.latitude;
       _lon = pos.coords.longitude;
-      _renderLocationPreview({ lat: _lat, lon: _lon }, false);
+      _renderLocationFound();
     },
-    () => { _renderLocationPreview(null, false); },
+    () => _showCameraPlaceFallback(),
     { timeout: 10000, maximumAge: 60000 }
   );
 }
 
-function _renderLocationPreview(coords, fromExif) {
+function _renderLocationFound() {
   const el = _dialog.querySelector('#obs-form-location');
   if (!el) return;
-  el.innerHTML = '';
-  if (coords) {
-    el.innerHTML = `
-      <span class="loc-found">${coords.lat.toFixed(5)}, ${coords.lon.toFixed(5)}</span>
-      <button type="button" class="loc-clear">entfernen</button>`;
-    el.querySelector('.loc-clear').addEventListener('click', () => {
-      _lat = null; _lon = null;
-      _renderLocationPreview(null, false);
-    });
-    el.hidden = false;
-  } else {
-    el.innerHTML = `
-      <span class="loc-missing">Kein Standort gefunden —</span>
-      <input id="obs-form-lat" class="obs-input obs-loc-input" type="number" step="any" placeholder="Breite">
-      <input id="obs-form-lon" class="obs-input obs-loc-input" type="number" step="any" placeholder="Länge">`;
-    el.hidden = false;
-  }
+  el.innerHTML = `
+    <span class="loc-found">Standort erfasst</span>
+    <button type="button" class="loc-clear">×</button>`;
+  el.querySelector('.loc-clear').addEventListener('click', () => {
+    _lat = null; _lon = null;
+    el.hidden = true;
+    el.innerHTML = '';
+  });
+  el.hidden = false;
+}
+
+function _showCameraPlaceFallback() {
+  const el = _dialog.querySelector('#obs-form-location');
+  if (!el) return;
+  el.innerHTML = `<input id="obs-form-place" class="obs-input obs-place-input" type="text" placeholder="Ort eingeben…">`;
+  el.hidden = false;
 }
 
 async function _onFileChange(e) {
@@ -443,16 +442,13 @@ async function _onFileChange(e) {
     if (result?.latitude != null) {
       _lat = result.latitude;
       _lon = result.longitude;
-      _renderLocationPreview({ lat: _lat, lon: _lon }, true);
+      _renderLocationFound();
     } else if (isCam) {
       _geolocateForCamera();
-    } else {
-      _renderLocationPreview(null, false);
     }
   } catch (err) {
     console.warn('exifr:', err);
     if (isCam) _geolocateForCamera();
-    else _renderLocationPreview(null, false);
   }
   _identifyPlant(file);
 }
@@ -479,14 +475,7 @@ async function _onSubmit() {
   try {
     if (file) filename = await _uploadToR2(file);
 
-    let lat = _lat, lon = _lon;
-    if (lat == null) {
-      const latInput = _dialog.querySelector('#obs-form-lat');
-      const lonInput = _dialog.querySelector('#obs-form-lon');
-      const lv = parseFloat(latInput?.value);
-      const lnv = parseFloat(lonInput?.value);
-      if (!isNaN(lv) && !isNaN(lnv)) { lat = lv; lon = lnv; }
-    }
+    const manualPlace = _dialog.querySelector('#obs-form-place')?.value.trim() || null;
 
     const body = {
       date:   _dialog.querySelector('#obs-form-date').value || null,
@@ -494,7 +483,8 @@ async function _onSubmit() {
       garden: _dialog.querySelector('#obs-form-garden').value || null,
       text:   _dialog.querySelector('#obs-form-text').value || null,
       slugs,
-      ...(lat != null && { lat, lon }),
+      ...(_lat != null && { lat: _lat, lon: _lon }),
+      ...(manualPlace  && { place: manualPlace }),
       ...(filename     && { filename }),
     };
 

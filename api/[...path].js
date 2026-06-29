@@ -527,27 +527,13 @@ export default async function handler(req, res) {
   if (resource === 'geocode-missing') {
     if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
     if (!await requireUser(req, res)) return;
-    // Priority 1: obs with lat/lon but no place at all
-    const { data: missing, error: e1 } = await supabase
+    const { data: rows, error: e1 } = await supabase
       .from('observations')
       .select('id, lat, lon')
       .not('lat', 'is', null)
-      .is('place', null)
+      .lt('created_at', new Date().toISOString())
       .limit(40);
     if (e1) return res.status(500).json({ error: e1.message });
-
-    // Priority 2: obs older than today that have a place (old single-level format)
-    const today = new Date().toISOString().slice(0, 10);
-    const { data: stale, error: e2 } = await supabase
-      .from('observations')
-      .select('id, lat, lon')
-      .not('lat', 'is', null)
-      .not('place', 'is', null)
-      .lt('created_at', today)
-      .limit(40 - (missing?.length ?? 0));
-    if (e2) return res.status(500).json({ error: e2.message });
-
-    const rows = [...(missing ?? []), ...(stale ?? [])];
     let updated = 0;
     for (const row of rows) {
       const place = await reverseGeocode(row.lat, row.lon);
