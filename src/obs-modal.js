@@ -137,13 +137,13 @@ function renderList(list, startIndex) {
     item.addEventListener('click', e => e.stopPropagation());
     listEl.appendChild(item);
 
-    if (obs.lat != null) {
+    if (obs.lat != null && !obs.place) {
       fetch('/api/geocode-obs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: obs.id, lat: obs.lat, lon: obs.lon }),
       }).then(r => r.json()).then(({ place: p }) => {
-        if (p && p !== obs.place) {
+        if (p) {
           obs.place = p;
           const placeEl = item.querySelector('.observation-place');
           if (placeEl) {
@@ -198,13 +198,13 @@ function renderObs(obs, onReady) {
     placeEl.textContent = place;
   }
 
-  if (obs.lat != null) {
+  if (obs.lat != null && !obs.place) {
     fetch('/api/geocode-obs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: obs.id, lat: obs.lat, lon: obs.lon }),
     }).then(r => r.json()).then(({ place: p }) => {
-      if (p && p !== obs.place) {
+      if (p) {
         obs.place = p;
         if (!gardenPath) placeEl.textContent = p;
       }
