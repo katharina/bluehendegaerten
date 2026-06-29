@@ -396,8 +396,8 @@ function _geolocateForCamera() {
       _lon = pos.coords.longitude;
       _renderLocationFound();
     },
-    () => _showCameraPlaceFallback(),
-    { timeout: 10000, maximumAge: 60000 }
+    err => { console.warn('geolocation:', err.code, err.message); _showCameraPlaceFallback(); },
+    { timeout: 15000, maximumAge: 300000, enableHighAccuracy: false }
   );
 }
 
@@ -433,22 +433,25 @@ async function _onFileChange(e) {
   const locEl = _dialog.querySelector('#obs-form-location');
   if (locEl) locEl.hidden = true;
   if (!file) return;
+
+  // For camera captures start geolocation immediately in parallel — iOS strips GPS from EXIF
+  if (isCam) _geolocateForCamera();
+
   try {
     const mod = await import('exifr');
     const parse = mod.parse ?? mod.default?.parse ?? mod.default;
-    const result = await parse(file, { gps: true, tiff: true, exif: true });
+    // parse(file, true) reads all segments including HEIC containers
+    const result = await parse(file, true);
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
+    // EXIF GPS wins over geolocation if present
     if (result?.latitude != null) {
       _lat = result.latitude;
       _lon = result.longitude;
       _renderLocationFound();
-    } else if (isCam) {
-      _geolocateForCamera();
     }
   } catch (err) {
     console.warn('exifr:', err);
-    if (isCam) _geolocateForCamera();
   }
   _identifyPlant(file);
 }
