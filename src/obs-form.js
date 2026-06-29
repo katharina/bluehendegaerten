@@ -396,19 +396,32 @@ async function _uploadToR2(file) {
 
 function _startGeo() {
   _geoPending = true;
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      _geoPending = false;
-      _geoLat = pos.coords.latitude; _geoLon = pos.coords.longitude;
-      if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
-    },
-    err => {
-      _geoPending = false;
-      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
+  let done = false;
+
+  const finish = (lat, lon, errMsg) => {
+    if (done) return;
+    done = true;
+    _geoPending = false;
+    if (lat != null) {
+      _geoLat = lat; _geoLon = lon;
+      if (_lat == null) { _lat = lat; _lon = lon; _renderLocationFound(); }
+    } else {
       const locEl = _dialog?.querySelector('#obs-form-location');
-      if (locEl && _lat == null) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${reason}</span>`; }
+      if (locEl && _lat == null) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${errMsg}</span>`; }
+    }
+  };
+
+  // JS-level fallback — browser timeout option is unreliable on Chrome iOS
+  const fallback = setTimeout(() => finish(null, null, 'Timeout'), 12000);
+
+  navigator.geolocation.getCurrentPosition(
+    pos => { clearTimeout(fallback); finish(pos.coords.latitude, pos.coords.longitude, null); },
+    err => {
+      clearTimeout(fallback);
+      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
+      finish(null, null, reason);
     },
-    { timeout: 20000, maximumAge: 0, enableHighAccuracy: false }
+    { enableHighAccuracy: false }
   );
 }
 
