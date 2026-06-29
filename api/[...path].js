@@ -215,9 +215,22 @@ export default async function handler(req, res) {
         const { date, type = 'foto', text, filename, lat, lon, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
+        let place = null;
+        if (lat != null && !garden) {
+          try {
+            const geo = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`, {
+              headers: { 'User-Agent': 'Bluehendegaerten/1.0 (k.birkenbach@gmail.com)' },
+            });
+            if (geo.ok) {
+              const { address } = await geo.json();
+              place = address?.suburb ?? address?.quarter ?? address?.neighbourhood
+                   ?? address?.city_district ?? address?.city ?? address?.town ?? address?.village ?? null;
+            }
+          } catch {}
+        }
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)
