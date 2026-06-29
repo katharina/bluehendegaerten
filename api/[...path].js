@@ -532,7 +532,6 @@ export default async function handler(req, res) {
   // ── Geocode missing places ────────────────────────────────────────────────────
   if (resource === 'geocode-missing') {
     if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
-    if (!await requireUser(req, res)) return;
     const { data: rows, error: e1 } = await supabase
       .from('observations')
       .select('id, lat, lon')
