@@ -15,12 +15,15 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   card.innerHTML = `
     <div class="carousel-card-img">
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
-      ${_loggedIn ? `<button class="carousel-card-delete">×</button>` : ''}
     </div>
     <div class="carousel-card-meta">
       ${name  ? `<div class="botanical-name">${name}</div>` : ''}
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${o.date ? `<div class="observation-date">${new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
+      ${_loggedIn && o.id ? `<div class="carousel-card-actions">
+        <button class="carousel-card-edit">Bearbeiten</button>
+        <button class="carousel-card-delete">Löschen</button>
+      </div>` : ''}
     </div>`;
   const imgEl = card.querySelector('.carousel-card-img img');
   const imgBox = card.querySelector('.carousel-card-img');
@@ -30,6 +33,10 @@ function buildObsCard(o, gardenMap, plantMap, list) {
 
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
+  });
+  card.querySelector('.carousel-card-edit')?.addEventListener('click', e => {
+    e.stopPropagation();
+    document.dispatchEvent(new CustomEvent('obs:edit', { detail: o }));
   });
   card.querySelector('.carousel-card-delete')?.addEventListener('click', async e => {
     e.stopPropagation();
