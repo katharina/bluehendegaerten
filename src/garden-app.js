@@ -85,7 +85,7 @@ const plantMap  = new Map(allPlants.map(p => [p.slug, p.name]));
 const bedImageMap = Object.fromEntries(bedImages.map(b => [b.bed_index, b.filename]));
 
 const layout = document.querySelector('.garden-layout');
-if (placements.length) {
+if (placements.length || garden.has_plan) {
   layout.classList.add('has-bed');
 } else {
   layout.classList.add('no-bed');
