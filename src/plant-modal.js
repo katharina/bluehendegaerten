@@ -66,6 +66,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
 
   dialog.querySelector('.plant-modal-name').textContent = plant.name ?? '';
   dialog.querySelector('.plant-modal-de').textContent = plant.name_de ?? '';
+  dialog.querySelector('.plant-modal-data').open = !window.matchMedia('(max-width: 640px)').matches;
   const familyInput = dialog.querySelector('.plant-modal-family');
   familyInput.value = plant.family ?? '';
   familyInput.readOnly = !_loggedIn;

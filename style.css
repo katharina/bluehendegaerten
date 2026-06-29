@@ -888,11 +888,6 @@ dialog#plant-modal::backdrop {
   white-space: nowrap;
 }
 
-#plant-modal-close {
-  background: transparent;
-  color: var(--plant-fg, #000);
-  border: 1px solid var(--plant-fg, #000);
-}
 
 dialog#plant-modal .action-btn {
   background: var(--plant-fg, #000);
@@ -919,7 +914,6 @@ dialog#plant-modal .action-btn {
 .plant-modal-observations {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--plant-fg, #000);
 }
 
 .plant-modal-obs-header {
@@ -969,7 +963,7 @@ dialog#plant-modal .action-btn {
 }
 
 .plant-modal-header .botanical-name {
-  font-size: var(--hb-font-size-10);
+  font-size: var(--hb-font-size-08);
   line-height: 1.1;
 }
 
@@ -1253,22 +1247,29 @@ dialog#plant-modal.authenticated .plant-color-picker {
   }
   .plant-modal-info {
     overflow-y: visible;
-    padding: var(--hb-space-400);
+    padding: var(--hb-space-500) var(--page-pad);
   }
   .plant-modal-observations {
     overflow-y: visible;
-    border-left: none;
-    border-top: 1px solid currentColor;
   }
   .plant-modal-obs-header {
     position: static;
-    padding: var(--hb-space-400) var(--hb-space-400) 0;
+    padding: var(--hb-space-500) var(--page-pad) 0;
+  }
+  .plant-modal-obs-list {
+    padding: 0 var(--page-pad) var(--hb-space-800);
   }
   .obs-col:last-child {
     display: none;
   }
   .obs-col:first-child {
     width: 100%;
+  }
+  #plant-modal-close {
+    position: fixed;
+    top: var(--hb-space-400);
+    right: var(--hb-space-400);
+    z-index: 10;
   }
 }
 
