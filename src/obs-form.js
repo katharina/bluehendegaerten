@@ -43,7 +43,8 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
-  document.addEventListener('obs:new', e => openObsForm(e.detail ?? {}));
+  document.addEventListener('obs:new',  e => openObsForm(e.detail ?? {}));
+  document.addEventListener('obs:edit', e => openObsForm({ editObs: e.detail }));
 }
 
 export function openObsForm({ plantSlug = null, gardenId = null, editObs = null } = {}) {
@@ -65,8 +66,13 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   const fileInput = _dialog.querySelector('#obs-form-file');
   const fileLabel = _dialog.querySelector('#obs-form-file-label');
   fileInput.value = '';
-  fileLabel.querySelector('#obs-form-file-text').textContent = 'Bild auswählen…';
-  fileLabel.classList.remove('has-file');
+  if (editObs?.filename) {
+    fileLabel.querySelector('#obs-form-file-text').textContent = editObs.filename.split('/').pop();
+    fileLabel.classList.add('has-file');
+  } else {
+    fileLabel.querySelector('#obs-form-file-text').textContent = 'Bild auswählen…';
+    fileLabel.classList.remove('has-file');
+  }
 
   const gardenSelect = _dialog.querySelector('#obs-form-garden');
   gardenSelect.innerHTML =
@@ -187,7 +193,7 @@ function _buildIdentifiedSection(suggestions) {
     section.appendChild(hdr);
     matched.forEach(s => {
       const p = _plantBySlug.get(s.slug);
-      if (p) section.appendChild(makeChip(p, true, s.score, true));
+      if (p) section.appendChild(makeChip({ ...p, name_de: p.name_de || s.common || null }, true, s.score, true));
     });
   }
   if (unmatched.length) {
