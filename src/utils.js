@@ -1,7 +1,7 @@
 const R2_URL = __R2_URL__;
 
 export function thumbUrl(filename) {
-  return `/api/thumb/${encodeURIComponent(filename)}`;
+  return `/api/thumb/${encodeURIComponent(filename)}?v=2`;
 }
 
 export function fullUrl(filename) {
