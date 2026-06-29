@@ -279,6 +279,10 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
 });
 
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session?.user) authedFetch('/api/geocode-missing', { method: 'POST' }).catch(() => {});
+});
+
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');
 const gardenCol = document.querySelector('.garden-col--garden');

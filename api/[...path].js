@@ -10,6 +10,25 @@ const PLANT_INFO_FIELDS = ['art','wuchs','hoehe','breite','frost','wurzel','lich
 const PLANTS_FIELDS = ['name','name_de','family','color','world_w','art','wuchs','hoehe','breite','frost','wurzel','licht','boden','wasser','naehrstoff','ph','kuebel','bloom_months','invasiv'];
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif']);
 
+async function reverseGeocode(lat, lon) {
+  try {
+    const geo = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=de`,
+      { headers: { 'User-Agent': 'Bluehendegaerten/1.0 (k.birkenbach@gmail.com)' } }
+    );
+    if (!geo.ok) return null;
+    const { address } = await geo.json();
+    if (!address) return null;
+    const suburb = address.suburb ?? address.quarter ?? address.neighbourhood ?? address.city_district ?? null;
+    const city   = address.city ?? address.town ?? address.village ?? address.hamlet
+                ?? address.county ?? address.state_district ?? address.state ?? null;
+    return suburb && city ? `${suburb}, ${city}` : suburb ?? city ?? null;
+  } catch (e) {
+    console.error('[geocode]', e?.message);
+    return null;
+  }
+}
+
 async function addSlugsToGarden(gardenId, slugs) {
   if (!gardenId) return;
   const { data: g } = await supabase.from('gardens').select('plants').eq('id', gardenId).maybeSingle();
@@ -218,17 +237,7 @@ export default async function handler(req, res) {
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
         let place = null;
         if (lat != null && !garden) {
-          try {
-            const geo = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`, {
-              headers: { 'User-Agent': 'Bluehendegaerten/1.0 (k.birkenbach@gmail.com)' },
-            });
-            if (geo.ok) {
-              const { address } = await geo.json();
-              const borough = address?.suburb ?? address?.quarter ?? address?.neighbourhood ?? address?.city_district ?? null;
-              const city    = address?.city ?? address?.town ?? address?.village ?? null;
-              place = borough && city ? `${borough}, ${city}` : borough ?? city ?? null;
-            }
-          } catch {}
+          place = await reverseGeocode(lat, lon);
         }
         const { data: obs, error } = await supabase
           .from('observations')
@@ -507,6 +516,29 @@ export default async function handler(req, res) {
       return res.json({ ok: true });
     }
     return res.status(405).json({ error: 'method not allowed' });
+  }
+
+  // ── Geocode missing places ────────────────────────────────────────────────────
+  if (resource === 'geocode-missing') {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
+    if (!await requireUser(req, res)) return;
+    const { data: rows, error } = await supabase
+      .from('observations')
+      .select('id, lat, lon')
+      .not('lat', 'is', null)
+      .is('place', null)
+      .limit(40);
+    if (error) return res.status(500).json({ error: error.message });
+    let updated = 0;
+    for (const row of rows ?? []) {
+      const place = await reverseGeocode(row.lat, row.lon);
+      if (place) {
+        await supabase.from('observations').update({ place }).eq('id', row.id);
+        updated++;
+      }
+      await new Promise(r => setTimeout(r, 1100));
+    }
+    return res.json({ processed: rows?.length ?? 0, updated });
   }
 
   res.status(404).json({ error: 'not found', resource, id, segments });

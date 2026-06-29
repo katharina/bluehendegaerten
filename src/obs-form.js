@@ -60,6 +60,13 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
 
+  if (_lat != null) {
+    _renderLocationPreview({ lat: _lat, lon: _lon }, true);
+  } else {
+    const locEl = _dialog.querySelector('#obs-form-location');
+    if (locEl) locEl.hidden = true;
+  }
+
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
   _dialog.querySelector('#obs-form-date').value  = editObs?.date ?? new Date().toISOString().slice(0, 10);
   _dialog.querySelector('#obs-form-type').value  = editObs?.type ?? 'foto';
@@ -378,6 +385,28 @@ async function _uploadToR2(file) {
   return key;
 }
 
+function _renderLocationPreview(coords, fromExif) {
+  const el = _dialog.querySelector('#obs-form-location');
+  if (!el) return;
+  el.innerHTML = '';
+  if (coords) {
+    el.innerHTML = `
+      <span class="loc-found">${coords.lat.toFixed(5)}, ${coords.lon.toFixed(5)}</span>
+      <button type="button" class="loc-clear">entfernen</button>`;
+    el.querySelector('.loc-clear').addEventListener('click', () => {
+      _lat = null; _lon = null;
+      _renderLocationPreview(null, false);
+    });
+    el.hidden = false;
+  } else {
+    el.innerHTML = `
+      <span class="loc-missing">Kein Standort gefunden —</span>
+      <input id="obs-form-lat" class="obs-input obs-loc-input" type="number" step="any" placeholder="Breite">
+      <input id="obs-form-lon" class="obs-input obs-loc-input" type="number" step="any" placeholder="Länge">`;
+    el.hidden = false;
+  }
+}
+
 async function _onFileChange(e) {
   const file = e.target.files[0];
   const isCam = e.target.id === 'obs-form-camera';
@@ -386,6 +415,8 @@ async function _onFileChange(e) {
   span.textContent = file ? file.name : (isCam ? 'Kamera' : 'Hochladen');
   label.classList.toggle('has-file', !!file);
   _lat = null; _lon = null;
+  const locEl = _dialog.querySelector('#obs-form-location');
+  if (locEl) locEl.hidden = true;
   if (!file) return;
   try {
     const mod = await import('exifr');
@@ -393,8 +424,17 @@ async function _onFileChange(e) {
     const result = await parse(file, { gps: true, tiff: true, exif: true });
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
-    if (result?.latitude != null) { _lat = result.latitude; _lon = result.longitude; }
-  } catch (err) { console.warn('exifr:', err); }
+    if (result?.latitude != null) {
+      _lat = result.latitude;
+      _lon = result.longitude;
+      _renderLocationPreview({ lat: _lat, lon: _lon }, true);
+    } else {
+      _renderLocationPreview(null, false);
+    }
+  } catch (err) {
+    console.warn('exifr:', err);
+    _renderLocationPreview(null, false);
+  }
   _identifyPlant(file);
 }
 
@@ -420,13 +460,22 @@ async function _onSubmit() {
   try {
     if (file) filename = await _uploadToR2(file);
 
+    let lat = _lat, lon = _lon;
+    if (lat == null) {
+      const latInput = _dialog.querySelector('#obs-form-lat');
+      const lonInput = _dialog.querySelector('#obs-form-lon');
+      const lv = parseFloat(latInput?.value);
+      const lnv = parseFloat(lonInput?.value);
+      if (!isNaN(lv) && !isNaN(lnv)) { lat = lv; lon = lnv; }
+    }
+
     const body = {
       date:   _dialog.querySelector('#obs-form-date').value || null,
       type:   _dialog.querySelector('#obs-form-type').value,
       garden: _dialog.querySelector('#obs-form-garden').value || null,
       text:   _dialog.querySelector('#obs-form-text').value || null,
       slugs,
-      ...(_lat != null && { lat: _lat, lon: _lon }),
+      ...(lat != null && { lat, lon }),
       ...(filename     && { filename }),
     };
 

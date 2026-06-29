@@ -7,6 +7,7 @@ import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
 import { initObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
+import { supabase, authedFetch } from './auth.js';
 
 const [gardens, observations, plants] = await Promise.all([
   fetch('/api/gardens').then(r => r.json()),
@@ -42,4 +43,8 @@ document.addEventListener('obs:deleted', e => removeObsFromCarousel(e.detail.id)
 document.addEventListener('plant:updated', e => {
   const idx = plants.findIndex(p => p.slug === e.detail.slug);
   if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants); }
+});
+
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session?.user) authedFetch('/api/geocode-missing', { method: 'POST' }).catch(() => {});
 });

@@ -556,6 +556,40 @@ dialog#add-plant-dialog::backdrop {
   .obs-camera-label { display: flex; }
 }
 
+.obs-form-location {
+  display: flex;
+  align-items: center;
+  gap: var(--hb-space-200);
+  font-size: var(--hb-font-size-01);
+  color: #666;
+  flex-wrap: wrap;
+}
+
+.loc-found {
+  color: #333;
+}
+
+.loc-missing {
+  color: #999;
+}
+
+.loc-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: var(--hb-font-size-01);
+  padding: 0;
+  text-decoration: underline;
+}
+
+.loc-clear:hover { color: #333; }
+
+.obs-loc-input {
+  width: 8rem;
+  font-size: var(--hb-font-size-01);
+}
+
 .obs-plant-grid {
   display: flex;
   flex-direction: column;
