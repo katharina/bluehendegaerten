@@ -199,7 +199,7 @@ function _buildIdentifiedSection(suggestions) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'obs-plant-chip pn-new-plant';
-      btn.innerHTML = `+ <em>${s.name}</em><span class="pn-score">${s.score}%</span>`;
+      btn.innerHTML = `+ <em>${s.name}</em>${s.common ? `<span class="chip-de">${s.common}</span>` : ''}<span class="pn-score">${s.score}%</span>`;
       btn.title = 'Als neue Pflanze hinzufügen';
       btn.addEventListener('click', async () => {
         btn.disabled = true;
@@ -278,12 +278,12 @@ async function _addPlantFromPlantNet(suggestion, allSuggestions, currentPreselec
     const res  = await authedFetch('/api/custom-plants', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug, name: suggestion.name, family: suggestion.family ?? null, garden, ...(color && { color }) }),
+      body: JSON.stringify({ slug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, garden, ...(color && { color }) }),
     });
     const body = await res.json();
     if (!res.ok && body.error !== 'slug already exists') { alert(body.error); return; }
     const finalSlug = body.slug ?? slug;
-    _plantBySlug.set(finalSlug, { slug: finalSlug, name: suggestion.name, family: suggestion.family ?? null, ...(color && { color }) });
+    _plantBySlug.set(finalSlug, { slug: finalSlug, name: suggestion.name, name_de: suggestion.common ?? null, family: suggestion.family ?? null, ...(color && { color }) });
     _plantByScientific.set(suggestion.name.toLowerCase(), finalSlug);
     const genus = suggestion.name.split(' ')[0].toLowerCase();
     if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, finalSlug);
@@ -331,7 +331,7 @@ async function _identifyPlant(file) {
     }).then(r => r.json());
     const seen = new Set();
     const suggestions = (data.results ?? [])
-      .map(r => ({ name: r.name, score: r.score, family: r.family ?? null, slug: _plantNetToSlug(r.name) }))
+      .map(r => ({ name: r.name, score: r.score, family: r.family ?? null, common: r.common ?? null, slug: _plantNetToSlug(r.name) }))
       .filter(s => s.score >= 10)
       .filter(s => { const key = s.slug ?? s.name; if (seen.has(key)) return false; seen.add(key); return true; });
     const preselected = [...grid.querySelectorAll('input:checked')].map(i => i.value);
