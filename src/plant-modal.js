@@ -97,7 +97,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   colA.innerHTML = colB.innerHTML = '';
   let i = 0;
 
+  const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
   function appendMasonry(card) {
+    if (isMobile()) { colA.appendChild(card); return; }
     (i++ % 2 === 0 ? colA : colB).appendChild(card);
   }
 

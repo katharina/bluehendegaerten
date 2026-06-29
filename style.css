@@ -784,20 +784,13 @@ dialog#obs-modal::backdrop {
 
 .obs-list-img-wrap {
   width: 100%;
-  aspect-ratio: 3 / 4;
   background: #111;
-  overflow: hidden;
-}
-
-.obs-list-img-wrap.is-landscape {
-  aspect-ratio: 4 / 3;
 }
 
 .obs-list-img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
 }
 
 .obs-list-meta {
@@ -1247,6 +1240,36 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .plant-modal-observations .action-btn {
   align-self: flex-start;
   margin-bottom: var(--hb-space-500);
+}
+
+@media (max-width: 640px) {
+  .plant-modal-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  .plant-modal-inner {
+    overflow-y: auto;
+  }
+  .plant-modal-info {
+    overflow-y: visible;
+    padding: var(--hb-space-400);
+  }
+  .plant-modal-observations {
+    overflow-y: visible;
+    border-left: none;
+    border-top: 1px solid currentColor;
+  }
+  .plant-modal-obs-header {
+    position: static;
+    padding: var(--hb-space-400) var(--hb-space-400) 0;
+  }
+  .obs-col:last-child {
+    display: none;
+  }
+  .obs-col:first-child {
+    width: 100%;
+  }
 }
 
 /* ── Garden page layout ──────────────────────────────────────────────────── */

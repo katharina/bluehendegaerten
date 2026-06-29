@@ -133,14 +133,6 @@ function renderList(list, startIndex) {
     });
     item.querySelector('.obs-modal-garden-link')?.addEventListener('click', e => e.stopPropagation());
 
-    const imgEl = item.querySelector('.obs-list-img');
-    const wrap  = item.querySelector('.obs-list-img-wrap');
-    if (imgEl && wrap) {
-      imgEl.addEventListener('load', () => {
-        if (imgEl.naturalWidth > imgEl.naturalHeight) wrap.classList.add('is-landscape');
-      });
-    }
-
     item.addEventListener('click', e => e.stopPropagation());
     listEl.appendChild(item);
   });
