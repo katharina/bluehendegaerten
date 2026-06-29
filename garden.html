@@ -193,6 +193,40 @@
     <div class="obs-modal-list" hidden></div>
   </dialog>
 
+  <dialog id="add-plant-dialog" tabindex="-1">
+    <div class="obs-form-inner">
+      <div class="section-header">
+        <h2 class="obs-form-title">Pflanze hinzufügen</h2>
+        <button class="action-btn-icon" id="add-plant-close">×</button>
+      </div>
+      <div class="obs-form-row">
+        <div class="obs-form-field">
+          <label class="obs-form-label">Botanischer Name</label>
+          <input id="apf-name" class="obs-input" type="text" autocomplete="off" spellcheck="false" placeholder="z.B. Lavandula angustifolia">
+        </div>
+        <div class="obs-form-field">
+          <label class="obs-form-label">Deutscher Name</label>
+          <input id="apf-name-de" class="obs-input" type="text" autocomplete="off" spellcheck="false" placeholder="z.B. Echter Lavendel">
+        </div>
+      </div>
+      <div class="obs-form-row">
+        <div class="obs-form-field">
+          <label class="obs-form-label">Familie</label>
+          <input id="apf-family" class="obs-input" type="text" autocomplete="off" spellcheck="false" placeholder="z.B. Lamiaceae">
+        </div>
+        <div class="obs-form-field" style="flex:0 0 auto">
+          <label class="obs-form-label">Farbe</label>
+          <input id="apf-color" class="obs-input" type="color" value="#a0c878">
+        </div>
+      </div>
+      <div id="apf-msg" class="obs-form-msg"></div>
+      <div class="obs-form-actions">
+        <button id="apf-submit" class="action-btn">Hinzufügen</button>
+        <button id="apf-cancel" class="action-btn-ghost">Abbrechen</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="lightbox" tabindex="-1">
     <img id="lightbox-img" src="" alt="">
   </dialog>

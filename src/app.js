@@ -6,6 +6,7 @@ import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
 import { initObsForm } from './obs-form.js';
+import { initAddPlant } from './add-plant.js';
 
 const [gardens, observations, customPlants, manifest, plantInfoAll] = await Promise.all([
   fetch('/api/gardens').then(r => r.json()),
@@ -52,6 +53,13 @@ document.getElementById('plant-count').textContent = plants.length;
 initPlantModal({ gardens, observations });
 initObsModal({ gardens, plants });
 initObsForm({ gardens, plants, observations });
+initAddPlant({
+  onAdded(plant) {
+    plants.push(plant);
+    renderPlantList(plants);
+    document.getElementById('plant-count').textContent = plants.length;
+  },
+});
 
 document.addEventListener('obs:saved', e => {
   prependObsToCarousel(e.detail, gardenMap, plantMap);

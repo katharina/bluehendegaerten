@@ -6,6 +6,7 @@ import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
 import { initObsForm } from './obs-form.js';
 import { renderBedPlan } from './bed-plan.js';
+import { initAddPlant } from './add-plant.js';
 import { supabase, authedFetch } from './auth.js';
 
 const path = window.location.pathname.split('/').filter(Boolean)[0] ?? '';
@@ -302,6 +303,13 @@ rerenderBedPlan();
 initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
+initAddPlant({
+  onAdded(plant) {
+    allPlants.push(plant);
+    gardenPlants.push(plant);
+    renderPlantList(gardenPlants, { bedSlugs });
+  },
+});
 
 document.addEventListener('obs:saved', e => {
   const obs = { ...e.detail, place: garden.name };
