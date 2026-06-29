@@ -402,23 +402,18 @@ function _startGeo() {
       _geoLat = pos.coords.latitude; _geoLon = pos.coords.longitude;
       if (_lat == null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
     },
-    () => {
+    err => {
       _geoPending = false;
+      const reason = ['', 'Berechtigung verweigert', 'Position nicht verfügbar', 'Timeout'][err.code] ?? err.message;
       const locEl = _dialog?.querySelector('#obs-form-location');
-      if (locEl && _lat == null) { locEl.hidden = true; locEl.innerHTML = ''; }
+      if (locEl && _lat == null) { locEl.hidden = false; locEl.innerHTML = `<span class="loc-missing">${reason}</span>`; }
     },
-    { timeout: 10000, maximumAge: Infinity, enableHighAccuracy: false }
+    { timeout: 20000, maximumAge: 0, enableHighAccuracy: false }
   );
 }
 
 function _offerGeoForCamera() {
   if (_geoPermission === 'denied' || !navigator.geolocation) return;
-  if (_geoLat != null) {
-    // reuse cached position from this session — instant
-    _lat = _geoLat; _lon = _geoLon;
-    _renderLocationFound();
-    return;
-  }
   const locEl = _dialog.querySelector('#obs-form-location');
   if (!locEl) return;
   locEl.hidden = false;
