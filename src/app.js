@@ -1,6 +1,6 @@
 import { parseCm } from './utils.js';
 import { renderGardenList } from './gardens.js';
-import { renderObsCarousel } from './observations.js';
+import { renderObsCarousel, prependObsToCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -47,3 +47,7 @@ renderPlantList(plants);
 initPlantModal({ gardens, observations });
 initObsModal({ gardens, plants });
 initObsForm({ gardens, plants, observations });
+
+document.addEventListener('obs:saved', e => {
+  prependObsToCarousel(e.detail, gardenMap, plantMap);
+});

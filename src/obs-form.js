@@ -425,16 +425,18 @@ async function _onSubmit() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      _dialog.close();
+      window.location.reload();
     } else {
-      await authedFetch('/api/observations', {
+      const res     = await authedFetch('/api/observations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      const saved = await res.json();
+      _dialog.close();
+      document.dispatchEvent(new CustomEvent('obs:saved', { detail: saved }));
     }
-
-    _dialog.close();
-    window.location.reload();
   } catch (e) {
     msg.textContent = 'Fehler: ' + (e.message ?? 'unbekannt');
     btn.disabled = false;

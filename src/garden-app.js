@@ -1,5 +1,5 @@
 import { parseCm } from './utils.js';
-import { renderObsCarousel, renderHerbarCarousel } from './observations.js';
+import { renderObsCarousel, renderHerbarCarousel, prependObsToCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -128,6 +128,10 @@ initPlantModal({ gardens, observations: allObservations, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 
+document.addEventListener('obs:saved', e => {
+  const obs = { ...e.detail, place: garden.name };
+  prependObsToCarousel(obs, gardenMap, plantMap);
+});
 
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');

@@ -75,6 +75,18 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
   loadMore();
 }
 
+export function prependObsToCarousel(obs, gardenMap, plantMap) {
+  const id = obs.type === 'herbarbeleg' ? 'herbar-carousel' : 'obs-carousel';
+  const carousel = document.getElementById(id);
+  if (!carousel) return;
+  if (carousel.hidden) {
+    carousel.hidden = false;
+    carousel.innerHTML = '';
+  }
+  const card = buildObsCard(obs, gardenMap, plantMap, [obs]);
+  carousel.prepend(card);
+}
+
 export function renderObsCarousel(observations, gardenMap, plantMap) {
   const fotos = observations
     .filter(o => o.type === 'foto' && o.filename)
