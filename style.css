@@ -583,6 +583,20 @@ dialog#obs-modal::backdrop {
   color: var(--hb-black-400);
 }
 
+.obs-delete-btn {
+  background: none;
+  border: none;
+  font-size: var(--hb-font-size-01);
+  color: #fff;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: var(--hb-space-300) 0 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.obs-delete-btn:hover { opacity: 0.8; }
+
 /* ── Lightbox ────────────────────────────────────────────────────────────── */
 
 dialog#lightbox {

@@ -220,6 +220,8 @@ async function _uploadToR2(file) {
   const { url, key } = await urlRes.json();
   const putRes = await fetch(url, { method: 'PUT', body: file, headers: { 'Content-Type': contentType } });
   if (!putRes.ok) throw new Error(`R2 PUT ${putRes.status}`);
+  // Pre-generate thumbnail so it's cached in R2 before the page reloads
+  fetch(`/api/thumb/${encodeURIComponent(key)}`).catch(() => {});
   return key;
 }
 

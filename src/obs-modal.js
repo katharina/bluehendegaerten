@@ -1,6 +1,8 @@
 import { fullUrl } from './utils.js';
+import { supabase, authedFetch } from './auth.js';
 
 let _dialog, _ctx, _list = [], _index = 0;
+let _loggedIn = false;
 
 export function initObsModal({ gardens = [], plants = [] } = {}) {
   _ctx = {
@@ -9,6 +11,10 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
   };
 
   _dialog = document.getElementById('obs-modal');
+
+  supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
+  supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
+
   _dialog.addEventListener('click', () => _dialog.close());
   _dialog.addEventListener('close', () => {
     const img = _dialog.querySelector('.obs-modal-img img');
@@ -110,4 +116,20 @@ function renderObs(obs, onReady) {
   const noteEl = _dialog.querySelector('.obs-modal-note');
   noteEl.textContent = obs.text ?? '';
   noteEl.hidden = !obs.text;
+
+  const existing = _dialog.querySelector('.obs-delete-btn');
+  if (existing) existing.remove();
+  if (_loggedIn && obs.id) {
+    const btn = document.createElement('button');
+    btn.className = 'obs-delete-btn';
+    btn.textContent = 'Löschen';
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      if (!confirm('Beobachtung wirklich löschen?')) return;
+      await authedFetch(`/api/observations/${obs.id}`, { method: 'DELETE' });
+      _dialog.close();
+      window.location.reload();
+    });
+    _dialog.querySelector('.obs-modal-inner').appendChild(btn);
+  }
 }
