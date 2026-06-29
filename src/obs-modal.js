@@ -139,8 +139,10 @@ function renderObs(obs, onReady) {
       window.location.reload();
     });
 
-    const info = _dialog.querySelector('.obs-modal-info');
-    info.appendChild(editBtn);
-    info.appendChild(delBtn);
+    const actions = document.createElement('div');
+    actions.className = 'obs-modal-actions';
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    _dialog.querySelector('.obs-modal-info').appendChild(actions);
   }
 }

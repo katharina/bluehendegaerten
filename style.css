@@ -736,19 +736,28 @@ dialog#obs-modal::backdrop {
   color: var(--hb-black-400);
 }
 
+.obs-modal-actions {
+  display: flex;
+  gap: var(--hb-space-300);
+  border-top: 1px solid #eee;
+  padding-top: var(--hb-space-200);
+  margin-top: var(--hb-space-100);
+}
+
 .obs-delete-btn, .obs-edit-btn {
   background: none;
   border: none;
   font-size: var(--hb-font-size-01);
-  color: #fff;
-  opacity: 0.4;
+  color: #000;
+  opacity: 1;
   cursor: pointer;
-  padding: var(--hb-space-300) 0 0;
+  padding: 0;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.obs-delete-btn:hover, .obs-edit-btn:hover { opacity: 0.8; }
+.obs-delete-btn { opacity: 0.4; }
+.obs-delete-btn:hover { opacity: 1; }
 
 /* ── Lightbox ────────────────────────────────────────────────────────────── */
 
