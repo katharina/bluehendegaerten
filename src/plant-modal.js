@@ -83,6 +83,15 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   familyInput.value = plant.family ?? '';
   familyInput.readOnly = !_loggedIn;
 
+  fetch(`/api/custom-plants/${plant.slug}`)
+    .then(r => r.ok ? r.json() : null)
+    .then(cp => {
+      if (!cp || _currentPlant?.slug !== plant.slug) return;
+      dialog.querySelector('.plant-modal-name').textContent = cp.name ?? '';
+      dialog.querySelector('.plant-modal-de').textContent = cp.name_de ?? '';
+      familyInput.value = cp.family ?? '';
+    });
+
   const swatch = dialog.querySelector('.plant-color-swatch');
   const picker = dialog.querySelector('.plant-color-picker');
   picker.disabled = !_loggedIn;
@@ -137,7 +146,23 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
   obsHeader.querySelector('.obs-all-toggle')?.remove();
-  renderObsList(plantObs);
+
+  if (gardenId) {
+    const here  = plantObs.filter(o => o.garden === gardenId);
+    const other = plantObs.filter(o => o.garden !== gardenId);
+    renderObsList(here);
+    if (other.length) {
+      const label = document.createElement('label');
+      label.className = 'obs-all-toggle';
+      label.innerHTML = `<input type="checkbox"> alle Gärten`;
+      label.querySelector('input').addEventListener('change', e =>
+        renderObsList(e.target.checked ? plantObs : here)
+      );
+      obsHeader.appendChild(label);
+    }
+  } else {
+    renderObsList(plantObs);
+  }
 
   const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
   const infoRows = dialog.querySelector('.plant-modal-info-rows');

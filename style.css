@@ -1466,12 +1466,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
 }
 
 
-.bed-version-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--hb-space-200);
-  padding: 0 var(--hb-space-600) var(--hb-space-300);
-}
 
 
 .plant-card.is-selected {
