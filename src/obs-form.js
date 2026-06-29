@@ -483,15 +483,19 @@ async function _onFileChange(e) {
     if (result?.latitude != null) {
       _lat = result.latitude; _lon = result.longitude; _place = null;
       _renderLocationFound();
-    } else if (_lat != null) {
+    } else if (isCam && _lat != null) {
       _renderLocationFound(_place ?? null);
     } else {
+      if (!isCam) { _lat = null; _lon = null; _place = null; }
       _showLocationSearch();
     }
   } catch (err) {
     console.warn('exifr:', err);
-    if (_lat != null) _renderLocationFound(_place ?? null);
-    else _showLocationSearch();
+    if (isCam && _lat != null) _renderLocationFound(_place ?? null);
+    else {
+      if (!isCam) { _lat = null; _lon = null; _place = null; }
+      _showLocationSearch();
+    }
   }
   _identifyPlant(file);
 }

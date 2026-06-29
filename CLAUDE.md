@@ -43,6 +43,13 @@ The same principle applies to `.observation-place`, `.observation-date`, and any
 
 - **Garden obs always show garden name.** If `obs.garden` is set, display the garden name — never `obs.place`, never a geocoded string. Everywhere: obs cards, modal, list view, edit form. Pattern: `gardenMap.get(obs.garden) || obs.place || ''`. Garden wins. No exceptions.
 
+### Location rules
+
+- **Upload: never prefill location.** When a file is picked from the gallery (`isCam === false`) and has no EXIF GPS, always show an empty search field. Never use the last saved location. Clear `_lat/_lon/_place` before calling `_showLocationSearch()`.
+- **Camera: use last saved location as fallback.** When a camera shot has no EXIF GPS, it's fine to prefill from `_loadLastLocation()` — the user is likely still in the same spot.
+- **Last location is saved on submit only**, never on form open or file pick.
+- Location display only appears after a file is picked — never on form open.
+
 ### HTML rules
 
 - HTML must be lean and structural — no presentational markup, no redundant wrappers.
