@@ -1,21 +1,22 @@
 import { fullUrl } from './utils.js';
 
-const BED_L = 9, BED_GAP = 0.5;
-const BED_WIDTHS = [1.5, 1.5, 1.5, 1.5, 3.0, 1.5, 1.5, 1.5, 3.0];
-const TOTAL_Z = BED_WIDTHS.reduce((a, b) => a + b, 0) + BED_GAP * (BED_WIDTHS.length - 1);
+const DEFAULT_BED_L = 9, BED_GAP = 0.5;
+const DEFAULT_BED_WIDTHS = [1.5, 1.5, 1.5, 1.5, 3.0, 1.5, 1.5, 1.5, 3.0];
 
-const bedLayout = (() => {
-  let cursor = -TOTAL_Z / 2;
-  return BED_WIDTHS.map((w, i) => {
+function buildLayout(bedL, bedWidths) {
+  const totalZ = bedWidths.reduce((a, b) => a + b, 0) + BED_GAP * (bedWidths.length - 1);
+  let cursor = -totalZ / 2;
+  const beds = bedWidths.map((w, i) => {
     const z = cursor + w / 2;
     cursor += w + BED_GAP;
     return { w, z, i };
   });
-})();
+  return { bedL, totalZ, beds };
+}
 
-function inBed(x, z) {
-  return Math.abs(x) <= BED_L / 2 - 0.01 &&
-    bedLayout.some(b => z >= b.z - b.w / 2 + 0.01 && z <= b.z + b.w / 2 - 0.01);
+function inBed(x, z, bedL, beds) {
+  return Math.abs(x) <= bedL / 2 - 0.01 &&
+    beds.some(b => z >= b.z - b.w / 2 + 0.01 && z <= b.z + b.w / 2 - 0.01);
 }
 
 function svgCoords(e, svgEl) {
@@ -33,25 +34,30 @@ export function renderBedPlan(container, {
   plants = [], bedImages = {}, placements = [],
   editMode = false, selectedSlug = null,
   onPlace = null, onRemove = null, onUploadBed = null,
+  bedConfig = null,
 }) {
   const colorBySlug = Object.fromEntries(plants.map(p => [p.slug, p.color ?? '#ccc']));
   const plantBySlug = Object.fromEntries(plants.map(p => [p.slug, p]));
 
+  const bedL = bedConfig?.bedL ?? DEFAULT_BED_L;
+  const bedWidths = bedConfig?.bedWidths ?? DEFAULT_BED_WIDTHS;
+  const { totalZ, beds } = buildLayout(bedL, bedWidths);
+
   const PAD = 0.4;
-  const vbX = -BED_L / 2 - PAD;
-  const vbY = -TOTAL_Z / 2 - PAD;
-  const vbW = BED_L + PAD * 2;
-  const vbH = TOTAL_Z + PAD * 2;
+  const vbX = -bedL / 2 - PAD;
+  const vbY = -totalZ / 2 - PAD;
+  const vbW = bedL + PAD * 2;
+  const vbH = totalZ + PAD * 2;
 
   let svg = `<svg class="bed-plan-svg" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
 
-  // Background layer: bed rectangles + images + dividers
-  for (const bed of bedLayout) {
-    const x0 = -BED_L / 2;
+  // Background layer: bed rectangles + images
+  for (const bed of beds) {
+    const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<rect x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" fill="none" stroke="#000" stroke-width="0.01"/>`;
+    svg += `<rect x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" fill="none" stroke="#000" stroke-width="0.01"/>`;
     if (bedImages[bed.i]) {
-      svg += `<image href="${fullUrl(bedImages[bed.i])}" x="${x0}" y="${z0}" width="${BED_L}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
+      svg += `<image href="${fullUrl(bedImages[bed.i])}" x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
     }
   }
 
@@ -68,12 +74,12 @@ export function renderBedPlan(container, {
   }
 
   // Foreground layer: bed numbers + edit buttons (always on top)
-  for (const bed of bedLayout) {
-    const x0 = -BED_L / 2;
+  for (const bed of beds) {
+    const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
     svg += `<text class="bed-number" x="${x0 + 0.1}" y="${z0 + 0.28}">${bed.i + 1}</text>`;
     if (editMode) {
-      const btnW = 0.6, btnH = 0.26, btnX = x0 + BED_L - btnW - 0.1, btnY = z0 + 0.08;
+      const btnW = 0.6, btnH = 0.26, btnX = x0 + bedL - btnW - 0.1, btnY = z0 + 0.08;
       svg += `<rect x="${btnX}" y="${btnY}" width="${btnW}" height="${btnH}" rx="0.06" fill="${bedImages[bed.i] ? '#444' : '#888'}" opacity="0.75" data-upload-bed="${bed.i}" style="cursor:pointer"/>`;
       svg += `<text x="${btnX + btnW / 2}" y="${btnY + 0.175}" font-size="0.155" fill="#fff" font-family="system-ui" text-anchor="middle" pointer-events="none">${bedImages[bed.i] ? '✎ Bild' : '+ Bild'}</text>`;
     }
@@ -119,7 +125,7 @@ export function renderBedPlan(container, {
       }
       if (!selectedSlug) return;
       const coords = svgCoords(e, svgEl);
-      if (coords && inBed(coords.x, coords.z)) onPlace?.(selectedSlug, coords.x, coords.z);
+      if (coords && inBed(coords.x, coords.z, bedL, beds)) onPlace?.(selectedSlug, coords.x, coords.z);
     } else {
       const circle = e.target.closest('circle[data-slug]');
       if (!circle) return;

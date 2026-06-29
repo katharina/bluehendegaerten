@@ -101,7 +101,8 @@ let editMode = false;
 let selectedSlug = null;
 
 function getStore() {
-  if (!planStore) planStore = { versions: [{ id: 'default', placements: [] }], currentId: 'default' };
+  if (!planStore) planStore = { versions: [{ id: 'default', name: 'Version 1', placements: [] }], currentId: 'default' };
+  if (!planStore.versions[0].name) planStore.versions[0].name = 'Version 1';
   return planStore;
 }
 function getActivePlacements() {
@@ -120,11 +121,25 @@ async function savePlan() {
   }).catch(() => {});
 }
 
+function getActiveVersion() {
+  const store = getStore();
+  return store.versions?.find(v => v.id === store.currentId) ?? store.versions?.[0];
+}
+
+function renderVersionSelect() {
+  const store = getStore();
+  const sel = document.getElementById('version-select');
+  sel.innerHTML = store.versions.map(v =>
+    `<option value="${v.id}"${v.id === store.currentId ? ' selected' : ''}>${v.name ?? 'Version'}</option>`
+  ).join('');
+}
+
 function rerenderBedPlan() {
   renderBedPlan(document.getElementById('bed-plan'), {
     plants: allPlants,
     bedImages: bedImageMap,
     placements: getActivePlacements(),
+    bedConfig: getStore().bedConfig ?? null,
     editMode,
     selectedSlug,
     onPlace(slug, x, z) {
@@ -198,6 +213,57 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     if (e.key === 'Enter') { e.preventDefault(); bedNameEl.blur(); }
   });
 
+  // Version management
+  const versionBar = document.getElementById('bed-version-bar');
+  const versionSel = document.getElementById('version-select');
+
+  renderVersionSelect();
+
+  versionSel.addEventListener('change', () => {
+    getStore().currentId = versionSel.value;
+    savePlan();
+    rerenderBedPlan();
+  });
+
+  document.getElementById('version-copy-btn').addEventListener('click', () => {
+    const store = getStore();
+    const current = getActiveVersion();
+    const n = store.versions.length + 1;
+    const newVer = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+      name: `Version ${n}`,
+      placements: JSON.parse(JSON.stringify(current.placements ?? [])),
+    };
+    store.versions.push(newVer);
+    store.currentId = newVer.id;
+    savePlan();
+    renderVersionSelect();
+    rerenderBedPlan();
+  });
+
+  document.getElementById('version-rename-btn').addEventListener('click', () => {
+    const ver = getActiveVersion();
+    const name = prompt('Version umbenennen:', ver.name ?? 'Version');
+    if (name === null) return;
+    ver.name = name.trim() || ver.name;
+    savePlan();
+    renderVersionSelect();
+  });
+
+  document.getElementById('bed-config-btn').addEventListener('click', () => {
+    const store = getStore();
+    const cfg = store.bedConfig ?? {};
+    const l = prompt('Beetlänge (Meter):', cfg.bedL ?? 9);
+    if (l === null) return;
+    const w = prompt('Beetbreiten, kommagetrennt (Meter):', (cfg.bedWidths ?? [1.5, 1.5, 1.5, 1.5, 3.0, 1.5, 1.5, 1.5, 3.0]).join(', '));
+    if (w === null) return;
+    const bedWidths = w.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n) && n > 0);
+    if (!bedWidths.length) return;
+    store.bedConfig = { bedL: parseFloat(l) || 9, bedWidths };
+    savePlan();
+    rerenderBedPlan();
+  });
+
   // Edit mode toggle
   const editBtn = document.getElementById('bed-edit-btn');
   editBtn.hidden = false;
@@ -205,9 +271,11 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     editMode = !editMode;
     editBtn.textContent = editMode ? 'Fertig' : 'Bearbeiten';
     editBtn.classList.toggle('is-active', editMode);
+    versionBar.hidden = !editMode;
     const hint = document.getElementById('bed-edit-hint');
     hint.hidden = !editMode;
     if (editMode) {
+      renderVersionSelect();
       hint.textContent = 'Pflanze auswählen, dann ins Beet klicken';
     } else {
       selectedSlug = null;

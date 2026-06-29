@@ -1436,6 +1436,13 @@ dialog#plant-modal.authenticated .plant-color-picker {
   cursor: pointer;
 }
 
+.bed-version-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--hb-space-200);
+  padding: 0 var(--hb-space-600) var(--hb-space-300);
+}
+
 .bed-edit-hint {
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-600);
