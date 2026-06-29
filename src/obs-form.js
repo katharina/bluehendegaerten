@@ -389,8 +389,11 @@ async function _onFileChange(e) {
   if (!file) return;
   try {
     const mod = await import('exifr');
+    console.log('[exifr] mod keys:', Object.keys(mod), '| default type:', typeof mod.default, '| parse type:', typeof mod.parse);
     const parse = mod.parse ?? mod.default?.parse ?? mod.default;
+    console.log('[exifr] parse fn type:', typeof parse);
     const result = await parse(file, { gps: true, tiff: true, exif: true });
+    console.log('[exifr] result lat/lon:', result?.latitude, result?.longitude);
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
     if (result?.latitude != null) { _lat = result.latitude; _lon = result.longitude; }
