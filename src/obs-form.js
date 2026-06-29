@@ -50,7 +50,6 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
-  _dialog.querySelector('#obs-form-camera-label').addEventListener('click', _onCameraLabelClick);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
   document.addEventListener('obs:new',  e => openObsForm(e.detail ?? {}));
@@ -65,7 +64,6 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
   _lat    = editObs?.lat ?? null;
   _lon    = editObs?.lon ?? null;
   _place  = editObs?.place ?? null;
-  _geoLat = null; _geoLon = null; _geoPending = false;
   _suggestions = editObs?.plantnet_suggestions ? JSON.parse(editObs.plantnet_suggestions) : [];
   _pendingAdds = new Map();
   _currentPlantSlug = plantSlug;
@@ -409,35 +407,25 @@ function _startGeo() {
       const locEl = _dialog?.querySelector('#obs-form-location');
       if (locEl && _lat == null) { locEl.hidden = true; locEl.innerHTML = ''; }
     },
-    { timeout: 30000, maximumAge: 60000, enableHighAccuracy: false }
+    { timeout: 10000, maximumAge: Infinity, enableHighAccuracy: false }
   );
 }
 
-function _onCameraLabelClick(e) {
-  if (!navigator.geolocation) return;
-  if (_geoLat != null || _geoPending) return; // already have geo — let camera open normally
-  if (_geoPermission === 'denied') return;    // no geo possible — let camera open normally
-  if (_geoPermission === 'granted') { _startGeo(); return; } // silent, no overlay needed
-
-  // permission is 'prompt' or unknown — show consent overlay
-  e.preventDefault();
-  const cameraInput = _dialog.querySelector('#obs-form-camera');
+function _offerGeoForCamera() {
+  if (_geoPermission === 'denied' || !navigator.geolocation) return;
+  if (_geoLat != null) {
+    // reuse cached position from this session — instant
+    _lat = _geoLat; _lon = _geoLon;
+    _renderLocationFound();
+    return;
+  }
   const locEl = _dialog.querySelector('#obs-form-location');
-  if (!locEl) { cameraInput.click(); return; }
+  if (!locEl) return;
   locEl.hidden = false;
-  locEl.innerHTML = '<span class="loc-missing">GPS für dieses Foto freigeben?</span>'
-    + '<button type="button" class="action-btn" id="geo-allow-btn">Erlauben</button>'
-    + '<button type="button" class="loc-clear" id="geo-skip-btn">Überspringen</button>';
-
-  locEl.querySelector('#geo-allow-btn').addEventListener('click', () => {
+  locEl.innerHTML = '<button type="button" class="action-btn" id="geo-now-btn">Standort hinzufügen</button>';
+  locEl.querySelector('#geo-now-btn').addEventListener('click', () => {
     locEl.innerHTML = '<span class="loc-missing">Standort wird angefragt…</span>';
     _startGeo();
-    cameraInput.click(); // direct gesture context — iOS allows this
-  });
-
-  locEl.querySelector('#geo-skip-btn').addEventListener('click', () => {
-    locEl.hidden = true; locEl.innerHTML = '';
-    cameraInput.click();
   });
 }
 
@@ -471,8 +459,7 @@ async function _onFileChange(e) {
   label.classList.toggle('has-file', !!file);
   _lat = null; _lon = null;
   const locEl = _dialog.querySelector('#obs-form-location');
-  // Keep showing "Standort wird angefragt…" if geo is still in flight
-  if (locEl && !_geoPending && _geoLat == null) locEl.hidden = true;
+  if (locEl) locEl.hidden = true;
   if (!file) return;
 
   try {
@@ -482,19 +469,14 @@ async function _onFileChange(e) {
     if (result?.DateTimeOriginal)
       _dialog.querySelector('#obs-form-date').value = result.DateTimeOriginal.toISOString().slice(0, 10);
     if (result?.latitude != null) {
-      // EXIF GPS wins
-      _lat = result.latitude;
-      _lon = result.longitude;
+      _lat = result.latitude; _lon = result.longitude;
       _renderLocationFound();
-    } else if (_geoLat != null) {
-      // Camera stripped GPS from EXIF — use geolocation acquired when form opened
-      _lat = _geoLat; _lon = _geoLon;
-      _renderLocationFound();
+    } else if (isCam) {
+      _offerGeoForCamera();
     }
-    // else: geo still pending — its callback will call _renderLocationFound() when it arrives
   } catch (err) {
     console.warn('exifr:', err);
-    if (_geoLat != null) { _lat = _geoLat; _lon = _geoLon; _renderLocationFound(); }
+    if (isCam) _offerGeoForCamera();
   }
   _identifyPlant(file);
 }
