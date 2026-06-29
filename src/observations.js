@@ -10,6 +10,7 @@ supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; }
 function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');
   card.className = 'carousel-card';
+  if (o.id) card.dataset.obsId = o.id;
   const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
   const place = o.place || gardenMap.get(o.garden) || '';
   card.innerHTML = `
@@ -79,6 +80,22 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
 
   observer.observe(sentinel);
   loadMore();
+}
+
+export function updateObsInCarousel(obs, gardenMap, plantMap) {
+  const carouselId = obs.type === 'herbarbeleg' ? 'herbar-carousel' : 'obs-carousel';
+  const carousel = document.getElementById(carouselId);
+  if (!carousel) return;
+  const existing = carousel.querySelector(`[data-obs-id="${obs.id}"]`);
+  if (existing) {
+    existing.replaceWith(buildObsCard(obs, gardenMap, plantMap, [obs]));
+  } else {
+    prependObsToCarousel(obs, gardenMap, plantMap);
+  }
+}
+
+export function removeObsFromCarousel(id) {
+  document.querySelectorAll(`[data-obs-id="${id}"]`).forEach(el => el.remove());
 }
 
 export function prependObsToCarousel(obs, gardenMap, plantMap) {

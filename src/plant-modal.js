@@ -94,6 +94,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ color: picker.value }),
+    }).then(r => {
+      if (r.ok) document.dispatchEvent(new CustomEvent('plant:updated', { detail: { slug: plant.slug, color: picker.value } }));
     });
   };
 
@@ -120,8 +122,9 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const onDelete = _loggedIn ? async obs => {
     if (!confirm('Beobachtung löschen?')) return;
     await authedFetch(`/api/observations/${obs.id}`, { method: 'DELETE' });
-    dialog.close();
-    window.location.reload();
+    document.dispatchEvent(new CustomEvent('obs:deleted', { detail: { id: obs.id } }));
+    const idx = plantObs.indexOf(obs);
+    if (idx !== -1) { plantObs.splice(idx, 1); renderObsList(plantObs); }
   } : null;
 
   const onEdit = _loggedIn ? obs => {
@@ -220,6 +223,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           });
           saveBtn.disabled = false;
           saveBtn.textContent = r.ok ? 'Gespeichert ✓' : 'Fehler';
+          if (r.ok) document.dispatchEvent(new CustomEvent('plant:updated', { detail: { slug: plant.slug, family: fields.family, ...fields } }));
           setTimeout(() => saveBtn.textContent = 'Speichern', 2000);
         });
         infoRows.after(saveBtn);

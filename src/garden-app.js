@@ -1,6 +1,6 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
-import { renderObsCarousel, renderHerbarCarousel, prependObsToCarousel } from './observations.js';
+import { renderObsCarousel, renderHerbarCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -270,9 +270,13 @@ initAddPlant({
   },
 });
 
-document.addEventListener('obs:saved', e => {
-  const obs = { ...e.detail, place: garden.name };
-  prependObsToCarousel(obs, gardenMap, plantMap);
+document.addEventListener('obs:saved',   e => prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap));
+document.addEventListener('obs:updated', e => updateObsInCarousel({ ...e.detail, place: e.detail.place || garden.name }, gardenMap, plantMap));
+document.addEventListener('obs:deleted', e => removeObsFromCarousel(e.detail.id));
+
+document.addEventListener('plant:updated', e => {
+  const idx = allPlants.findIndex(p => p.slug === e.detail.slug);
+  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
 });
 
 // Lock panels open on click; release by clicking col 1

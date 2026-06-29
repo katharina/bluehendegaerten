@@ -265,7 +265,9 @@ export default async function handler(req, res) {
         }
         const effectiveGarden = garden ?? fields.garden;
         if (slugs?.length && effectiveGarden) await addSlugsToGarden(effectiveGarden, slugs);
-        return res.json({ ok: true });
+        const { data: updated } = await supabase.from('observations').select('*').eq('id', id).maybeSingle();
+        const withS = await withSlugs([updated]);
+        return res.json(withS[0]);
       }
       if (req.method === 'DELETE') {
         if (!await requireUser(req, res)) return;

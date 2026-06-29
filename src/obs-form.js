@@ -431,14 +431,16 @@ async function _onSubmit() {
     };
 
     if (_editId) {
-      await authedFetch(`/api/observations/${_editId}`, {
+      const editRes = await authedFetch(`/api/observations/${_editId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      const saved = await editRes.json();
+      const _plants = (saved.slugs ?? []).map(s => _plantBySlug.get(s)).filter(Boolean);
       resetBtn();
       _dialog.close();
-      window.location.reload();
+      document.dispatchEvent(new CustomEvent('obs:updated', { detail: { ...saved, _plants } }));
     } else {
       const res     = await authedFetch('/api/observations', {
         method: 'POST',

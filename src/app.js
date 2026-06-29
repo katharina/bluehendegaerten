@@ -1,7 +1,7 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
 import { renderGardenList } from './gardens.js';
-import { renderObsCarousel, prependObsToCarousel } from './observations.js';
+import { renderObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -35,6 +35,11 @@ initAddPlant({
   },
 });
 
-document.addEventListener('obs:saved', e => {
-  prependObsToCarousel(e.detail, gardenMap, plantMap);
+document.addEventListener('obs:saved',   e => prependObsToCarousel(e.detail, gardenMap, plantMap));
+document.addEventListener('obs:updated', e => updateObsInCarousel(e.detail, gardenMap, plantMap));
+document.addEventListener('obs:deleted', e => removeObsFromCarousel(e.detail.id));
+
+document.addEventListener('plant:updated', e => {
+  const idx = plants.findIndex(p => p.slug === e.detail.slug);
+  if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants); }
 });
