@@ -973,7 +973,7 @@ dialog#plant-modal .action-btn {
 }
 
 .plant-modal-header .botanical-name {
-  font-size: var(--hb-font-size-08);
+  font-size: var(--hb-font-size-10);
   line-height: 1.1;
 }
 
@@ -1258,6 +1258,9 @@ dialog#plant-modal.authenticated .plant-color-picker {
   .plant-modal-info {
     overflow-y: visible;
     padding: var(--hb-space-500) var(--page-pad);
+  }
+  .plant-modal-header .botanical-name {
+    font-size: var(--hb-font-size-08);
   }
   .plant-modal-observations {
     overflow-y: visible;
