@@ -29,15 +29,16 @@ function buildPlantCard(p, maxW) {
   return card;
 }
 
-export function renderPlantList(plants, { bedSlugs = null } = {}) {
-  const sorted = [...plants].sort((a, b) => {
+export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } = {}) {
+  const visible = obsSlugSet ? plants.filter(p => obsSlugSet.has(p.slug)) : plants;
+  const sorted = [...visible].sort((a, b) => {
     const aN = isNew(a), bN = isNew(b);
     if (aN && !bN) return -1;
     if (!aN && bN) return 1;
     if (aN && bN) return new Date(b.created_at) - new Date(a.created_at);
     return (a.name ?? '').localeCompare(b.name ?? '');
   });
-  const maxW = Math.max(...plants.map(p => p.world_w ?? 0.3));
+  const maxW = Math.max(...visible.map(p => p.world_w ?? 0.3), 0.3);
   const list = document.getElementById('plant-list');
   const filterInput = document.getElementById('plant-filter');
   const bedLabel    = document.getElementById('plant-filter-bed-label');

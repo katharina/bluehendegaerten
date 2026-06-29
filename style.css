@@ -181,6 +181,17 @@ ul {
 
 #garden-list {
   min-height: 3em;
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+#garden-list li {
+  margin-bottom: var(--hb-space-150);
+}
+
+.garden-count {
+  color: #000;
+  text-decoration: none;
 }
 
 #obs-carousel,

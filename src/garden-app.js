@@ -252,11 +252,19 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   }, true);
 });
 
+const obsSlugSet = new Set(allObservations.flatMap(o => o.slugs ?? []));
+
+function updatePlantCount(n) {
+  document.getElementById('plant-count').textContent = n ?? gardenPlants.filter(p => obsSlugSet.has(p.slug)).length;
+}
+
+document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.size));
+
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
 renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
-renderPlantList(gardenPlants, { bedSlugs });
+renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
 rerenderBedPlan();
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
@@ -270,13 +278,33 @@ initAddPlant({
   },
 });
 
-document.addEventListener('obs:saved',   e => prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap));
-document.addEventListener('obs:updated', e => updateObsInCarousel({ ...e.detail, place: e.detail.place || garden.name }, gardenMap, plantMap));
-document.addEventListener('obs:deleted', e => removeObsFromCarousel(e.detail.id));
+document.addEventListener('obs:saved', e => {
+  allObservations.push(e.detail);
+  (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
+  prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
+  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+});
+
+document.addEventListener('obs:updated', e => {
+  const idx = allObservations.findIndex(o => o.id === e.detail.id);
+  if (idx !== -1) allObservations[idx] = { ...allObservations[idx], ...e.detail };
+  (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
+  updateObsInCarousel({ ...e.detail, place: e.detail.place || garden.name }, gardenMap, plantMap);
+  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+});
+
+document.addEventListener('obs:deleted', e => {
+  const idx = allObservations.findIndex(o => o.id === e.detail.id);
+  if (idx !== -1) allObservations.splice(idx, 1);
+  obsSlugSet.clear();
+  allObservations.forEach(o => (o.slugs ?? []).forEach(s => obsSlugSet.add(s)));
+  removeObsFromCarousel(e.detail.id);
+  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+});
 
 document.addEventListener('plant:updated', e => {
   const idx = allPlants.findIndex(p => p.slug === e.detail.slug);
-  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
+  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs, obsSlugSet }); }
 });
 
 
