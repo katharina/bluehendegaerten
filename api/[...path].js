@@ -19,15 +19,22 @@ async function reverseGeocode(lat, lon) {
     if (!geo.ok) return null;
     const { address } = await geo.json();
     if (!address) return null;
-    const sub    = address.suburb ?? address.quarter ?? address.neighbourhood ?? address.city_district ?? null;
-    const city   = address.city ?? address.town ?? address.village ?? address.hamlet ?? null;
-    const region = address.county ?? address.state ?? null;
-    const ctry   = address.country ?? null;
-    if (sub && city) return region ? `${sub}, ${city}, ${region}` : `${sub}, ${city}`;
-    if (city && region) return `${city}, ${region}`;
-    if (city && ctry)   return `${city}, ${ctry}`;
-    if (region && ctry) return `${region}, ${ctry}`;
-    return sub ?? city ?? region ?? ctry ?? null;
+    const a = address;
+    const sub    = a.suburb ?? a.quarter ?? a.neighbourhood ?? a.city_district ?? null;
+    const city   = a.city ?? a.town ?? a.village ?? a.hamlet ?? null;
+    const county = a.county ?? a.state_district ?? null;
+    const state  = a.state ?? null;
+    const ctry   = a.country ?? null;
+
+    // Pick most specific, then exactly one level up
+    const specific = sub ?? city ?? county ?? state ?? ctry ?? null;
+    let context = null;
+    if (specific === sub)    context = city ?? county ?? state ?? ctry ?? null;
+    if (specific === city)   context = county ?? state ?? ctry ?? null;
+    if (specific === county) context = state ?? ctry ?? null;
+    if (specific === state)  context = ctry ?? null;
+
+    return specific && context ? `${specific}, ${context}` : specific ?? null;
   } catch (e) {
     console.error('[geocode]', e?.message);
     return null;
