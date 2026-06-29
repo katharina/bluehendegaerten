@@ -91,9 +91,18 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
   function makeChip(p, checked, score, suggested) {
     const chip = document.createElement('label');
     chip.className = 'obs-plant-chip' + (checked ? ' checked' : '') + (suggested ? ' pn-suggested' : '');
-    const displayName = p.name_de || p.name;
-    chip.innerHTML = `<input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>${displayName}${score != null ? `<span class="pn-score">${score}%</span>` : ''}`;
+    chip.innerHTML = `
+      <input type="checkbox" value="${p.slug}"${checked ? ' checked' : ''}>
+      <em class="chip-botanical">${p.name}</em>
+      ${p.name_de ? `<span class="chip-de">${p.name_de}</span>` : ''}
+      ${score != null ? `<span class="pn-score">${score}%</span>` : ''}
+      <button type="button" class="chip-remove">×</button>`;
     chip.querySelector('input').addEventListener('change', e => chip.classList.toggle('checked', e.target.checked));
+    chip.querySelector('.chip-remove').addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      chip.remove();
+    });
     return chip;
   }
 
@@ -108,6 +117,10 @@ function _buildPlantGrid(preselected = [], suggestions = [], showAll = false) {
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(p => grid.appendChild(makeChip(p, false, null, false)));
   } else if (suggestions.length && !preselected.length) {
+    const hdr = document.createElement('div');
+    hdr.className = 'obs-plant-grid-header';
+    hdr.textContent = 'Identifizierte Pflanzen';
+    grid.appendChild(hdr);
     suggestedSlugs.forEach(slug => {
       const p = _plantBySlug.get(slug);
       if (p) grid.appendChild(makeChip(p, true, scoreMap.get(slug), true));

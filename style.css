@@ -459,12 +459,18 @@ dialog#obs-form-dialog::backdrop {
   gap: var(--hb-space-200);
 }
 
+.obs-plant-grid-header {
+  width: 100%;
+  font-size: var(--hb-font-size-01);
+  opacity: 0.45;
+  margin-bottom: var(--hb-space-050);
+}
+
 .obs-plant-chip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: var(--hb-font-size-01);
-  font-style: italic;
   padding: var(--hb-space-100) var(--hb-space-300);
   border: 1px solid #ddd;
   cursor: pointer;
@@ -473,6 +479,27 @@ dialog#obs-form-dialog::backdrop {
 }
 
 .obs-plant-chip input[type="checkbox"] { display: none; }
+
+.chip-botanical { font-style: italic; }
+
+.chip-de {
+  font-style: normal;
+  opacity: 0.65;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1em;
+  line-height: 1;
+  margin-left: 2px;
+}
+
+.chip-remove:hover { opacity: 1; }
 
 .obs-plant-chip.checked {
   border-color: #000;
