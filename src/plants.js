@@ -13,8 +13,11 @@ function parseBreite(p) {
   return nums ? Math.max(...nums.map(Number)) : null;
 }
 
-function buildPlantCard(p, maxW) {
-  const dotSize = Math.round((parseBreite(p) ?? 30) / maxW * 48);
+const DOT_CAP = 300;
+
+function buildPlantCard(p) {
+  const breite = Math.min(parseBreite(p) ?? 30, DOT_CAP);
+  const dotSize = Math.max(8, Math.round(Math.sqrt(breite / DOT_CAP) * 48));
   const card = document.createElement('div');
   card.className = 'plant-card';
   card.dataset.slug = p.slug;
@@ -43,7 +46,6 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
     if (aN && bN) return new Date(b.created_at) - new Date(a.created_at);
     return (a.name ?? '').localeCompare(b.name ?? '');
   });
-  const maxW = Math.max(...visible.map(p => parseBreite(p) ?? 30), 30);
   const list = document.getElementById('plant-list');
   const filterInput = document.getElementById('plant-filter');
   const bedLabel    = document.getElementById('plant-filter-bed-label');
@@ -60,7 +62,7 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
       (p.name_de ?? '').toLowerCase().includes(q) ||
       (p.family  ?? '').toLowerCase().includes(q)
     );
-    list.replaceChildren(...filtered.map(p => buildPlantCard(p, maxW)));
+    list.replaceChildren(...filtered.map(p => buildPlantCard(p)));
     document.dispatchEvent(new CustomEvent('plant:filter', {
       detail: { slugs: new Set(filtered.map(p => p.slug)), active: !!(q || bedOnly) },
     }));
