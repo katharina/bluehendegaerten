@@ -1221,10 +1221,24 @@ dialog#plant-modal.authenticated .plant-color-picker {
   opacity: 0.3;
 }
 
-.plant-info-save {
+.plant-info-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: var(--hb-space-300);
+}
+
+.action-btn-outline {
+  background: transparent;
   color: var(--plant-fg, #000);
-  border-color: var(--plant-fg, #000);
+  border: 1px solid var(--plant-fg, #000);
+  padding: 0 var(--hb-space-300);
+  height: 32px;
+  border-radius: 16px;
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .bloom-bar--editable .bloom-cell {
@@ -1347,7 +1361,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   flex-basis: 100%;
 }
 
-.plant-modal-observations .action-btn {
+.plant-modal-observations .action-btn-outline {
   align-self: flex-start;
   margin-bottom: var(--hb-space-500);
 }

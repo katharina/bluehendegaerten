@@ -204,7 +204,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         }
 
         const autofillBtn = document.createElement('button');
-        autofillBtn.className = 'action-btn-ghost plant-info-autofill';
+        autofillBtn.className = 'action-btn-outline plant-info-autofill';
         autofillBtn.textContent = 'Automatisch befüllen';
         autofillBtn.addEventListener('click', async () => {
           autofillBtn.disabled = true;
@@ -236,7 +236,9 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
             setTimeout(() => autofillBtn.textContent = 'Automatisch befüllen', 2000);
           }
         });
-        infoRows.after(autofillBtn);
+        const actionsRow = document.createElement('div');
+        actionsRow.className = 'plant-info-actions';
+        actionsRow.appendChild(autofillBtn);
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'action-btn plant-info-save';
@@ -261,7 +263,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           if (r.ok) document.dispatchEvent(new CustomEvent('plant:updated', { detail: { slug: plant.slug, family: fields.family, ...fields } }));
           setTimeout(() => saveBtn.textContent = 'Speichern', 2000);
         });
-        autofillBtn.after(saveBtn);
+        actionsRow.appendChild(saveBtn);
+        infoRows.after(actionsRow);
       } else {
         const rows = CARE_FIELDS.filter(f => info[f.key]);
         if (rows.length) {
