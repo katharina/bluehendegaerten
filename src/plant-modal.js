@@ -240,9 +240,15 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
             setTimeout(() => autofillBtn.textContent = 'Automatisch befüllen', 2000);
           }
         });
+        const hasEmptyFields =
+          !dialog.querySelector('.plant-modal-de').textContent.trim() ||
+          !familyInput.value.trim() ||
+          !bloomBar.querySelectorAll('.bloom-cell.active').length ||
+          [...infoRows.querySelectorAll('.plant-info-input')].some(i => !i.value.trim());
+
         const actionsRow = document.createElement('div');
         actionsRow.className = 'plant-info-actions';
-        actionsRow.appendChild(autofillBtn);
+        if (hasEmptyFields) actionsRow.appendChild(autofillBtn);
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'action-btn plant-info-save';
