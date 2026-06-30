@@ -155,6 +155,60 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── Plant autofill (Claude Haiku) ───────────────────────────────────────────
+  if (resource === 'plant-autofill') {
+    if (req.method !== 'POST') return res.status(405).end();
+    if (!await requireUser(req, res)) return;
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) return res.status(500).json({ error: 'not configured' });
+    const { name } = req.body ?? {};
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const prompt = `Du bist ein botanischer Experte. Fülle die folgenden Felder für die Pflanze "${name}" aus.
+
+Antworte NUR mit einem JSON-Objekt mit diesen Feldern (null wenn unbekannt):
+- name_de: deutscher Trivialname
+- family: botanische Familie
+- art: Wuchsart, z.B. "einjährig", "zweijährig", "ausdauernd", "Strauch", "Baum"
+- wuchs: Wuchsform, z.B. "aufrecht", "kriechend", "horstig", "ausläuferbildend"
+- hoehe: typische Höhe in cm als String, z.B. "60-120"
+- breite: typische Breite in cm als String, z.B. "30-60"
+- licht: "Sonne", "Halbschatten", "Schatten" oder Kombination
+- boden: Bodentyp, z.B. "humos, feucht", "sandig, durchlässig"
+- wasser: "trocken", "mäßig", "feucht" oder "wechselfeucht"
+- naehrstoff: "nährstoffarm", "mäßig" oder "nährstoffreich"
+- ph: z.B. "sauer", "neutral", "basisch"
+- frost: "frosthart", "bedingt frosthart" oder "frostempfindlich"
+- wurzel: z.B. "Pfahlwurzel", "Flachwurzel", "Rhizom", "Zwiebel"
+- kuebel: "ja", "nein" oder "bedingt"
+- bloom_months: Blütemonate als Array von Zahlen 1-12, z.B. [6,7,8,9]
+- invasiv: "ja", "nein" oder "regional"
+- world_w: typische Ausbreitung in Metern als Dezimalzahl, z.B. 0.5
+
+Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
+    try {
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 600,
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+      if (!r.ok) return res.status(r.status).json({ error: 'claude error' });
+      const data = await r.json();
+      const text = data.content?.[0]?.text ?? '';
+      const json = text.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+      return res.json(JSON.parse(json));
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
   // ── Gardens ─────────────────────────────────────────────────────────────────
   if (resource === 'gardens') {
     if (!id) {

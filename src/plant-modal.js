@@ -203,6 +203,41 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           infoRows.appendChild(row);
         }
 
+        const autofillBtn = document.createElement('button');
+        autofillBtn.className = 'action-btn-ghost plant-info-autofill';
+        autofillBtn.textContent = 'Automatisch befüllen';
+        autofillBtn.addEventListener('click', async () => {
+          autofillBtn.disabled = true;
+          autofillBtn.textContent = '…';
+          try {
+            const r = await authedFetch('/api/plant-autofill', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: plant.name }),
+            });
+            if (!r.ok) throw new Error();
+            const data = await r.json();
+            if (data.name_de) dialog.querySelector('.plant-modal-de').textContent = data.name_de;
+            if (data.family) familyInput.value = data.family;
+            infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
+              const val = data[inp.dataset.field];
+              if (val != null) inp.value = val;
+            });
+            if (Array.isArray(data.bloom_months)) {
+              bloomBar.querySelectorAll('.bloom-cell').forEach(cell => {
+                cell.classList.toggle('active', data.bloom_months.includes(parseInt(cell.dataset.month)));
+              });
+            }
+            autofillBtn.textContent = 'Befüllt ✓';
+          } catch {
+            autofillBtn.textContent = 'Fehler';
+          } finally {
+            autofillBtn.disabled = false;
+            setTimeout(() => autofillBtn.textContent = 'Automatisch befüllen', 2000);
+          }
+        });
+        infoRows.after(autofillBtn);
+
         const saveBtn = document.createElement('button');
         saveBtn.className = 'action-btn plant-info-save';
         saveBtn.textContent = 'Speichern';
@@ -226,7 +261,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           if (r.ok) document.dispatchEvent(new CustomEvent('plant:updated', { detail: { slug: plant.slug, family: fields.family, ...fields } }));
           setTimeout(() => saveBtn.textContent = 'Speichern', 2000);
         });
-        infoRows.after(saveBtn);
+        autofillBtn.after(saveBtn);
       } else {
         const rows = CARE_FIELDS.filter(f => info[f.key]);
         if (rows.length) {
