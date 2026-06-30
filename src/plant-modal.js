@@ -162,6 +162,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const infoRows = dialog.querySelector('.plant-modal-info-rows');
   bloomBar.innerHTML = infoRows.innerHTML = '';
   dialog.querySelector('.plant-info-save')?.remove();
+  dialog.querySelector('.plant-info-autofill')?.remove();
+  dialog.querySelector('.plant-info-actions')?.remove();
 
   fetch(`/api/plants/${plant.slug}`)
     .then(r => r.ok ? r.json() : null)
@@ -217,13 +219,15 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
             });
             if (!r.ok) throw new Error();
             const data = await r.json();
-            if (data.name_de) dialog.querySelector('.plant-modal-de').textContent = data.name_de;
-            if (data.family) familyInput.value = data.family;
+            if (data.name_de && !dialog.querySelector('.plant-modal-de').textContent.trim())
+              dialog.querySelector('.plant-modal-de').textContent = data.name_de;
+            if (data.family && !familyInput.value.trim()) familyInput.value = data.family;
             infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
               const val = data[inp.dataset.field];
-              if (val != null) inp.value = val;
+              if (val != null && !inp.value.trim()) inp.value = val;
             });
-            if (Array.isArray(data.bloom_months)) {
+            const activeMonths = bloomBar.querySelectorAll('.bloom-cell.active');
+            if (Array.isArray(data.bloom_months) && !activeMonths.length) {
               bloomBar.querySelectorAll('.bloom-cell').forEach(cell => {
                 cell.classList.toggle('active', data.bloom_months.includes(parseInt(cell.dataset.month)));
               });
