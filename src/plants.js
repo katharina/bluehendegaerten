@@ -8,8 +8,13 @@ function isNew(p) {
   return p.created_at && (Date.now() - new Date(p.created_at).getTime()) < THREE_DAYS;
 }
 
+function parseBreite(p) {
+  const nums = String(p.breite ?? '').match(/\d+/g);
+  return nums ? Math.max(...nums.map(Number)) : null;
+}
+
 function buildPlantCard(p, maxW) {
-  const dotSize = Math.round((p.world_w ?? 0.3) / maxW * 48);
+  const dotSize = Math.round((parseBreite(p) ?? 30) / maxW * 48);
   const card = document.createElement('div');
   card.className = 'plant-card';
   card.dataset.slug = p.slug;
@@ -38,7 +43,7 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
     if (aN && bN) return new Date(b.created_at) - new Date(a.created_at);
     return (a.name ?? '').localeCompare(b.name ?? '');
   });
-  const maxW = Math.max(...visible.map(p => p.world_w ?? 0.3), 0.3);
+  const maxW = Math.max(...visible.map(p => parseBreite(p) ?? 30), 30);
   const list = document.getElementById('plant-list');
   const filterInput = document.getElementById('plant-filter');
   const bedLabel    = document.getElementById('plant-filter-bed-label');

@@ -1229,6 +1229,8 @@ dialog#plant-modal.authenticated .plant-color-picker {
 }
 
 .action-btn-outline {
+  display: inline-flex;
+  align-items: center;
   background: transparent;
   color: var(--plant-fg, #000);
   border: 1px solid var(--plant-fg, #000);
