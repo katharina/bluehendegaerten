@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&family=Source+Code+Pro:wght@300;400&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/globals.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <button class="hamburger" id="topbar-btn" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="topbar-dropdown" id="topbar-dropdown" hidden></div>
+
+  <section class="page-header chapeau">
+    <a href="/">Blühende Gärten</a>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h3><span id="plant-count"></span> Pflanzen</h3>
+    </div>
+    <div class="section-content">
+      <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+    </div>
+    <div id="plant-list"></div>
+  </section>
+
+  <dialog id="plant-modal" tabindex="-1">
+    <div class="plant-modal-inner">
+      <div class="plant-modal-layout">
+
+        <div class="plant-modal-info">
+          <div class="plant-modal-header">
+            <div class="botanical-name plant-modal-name" spellcheck="false"></div>
+            <div class="german-name plant-modal-de" spellcheck="false"></div>
+            <div class="plant-modal-meta">
+              <input class="plant-modal-family" type="text" placeholder="Familie" spellcheck="false" autocomplete="off">
+              <label class="plant-color-swatch" for="plant-color-input"></label>
+              <input class="plant-color-picker" id="plant-color-input" type="color">
+            </div>
+          </div>
+          <div class="plant-modal-gardens"></div>
+          <details class="plant-modal-data" open>
+            <summary>Pflanzendaten</summary>
+            <div class="plant-modal-bloom-bar"></div>
+            <div class="plant-modal-info-rows"></div>
+            <details class="plant-modal-changelog" hidden>
+              <summary>Änderungsprotokoll</summary>
+              <div class="plant-modal-changelog-rows"></div>
+            </details>
+          </details>
+        </div>
+
+        <div class="plant-modal-observations">
+          <div class="plant-modal-obs-header">
+            <div class="section-header">
+              <h3>Beobachtungen</h3>
+              <button class="action-btn-icon" id="plant-modal-close">×</button>
+            </div>
+            <button class="action-btn-outline" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
+          </div>
+          <div class="plant-modal-obs-list">
+            <div class="obs-col"></div>
+            <div class="obs-col"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="obs-modal" tabindex="-1">
+    <button class="obs-nav obs-nav--prev">&#8249;</button>
+    <div class="obs-modal-inner">
+      <div class="obs-modal-img">
+        <img src="" alt="">
+        <div class="obs-modal-info">
+          <div class="obs-modal-plants"></div>
+          <div class="obs-modal-place observation-place"></div>
+          <div class="obs-modal-date observation-date"></div>
+          <div class="obs-modal-note"></div>
+        </div>
+      </div>
+    </div>
+    <button class="obs-nav obs-nav--next">&#8250;</button>
+    <div class="obs-modal-list" hidden></div>
+  </dialog>
+
+  <script type="module" src="/src/plants-all.js"></script>
+</body>
+</html>

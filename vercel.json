@@ -8,6 +8,7 @@
     { "src": "/api/(.*)", "dest": "/api/[...path].js" },
     { "handle": "filesystem" },
     { "src": "/", "dest": "/index.html" },
+    { "src": "/plants/all", "dest": "/plants/all.html" },
     { "src": "/(.*)", "dest": "/garden.html" }
   ]
 }

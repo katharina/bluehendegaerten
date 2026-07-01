@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
             const url = (req.url ?? '/').split('?')[0];
             const isRoot     = url === '/';
             const hasExt     = /\.[^/]+$/.test(url);
+            if (url === '/plants/all') { req.url = '/plants/all.html'; next(); return; }
             const isReserved = url.startsWith('/api') ||
                                url.startsWith('/uploads') ||
                                url.startsWith('/plants') ||
@@ -44,8 +45,9 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          main:   'index.html',
-          garden: 'garden.html',
+          main:      'index.html',
+          garden:    'garden.html',
+          plantsAll: 'plants/all.html',
         },
       },
     },
