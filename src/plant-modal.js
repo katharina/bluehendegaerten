@@ -253,7 +253,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         saveBtn.className = 'action-btn plant-info-save';
         saveBtn.textContent = 'Speichern';
         saveBtn.addEventListener('click', async () => {
-          const fields = { family: familyInput.value.trim() || null };
+          const fields = {
+            family:  familyInput.value.trim() || null,
+            name_de: dialog.querySelector('.plant-modal-de').textContent.trim() || null,
+          };
           infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
             fields[inp.dataset.field] = inp.value.trim() || null;
           });
