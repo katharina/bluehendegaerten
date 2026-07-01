@@ -196,7 +196,8 @@ ul {
 }
 
 #obs-carousel,
-#herbar-carousel {
+#herbar-carousel,
+#notiz-carousel {
   display: flex;
   gap: var(--hb-space-200);
   overflow-x: auto;
@@ -206,12 +207,14 @@ ul {
 
 
 #obs-carousel .carousel-card:first-child,
-#herbar-carousel .carousel-card:first-child {
+#herbar-carousel .carousel-card:first-child,
+#notiz-carousel .carousel-card:first-child {
   margin-left: var(--page-pad);
 }
 
 #obs-carousel::-webkit-scrollbar,
-#herbar-carousel::-webkit-scrollbar {
+#herbar-carousel::-webkit-scrollbar,
+#notiz-carousel::-webkit-scrollbar {
   display: none;
 }
 
