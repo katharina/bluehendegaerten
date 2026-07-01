@@ -1,5 +1,5 @@
 import { authedFetch, supabase } from './auth.js';
-import { fullUrl } from './utils.js';
+import { fullUrl, thumbUrl } from './utils.js';
 
 let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
 let _defaultGardenId = null;
@@ -11,7 +11,8 @@ let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
 let _loggedIn = false;
 let _recentSlugs = [];
 let _rotatedBlob = null;
-let _rotationSource = null; // File or Blob — always a local source, avoids canvas CORS
+let _rotationSource = null;        // File or Blob — always a local source, avoids canvas CORS
+let _rotationSourcePromise = null; // prefetch for existing obs (thumb proxy, same-origin)
 
 export function addPlantToObsForm(plant) {
   if (!_plantBySlug) return;
@@ -86,6 +87,9 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null,
 
   _rotatedBlob = null;
   _rotationSource = null;
+  _rotationSourcePromise = editObs?.filename
+    ? fetch(thumbUrl(editObs.filename)).then(r => r.blob()).then(b => { _rotationSource = b; return b; }).catch(() => null)
+    : null;
   _setPreview(editObs?.filename ? fullUrl(editObs.filename) : null);
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
@@ -124,6 +128,7 @@ function _close() {
   _suggestions = [];
   _rotatedBlob = null;
   _rotationSource = null;
+  _rotationSourcePromise = null;
   _dialog.close();
 }
 
@@ -534,11 +539,9 @@ async function _onRotate() {
   try {
     let sourceBlob = _rotatedBlob ?? _rotationSource;
     if (!sourceBlob) {
-      const img = _dialog.querySelector('#obs-form-preview-img');
-      if (!img?.src || img.src === window.location.href) return;
-      sourceBlob = await fetch(img.src).then(r => r.blob());
-      _rotationSource = sourceBlob;
+      sourceBlob = await _rotationSourcePromise;
     }
+    if (!sourceBlob) { if (msgEl) msgEl.textContent = 'Bitte Datei neu auswählen um zu drehen.'; return; }
 
     const blobUrl = URL.createObjectURL(sourceBlob);
     const loaded = await new Promise((res, rej) => {
