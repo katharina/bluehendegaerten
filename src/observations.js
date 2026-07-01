@@ -96,6 +96,7 @@ export function updateObsInCarousel(obs, gardenMap, plantMap) {
   if (existing) {
     existing.replaceWith(buildObsCard(obs, gardenMap, plantMap, [obs]));
   } else {
+    removeObsFromCarousel(obs.id);
     prependObsToCarousel(obs, gardenMap, plantMap);
   }
 }
