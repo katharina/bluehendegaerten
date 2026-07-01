@@ -77,7 +77,9 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   setColor(plant.color ?? '#ffffff');
 
   dialog.querySelector('.plant-modal-name').textContent = plant.name ?? '';
-  dialog.querySelector('.plant-modal-de').textContent = plant.name_de ?? '';
+  const nameDeEl = dialog.querySelector('.plant-modal-de');
+  nameDeEl.textContent = plant.name_de ?? '';
+  nameDeEl.contentEditable = _loggedIn ? 'true' : 'false';
   dialog.querySelector('.plant-modal-data').open = !window.matchMedia('(max-width: 640px)').matches;
   const familyInput = dialog.querySelector('.plant-modal-family');
   familyInput.value = plant.family ?? '';
@@ -170,7 +172,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
       if (!info || _currentPlant?.slug !== plant.slug) return;
 
       dialog.querySelector('.plant-modal-name').textContent = info.name ?? '';
-      dialog.querySelector('.plant-modal-de').textContent = info.name_de ?? '';
+      nameDeEl.textContent = info.name_de ?? '';
       familyInput.value = info.family ?? '';
       if (info.color) setColor(info.color);
 
@@ -218,8 +220,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
             });
             if (!r.ok) throw new Error();
             const data = await r.json();
-            if (data.name_de && !dialog.querySelector('.plant-modal-de').textContent.trim())
-              dialog.querySelector('.plant-modal-de').textContent = data.name_de;
+            if (data.name_de && !nameDeEl.textContent.trim())
+              nameDeEl.textContent = data.name_de;
             if (data.family && !familyInput.value.trim()) familyInput.value = data.family;
             infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
               const val = data[inp.dataset.field];
@@ -240,7 +242,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           }
         });
         const hasEmptyFields =
-          !dialog.querySelector('.plant-modal-de').textContent.trim() ||
+          !nameDeEl.textContent.trim() ||
           !familyInput.value.trim() ||
           !bloomBar.querySelectorAll('.bloom-cell.active').length ||
           [...infoRows.querySelectorAll('.plant-info-input')].some(i => !i.value.trim());
@@ -255,7 +257,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         saveBtn.addEventListener('click', async () => {
           const fields = {
             family:  familyInput.value.trim() || null,
-            name_de: dialog.querySelector('.plant-modal-de').textContent.trim() || null,
+            name_de: nameDeEl.textContent.trim() || null,
           };
           infoRows.querySelectorAll('.plant-info-input').forEach(inp => {
             fields[inp.dataset.field] = inp.value.trim() || null;
