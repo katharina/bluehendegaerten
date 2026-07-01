@@ -124,5 +124,7 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   const belege = observations
     .filter(o => o.type === 'herbarbeleg' && o.filename)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const section = document.getElementById('herbar-section');
+  if (section) section.hidden = belege.length === 0;
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }

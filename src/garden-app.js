@@ -264,7 +264,7 @@ const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
 renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
-renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
@@ -282,7 +282,7 @@ document.addEventListener('obs:saved', e => {
   allObservations.push(e.detail);
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
-  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+  renderPlantList(gardenPlants, { bedSlugs });
 });
 
 document.addEventListener('obs:updated', e => {
@@ -290,7 +290,7 @@ document.addEventListener('obs:updated', e => {
   if (idx !== -1) allObservations[idx] = { ...allObservations[idx], ...e.detail };
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   updateObsInCarousel({ ...e.detail, place: e.detail.place || garden.name }, gardenMap, plantMap);
-  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+  renderPlantList(gardenPlants, { bedSlugs });
 });
 
 document.addEventListener('obs:deleted', e => {
@@ -299,12 +299,12 @@ document.addEventListener('obs:deleted', e => {
   obsSlugSet.clear();
   allObservations.forEach(o => (o.slugs ?? []).forEach(s => obsSlugSet.add(s)));
   removeObsFromCarousel(e.detail.id);
-  renderPlantList(gardenPlants, { bedSlugs, obsSlugSet });
+  renderPlantList(gardenPlants, { bedSlugs });
 });
 
 document.addEventListener('plant:updated', e => {
   const idx = allPlants.findIndex(p => p.slug === e.detail.slug);
-  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs, obsSlugSet }); }
+  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
 });
 
 
