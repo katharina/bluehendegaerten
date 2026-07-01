@@ -257,7 +257,7 @@ function renderNotes(obs) {
   const list    = document.getElementById('notes-list');
   if (!section || !list) return;
   const notes = obs
-    .filter(o => o.text)
+    .filter(o => o.type === 'notiz')
     .sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at));
   section.hidden = notes.length === 0;
   list.innerHTML = notes.map(o => {
@@ -300,11 +300,13 @@ initAddPlant({
 document.addEventListener('obs:saved', e => {
   allObservations.push(e.detail);
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
-  prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
-  const carousel = document.getElementById('obs-carousel');
-  if (carousel) carousel.scrollLeft = 0;
+  if (e.detail.type !== 'notiz') {
+    prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
+    const carousel = document.getElementById('obs-carousel');
+    if (carousel) carousel.scrollLeft = 0;
+  }
   renderNotes(allObservations.filter(o => o.garden === garden.id));
-  if (e.detail.text) {
+  if (e.detail.type === 'notiz') {
     document.getElementById('notes-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   renderPlantList(gardenPlants, { bedSlugs });
