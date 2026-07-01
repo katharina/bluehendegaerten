@@ -530,39 +530,43 @@ function _setPreview(src) {
 }
 
 async function _onRotate() {
-  // Use _rotatedBlob (previous rotation) or _rotationSource (original file) as canvas source.
-  // Never read from the DOM img — it may be cross-origin (R2) and would taint the canvas.
-  const source = _rotatedBlob ?? _rotationSource;
-  if (!source) {
-    // Editing an existing obs with no new file selected — fetch as blob to get a local copy.
-    const img = _dialog.querySelector('#obs-form-preview-img');
-    if (!img?.src) return;
-    try {
-      _rotationSource = await fetch(img.src).then(r => r.blob());
-    } catch { return; }
+  const msgEl = _dialog.querySelector('#obs-form-msg');
+  try {
+    let sourceBlob = _rotatedBlob ?? _rotationSource;
+    if (!sourceBlob) {
+      const img = _dialog.querySelector('#obs-form-preview-img');
+      if (!img?.src || img.src === window.location.href) return;
+      sourceBlob = await fetch(img.src).then(r => r.blob());
+      _rotationSource = sourceBlob;
+    }
+
+    const blobUrl = URL.createObjectURL(sourceBlob);
+    const loaded = await new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res(i);
+      i.onerror = () => rej(new Error('Bild konnte nicht geladen werden'));
+      i.src = blobUrl;
+    });
+    URL.revokeObjectURL(blobUrl);
+
+    const canvas = document.createElement('canvas');
+    canvas.width  = loaded.naturalHeight;
+    canvas.height = loaded.naturalWidth;
+    const ctx = canvas.getContext('2d');
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(loaded, -loaded.naturalWidth / 2, -loaded.naturalHeight / 2);
+
+    const rotated = await new Promise((res, rej) =>
+      canvas.toBlob(b => b ? res(b) : rej(new Error('Canvas toBlob fehlgeschlagen')), 'image/jpeg', 0.92)
+    );
+    _rotatedBlob = rotated;
+    _setPreview(URL.createObjectURL(_rotatedBlob));
+    if (msgEl) msgEl.textContent = '';
+  } catch (err) {
+    console.error('Rotate failed:', err);
+    if (msgEl) msgEl.textContent = 'Rotation fehlgeschlagen: ' + err.message;
   }
-
-  const blob = _rotatedBlob ?? _rotationSource;
-  if (!blob) return;
-  const url = URL.createObjectURL(blob);
-  const fresh = await new Promise((res, rej) => {
-    const i = new Image();
-    i.onload = () => res(i);
-    i.onerror = rej;
-    i.src = url;
-  }).catch(() => null);
-  URL.revokeObjectURL(url);
-  if (!fresh?.naturalWidth) return;
-
-  const canvas = document.createElement('canvas');
-  canvas.width  = fresh.naturalHeight;
-  canvas.height = fresh.naturalWidth;
-  const ctx = canvas.getContext('2d');
-  ctx.translate(canvas.width / 2, canvas.height / 2);
-  ctx.rotate(Math.PI / 2);
-  ctx.drawImage(fresh, -fresh.naturalWidth / 2, -fresh.naturalHeight / 2);
-  _rotatedBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92));
-  _setPreview(URL.createObjectURL(_rotatedBlob));
 }
 
 async function _onSubmit() {
