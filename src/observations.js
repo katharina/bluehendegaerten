@@ -132,6 +132,8 @@ export function renderPflanzenlabelCarousel(observations, gardenMap, plantMap) {
   const labels = observations
     .filter(o => o.type === 'pflanzenlabel')
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const section = document.getElementById('pflanzenlabel-section');
+  if (section) section.hidden = labels.length === 0;
   renderCarousel(labels, gardenMap, plantMap, 'pflanzenlabel-carousel');
 }
 
@@ -139,6 +141,8 @@ export function renderNotizCarousel(observations, gardenMap, plantMap) {
   const notes = observations
     .filter(o => o.type === 'notiz')
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const section = document.getElementById('notiz-section');
+  if (section) section.hidden = notes.length === 0;
   renderCarousel(notes, gardenMap, plantMap, 'notiz-carousel');
 }
 
@@ -146,5 +150,7 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   const belege = observations
     .filter(o => o.type === 'herbarbeleg' && o.filename)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const section = document.getElementById('herbar-section');
+  if (section) section.hidden = belege.length === 0;
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }
