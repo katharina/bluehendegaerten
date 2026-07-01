@@ -300,7 +300,14 @@ initAddPlant({
 document.addEventListener('obs:saved', e => {
   allObservations.push(e.detail);
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
-  prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
+  if (e.detail.type === 'notiz') {
+    renderNotes(allObservations.filter(o => o.garden === garden.id));
+    document.getElementById('notes-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
+    const carousel = document.getElementById('obs-carousel');
+    if (carousel) carousel.scrollLeft = 0;
+  }
   renderPlantList(gardenPlants, { bedSlugs });
 });
 
