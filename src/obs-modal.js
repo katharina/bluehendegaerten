@@ -99,6 +99,7 @@ function renderList(list, startIndex) {
   nextBtn.hidden = true;
   listEl.hidden  = false;
   listEl.innerHTML = '';
+  listEl.scrollTop = 0;
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'obs-list-close action-btn-icon';
