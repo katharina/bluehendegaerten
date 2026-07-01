@@ -11,6 +11,7 @@ let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
 let _loggedIn = false;
 let _recentSlugs = [];
 let _rotatedBlob = null;
+let _rotationSource = null; // File or Blob — always a local source, avoids canvas CORS
 
 export function initObsForm({ gardens = [], plants = [], gardenId = null, observations = [] } = {}) {
   _dialog = document.getElementById('obs-form-dialog');
@@ -76,6 +77,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null,
   }
 
   _rotatedBlob = null;
+  _rotationSource = null;
   _setPreview(editObs?.filename ? fullUrl(editObs.filename) : null);
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
@@ -113,6 +115,7 @@ function _close() {
   _editId = null;
   _suggestions = [];
   _rotatedBlob = null;
+  _rotationSource = null;
   _dialog.close();
 }
 
@@ -481,6 +484,7 @@ async function _onFileChange(e) {
   label.classList.toggle('has-file', !!file);
   if (!file) return;
   _rotatedBlob = null;
+  _rotationSource = file;
   _setPreview(URL.createObjectURL(file));
 
   try {
@@ -518,15 +522,37 @@ function _setPreview(src) {
 }
 
 async function _onRotate() {
-  const img = _dialog.querySelector('#obs-form-preview-img');
-  if (!img || !img.src) return;
+  // Use _rotatedBlob (previous rotation) or _rotationSource (original file) as canvas source.
+  // Never read from the DOM img — it may be cross-origin (R2) and would taint the canvas.
+  const source = _rotatedBlob ?? _rotationSource;
+  if (!source) {
+    // Editing an existing obs with no new file selected — fetch as blob to get a local copy.
+    const img = _dialog.querySelector('#obs-form-preview-img');
+    if (!img?.src) return;
+    try {
+      _rotationSource = await fetch(img.src).then(r => r.blob());
+    } catch { return; }
+  }
+
+  const blob = _rotatedBlob ?? _rotationSource;
+  if (!blob) return;
+  const url = URL.createObjectURL(blob);
+  const fresh = await new Promise((res, rej) => {
+    const i = new Image();
+    i.onload = () => res(i);
+    i.onerror = rej;
+    i.src = url;
+  }).catch(() => null);
+  URL.revokeObjectURL(url);
+  if (!fresh?.naturalWidth) return;
+
   const canvas = document.createElement('canvas');
-  canvas.width  = img.naturalHeight;
-  canvas.height = img.naturalWidth;
+  canvas.width  = fresh.naturalHeight;
+  canvas.height = fresh.naturalWidth;
   const ctx = canvas.getContext('2d');
   ctx.translate(canvas.width / 2, canvas.height / 2);
   ctx.rotate(Math.PI / 2);
-  ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+  ctx.drawImage(fresh, -fresh.naturalWidth / 2, -fresh.naturalHeight / 2);
   _rotatedBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92));
   _setPreview(URL.createObjectURL(_rotatedBlob));
 }
