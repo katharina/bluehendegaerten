@@ -45,8 +45,10 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   card.querySelector('.carousel-card-delete')?.addEventListener('click', async e => {
     e.stopPropagation();
     if (!confirm('Beobachtung löschen?')) return;
-    await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+    const res = await authedFetch(`/api/observations/${o.id}`, { method: 'DELETE' });
+    if (!res.ok) return;
     card.remove();
+    document.dispatchEvent(new CustomEvent('obs:deleted', { detail: { id: o.id, type: o.type } }));
   });
   return card;
 }

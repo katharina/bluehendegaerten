@@ -320,6 +320,10 @@ document.addEventListener('obs:deleted', e => {
   obsSlugSet.clear();
   allObservations.forEach(o => (o.slugs ?? []).forEach(s => obsSlugSet.add(s)));
   removeObsFromCarousel(e.detail.id);
+  const gardenObs = allObservations.filter(o => o.garden === garden.id);
+  if (e.detail.type === 'herbarbeleg') renderHerbarCarousel(gardenObs, gardenMap, plantMap);
+  else if (e.detail.type === 'notiz') renderNotizCarousel(gardenObs, gardenMap, plantMap);
+  else if (e.detail.type === 'pflanzenlabel') renderPflanzenlabelCarousel(gardenObs, gardenMap, plantMap);
   renderPlantList(gardenPlants, { bedSlugs });
 });
 
