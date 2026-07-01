@@ -156,3 +156,14 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   if (section) section.hidden = belege.length === 0;
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }
+
+export function renderObsGrid(observations, gardenMap, plantMap, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  if (!observations.length) {
+    container.textContent = 'Keine Beobachtungen';
+    return;
+  }
+  observations.forEach(o => container.appendChild(buildObsCard(o, gardenMap, plantMap, observations)));
+}

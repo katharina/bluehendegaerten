@@ -62,3 +62,5 @@ The same principle applies to `.observation-place`, `.observation-date`, and any
 - **Shared plant modal HTML**: modal markup is duplicated in index.html and garden.html — consolidate into a shared template.
 
 - **Plant changelog not showing**: `plant_edits` table inserts appear to fail silently. Server logs `[logEdits]` errors but root cause (table schema mismatch?) unresolved. `GET /api/plant-edits/:slug` returns `[]`. Investigate Supabase `plant_edits` table columns.
+
+- **Garden-scoped plant identification via CLIP embeddings**: Replace/augment PlantNet with visual similarity search against labeled observations in the same garden. Needed because rare species (e.g. Echinacea tennesseensis) never appear in PlantNet results. Plan: (1) enable pgvector in Supabase + add `embedding vector(512)` column to observations, (2) generate CLIP embeddings via HuggingFace API (HF_TOKEN env var) on upload, (3) similarity endpoint scoped to garden, (4) show suggestions in obs form alongside PlantNet, (5) backfill existing labeled observations. Gets smarter as observations accumulate — every correction is implicit training data.

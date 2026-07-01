@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&family=Source+Code+Pro:wght@300;400&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/globals.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <button class="hamburger" id="topbar-btn" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="topbar-dropdown" id="topbar-dropdown" hidden></div>
+
+  <section class="page-header chapeau">
+    <a href="/" id="back-link">Blühende Gärten</a>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h3 id="page-title">Beobachtungen</h3>
+    </div>
+    <nav class="obs-type-tabs">
+      <a class="obs-type-tab" data-type="foto" href="/beobachtungen/fotos">Fotos</a>
+      <a class="obs-type-tab" data-type="herbarbeleg" href="/beobachtungen/herbar">Herbarbelege</a>
+      <a class="obs-type-tab" data-type="pflanzenlabel" href="/beobachtungen/pflanzenlabel">Pflanzenlabels</a>
+      <a class="obs-type-tab" data-type="notiz" href="/beobachtungen/notiz">Notizen</a>
+    </nav>
+    <div id="obs-grid" class="obs-grid"></div>
+  </section>
+
+  <dialog id="obs-modal" tabindex="-1">
+    <button class="obs-nav obs-nav--prev">&#8249;</button>
+    <div class="obs-modal-inner">
+      <div class="obs-modal-img">
+        <img src="" alt="">
+        <div class="obs-modal-info">
+          <div class="obs-modal-plants"></div>
+          <div class="obs-modal-place observation-place"></div>
+          <div class="obs-modal-date observation-date"></div>
+          <div class="obs-modal-note"></div>
+        </div>
+      </div>
+    </div>
+    <button class="obs-nav obs-nav--next">&#8250;</button>
+    <div class="obs-modal-list" hidden></div>
+  </dialog>
+
+  <dialog id="obs-form-dialog" tabindex="-1">
+    <div class="obs-form-inner">
+      <div class="section-header">
+        <h2 class="obs-form-title" id="obs-form-title">Beobachtung</h2>
+        <button class="action-btn-icon" id="obs-form-close">×</button>
+      </div>
+      <div class="obs-file-row">
+        <label class="obs-file-label" id="obs-form-file-label">
+          <span id="obs-form-file-text">Hochladen</span>
+          <input id="obs-form-file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.gif">
+        </label>
+        <label class="obs-file-label obs-camera-label" id="obs-form-camera-label">
+          <span>Kamera</span>
+          <input id="obs-form-camera" type="file" accept="image/*" capture="environment">
+        </label>
+      </div>
+      <div id="obs-form-preview" class="obs-form-preview" hidden>
+        <img id="obs-form-preview-img" src="" alt="">
+        <button type="button" id="obs-form-rotate" class="obs-rotate-btn">↻</button>
+      </div>
+      <div id="obs-form-location" class="obs-form-location" hidden></div>
+      <div class="obs-form-row">
+        <div class="obs-form-field">
+          <label class="obs-form-label">Datum</label>
+          <input id="obs-form-date" class="obs-input" type="date">
+        </div>
+        <div class="obs-form-field">
+          <label class="obs-form-label">Typ</label>
+          <select id="obs-form-type" class="obs-select">
+            <option value="foto">Foto</option>
+            <option value="zeichnung">Zeichnung</option>
+            <option value="herbarbeleg">Herbarbeleg</option>
+            <option value="pflanzenlabel">Pflanzenlabel</option>
+            <option value="notiz">Notiz</option>
+          </select>
+        </div>
+        <div class="obs-form-field">
+          <label class="obs-form-label">Garten</label>
+          <select id="obs-form-garden" class="obs-select"></select>
+        </div>
+      </div>
+      <div id="obs-form-identified" hidden></div>
+      <div id="obs-form-plant-grid" class="obs-plant-grid"></div>
+      <textarea id="obs-form-text" class="obs-textarea" placeholder="Beobachtung, Beschreibung…"></textarea>
+      <div id="obs-form-msg" class="obs-form-msg"></div>
+      <div class="obs-form-actions">
+        <button id="obs-form-submit" class="action-btn">Speichern</button>
+        <button id="obs-form-cancel" class="action-btn-ghost">Abbrechen</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/beobachtungen-app.js"></script>
+  <script type="module" src="/src/topbar.js"></script>
+</body>
+</html>

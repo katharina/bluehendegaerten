@@ -27,6 +27,12 @@ if (!garden) {
 document.getElementById('garden-name').textContent = garden.name;
 document.title = `${garden.name} — Blühende Gärten`;
 
+const SECTION_LINK_TYPES = { foto: 'fotos', herbar: 'herbar', pflanzenlabel: 'pflanzenlabel', notiz: 'notiz' };
+Object.entries(SECTION_LINK_TYPES).forEach(([key, slug]) => {
+  const el = document.getElementById(`section-link-${key}`);
+  if (el) el.href = `/beobachtungen/${slug}?garden=${garden.id}`;
+});
+
 const plantBySlug = new Map(allPlants.map(p => [p.slug, p]));
 
 // Fetch plan upfront so we know all placement slugs
@@ -253,6 +259,16 @@ supabase.auth.getSession().then(({ data: { session } }) => {
 });
 
 
+function updateSectionCounts(obs) {
+  const counts = { foto: 0, herbarbeleg: 0, pflanzenlabel: 0, notiz: 0 };
+  obs.forEach(o => { if (o.type in counts) counts[o.type]++; });
+  const set = (id, n) => { const el = document.getElementById(id); if (el) el.textContent = n ? `(${n})` : ''; };
+  set('obs-type-count-foto', counts.foto);
+  set('obs-type-count-herbar', counts.herbarbeleg);
+  set('obs-type-count-pflanzenlabel', counts.pflanzenlabel);
+  set('obs-type-count-notiz', counts.notiz);
+}
+
 const obsSlugSet = new Set(allObservations.flatMap(o => o.slugs ?? []));
 
 function updatePlantCount(n) {
@@ -266,6 +282,7 @@ renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderPflanzenlabelCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
+updateSectionCounts(gardenObs);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
@@ -292,6 +309,7 @@ document.addEventListener('obs:saved', e => {
   allObservations.push(e.detail);
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   const gardenObs = allObservations.filter(o => o.garden === garden.id);
+  updateSectionCounts(gardenObs);
   if (e.detail.type === 'notiz') {
     renderNotizCarousel(gardenObs, gardenMap, plantMap);
     document.getElementById('notiz-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -322,6 +340,7 @@ document.addEventListener('obs:deleted', e => {
   allObservations.forEach(o => (o.slugs ?? []).forEach(s => obsSlugSet.add(s)));
   removeObsFromCarousel(e.detail.id);
   const gardenObs = allObservations.filter(o => o.garden === garden.id);
+  updateSectionCounts(gardenObs);
   if (e.detail.type === 'herbarbeleg') renderHerbarCarousel(gardenObs, gardenMap, plantMap);
   else if (e.detail.type === 'notiz') renderNotizCarousel(gardenObs, gardenMap, plantMap);
   else if (e.detail.type === 'pflanzenlabel') renderPflanzenlabelCarousel(gardenObs, gardenMap, plantMap);

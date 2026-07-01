@@ -9,6 +9,7 @@
     { "handle": "filesystem" },
     { "src": "/", "dest": "/index.html" },
     { "src": "/plants/all", "dest": "/plants/all.html" },
+    { "src": "/beobachtungen(.*)", "dest": "/beobachtungen/index.html" },
     { "src": "/(.*)", "dest": "/garden.html" }
   ]
 }

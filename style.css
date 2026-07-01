@@ -195,6 +195,13 @@ ul {
   text-decoration: none;
 }
 
+.section-count {
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  color: #888;
+  font-weight: normal;
+}
+
 .garden-obs-counts {
   display: flex;
   flex-wrap: wrap;
@@ -1656,6 +1663,63 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .bed-tooltip-de {
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-600);
+}
+
+/* ── Beobachtungen page ──────────────────────────────────────────────────── */
+
+.obs-type-tabs {
+  display: flex;
+  gap: var(--hb-space-200);
+  margin: var(--hb-space-300) var(--page-pad) var(--hb-space-500);
+  flex-wrap: wrap;
+}
+
+.obs-type-tab {
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-600);
+  text-decoration: none;
+  padding: var(--hb-space-100) var(--hb-space-200);
+  border: 1px solid var(--hb-black-800);
+}
+
+.obs-type-tab.is-active {
+  background: var(--hb-black-1000);
+  color: #fff;
+  border-color: var(--hb-black-1000);
+}
+
+.obs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--hb-space-300);
+  margin: 0 var(--page-pad) var(--hb-space-800);
+}
+
+.obs-grid .carousel-card {
+  width: 100%;
+}
+
+.obs-grid .carousel-card-img {
+  height: auto;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.obs-grid .carousel-card-meta {
+  width: 100%;
+  min-width: unset;
+}
+
+/* ── Section header links ────────────────────────────────────────────────── */
+
+.section-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  text-decoration: underline;
 }
 
 /* ── Action button ───────────────────────────────────────────────────────── */
