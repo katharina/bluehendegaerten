@@ -252,6 +252,24 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   }, true);
 });
 
+function renderNotes(obs) {
+  const section = document.getElementById('notes-section');
+  const list    = document.getElementById('notes-list');
+  if (!section || !list) return;
+  const notes = obs
+    .filter(o => o.type === 'notiz' && o.text)
+    .sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at));
+  section.hidden = notes.length === 0;
+  list.innerHTML = notes.map(o => {
+    const plants = (o.slugs ?? []).map(s => plantMap.get(s)).filter(Boolean).join(', ');
+    const date   = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    return `<li class="note-item">
+      <div class="note-meta">${[plants, date].filter(Boolean).join(' · ')}</div>
+      <div class="note-text">${o.text}</div>
+    </li>`;
+  }).join('');
+}
+
 const obsSlugSet = new Set(allObservations.flatMap(o => o.slugs ?? []));
 
 function updatePlantCount(n) {
@@ -263,6 +281,7 @@ document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.s
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
 renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
+renderNotes(gardenObs);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();

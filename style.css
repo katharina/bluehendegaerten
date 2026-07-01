@@ -189,6 +189,21 @@ ul {
   margin-bottom: var(--hb-space-150);
 }
 
+.note-item {
+  list-style: none;
+  margin-bottom: var(--hb-space-400);
+}
+
+.note-meta {
+  font-size: var(--hb-font-size-01);
+  opacity: 0.5;
+  margin-bottom: var(--hb-space-050);
+}
+
+.note-text {
+  white-space: pre-wrap;
+}
+
 .garden-count {
   color: #000;
   text-decoration: none;
