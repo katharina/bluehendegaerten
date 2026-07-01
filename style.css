@@ -197,6 +197,7 @@ ul {
 
 #obs-carousel,
 #herbar-carousel,
+#pflanzenlabel-carousel,
 #notiz-carousel {
   display: flex;
   gap: var(--hb-space-200);
@@ -208,12 +209,14 @@ ul {
 
 #obs-carousel .carousel-card:first-child,
 #herbar-carousel .carousel-card:first-child,
+#pflanzenlabel-carousel .carousel-card:first-child,
 #notiz-carousel .carousel-card:first-child {
   margin-left: var(--page-pad);
 }
 
 #obs-carousel::-webkit-scrollbar,
 #herbar-carousel::-webkit-scrollbar,
+#pflanzenlabel-carousel::-webkit-scrollbar,
 #notiz-carousel::-webkit-scrollbar {
   display: none;
 }

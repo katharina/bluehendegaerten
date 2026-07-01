@@ -49,7 +49,7 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   document.addEventListener('obs:edit', e => openObsForm({ editObs: e.detail }));
 }
 
-export function openObsForm({ plantSlug = null, gardenId = null, editObs = null } = {}) {
+export function openObsForm({ plantSlug = null, gardenId = null, editObs = null, type = null } = {}) {
   if (!_loggedIn) { _showLoginForm(); return; }
   if (_loginPane) _loginPane.hidden = true;
   _formInner.hidden = false;
@@ -74,7 +74,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null 
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
   _dialog.querySelector('#obs-form-date').value  = editObs?.date ?? new Date().toISOString().slice(0, 10);
-  _dialog.querySelector('#obs-form-type').value  = editObs?.type ?? 'foto';
+  _dialog.querySelector('#obs-form-type').value  = editObs?.type ?? type ?? 'foto';
   _dialog.querySelector('#obs-form-text').value  = editObs?.text ?? '';
   _dialog.querySelector('#obs-form-msg').textContent = '';
 

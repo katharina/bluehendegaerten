@@ -54,10 +54,9 @@ function buildObsCard(o, gardenMap, plantMap, list) {
 function renderCarousel(items, gardenMap, plantMap, containerId) {
   const carousel = document.getElementById(containerId);
   if (!carousel) return;
-  if (!items.length) {
-    carousel.hidden = true;
-    return;
-  }
+  carousel.hidden = !items.length;
+  carousel.innerHTML = '';
+  if (!items.length) return;
   let offset = 0;
 
   const sentinel = document.createElement('div');
@@ -82,8 +81,15 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
   loadMore();
 }
 
+function carouselIdForType(type) {
+  if (type === 'herbarbeleg') return 'herbar-carousel';
+  if (type === 'notiz') return 'notiz-carousel';
+  if (type === 'pflanzenlabel') return 'pflanzenlabel-carousel';
+  return 'obs-carousel';
+}
+
 export function updateObsInCarousel(obs, gardenMap, plantMap) {
-  const carouselId = obs.type === 'herbarbeleg' ? 'herbar-carousel' : 'obs-carousel';
+  const carouselId = carouselIdForType(obs.type);
   const carousel = document.getElementById(carouselId);
   if (!carousel) return;
   const existing = carousel.querySelector(`[data-obs-id="${obs.id}"]`);
@@ -99,7 +105,8 @@ export function removeObsFromCarousel(id) {
 }
 
 export function prependObsToCarousel(obs, gardenMap, plantMap) {
-  const id = obs.type === 'herbarbeleg' ? 'herbar-carousel' : 'obs-carousel';
+  const id = carouselIdForType(obs.type);
+  if (!id) return;
   const carousel = document.getElementById(id);
   if (!carousel) return;
   if (carousel.hidden) {
@@ -120,12 +127,17 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
+export function renderPflanzenlabelCarousel(observations, gardenMap, plantMap) {
+  const labels = observations
+    .filter(o => o.type === 'pflanzenlabel')
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  renderCarousel(labels, gardenMap, plantMap, 'pflanzenlabel-carousel');
+}
+
 export function renderNotizCarousel(observations, gardenMap, plantMap) {
   const notes = observations
     .filter(o => o.type === 'notiz')
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  const section = document.getElementById('notiz-section');
-  if (section) section.hidden = notes.length === 0;
   renderCarousel(notes, gardenMap, plantMap, 'notiz-carousel');
 }
 
@@ -133,7 +145,5 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   const belege = observations
     .filter(o => o.type === 'herbarbeleg' && o.filename)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  const section = document.getElementById('herbar-section');
-  if (section) section.hidden = belege.length === 0;
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }
