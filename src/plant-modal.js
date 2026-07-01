@@ -86,7 +86,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const swatch = dialog.querySelector('.plant-color-swatch');
   const picker = dialog.querySelector('.plant-color-picker');
   picker.disabled = !_loggedIn;
-  swatch.onclick = () => { if (_loggedIn) picker.click(); };
   picker.oninput  = () => setColor(picker.value);
   picker.onchange = () => {
     if (!_loggedIn) return;
