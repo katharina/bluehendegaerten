@@ -1,4 +1,5 @@
 import { authedFetch, supabase } from './auth.js';
+import { fullUrl } from './utils.js';
 
 let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
 let _defaultGardenId = null;
@@ -9,6 +10,7 @@ let _currentPlantSlug = null;
 let _pendingAdds = new Map(); // suggestion.name → Promise<slug>
 let _loggedIn = false;
 let _recentSlugs = [];
+let _rotatedBlob = null;
 
 export function initObsForm({ gardens = [], plants = [], gardenId = null, observations = [] } = {}) {
   _dialog = document.getElementById('obs-form-dialog');
@@ -43,6 +45,7 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
   _dialog.querySelector('#obs-form-file').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-camera').addEventListener('change', _onFileChange);
   _dialog.querySelector('#obs-form-submit').addEventListener('click', _onSubmit);
+  _dialog.querySelector('#obs-form-rotate').addEventListener('click', _onRotate);
 
   document.getElementById('quick-obs-btn')?.addEventListener('click', () => openObsForm({}));
   document.addEventListener('obs:new',  e => openObsForm(e.detail ?? {}));
@@ -71,6 +74,9 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null,
     }
     if (locEl) { locEl.hidden = true; locEl.innerHTML = ''; }
   }
+
+  _rotatedBlob = null;
+  _setPreview(editObs?.filename ? fullUrl(editObs.filename) : null);
 
   _dialog.querySelector('#obs-form-title').textContent = _editId ? 'Bearbeiten' : 'Beobachtung';
   _dialog.querySelector('#obs-form-date').value  = editObs?.date ?? new Date().toISOString().slice(0, 10);
@@ -106,6 +112,7 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null,
 function _close() {
   _editId = null;
   _suggestions = [];
+  _rotatedBlob = null;
   _dialog.close();
 }
 
@@ -473,6 +480,8 @@ async function _onFileChange(e) {
   span.textContent = file ? file.name : (isCam ? 'Kamera' : 'Hochladen');
   label.classList.toggle('has-file', !!file);
   if (!file) return;
+  _rotatedBlob = null;
+  _setPreview(URL.createObjectURL(file));
 
   try {
     const mod = await import('exifr');
@@ -500,6 +509,28 @@ async function _onFileChange(e) {
   _identifyPlant(file);
 }
 
+function _setPreview(src) {
+  const wrap = _dialog.querySelector('#obs-form-preview');
+  const img  = _dialog.querySelector('#obs-form-preview-img');
+  if (!wrap || !img) return;
+  if (src) { img.src = src; wrap.hidden = false; }
+  else { img.src = ''; wrap.hidden = true; }
+}
+
+async function _onRotate() {
+  const img = _dialog.querySelector('#obs-form-preview-img');
+  if (!img || !img.src) return;
+  const canvas = document.createElement('canvas');
+  canvas.width  = img.naturalHeight;
+  canvas.height = img.naturalWidth;
+  const ctx = canvas.getContext('2d');
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(Math.PI / 2);
+  ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+  _rotatedBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92));
+  _setPreview(URL.createObjectURL(_rotatedBlob));
+}
+
 async function _onSubmit() {
   const msg  = _dialog.querySelector('#obs-form-msg');
   const btn  = _dialog.querySelector('#obs-form-submit');
@@ -520,7 +551,8 @@ async function _onSubmit() {
   let filename = null;
 
   try {
-    if (file) filename = await _uploadToR2(file);
+    const upload = _rotatedBlob ? new File([_rotatedBlob], 'photo.jpg', { type: 'image/jpeg' }) : file;
+    if (upload) filename = await _uploadToR2(upload);
 
     const body = {
       date:   _dialog.querySelector('#obs-form-date').value || null,
