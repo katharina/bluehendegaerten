@@ -58,4 +58,7 @@ The same principle applies to `.observation-place`, `.observation-date`, and any
 
 ## TODOs
 
+- **Plant card dot z-index**: the colored dot should sit below the text (z-index behind text layer).
+- **Shared plant modal HTML**: modal markup is duplicated in index.html and garden.html — consolidate into a shared template.
+
 - **Plant changelog not showing**: `plant_edits` table inserts appear to fail silently. Server logs `[logEdits]` errors but root cause (table schema mismatch?) unresolved. `GET /api/plant-edits/:slug` returns `[]`. Investigate Supabase `plant_edits` table columns.

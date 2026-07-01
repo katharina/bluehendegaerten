@@ -340,6 +340,14 @@ ul {
   height: var(--plant-dot-size);
   border-radius: 50%;
   background: var(--plant-color);
+  z-index: 0;
+}
+
+.plant-card .botanical-name,
+.plant-card .german-name,
+.plant-card .plant-family {
+  position: relative;
+  z-index: 1;
 }
 
 .plant-card .botanical-name {
