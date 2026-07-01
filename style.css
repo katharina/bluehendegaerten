@@ -195,6 +195,19 @@ ul {
   text-decoration: none;
 }
 
+.garden-obs-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hb-space-200);
+  margin-top: var(--hb-space-100);
+}
+
+.garden-obs-count {
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  color: #888;
+}
+
 #obs-carousel,
 #herbar-carousel,
 #pflanzenlabel-carousel,
