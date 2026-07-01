@@ -314,9 +314,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         });
     });
 
+  dialog.showModal();
+  dialog.scrollTop = 0;
   dialog.querySelector('.plant-modal-info').scrollTop = 0;
   dialog.querySelector('.plant-modal-observations').scrollTop = 0;
-  dialog.showModal();
   dialog.focus();
 }
 

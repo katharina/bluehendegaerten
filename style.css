@@ -1423,9 +1423,12 @@ dialog#plant-modal.authenticated .plant-color-picker {
     grid-template-columns: 1fr;
     height: auto;
     overflow: visible;
-    flex-shrink: 0;
   }
   .plant-modal-inner {
+    height: auto;
+    overflow-y: visible;
+  }
+  dialog#plant-modal {
     overflow-y: auto;
   }
   .plant-modal-info {
