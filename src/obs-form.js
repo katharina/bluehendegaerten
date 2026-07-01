@@ -13,6 +13,14 @@ let _recentSlugs = [];
 let _rotatedBlob = null;
 let _rotationSource = null; // File or Blob — always a local source, avoids canvas CORS
 
+export function addPlantToObsForm(plant) {
+  if (!_plantBySlug) return;
+  _plantBySlug.set(plant.slug, plant);
+  _plantByScientific.set(plant.name.toLowerCase(), plant.slug);
+  const genus = plant.name.split(' ')[0].toLowerCase();
+  if (!_plantByScientific.has(genus)) _plantByScientific.set(genus, plant.slug);
+}
+
 export function initObsForm({ gardens = [], plants = [], gardenId = null, observations = [] } = {}) {
   _dialog = document.getElementById('obs-form-dialog');
   if (!_dialog) return;

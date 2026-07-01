@@ -5,7 +5,7 @@ import { renderObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObs
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
-import { initObsForm } from './obs-form.js';
+import { initObsForm, addPlantToObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
 
 const [gardens, observations, plants] = await Promise.all([
@@ -35,6 +35,7 @@ initObsForm({ gardens, plants, observations });
 initAddPlant({
   onAdded(plant) {
     plants.push(plant);
+    addPlantToObsForm(plant);
     renderPlantList(plants, { obsSlugSet });
   },
 });

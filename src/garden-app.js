@@ -4,7 +4,7 @@ import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPfl
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
-import { initObsForm } from './obs-form.js';
+import { initObsForm, addPlantToObsForm } from './obs-form.js';
 import { renderBedPlan } from './bed-plan.js';
 import { initAddPlant } from './add-plant.js';
 import { supabase, authedFetch } from './auth.js';
@@ -283,6 +283,7 @@ initAddPlant({
   onAdded(plant) {
     allPlants.push(plant);
     gardenPlants.push(plant);
+    addPlantToObsForm(plant);
     renderPlantList(gardenPlants, { bedSlugs });
   },
 });
