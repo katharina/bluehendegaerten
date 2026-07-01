@@ -195,12 +195,6 @@ ul {
   text-decoration: none;
 }
 
-.section-count {
-  font-family: var(--font-mono);
-  font-size: var(--hb-font-size-01);
-  color: #888;
-  font-weight: normal;
-}
 
 .garden-obs-counts {
   display: flex;

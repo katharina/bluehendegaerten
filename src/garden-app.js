@@ -262,7 +262,7 @@ supabase.auth.getSession().then(({ data: { session } }) => {
 function updateSectionCounts(obs) {
   const counts = { foto: 0, herbarbeleg: 0, pflanzenlabel: 0, notiz: 0 };
   obs.forEach(o => { if (o.type in counts) counts[o.type]++; });
-  const set = (id, n) => { const el = document.getElementById(id); if (el) el.textContent = n ? `(${n})` : ''; };
+  const set = (id, n) => { const el = document.getElementById(id); if (el) el.textContent = n || ''; };
   set('obs-type-count-foto', counts.foto);
   set('obs-type-count-herbar', counts.herbarbeleg);
   set('obs-type-count-pflanzenlabel', counts.pflanzenlabel);
