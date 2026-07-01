@@ -120,6 +120,15 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
+export function renderNotizCarousel(observations, gardenMap, plantMap) {
+  const notes = observations
+    .filter(o => o.type === 'notiz')
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const section = document.getElementById('notiz-section');
+  if (section) section.hidden = notes.length === 0;
+  renderCarousel(notes, gardenMap, plantMap, 'notiz-carousel');
+}
+
 export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   const belege = observations
     .filter(o => o.type === 'herbarbeleg' && o.filename)

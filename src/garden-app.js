@@ -1,6 +1,6 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
-import { renderObsCarousel, renderHerbarCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
+import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -252,23 +252,6 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   }, true);
 });
 
-function renderNotes(obs) {
-  const section = document.getElementById('notes-section');
-  const list    = document.getElementById('notes-list');
-  if (!section || !list) return;
-  const notes = obs
-    .filter(o => o.type === 'notiz')
-    .sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at));
-  section.hidden = notes.length === 0;
-  list.innerHTML = notes.map(o => {
-    const plants = (o.slugs ?? []).map(s => plantMap.get(s)).filter(Boolean).join(', ');
-    const date   = o.date ? new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-    return `<li class="note-item">
-      <div class="note-meta">${[plants, date].filter(Boolean).join(' · ')}</div>
-      <div class="note-text">${o.text}</div>
-    </li>`;
-  }).join('');
-}
 
 const obsSlugSet = new Set(allObservations.flatMap(o => o.slugs ?? []));
 
@@ -281,7 +264,7 @@ document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.s
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
 renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
-renderNotes(gardenObs);
+renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
@@ -305,9 +288,9 @@ document.addEventListener('obs:saved', e => {
     const carousel = document.getElementById('obs-carousel');
     if (carousel) carousel.scrollLeft = 0;
   }
-  renderNotes(allObservations.filter(o => o.garden === garden.id));
+  renderNotizCarousel(allObservations.filter(o => o.garden === garden.id), gardenMap, plantMap);
   if (e.detail.type === 'notiz') {
-    document.getElementById('notes-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('notiz-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   renderPlantList(gardenPlants, { bedSlugs });
 });
