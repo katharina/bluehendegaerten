@@ -156,13 +156,18 @@ function _showLoginForm() {
     const email = _loginPane.querySelector('#obs-login-email').value.trim();
     if (!email) return;
     const btn = _loginPane.querySelector('#obs-login-submit');
+    const msg = _loginPane.querySelector('#obs-login-msg');
+    if (email !== 'k.birkenbach@gmail.com') {
+      msg.textContent = `Link an ${email} verschickt.`;
+      btn.hidden = true;
+      return;
+    }
     btn.disabled = true;
     btn.textContent = '…';
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: window.location.origin },
     });
-    const msg = _loginPane.querySelector('#obs-login-msg');
     if (error) {
       msg.textContent = 'Fehler: ' + error.message;
       btn.disabled = false;

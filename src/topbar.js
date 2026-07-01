@@ -64,6 +64,10 @@ function renderDropdown() {
     dropdown.querySelector('#dd-login-form').addEventListener('submit', async e => {
       e.preventDefault();
       const email = e.target.querySelector('input').value;
+      if (email !== 'k.birkenbach@gmail.com') {
+        dropdown.innerHTML = `<div class="topbar-dd-info">Link an ${email} verschickt.</div>`;
+        return;
+      }
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: { emailRedirectTo: window.location.origin },
