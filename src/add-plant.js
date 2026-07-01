@@ -57,7 +57,30 @@ export function initAddPlant({ onAdded } = {}) {
       return;
     }
 
+    const plant = { ...data, slug: data.slug ?? slug, name, name_de: nameDe || null, family: family || null, color };
     close();
-    onAdded?.({ ...data, slug: data.slug ?? slug, name, name_de: nameDe || null, family: family || null, color });
+    onAdded?.(plant);
+
+    const DEFAULT_COLOR = '#a0c878';
+    authedFetch('/api/plant-autofill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    }).then(r => r.ok ? r.json() : null).then(fill => {
+      if (!fill) return;
+      const patch = {};
+      for (const [k, v] of Object.entries(fill)) {
+        if (v != null) patch[k] = v;
+      }
+      if (color !== DEFAULT_COLOR) delete patch.color;
+      if (!nameDe && fill.name_de) patch.name_de = fill.name_de;
+      if (!family && fill.family) patch.family = fill.family;
+      if (!Object.keys(patch).length) return;
+      authedFetch(`/api/plants/${plant.slug}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      });
+    }).catch(() => {});
   });
 }

@@ -183,6 +183,7 @@ Antworte NUR mit einem JSON-Objekt mit diesen Feldern (null wenn unbekannt):
 - bloom_months: Blütemonate als Array von Zahlen 1-12, z.B. [6,7,8,9]
 - invasiv: "ja", "nein" oder "regional"
 - world_w: typische Ausbreitung in Metern als Dezimalzahl, z.B. 0.5
+- color: dominante Blütenfarbe als Hex-Farbwert, z.B. "#e8a0c0" für rosa, "#f5e642" für gelb, "#ffffff" für weiß (string)
 
 Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
     try {
