@@ -324,7 +324,10 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
       }
     } else {
       if (req.method === 'PATCH') {
-        if (!await requireUser(req, res)) return;
+        const user = await requireUser(req, res);
+        if (!user) return;
+        const { data: obsCheck } = await supabase.from('observations').select('created_by').eq('id', id).maybeSingle();
+        if (obsCheck?.created_by && obsCheck.created_by !== user.id) return res.status(403).json({ error: 'forbidden' });
         const { date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden } = req.body ?? {};
         const fields = {};
         if (date                  !== undefined) fields.date                  = date || null;
@@ -352,7 +355,10 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         return res.json(withS[0]);
       }
       if (req.method === 'DELETE') {
-        if (!await requireUser(req, res)) return;
+        const user = await requireUser(req, res);
+        if (!user) return;
+        const { data: obsCheck } = await supabase.from('observations').select('created_by').eq('id', id).maybeSingle();
+        if (obsCheck?.created_by && obsCheck.created_by !== user.id) return res.status(403).json({ error: 'forbidden' });
         const { error } = await supabase.from('observations').delete().eq('id', id);
         if (error) return res.status(500).json({ error: error.message });
         return res.json({ ok: true });
