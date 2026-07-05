@@ -1,5 +1,6 @@
 import { thumbUrl, fullUrl, contrastColor } from './utils.js';
 import { supabase, authedFetch } from './auth.js';
+import { getCurrentUserId } from './observations.js';
 
 const MONTHS_DE = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
@@ -335,13 +336,17 @@ function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
   const date  = o.date
     ? new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
     : '';
+  const isOwner = o.created_by && o.created_by === getCurrentUserId();
+  const showActions = isOwner && (onEdit || onDelete);
+  const showCreator = o.created_by && !isOwner;
   card.innerHTML = `
     ${o.filename ? `<div class="modal-obs-img"><img src="${thumbUrl(o.filename)}" loading="lazy" data-full="${fullUrl(o.filename)}"></div>` : ''}
     <div class="modal-obs-meta">
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
+      ${showCreator ? `<div class="carousel-card-creator">${o.created_by_name || 'Blümchen'}</div>` : ''}
     </div>
-    ${onEdit || onDelete ? `<div class="modal-obs-actions">
+    ${showActions ? `<div class="modal-obs-actions">
       ${onEdit   ? `<button class="modal-obs-edit">Bearbeiten</button>` : ''}
       ${onDelete ? `<button class="modal-obs-delete">Löschen</button>` : ''}
     </div>` : ''}

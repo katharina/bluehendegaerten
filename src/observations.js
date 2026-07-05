@@ -9,6 +9,7 @@ supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!sessi
 supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
 
 export function setCurrentUser(userId) { _userId = userId; _loggedIn = !!userId; }
+export function getCurrentUserId() { return _userId; }
 
 function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');

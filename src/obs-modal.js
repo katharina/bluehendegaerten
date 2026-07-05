@@ -1,5 +1,6 @@
 import { fullUrl } from './utils.js';
 import { supabase } from './auth.js';
+import { getCurrentUserId } from './observations.js';
 
 let _dialog, _ctx, _list = [], _index = 0;
 let _loggedIn = false;
@@ -123,6 +124,7 @@ function renderList(list, startIndex) {
         ${plantLinks ? `<div class="obs-list-plants">${plantLinks}</div>` : ''}
         ${place ? `<div class="observation-place">${gardenPath ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
         ${date   ? `<div class="observation-date">${date}</div>` : ''}
+        ${obs.created_by && obs.created_by !== getCurrentUserId() ? `<div class="carousel-card-creator">${obs.created_by_name || 'Blümchen'}</div>` : ''}
         ${obs.text ? `<div class="obs-list-note">${obs.text}</div>` : ''}
       </div>`;
 
