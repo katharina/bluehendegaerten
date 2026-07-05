@@ -307,7 +307,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
             const from = e.old_value != null ? `<span class="changelog-old">${e.old_value}</span> → ` : '';
             const to   = e.new_value != null ? `<span class="changelog-new">${e.new_value}</span>` : '—';
             return `<div class="changelog-row">
-              <span class="changelog-date">${date}${e.user_name ? ` · ${e.user_name}` : ''}</span>
+              <span class="changelog-date">${date}${e.user_name ? ` <span class="changelog-author">${e.user_name}</span>` : ''}</span>
               <span class="changelog-field">${label}</span>
               <span class="changelog-value">${from}${to}</span>
             </div>`;
