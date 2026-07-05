@@ -1,18 +1,24 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
 import { renderGardenList } from './gardens.js';
-import { renderObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
+import { renderObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
 import { initObsForm, addPlantToObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
+import { supabase } from './auth.js';
 
-const [gardens, observations, plants] = await Promise.all([
-  fetch('/api/gardens').then(r => r.json()),
-  fetch('/api/observations').then(r => r.json()),
-  fetch('/api/plants').then(r => r.json()),
+const [[gardens, observations, plants], { data: { session } }] = await Promise.all([
+  Promise.all([
+    fetch('/api/gardens').then(r => r.json()),
+    fetch('/api/observations').then(r => r.json()),
+    fetch('/api/plants').then(r => r.json()),
+  ]),
+  supabase.auth.getSession(),
 ]);
+
+setCurrentUser(session?.user?.id ?? null);
 
 const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
 const plantMap  = new Map(plants.map(p => [p.slug, p.name]));

@@ -1,6 +1,6 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
-import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel } from './observations.js';
+import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -278,6 +278,9 @@ function updatePlantCount(n) {
 }
 
 document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.size));
+
+const { data: { session } } = await supabase.auth.getSession();
+setCurrentUser(session?.user?.id ?? null);
 
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
 renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);

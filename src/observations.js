@@ -8,6 +8,8 @@ let _userId = null;
 supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
 supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
 
+export function setCurrentUser(userId) { _userId = userId; _loggedIn = !!userId; }
+
 function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');
   card.className = 'carousel-card';
