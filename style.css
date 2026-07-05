@@ -1066,6 +1066,7 @@ dialog#plant-modal .action-btn {
   display: flex;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
 .plant-modal-info,
