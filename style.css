@@ -1028,9 +1028,6 @@ dialog#plant-modal {
   border: none;
   background: var(--plant-color, #fff);
   color: var(--plant-fg, #000);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 dialog#plant-modal::backdrop {
@@ -1038,10 +1035,11 @@ dialog#plant-modal::backdrop {
 }
 
 .plant-modal-inner {
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .action-btn {
