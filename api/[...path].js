@@ -50,16 +50,13 @@ async function addSlugsToGarden(gardenId, slugs) {
   await supabase.from('gardens').update({ plants: [...existing, ...toAdd] }).eq('id', gardenId);
 }
 
-let _userNameCache = null;
-let _userNameCacheAt = 0;
-async function resolveCreatorNames(rows) {
-  if (!rows.some(r => r.created_by)) return rows;
-  if (!_userNameCache || Date.now() - _userNameCacheAt > 60_000) {
-    const { data } = await supabase.auth.admin.listUsers({ perPage: 1000 });
-    _userNameCache = new Map((data?.users ?? []).map(u => [u.id, u.user_metadata?.display_name || null]));
-    _userNameCacheAt = Date.now();
-  }
-  return rows.map(r => ({ ...r, created_by_name: r.created_by ? (_userNameCache.get(r.created_by) ?? null) : null }));
+
+async function withCreatorNames(rows) {
+  const uniqueIds = [...new Set(rows.filter(r => r.created_by).map(r => r.created_by))];
+  if (!uniqueIds.length) return rows;
+  const { data: names } = await supabase.rpc('get_display_names', { user_ids: uniqueIds });
+  const nameMap = new Map((names ?? []).map(u => [u.id, u.display_name]));
+  return rows.map(r => ({ ...r, created_by_name: r.created_by ? (nameMap.get(r.created_by) ?? null) : null }));
 }
 
 async function withSlugs(rows) {
@@ -306,7 +303,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         }
-        return res.json(await resolveCreatorNames(await withSlugs(rows)));
+        return res.json(await withCreatorNames(await withSlugs(rows)));
       }
       if (req.method === 'POST') {
         const user = await requireUser(req, res);
@@ -351,7 +348,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const effectiveGarden = garden ?? fields.garden;
         if (slugs?.length && effectiveGarden) await addSlugsToGarden(effectiveGarden, slugs);
         const { data: updated } = await supabase.from('observations').select('*').eq('id', id).maybeSingle();
-        const withS = await resolveCreatorNames(await withSlugs([updated]));
+        const withS = await withCreatorNames(await withSlugs([updated]));
         return res.json(withS[0]);
       }
       if (req.method === 'DELETE') {
