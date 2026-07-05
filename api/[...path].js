@@ -50,6 +50,18 @@ async function addSlugsToGarden(gardenId, slugs) {
   await supabase.from('gardens').update({ plants: [...existing, ...toAdd] }).eq('id', gardenId);
 }
 
+let _userNameCache = null;
+let _userNameCacheAt = 0;
+async function resolveCreatorNames(rows) {
+  if (!rows.some(r => r.created_by)) return rows;
+  if (!_userNameCache || Date.now() - _userNameCacheAt > 60_000) {
+    const { data } = await supabase.auth.admin.listUsers({ perPage: 1000 });
+    _userNameCache = new Map((data?.users ?? []).map(u => [u.id, u.user_metadata?.display_name || null]));
+    _userNameCacheAt = Date.now();
+  }
+  return rows.map(r => ({ ...r, created_by_name: r.created_by ? (_userNameCache.get(r.created_by) ?? null) : null }));
+}
+
 async function withSlugs(rows) {
   if (!rows.length) return rows;
   const ids = rows.map(r => r.id);
@@ -294,7 +306,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         }
-        return res.json(await withSlugs(rows));
+        return res.json(await resolveCreatorNames(await withSlugs(rows)));
       }
       if (req.method === 'POST') {
         const user = await requireUser(req, res);
@@ -303,10 +315,9 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
         const place = clientPlace || (lat != null ? await reverseGeocode(lat, lon) : null);
-        const created_by_name = user.user_metadata?.display_name || null;
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place, created_by: user.id, created_by_name })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place, created_by: user.id })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)
@@ -340,7 +351,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const effectiveGarden = garden ?? fields.garden;
         if (slugs?.length && effectiveGarden) await addSlugsToGarden(effectiveGarden, slugs);
         const { data: updated } = await supabase.from('observations').select('*').eq('id', id).maybeSingle();
-        const withS = await withSlugs([updated]);
+        const withS = await resolveCreatorNames(await withSlugs([updated]));
         return res.json(withS[0]);
       }
       if (req.method === 'DELETE') {
