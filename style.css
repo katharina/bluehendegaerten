@@ -249,6 +249,13 @@ ul {
 
 .carousel-card-delete { opacity: 0.3; }
 
+.carousel-card-creator {
+  font-family: var(--font-mono);
+  font-size: var(--hb-font-size-01);
+  color: var(--hb-black-600);
+  padding-top: var(--hb-space-100);
+}
+
 .carousel-card-img {
   height: 213px;
   aspect-ratio: 3 / 4;

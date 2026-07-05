@@ -297,14 +297,16 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         return res.json(await withSlugs(rows));
       }
       if (req.method === 'POST') {
-        if (!await requireUser(req, res)) return;
+        const user = await requireUser(req, res);
+        if (!user) return;
         const { date, type = 'foto', text, filename, lat, lon, place: clientPlace, slugs = [] } = req.body ?? {};
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
         const place = clientPlace || (lat != null ? await reverseGeocode(lat, lon) : null);
+        const created_by_name = user.user_metadata?.display_name || null;
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place, created_by: user.id, created_by_name })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)

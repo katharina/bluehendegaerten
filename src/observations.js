@@ -3,9 +3,10 @@ import { supabase, authedFetch } from './auth.js';
 
 const PAGE = 20;
 let _loggedIn = false;
+let _userId = null;
 
-supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
-supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
+supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
+supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
 
 function buildObsCard(o, gardenMap, plantMap, list) {
   const card  = document.createElement('div');
@@ -21,10 +22,11 @@ function buildObsCard(o, gardenMap, plantMap, list) {
       ${name  ? `<div class="botanical-name">${name}</div>` : ''}
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${o.date ? `<div class="observation-date">${new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
-      ${_loggedIn && o.id ? `<div class="carousel-card-actions">
+      ${o.id && _loggedIn && _userId === o.created_by ? `<div class="carousel-card-actions">
         <button class="carousel-card-edit">Bearbeiten</button>
         <button class="carousel-card-delete">Löschen</button>
       </div>` : ''}
+      ${o.id && o.created_by && _userId !== o.created_by ? `<div class="carousel-card-creator">${o.created_by_name || 'Blümchen'}</div>` : ''}
     </div>`;
   const imgEl = card.querySelector('.carousel-card-img img');
   const imgBox = card.querySelector('.carousel-card-img');
