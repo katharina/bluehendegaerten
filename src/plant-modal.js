@@ -294,29 +294,31 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         }
       }
 
-      const changelogEl = dialog.querySelector('.plant-modal-changelog');
-      const changelogRows = dialog.querySelector('.plant-modal-changelog-rows');
-      changelogEl.hidden = true;
-      changelogRows.innerHTML = '';
-      fetch(`/api/plant-edits/${plant.slug}`)
-        .then(r => r.ok ? r.json() : [])
-        .then(edits => {
-          if (!edits.length) return;
-          changelogEl.hidden = false;
-          changelogRows.innerHTML = edits.map(e => {
-            const _d = new Date(e.created_at);
-            const date = `${_d.getDate()}.${_d.getMonth()+1}. ${String(_d.getHours()).padStart(2,'0')}:${String(_d.getMinutes()).padStart(2,'0')}`;
-            const label = FIELD_LABEL[e.field] ?? e.field;
-            const from = e.old_value != null ? `<span class="changelog-old">${e.old_value}</span> → ` : '';
-            const to   = e.new_value != null ? `<span class="changelog-new">${e.new_value}</span>` : '—';
-            return `<div class="changelog-row">
-              <span class="changelog-date">${date}</span>
-              <span class="changelog-field">${label}</span>
-              <span class="changelog-value">${from}${to}</span>
-              <span class="changelog-author">${e.user_name || 'Claude'}</span>
-            </div>`;
-          }).join('');
-        });
+    });
+
+  const changelogEl = dialog.querySelector('.plant-modal-changelog');
+  const changelogRows = dialog.querySelector('.plant-modal-changelog-rows');
+  changelogEl.hidden = true;
+  changelogRows.innerHTML = '';
+  fetch(`/api/plant-edits/${plant.slug}`)
+    .then(r => r.ok ? r.json() : [])
+    .then(edits => {
+      if (_currentPlant?.slug !== plant.slug) return;
+      if (!edits.length) return;
+      changelogEl.hidden = false;
+      changelogRows.innerHTML = edits.map(e => {
+        const _d = new Date(e.created_at);
+        const date = `${_d.getDate()}.${_d.getMonth()+1}. ${String(_d.getHours()).padStart(2,'0')}:${String(_d.getMinutes()).padStart(2,'0')}`;
+        const label = FIELD_LABEL[e.field] ?? e.field;
+        const from = e.old_value != null ? `<span class="changelog-old">${e.old_value}</span> → ` : '';
+        const to   = e.new_value != null ? `<span class="changelog-new">${e.new_value}</span>` : '—';
+        return `<div class="changelog-row">
+          <span class="changelog-date">${date}</span>
+          <span class="changelog-field">${label}</span>
+          <span class="changelog-value">${from}${to}</span>
+          <span class="changelog-author">${e.user_name || 'Claude'}</span>
+        </div>`;
+      }).join('');
     });
 
   dialog.showModal();
