@@ -68,8 +68,9 @@ function renderDropdown() {
         email,
         options: { emailRedirectTo: window.location.origin },
       });
+      if (error) console.error('signInWithOtp error:', error);
       dropdown.innerHTML = error
-        ? `<div class="topbar-dd-info">Fehler: ${error.message}</div>`
+        ? `<div class="topbar-dd-info">Fehler: ${error.message || error.error_description || JSON.stringify(error)}</div>`
         : `<div class="topbar-dd-info">Link an ${email} verschickt.</div>`;
     });
   }
