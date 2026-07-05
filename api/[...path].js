@@ -375,8 +375,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
       fields.updated_at = new Date().toISOString();
       const { error } = await supabase.from('plant_info').upsert(fields);
       if (error) return res.status(500).json({ error: error.message });
-      const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
-      const userName = profile?.username || user.email;
+      const userName = user.user_metadata?.display_name || user.email;
       logEdits(id, user.id, userName,
         Object.keys(fields).filter(k => PLANT_INFO_FIELDS.includes(k))
           .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))
@@ -438,8 +437,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         fields.updated_at = new Date().toISOString();
         const { error } = await supabase.from('plants').update(fields).eq('slug', id);
         if (error) return res.status(500).json({ error: error.message });
-        const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
-        const userName = profile?.username || user.email;
+        const userName = user.user_metadata?.display_name || user.email;
         logEdits(id, user.id, userName,
           Object.keys(fields).filter(k => PLANTS_FIELDS.includes(k))
             .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))
@@ -515,8 +513,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const { data: current } = await supabase.from('custom_plants').select('*').eq('slug', id).maybeSingle();
         const { error } = await supabase.from('custom_plants').update(fields).eq('slug', id);
         if (error) return res.status(500).json({ error: error.message });
-        const { data: profile } = await supabase.from('profiles').select('username').eq('id', user.id).maybeSingle();
-        const userName = profile?.username || user.email;
+        const userName = user.user_metadata?.display_name || user.email;
         await logEdits(id, user.id, userName,
           Object.keys(fields).map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })));
         return res.json({ ok: true });
@@ -561,20 +558,17 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
     return res.status(405).json({ error: 'method not allowed' });
   }
 
-  // ── Profiles ──────────────────────────────────────────────────────────────────
+  // ── Display name ─────────────────────────────────────────────────────────────
   if (resource === 'profiles' && id === 'me') {
     const user = await requireUser(req, res);
     if (!user) return;
     if (req.method === 'GET') {
-      const { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
-      if (error) return res.status(500).json({ error: error.message });
-      return res.json(data ?? { id: user.id, username: null });
+      return res.json({ id: user.id, display_name: user.user_metadata?.display_name ?? null, email: user.email });
     }
     if (req.method === 'PATCH') {
-      const { username } = req.body ?? {};
-      if (!username?.trim()) return res.status(400).json({ error: 'username required' });
-      const { error } = await supabase.from('profiles')
-        .upsert({ id: user.id, username: username.trim() }, { onConflict: 'id' });
+      const { display_name } = req.body ?? {};
+      if (!display_name?.trim()) return res.status(400).json({ error: 'display_name required' });
+      const { error } = await supabase.auth.admin.updateUserById(user.id, { user_metadata: { display_name: display_name.trim() } });
       if (error) return res.status(500).json({ error: error.message });
       return res.json({ ok: true });
     }

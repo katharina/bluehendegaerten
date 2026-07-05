@@ -1,26 +1,18 @@
-import { supabase, authedFetch } from './auth.js';
+import { supabase } from './auth.js';
 
 const btn      = document.getElementById('topbar-btn');
 const dropdown = document.getElementById('topbar-dropdown');
 
-let _user    = null;
-let _profile = null;
+let _user = null;
 
 supabase.auth.getSession().then(({ data: { session } }) => {
   _user = session?.user ?? null;
-  if (_user) loadProfile();
 });
 
 supabase.auth.onAuthStateChange((_e, session) => {
   _user = session?.user ?? null;
-  if (_user) loadProfile();
-  else { _profile = null; if (!dropdown.hidden) renderDropdown(); }
+  if (!dropdown.hidden) renderDropdown();
 });
-
-async function loadProfile() {
-  const r = await authedFetch('/api/profiles/me');
-  if (r.ok) { _profile = await r.json(); if (!dropdown.hidden) renderDropdown(); }
-}
 
 btn.addEventListener('click', e => {
   e.stopPropagation();
@@ -33,22 +25,17 @@ dropdown.addEventListener('click', e => e.stopPropagation());
 
 function renderDropdown() {
   if (_user) {
-    const name = _profile?.username ?? _user.email ?? '';
+    const name = _user.user_metadata?.display_name || _user.email || '';
     dropdown.innerHTML = `
       <div class="topbar-dd-info">${name}</div>
       <button class="topbar-dd-item" id="dd-rename">Name ändern</button>
       <button class="topbar-dd-item" id="dd-logout">Abmelden</button>
     `;
-    dropdown.querySelector('#dd-rename').addEventListener('click', () => {
-      const next = prompt('Neuer Name:', _profile?.username ?? '');
+    dropdown.querySelector('#dd-rename').addEventListener('click', async () => {
+      const next = prompt('Anzeigename:', _user.user_metadata?.display_name ?? '');
       if (!next?.trim()) return;
-      authedFetch('/api/profiles/me', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: next.trim() }),
-      }).then(r => {
-        if (r.ok) { _profile = { ..._profile, username: next.trim() }; renderDropdown(); }
-      });
+      const { error } = await supabase.auth.updateUser({ data: { display_name: next.trim() } });
+      if (!error) renderDropdown();
     });
     dropdown.querySelector('#dd-logout').addEventListener('click', () => {
       supabase.auth.signOut();
