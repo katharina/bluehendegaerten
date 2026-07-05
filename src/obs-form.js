@@ -2,6 +2,7 @@ import { authedFetch, supabase } from './auth.js';
 import { fullUrl, thumbUrl } from './utils.js';
 
 let _dialog, _formInner, _loginPane, _gardens, _plantBySlug, _plantByScientific;
+let _userId = null;
 let _defaultGardenId = null;
 let _editId = null;
 let _lat = null, _lon = null, _place = null;
@@ -46,8 +47,8 @@ export function initObsForm({ gardens = [], plants = [], gardenId = null, observ
     }
   }
 
-  supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; });
-  supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; });
+  supabase.auth.getSession().then(({ data: { session } }) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
+  supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; _userId = session?.user?.id ?? null; });
 
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _close(); });
   _dialog.querySelector('#obs-form-close').addEventListener('click', _close);
@@ -110,9 +111,13 @@ export function openObsForm({ plantSlug = null, gardenId = null, editObs = null,
   }
 
   const gardenSelect = _dialog.querySelector('#obs-form-garden');
+  const selectedGardenId = editObs?.garden ?? gardenId ?? _defaultGardenId ?? null;
+  const ownGardens = _userId
+    ? _gardens.filter(g => g.created_by === _userId || g.id === selectedGardenId)
+    : _gardens.filter(g => g.id === selectedGardenId);
   gardenSelect.innerHTML =
     '<option value="">— kein Garten —</option>' +
-    _gardens.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+    ownGardens.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
   gardenSelect.value = editObs?.garden ?? gardenId ?? _defaultGardenId ?? '';
 
   const preselected = editObs?.slugs ?? (plantSlug ? [plantSlug] : []);
