@@ -1323,7 +1323,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .changelog-row {
   display: grid;
-  grid-template-columns: 7rem 6rem 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   gap: var(--hb-space-200);
   align-items: baseline;
   padding: var(--hb-space-100) 0;
