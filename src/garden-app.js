@@ -177,6 +177,8 @@ bedImgInput.addEventListener('change', async () => {
 
 supabase.auth.getSession().then(({ data: { session } }) => {
   if (!session?.user) return;
+  const isOwner = garden.created_by === session.user.id;
+  if (!isOwner) return;
 
   // Bed name editable
   bedNameEl.contentEditable = 'true';
