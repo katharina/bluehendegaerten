@@ -1062,15 +1062,14 @@ dialog#plant-modal .action-btn {
 
 
 .plant-modal-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
 }
 
 .plant-modal-info,
 .plant-modal-observations {
+  flex: 1;
   overflow-y: auto;
   min-height: 0;
 }
