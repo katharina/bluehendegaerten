@@ -1064,7 +1064,8 @@ dialog#plant-modal .action-btn {
 .plant-modal-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 

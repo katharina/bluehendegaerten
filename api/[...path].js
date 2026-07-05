@@ -453,7 +453,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         fields.updated_at = new Date().toISOString();
         const { error } = await supabase.from('plants').update(fields).eq('slug', id);
         if (error) return res.status(500).json({ error: error.message });
-        const userName = user.user_metadata?.display_name || user.email;
+        const userName = req.body?.autofill_source ? 'Claude' : (user.user_metadata?.display_name || user.email);
         logEdits(id, user.id, userName,
           Object.keys(fields).filter(k => PLANTS_FIELDS.includes(k))
             .map(k => ({ field: k, oldValue: current?.[k] ?? null, newValue: fields[k] })))

@@ -234,7 +234,8 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
                 cell.classList.toggle('active', data.bloom_months.includes(parseInt(cell.dataset.month)));
               });
             }
-            autofillBtn.textContent = 'Befüllt ✓';
+            autofillBtn.dataset.used = '1';
+        autofillBtn.textContent = 'Befüllt ✓';
           } catch {
             autofillBtn.textContent = 'Fehler';
           } finally {
@@ -268,10 +269,11 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
           );
           saveBtn.disabled = true;
           saveBtn.textContent = '…';
+          const autofillUsed = !!dialog.querySelector('.plant-info-autofill[data-used]');
           const r = await authedFetch(`/api/plants/${plant.slug}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(fields),
+            body: JSON.stringify({ ...fields, ...(autofillUsed ? { autofill_source: true } : {}) }),
           });
           saveBtn.disabled = false;
           saveBtn.textContent = r.ok ? 'Gespeichert ✓' : 'Fehler';
