@@ -354,13 +354,13 @@ function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
   card.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
   });
-  if (onEdit) {
+  if (showActions && onEdit) {
     card.querySelector('.modal-obs-edit').addEventListener('click', e => {
       e.stopPropagation();
       onEdit(o);
     });
   }
-  if (onDelete) {
+  if (showActions && onDelete) {
     card.querySelector('.modal-obs-delete').addEventListener('click', e => {
       e.stopPropagation();
       onDelete(o);
