@@ -107,10 +107,11 @@ function getActiveVersion() {
   return store.versions?.find(v => v.id === store.currentId) ?? store.versions?.[0];
 }
 
-function renderVersionSelect() {
+function renderVersionSelect(versions) {
   const store = getStore();
+  const list = versions ?? store.versions;
   const sel = document.getElementById('version-select');
-  sel.innerHTML = store.versions.map(v =>
+  sel.innerHTML = list.map(v =>
     `<option value="${v.id}"${v.id === store.currentId ? ' selected' : ''}>${v.name ?? 'Version'}</option>`
   ).join('');
 }
@@ -287,8 +288,9 @@ rerenderBedPlan();
 // Version switcher — visible to everyone when multiple versions exist
 const versionBar = document.getElementById('bed-version-bar');
 const versionSel = document.getElementById('version-select');
-if (planStore?.versions?.length > 1) {
-  renderVersionSelect();
+const publicVersions = planStore?.versions?.filter(v => !v.name?.toLowerCase().startsWith('backup_')) ?? [];
+if (publicVersions.length > 1) {
+  renderVersionSelect(publicVersions);
   versionBar.hidden = false;
 }
 versionSel.addEventListener('change', () => {
