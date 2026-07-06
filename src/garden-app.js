@@ -209,8 +209,23 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     if (e.key === 'Enter') { e.preventDefault(); bedNameEl.blur(); }
   });
 
+  // Version name editing
+  const versionNameInput = document.getElementById('version-name-input');
+  function syncVersionNameInput() {
+    versionNameInput.value = getActiveVersion()?.name ?? '';
+  }
+  versionNameInput.addEventListener('blur', () => {
+    const name = versionNameInput.value.trim();
+    if (!name) return;
+    const ver = getActiveVersion();
+    if (ver) { ver.name = name; savePlan(); renderVersionSelect(); refreshPlantListForVersion(); }
+  });
+  versionNameInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') versionNameInput.blur();
+  });
+
   // Version management (owner: persist selection + copy/config)
-  versionSel.addEventListener('change', () => { savePlan(); refreshPlantListForVersion(); });
+  versionSel.addEventListener('change', () => { syncVersionNameInput(); savePlan(); refreshPlantListForVersion(); });
 
   document.getElementById('version-copy-btn').addEventListener('click', () => {
     const store = getStore();
@@ -254,7 +269,10 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     document.getElementById('bed-actions').hidden = !editMode;
     if (editMode) {
       renderVersionSelect();
+      syncVersionNameInput();
+      versionNameInput.hidden = false;
     } else {
+      versionNameInput.hidden = true;
       selectedSlug = null;
       document.querySelectorAll('.plant-card.is-selected').forEach(c => c.classList.remove('is-selected'));
     }

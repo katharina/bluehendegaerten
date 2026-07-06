@@ -539,6 +539,16 @@ dialog#add-plant-dialog::backdrop {
 }
 
 .obs-input,
+.version-name-input {
+  font-family: var(--font-sans);
+  font-size: var(--hb-font-size-02);
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
+  padding: var(--hb-space-100) 0;
+  flex: 1;
+}
+
 .obs-select,
 .obs-textarea {
   font-family: var(--font-sans);
