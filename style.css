@@ -1615,6 +1615,12 @@ dialog#plant-modal.authenticated .plant-color-picker {
   padding: 0 var(--hb-space-600) var(--hb-space-600);
 }
 
+@media (max-width: 700px) {
+  #bed-plan {
+    padding: 0 0 var(--hb-space-600);
+  }
+}
+
 .bed-plan-svg {
   width: 100%;
   height: auto;
