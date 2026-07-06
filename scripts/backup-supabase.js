@@ -13,9 +13,11 @@ const supabase = createClient(
 
 const TABLES = [
   'gardens',
+  'plants',
+  'plant_info',
+  'plant_edits',
   'observations',
   'observation_plants',
-  'plant_info',
   'plans',
   'custom_plants',
   'bed_images',
