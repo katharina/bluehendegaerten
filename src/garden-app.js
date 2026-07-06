@@ -77,6 +77,19 @@ layout.addEventListener('mousemove', () => layout.classList.add('is-interactive'
 const bedNameEl = document.getElementById('bed-name');
 if (planStore?.bedName) bedNameEl.textContent = planStore.bedName;
 
+// ── Version switcher — declared early so owner callback can safely reference them
+const versionBar = document.getElementById('bed-version-bar');
+const versionSel = document.getElementById('version-select');
+const publicVersions = planStore?.versions?.filter(v => !v.name?.toLowerCase().startsWith('backup_')) ?? [];
+if (publicVersions.length > 1) {
+  renderVersionSelect(publicVersions);
+  versionBar.hidden = false;
+}
+versionSel.addEventListener('change', () => {
+  getStore().currentId = versionSel.value;
+  rerenderBedPlan();
+});
+
 // ── Edit mode ─────────────────────────────────────────────────────────────────
 let editMode = false;
 let selectedSlug = null;
@@ -285,18 +298,6 @@ const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
 
-// Version switcher — visible to everyone when multiple versions exist
-const versionBar = document.getElementById('bed-version-bar');
-const versionSel = document.getElementById('version-select');
-const publicVersions = planStore?.versions?.filter(v => !v.name?.toLowerCase().startsWith('backup_')) ?? [];
-if (publicVersions.length > 1) {
-  renderVersionSelect(publicVersions);
-  versionBar.hidden = false;
-}
-versionSel.addEventListener('change', () => {
-  getStore().currentId = versionSel.value;
-  rerenderBedPlan();
-});
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
