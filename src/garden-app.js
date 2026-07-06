@@ -192,17 +192,8 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     if (e.key === 'Enter') { e.preventDefault(); bedNameEl.blur(); }
   });
 
-  // Version management
-  const versionBar = document.getElementById('bed-version-bar');
-  const versionSel = document.getElementById('version-select');
-
-  renderVersionSelect();
-
-  versionSel.addEventListener('change', () => {
-    getStore().currentId = versionSel.value;
-    savePlan();
-    rerenderBedPlan();
-  });
+  // Version management (owner: persist selection + copy/config)
+  versionSel.addEventListener('change', () => savePlan());
 
   document.getElementById('version-copy-btn').addEventListener('click', () => {
     const store = getStore();
@@ -217,6 +208,7 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     store.currentId = newVer.id;
     savePlan();
     renderVersionSelect();
+    versionBar.hidden = false;
     rerenderBedPlan();
   });
 
@@ -241,7 +233,7 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     editMode = !editMode;
     editBtn.textContent = editMode ? 'Fertig' : 'Bearbeiten';
     editBtn.classList.toggle('is-active', editMode);
-    versionBar.hidden = !editMode;
+    versionBar.hidden = !editMode && getStore().versions.length <= 1;
     document.getElementById('bed-actions').hidden = !editMode;
     if (editMode) {
       renderVersionSelect();
@@ -291,6 +283,18 @@ updateSectionCounts(gardenObs);
 const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
+
+// Version switcher — visible to everyone when multiple versions exist
+const versionBar = document.getElementById('bed-version-bar');
+const versionSel = document.getElementById('version-select');
+if (planStore?.versions?.length > 1) {
+  renderVersionSelect();
+  versionBar.hidden = false;
+}
+versionSel.addEventListener('change', () => {
+  getStore().currentId = versionSel.value;
+  rerenderBedPlan();
+});
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
 initObsModal({ gardens, plants: allPlants });
