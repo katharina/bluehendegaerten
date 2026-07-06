@@ -79,7 +79,7 @@ export function initAddPlant({ onAdded } = {}) {
       authedFetch(`/api/plants/${plant.slug}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(patch),
+        body: JSON.stringify({ ...patch, autofill_source: true }),
       });
     }).catch(() => {});
   });
