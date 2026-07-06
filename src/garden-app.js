@@ -88,6 +88,7 @@ if (publicVersions.length > 1) {
 versionSel.addEventListener('change', () => {
   getStore().currentId = versionSel.value;
   rerenderBedPlan();
+  refreshPlantListForVersion();
 });
 
 // ── Edit mode ─────────────────────────────────────────────────────────────────
@@ -207,7 +208,7 @@ supabase.auth.getSession().then(({ data: { session } }) => {
   });
 
   // Version management (owner: persist selection + copy/config)
-  versionSel.addEventListener('change', () => savePlan());
+  versionSel.addEventListener('change', () => { savePlan(); refreshPlantListForVersion(); });
 
   document.getElementById('version-copy-btn').addEventListener('click', () => {
     const store = getStore();
@@ -294,7 +295,18 @@ renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderPflanzenlabelCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
 updateSectionCounts(gardenObs);
-const bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
+let bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
+
+function refreshPlantListForVersion() {
+  const active = getActivePlacements();
+  bedSlugs = active.length ? new Set(active.map(p => p.slug)) : null;
+  renderPlantList(gardenPlants, { bedSlugs });
+  const store = getStore();
+  const ver = getActiveVersion();
+  const el = document.getElementById('bed-filter-text');
+  if (el) el.textContent = store.versions.length > 1 ? `im Beet "${ver.name}"` : 'im Beet';
+}
+
 renderPlantList(gardenPlants, { bedSlugs });
 rerenderBedPlan();
 
