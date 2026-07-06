@@ -48,9 +48,11 @@ if (planData?.data) {
   } catch {}
 }
 
-// Collect all relevant slugs: garden list + plan placements + garden obs
+// Collect all relevant slugs: garden list + ALL version placements + garden obs
 const relevantSlugs = new Set(garden.plants ?? []);
-for (const p of placements) relevantSlugs.add(p.slug);
+for (const ver of (planStore?.versions ?? [])) {
+  for (const p of (ver.placements ?? [])) relevantSlugs.add(p.slug);
+}
 
 const gardenObs = allObservations.filter(o => o.garden === garden.id);
 for (const o of gardenObs) {
@@ -295,7 +297,7 @@ renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderPflanzenlabelCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
 updateSectionCounts(gardenObs);
-let bedSlugs = placements.length ? new Set(placements.map(p => p.slug)) : null;
+let bedSlugs = null;
 
 function refreshPlantListForVersion() {
   const active = getActivePlacements();
@@ -304,10 +306,10 @@ function refreshPlantListForVersion() {
   const store = getStore();
   const ver = getActiveVersion();
   const el = document.getElementById('bed-filter-text');
-  if (el) el.textContent = store.versions.length > 1 ? `im Beet "${ver.name}"` : 'im Beet';
+  if (el) el.textContent = publicVersions.length > 1 ? `im Beet ${ver.name}` : 'im Beet';
 }
 
-renderPlantList(gardenPlants, { bedSlugs });
+refreshPlantListForVersion();
 rerenderBedPlan();
 
 
