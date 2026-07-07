@@ -172,6 +172,12 @@ h1 {
   opacity: 1;
 }
 
+.highlight-info {
+  bottom: var(--hb-space-400);
+  right: auto;
+  left: var(--hb-space-400);
+}
+
 .highlight-img {
   width: 100%;
   height: 100%;
