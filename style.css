@@ -195,25 +195,6 @@ h1 {
     flex: 1;
     height: 100vh;
     overflow-y: auto;
-    background: #c0392b;
-    color: #fff;
-  }
-  .homepage-sidebar .section-link,
-  .homepage-sidebar h3,
-  .homepage-sidebar .botanical-name,
-  .homepage-sidebar .observation-place,
-  .homepage-sidebar .observation-date,
-  .homepage-sidebar .filter-input {
-    color: #fff;
-  }
-  .homepage-sidebar .section-header {
-    border-top-color: rgba(255,255,255,0.25);
-  }
-  .homepage-sidebar .filter-input {
-    border-bottom-color: rgba(255,255,255,0.4);
-    background: transparent;
-  }
-  .homepage-sidebar .filter-input::placeholder { color: rgba(255,255,255,0.5); }
 }
 
 .highlight-header {
