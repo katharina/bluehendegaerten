@@ -51,15 +51,19 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   });
   card.querySelector('.carousel-card-highlight')?.addEventListener('click', async e => {
     e.stopPropagation();
+    const btn = e.currentTarget;
     const newVal = !o.highlighted;
+    o.highlighted = newVal;
+    btn.classList.toggle('is-active', newVal);
     const res = await authedFetch(`/api/observations/${o.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ highlighted: newVal }),
     });
-    if (!res.ok) return;
-    o.highlighted = newVal;
-    e.currentTarget.classList.toggle('is-active', newVal);
+    if (!res.ok) {
+      o.highlighted = !newVal;
+      btn.classList.toggle('is-active', !newVal);
+    }
   });
   card.querySelector('.carousel-card-delete')?.addEventListener('click', async e => {
     e.stopPropagation();
