@@ -53,10 +53,10 @@ body {
   top: var(--hb-space-400);
   right: var(--page-pad);
   z-index: 500;
-  background: none;
+  background: #000;
   border: none;
   cursor: pointer;
-  padding: var(--hb-space-200);
+  padding: var(--hb-space-300);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -66,12 +66,7 @@ body {
   display: block;
   width: 16px;
   height: 1px;
-  background: currentColor;
-}
-
-.has-highlight .hamburger span {
   background: #fff;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
 .topbar-dropdown {
@@ -450,7 +445,7 @@ ul {
 }
 
 .plant-card .botanical-name {
-  font-size: var(--hb-font-size-02);
+  font-size: var(--hb-font-size-03);
   line-height: 1.3;
 }
 
@@ -479,7 +474,7 @@ ul {
 /* ── Carousel card meta ──────────────────────────────────────────────────── */
 
 .carousel-card-meta .botanical-name {
-  font-size: var(--hb-font-size-04);
+  font-size: var(--hb-font-size-02);
   color: var(--hb-black-1000);
   white-space: normal;
   display: -webkit-box;
