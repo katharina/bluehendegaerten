@@ -177,7 +177,7 @@ h1 {
 
 .highlight-header {
   position: fixed;
-  bottom: var(--hb-space-700);
+  top: var(--hb-space-700);
   left: var(--page-pad);
   margin: 0;
   padding: 0;
