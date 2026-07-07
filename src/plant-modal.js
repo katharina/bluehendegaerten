@@ -27,7 +27,7 @@ const FIELD_LABEL = {
 let _dialog, _ctx, _loggedIn = false, _gardenId = null, _currentPlant = null;
 
 export function initPlantModal({ gardens = [], observations = [], plants = [], gardenId = null } = {}) {
-  _ctx = { gardens, observations };
+  _ctx = { gardens, observations, plants };
   _gardenId = gardenId;
   _dialog = document.getElementById('plant-modal');
 
@@ -65,8 +65,12 @@ export function initPlantModal({ gardens = [], observations = [], plants = [], g
 
 export async function openPlantModal(plant, { gardenId = null } = {}) {
   _currentPlant = plant;
-  const { gardens, observations } = _ctx;
+  const { gardens, observations, plants } = _ctx;
   const dialog = _dialog;
+
+  // Merge with cached plant data so color is available immediately
+  const cached = plants?.find(p => p.slug === plant.slug);
+  if (cached) plant = { ...cached, ...plant };
 
   const setColor = c => {
     dialog.style.setProperty('--plant-color', c);
