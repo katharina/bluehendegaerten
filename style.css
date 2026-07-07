@@ -1024,9 +1024,16 @@ dialog#obs-modal::backdrop {
 #highlight-info .observation-place,
 #highlight-info .observation-date {
   background: #fff;
+  color: #000;
   padding: 1px 4px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  cursor: pointer;
+}
+
+#highlight-info .obs-modal-plant-link:hover {
+  background: #000;
+  color: #fff;
 }
 
 .obs-modal-note {
