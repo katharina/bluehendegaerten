@@ -172,23 +172,6 @@ h1 {
   opacity: 1;
 }
 
-.highlight-info {
-  bottom: var(--page-pad);
-  right: auto;
-  left: var(--page-pad);
-  background: none;
-  padding: 0;
-  align-items: flex-start;
-}
-
-.highlight-info .obs-modal-plant-link,
-.highlight-info .observation-place,
-.highlight-info .observation-date {
-  background: #fff;
-  padding: 1px 4px;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
 
 .highlight-img {
   width: 100%;
@@ -1016,6 +999,28 @@ dialog#obs-modal::backdrop {
 .obs-modal-info .observation-date {
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-400);
+}
+
+#highlight-info {
+  bottom: var(--page-pad);
+  right: auto;
+  left: var(--page-pad);
+  background: none;
+  padding: 0;
+  align-items: flex-start;
+}
+
+#highlight-info .obs-modal-plant-link {
+  white-space: nowrap;
+}
+
+#highlight-info .obs-modal-plant-link,
+#highlight-info .observation-place,
+#highlight-info .observation-date {
+  background: #fff;
+  padding: 1px 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .obs-modal-note {
