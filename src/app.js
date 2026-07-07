@@ -32,7 +32,7 @@ function updateCounts() {
 }
 
 renderGardenList(gardens, []);
-initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, sharedList: observations });
+initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, sharedList: observations, onLoad: updateCounts });
 renderPlantList(plants, {});
 updateCounts();
 

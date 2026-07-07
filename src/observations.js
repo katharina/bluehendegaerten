@@ -153,7 +153,7 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
-export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedList }) {
+export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedList, onLoad }) {
   const carousel = document.getElementById(containerId);
   if (!carousel) return;
   carousel.hidden = false;
@@ -177,6 +177,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedLi
     });
     offset += batch.length;
     loading = false;
+    onLoad?.();
     if (batch.length < BATCH) { sentinel.remove(); observer.disconnect(); }
   }
 
@@ -185,6 +186,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedLi
     { root: carousel, threshold: 0.1 }
   );
   observer.observe(sentinel);
+  loadMore(); // always kick off the first batch immediately
 }
 
 export function renderPflanzenlabelCarousel(observations, gardenMap, plantMap) {
