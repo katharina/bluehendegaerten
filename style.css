@@ -479,7 +479,7 @@ ul {
 /* ── Carousel card meta ──────────────────────────────────────────────────── */
 
 .carousel-card-meta .botanical-name {
-  font-size: var(--hb-font-size-02);
+  font-size: var(--hb-font-size-04);
   color: var(--hb-black-1000);
   white-space: normal;
   display: -webkit-box;
