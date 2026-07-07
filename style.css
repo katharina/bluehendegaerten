@@ -188,7 +188,7 @@ h1 {
     display: flex;
   }
   .highlight-bg {
-    flex: 2;
+    flex: 1;
   }
   .homepage-sidebar {
     display: block;
