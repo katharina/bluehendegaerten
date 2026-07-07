@@ -69,6 +69,11 @@ body {
   background: currentColor;
 }
 
+.has-highlight .hamburger span {
+  background: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+}
+
 .topbar-dropdown {
   position: fixed;
   top: calc(var(--hb-space-400) + 28px);
@@ -147,6 +152,27 @@ h1 {
 .page-header {
   margin: var(--hb-space-900) var(--page-pad) var(--hb-space-800) var(--page-pad);
   padding: var(--hb-space-300) 0 0 0;
+}
+
+.highlight-bg {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.highlight-header {
+  position: fixed;
+  bottom: var(--hb-space-700);
+  left: var(--page-pad);
+  margin: 0;
+  padding: 0;
+}
+
+.highlight-header h1 {
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
 
 .page-header.chapeau {

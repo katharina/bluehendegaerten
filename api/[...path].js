@@ -299,6 +299,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         } else {
           let query = supabase.from('observations').select('*').order('created_at', { ascending: false });
           if (garden) query = query.eq('garden', garden);
+          if (req.query.highlighted === 'true') query = query.eq('highlighted', true);
           const { data, error } = await query;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
