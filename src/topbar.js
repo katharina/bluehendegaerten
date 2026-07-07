@@ -24,9 +24,16 @@ document.addEventListener('click', () => { dropdown.hidden = true; });
 dropdown.addEventListener('click', e => e.stopPropagation());
 
 function renderDropdown() {
+  const navLinks = `
+    <a class="topbar-dd-item" href="/">Startseite</a>
+    <a class="topbar-dd-item" href="/beobachtungen/fotos">Alle Beobachtungen</a>
+    <a class="topbar-dd-item" href="/plants/all">Alle Pflanzen</a>
+  `;
   if (_user) {
     const name = _user.user_metadata?.display_name || _user.email || '';
     dropdown.innerHTML = `
+      ${navLinks}
+      <div class="topbar-dd-divider"></div>
       <div class="topbar-dd-info">${name}</div>
       <button class="topbar-dd-item" id="dd-rename">Name ändern</button>
       <button class="topbar-dd-item" id="dd-logout">Abmelden</button>
@@ -43,6 +50,8 @@ function renderDropdown() {
     });
   } else {
     dropdown.innerHTML = `
+      ${navLinks}
+      <div class="topbar-dd-divider"></div>
       <form id="dd-login-form" class="topbar-dd-login">
         <input class="topbar-dd-input" type="email" placeholder="Email" required autocomplete="email">
         <button class="topbar-dd-item" type="submit">Magic Link senden</button>

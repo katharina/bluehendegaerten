@@ -108,6 +108,13 @@ body {
 
 .topbar-dd-item:hover { opacity: 0.6; }
 
+a.topbar-dd-item { text-decoration: none; }
+
+.topbar-dd-divider {
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: var(--hb-space-200) 0;
+}
+
 .topbar-dd-login {
   display: flex;
   flex-direction: column;
