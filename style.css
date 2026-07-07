@@ -176,6 +176,18 @@ h1 {
   bottom: var(--page-pad);
   right: auto;
   left: var(--page-pad);
+  background: none;
+  padding: 0;
+  align-items: flex-start;
+}
+
+.highlight-info .obs-modal-plant-link,
+.highlight-info .observation-place,
+.highlight-info .observation-date {
+  background: #fff;
+  padding: 1px 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .highlight-img {
