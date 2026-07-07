@@ -2,6 +2,7 @@ import { thumbUrl, fullUrl } from './utils.js';
 import { supabase, authedFetch } from './auth.js';
 
 const PAGE = 20;
+const SITE_OWNER_ID = import.meta.env.VITE_SITE_OWNER_ID ?? null;
 let _loggedIn = false;
 let _userId = null;
 
@@ -29,6 +30,7 @@ function buildObsCard(o, gardenMap, plantMap, list) {
         <button class="carousel-card-edit">Bearbeiten</button>
         <button class="carousel-card-delete">Löschen</button>
       </div>` : ''}
+      ${o.id && SITE_OWNER_ID && _userId === SITE_OWNER_ID ? `<button class="carousel-card-highlight${o.highlighted ? ' is-active' : ''}" title="Highlight">★</button>` : ''}
       ${o.id && o.created_by && _userId !== o.created_by ? `<div class="carousel-card-creator">${o.created_by_name || 'Blümchen'}</div>` : ''}
     </div>`;
   const imgEl = card.querySelector('.carousel-card-img img');
@@ -46,6 +48,18 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   card.querySelector('.carousel-card-edit')?.addEventListener('click', e => {
     e.stopPropagation();
     document.dispatchEvent(new CustomEvent('obs:edit', { detail: o }));
+  });
+  card.querySelector('.carousel-card-highlight')?.addEventListener('click', async e => {
+    e.stopPropagation();
+    const newVal = !o.highlighted;
+    const res = await authedFetch(`/api/observations/${o.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ highlighted: newVal }),
+    });
+    if (!res.ok) return;
+    o.highlighted = newVal;
+    e.currentTarget.classList.toggle('is-active', newVal);
   });
   card.querySelector('.carousel-card-delete')?.addEventListener('click', async e => {
     e.stopPropagation();

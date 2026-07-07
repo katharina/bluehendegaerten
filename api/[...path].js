@@ -326,10 +326,15 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
       if (req.method === 'PATCH') {
         const user = await requireUser(req, res);
         if (!user) return;
+        const isSiteOwner = !!process.env.SITE_OWNER_ID && user.id === process.env.SITE_OWNER_ID;
         const { data: obsCheck } = await supabase.from('observations').select('created_by').eq('id', id).maybeSingle();
-        if (obsCheck?.created_by && obsCheck.created_by !== user.id) return res.status(403).json({ error: 'forbidden' });
-        const { date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden } = req.body ?? {};
+        const isCreator = !obsCheck?.created_by || obsCheck.created_by === user.id;
+        const { highlighted, date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden } = req.body ?? {};
+        const hasRegularFields = [date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden].some(v => v !== undefined);
+        if (hasRegularFields && !isCreator) return res.status(403).json({ error: 'forbidden' });
+        if (highlighted !== undefined && !isSiteOwner) return res.status(403).json({ error: 'forbidden' });
         const fields = {};
+        if (highlighted           !== undefined) fields.highlighted           = !!highlighted;
         if (date                  !== undefined) fields.date                  = date || null;
         if (type                  !== undefined) fields.type                  = type;
         if (garden                !== undefined) fields.garden                = garden || null;
