@@ -8,6 +8,7 @@ export function renderGardenList(gardens, observations = []) {
   });
 
   const list = document.getElementById('garden-list');
+  if (!list) return;
   gardens.forEach(g => {
     const li = document.createElement('li');
     const a  = document.createElement('a');

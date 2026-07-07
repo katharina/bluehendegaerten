@@ -26,36 +26,28 @@
     <h1>Blühende<br>Gärten</h1>
   </section>
 
-  <!--
-  <section>
-    <div class="section-header">
-      <h3>Alle Gärten</h3>
-    </div>
-    <div class="section-content">
-      <ul id="garden-list"></ul>
-    </div>
-  </section>
+  <aside class="homepage-sidebar">
+    <section>
+      <div class="section-header">
+        <h3><span id="obs-count"></span> <a href="/beobachtungen/fotos" class="section-link">Beobachtungen</a></h3>
+        <button id="quick-obs-btn" class="action-btn-icon">+</button>
+      </div>
+      <div class="section-content no-horizontal-padding">
+        <div id="obs-carousel"></div>
+      </div>
+    </section>
 
-  <section>
-    <div class="section-header">
-      <h3><span id="obs-count"></span> <a href="/beobachtungen/fotos" class="section-link">Beobachtungen</a></h3>
-      <button id="quick-obs-btn" class="action-btn-icon">+</button>
-    </div>
-    <div class="section-content no-horizontal-padding">
-      <div id="obs-carousel"></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-header">
-      <h3><span id="plant-count"></span> Pflanzen</h3>
-      <button id="add-plant-btn" class="action-btn-icon">+</button>
-    </div>
-    <div class="section-content">
-      <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
-    </div>
-    <div id="plant-list"></div>
-  </section>
+    <section>
+      <div class="section-header">
+        <h3><span id="plant-count"></span> Pflanzen</h3>
+        <button id="add-plant-btn" class="action-btn-icon">+</button>
+      </div>
+      <div class="section-content">
+        <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+      </div>
+      <div id="plant-list"></div>
+    </section>
+  </aside>
 
   <dialog id="plant-modal" tabindex="-1">
     <div class="plant-modal-inner">
@@ -207,9 +199,9 @@
   <dialog id="lightbox" tabindex="-1">
     <img id="lightbox-img" src="" alt="">
   </dialog>
-  -->
 
   <script type="module" src="/src/homepage.js"></script>
+  <script type="module" src="/src/app.js"></script>
   <script type="module" src="/src/topbar.js"></script>
 </body>
 </html>
