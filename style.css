@@ -169,6 +169,12 @@ h1 {
   position: relative;
   height: 100vh;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.highlight-bg.is-loaded {
+  opacity: 1;
 }
 
 .highlight-img {
