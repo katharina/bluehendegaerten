@@ -1010,7 +1010,8 @@ dialog#obs-modal::backdrop {
   align-items: flex-start;
 }
 
-#highlight-info .obs-modal-plant-link {
+#highlight-info .obs-modal-plant-link,
+#highlight-info .observation-place {
   white-space: nowrap;
 }
 

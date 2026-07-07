@@ -9,8 +9,15 @@ const obs = highlights[Math.floor(Math.random() * highlights.length)];
 if (obs.slugs?.length) {
   const plants = await fetch('/api/plants').then(r => r.json()).catch(() => []);
   const plantMap = new Map(plants.map(p => [p.slug, p.name]));
-  document.getElementById('highlight-plants').innerHTML =
-    obs.slugs.map(s => `<span class="obs-modal-plant-link botanical-name">${plantMap.get(s) ?? s}</span>`).join('');
+  const container = document.getElementById('highlight-plants');
+  container.innerHTML = obs.slugs.map(s =>
+    `<span class="obs-modal-plant-link botanical-name" data-slug="${s}">${plantMap.get(s) ?? s}</span>`
+  ).join('');
+  container.querySelectorAll('[data-slug]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('plant:open', { detail: { slug: el.dataset.slug } }));
+    });
+  });
 }
 if (obs.place) document.getElementById('highlight-place').textContent = obs.place;
 if (obs.date)  document.getElementById('highlight-date').textContent =
