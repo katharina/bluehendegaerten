@@ -110,9 +110,10 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     .map(g => `<a class="garden-badge" href="/${g.path ?? g.id}">${g.name}</a>`)
     .join('');
 
-  const plantObs = observations
-    .filter(o => o.slugs?.includes(plant.slug))
-    .sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at));
+  const plantObs = await fetch(`/api/observations?slug=${plant.slug}`)
+    .then(r => r.ok ? r.json() : [])
+    .catch(() => observations.filter(o => o.slugs?.includes(plant.slug)))
+    .then(list => list.sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at)));
   const obsList = dialog.querySelector('.plant-modal-obs-list');
   const [colA, colB] = obsList.querySelectorAll('.obs-col');
   colA.innerHTML = colB.innerHTML = '';

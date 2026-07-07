@@ -153,6 +153,40 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
+export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedList }) {
+  const carousel = document.getElementById(containerId);
+  if (!carousel) return;
+  carousel.hidden = false;
+
+  const BATCH = 10;
+  let offset = 0;
+  let loading = false;
+
+  const sentinel = document.createElement('div');
+  carousel.appendChild(sentinel);
+
+  async function loadMore() {
+    if (loading) return;
+    loading = true;
+    const batch = await fetch(`/api/observations?limit=${BATCH}&offset=${offset}`)
+      .then(r => r.json()).catch(() => []);
+    const fotos = batch.filter(o => o.type === 'foto' && o.filename);
+    fotos.forEach(o => {
+      sharedList.push(o);
+      sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList));
+    });
+    offset += batch.length;
+    loading = false;
+    if (batch.length < BATCH) { sentinel.remove(); observer.disconnect(); }
+  }
+
+  const observer = new IntersectionObserver(
+    entries => { if (entries[0].isIntersecting) loadMore(); },
+    { root: carousel, threshold: 0.1 }
+  );
+  observer.observe(sentinel);
+}
+
 export function renderPflanzenlabelCarousel(observations, gardenMap, plantMap) {
   const labels = observations
     .filter(o => o.type === 'pflanzenlabel')

@@ -1,7 +1,7 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
 import { renderGardenList } from './gardens.js';
-import { renderObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
+import { initLazyObsCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -9,10 +9,9 @@ import { initObsForm, addPlantToObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
 import { supabase } from './auth.js';
 
-const [[gardens, observations, plants], { data: { session } }] = await Promise.all([
+const [[gardens, plants], { data: { session } }] = await Promise.all([
   Promise.all([
     fetch('/api/gardens').then(r => r.json()),
-    fetch('/api/observations').then(r => r.json()),
     fetch('/api/plants').then(r => r.json()),
   ]),
   supabase.auth.getSession(),
@@ -23,16 +22,18 @@ setCurrentUser(session?.user?.id ?? null);
 const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
 const plantMap  = new Map(plants.map(p => [p.slug, p.name]));
 
-const obsSlugSet = new Set(observations.flatMap(o => o.slugs ?? []));
+const observations = []; // populated lazily as carousel loads
 
 function updateCounts() {
-  document.getElementById('obs-count').textContent  = observations.filter(o => o.filename).length;
-  document.getElementById('plant-count').textContent = plants.filter(p => obsSlugSet.has(p.slug)).length;
+  const el = document.getElementById('obs-count');
+  if (el) el.textContent = observations.filter(o => o.filename).length;
+  const pe = document.getElementById('plant-count');
+  if (pe) pe.textContent = plants.length;
 }
 
-renderGardenList(gardens, observations);
-renderObsCarousel(observations, gardenMap, plantMap);
-renderPlantList(plants, { obsSlugSet });
+renderGardenList(gardens, []);
+initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, sharedList: observations });
+renderPlantList(plants, {});
 updateCounts();
 
 initPlantModal({ gardens, observations, plants });
@@ -42,38 +43,31 @@ initAddPlant({
   onAdded(plant) {
     plants.push(plant);
     addPlantToObsForm(plant);
-    renderPlantList(plants, { obsSlugSet });
+    renderPlantList(plants, {});
   },
 });
 
 document.addEventListener('obs:saved', e => {
   observations.push(e.detail);
-  (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   prependObsToCarousel(e.detail, gardenMap, plantMap);
-  renderPlantList(plants, { obsSlugSet });
   updateCounts();
 });
 
 document.addEventListener('obs:updated', e => {
   const idx = observations.findIndex(o => o.id === e.detail.id);
   if (idx !== -1) observations[idx] = { ...observations[idx], ...e.detail };
-  (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   updateObsInCarousel(e.detail, gardenMap, plantMap);
-  renderPlantList(plants, { obsSlugSet });
 });
 
 document.addEventListener('obs:deleted', e => {
   const idx = observations.findIndex(o => o.id === e.detail.id);
   if (idx !== -1) observations.splice(idx, 1);
-  obsSlugSet.clear();
-  observations.forEach(o => (o.slugs ?? []).forEach(s => obsSlugSet.add(s)));
   removeObsFromCarousel(e.detail.id);
-  renderPlantList(plants, { obsSlugSet });
   updateCounts();
 });
 
 document.addEventListener('plant:updated', e => {
   const idx = plants.findIndex(p => p.slug === e.detail.slug);
-  if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, { obsSlugSet }); }
+  if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, {}); }
 });
 

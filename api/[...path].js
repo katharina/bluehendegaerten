@@ -286,20 +286,24 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
     if (!id) {
       if (req.method === 'GET') {
         const { slug, garden } = req.query;
+        const limit  = parseInt(req.query.limit)  || null;
+        const offset = parseInt(req.query.offset) || 0;
         let rows;
         if (slug) {
           const { data: links } = await supabase
             .from('observation_plants').select('observation_id').eq('slug', slug);
           const ids = (links ?? []).map(l => l.observation_id);
           if (!ids.length) return res.json([]);
-          const { data, error } = await supabase
-            .from('observations').select('*').in('id', ids).order('created_at', { ascending: false });
+          let q = supabase.from('observations').select('*').in('id', ids).order('created_at', { ascending: false });
+          if (limit) q = q.range(offset, offset + limit - 1);
+          const { data, error } = await q;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         } else {
           let query = supabase.from('observations').select('*').order('created_at', { ascending: false });
           if (garden) query = query.eq('garden', garden);
           if (req.query.highlighted === 'true') query = query.eq('highlighted', true);
+          if (limit) query = query.range(offset, offset + limit - 1);
           const { data, error } = await query;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
