@@ -163,6 +163,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
   const BATCH = 10;
   let offset = 0;
   let batches = 0;
+  let fotosLoaded = 0;
   let loading = false;
 
   const sentinel = document.createElement('div');
@@ -177,6 +178,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
     fotos.forEach(o => {
       sharedList.push(o);
       sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList, colorMap));
+      fotosLoaded++;
     });
     offset += batch.length;
     batches++;
@@ -189,7 +191,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
       if (showAllHref) {
         const link = document.createElement('a');
         link.className = 'carousel-card carousel-show-all';
-        link.href = showAllHref;
+        link.href = `${showAllHref}?from=${fotosLoaded}`;
         link.textContent = 'Alle Beobachtungen →';
         carousel.appendChild(link);
       }

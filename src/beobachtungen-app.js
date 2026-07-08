@@ -62,6 +62,14 @@ obs = obs
 
 renderObsGrid(obs, gardenMap, plantMap, 'obs-grid');
 
+const from = parseInt(params.get('from')) || 0;
+if (from > 0) {
+  requestAnimationFrame(() => {
+    const cards = document.querySelectorAll('#obs-grid .carousel-card');
+    cards[from]?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  });
+}
+
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, observations: allObservations });
 
