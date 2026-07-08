@@ -1028,18 +1028,32 @@ dialog#obs-modal::backdrop {
 
 @media (max-width: 640px) {
   dialog#obs-modal[open] {
-    align-items: flex-start;
-    padding-top: var(--hb-space-500);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .obs-modal-img {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
   .obs-modal-img img {
     width: 100vw;
     max-width: 100vw;
-    max-height: calc(100dvh - var(--hb-space-500));
+    max-height: calc(100dvh - 72px);
     height: auto;
     filter: none;
+  }
+  /* info flows below image */
+  .obs-modal-info {
+    position: static;
+    padding: var(--hb-space-200) var(--page-pad);
+  }
+  /* if image fills the screen, info overlaps the bottom */
+  .obs-modal-img.info-overlap .obs-modal-info {
+    position: absolute;
+    bottom: var(--hb-space-200);
+    left: var(--page-pad);
+    padding: 0;
   }
   .obs-nav {
     position: fixed;
@@ -1096,12 +1110,6 @@ dialog#obs-modal::backdrop {
 .obs-modal-info .observation-place,
 .obs-modal-info .observation-date {
   font-size: var(--hb-font-size-01);
-}
-
-@media (max-width: 640px) {
-  .obs-modal-info {
-    bottom: var(--hb-space-200);
-  }
 }
 
 .obs-modal-info .obs-modal-plant-link:hover {

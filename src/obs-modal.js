@@ -177,8 +177,17 @@ function renderObs(obs, onReady) {
 
   const imgWrap = _dialog.querySelector('.obs-modal-img');
   const img     = _dialog.querySelector('.obs-modal-img img');
+  imgWrap.classList.remove('info-overlap');
   if (obs.filename) {
-    img.onload = () => { img.onload = null; onReady?.(); };
+    img.onload = () => {
+      img.onload = null;
+      if (isMobile()) {
+        const infoEl = imgWrap.querySelector('.obs-modal-info');
+        const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
+        imgWrap.classList.toggle('info-overlap', overflows);
+      }
+      onReady?.();
+    };
     img.onerror = () => { img.onerror = null; onReady?.(); };
     img.src = fullUrl(obs.filename);
     imgWrap.hidden = false;
