@@ -1137,6 +1137,26 @@ dialog#obs-modal::backdrop {
 
 /* ── Obs modal mobile list ───────────────────────────────────────────────── */
 
+.obs-modal-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.obs-modal-end-link {
+  color: #fff;
+  font-size: var(--hb-font-size-04);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+  padding: var(--hb-space-400) var(--hb-space-600);
+}
+
+.obs-modal-end-link:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
 .obs-modal-list {
   width: 100%;
   height: 100%;

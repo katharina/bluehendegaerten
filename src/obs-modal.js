@@ -2,11 +2,12 @@ import { fullUrl } from './utils.js';
 import { supabase } from './auth.js';
 import { getCurrentUserId } from './observations.js';
 
-let _dialog, _ctx, _list = [], _index = 0;
+let _dialog, _ctx, _list = [], _index = 0, _showAllHref = null;
 let _loggedIn = false;
 const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
 
-export function initObsModal({ gardens = [], plants = [] } = {}) {
+export function initObsModal({ gardens = [], plants = [], showAllHref = null } = {}) {
+  _showAllHref = showAllHref;
   _ctx = {
     gardenMap: new Map(gardens.map(g => [g.id, g])),
     plantMap:  new Map(plants.map(p => [p.slug, p])),
@@ -27,6 +28,7 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
     img.onload = img.onerror = null;
     img.src = '';
     _dialog.querySelector('.obs-modal-list').innerHTML = '';
+    hideAllScreen();
   });
 
   _dialog.querySelector('.obs-nav--prev').addEventListener('click', e => {
@@ -63,14 +65,45 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
 }
 
 function navigate(dir) {
-  _index = (_index + dir + _list.length) % _list.length;
+  const next = _index + dir;
+  if (next < 0) return;
+  if (next >= _list.length) {
+    if (_showAllHref) showAllScreen();
+    return;
+  }
+  hideAllScreen();
+  _index = next;
   renderObs(_list[_index], updateNav);
 }
 
 function updateNav() {
-  const show = _list.length > 1;
-  _dialog.querySelector('.obs-nav--prev').hidden = !show;
-  _dialog.querySelector('.obs-nav--next').hidden = !show;
+  const multi = _list.length > 1;
+  _dialog.querySelector('.obs-nav--prev').hidden = !multi || _index === 0;
+  _dialog.querySelector('.obs-nav--next').hidden = !multi;
+}
+
+function showAllScreen() {
+  const inner = _dialog.querySelector('.obs-modal-inner');
+  inner.hidden = true;
+  _dialog.querySelector('.obs-nav--prev').hidden = false;
+  _dialog.querySelector('.obs-nav--next').hidden = true;
+
+  let end = _dialog.querySelector('.obs-modal-end');
+  if (!end) {
+    end = document.createElement('div');
+    end.className = 'obs-modal-end';
+    end.addEventListener('click', e => e.stopPropagation());
+    _dialog.insertBefore(end, _dialog.querySelector('.obs-modal-list'));
+  }
+  const href = `${_showAllHref}?from=${_list.length}`;
+  end.innerHTML = `<a class="obs-modal-end-link" href="${href}">Alle Beobachtungen →</a>`;
+  end.hidden = false;
+}
+
+function hideAllScreen() {
+  const end = _dialog.querySelector('.obs-modal-end');
+  if (end) end.hidden = true;
+  _dialog.querySelector('.obs-modal-inner').hidden = false;
 }
 
 function buildObsInfo(obs) {

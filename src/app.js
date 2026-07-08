@@ -44,7 +44,7 @@ renderPlantList(plants, {});
 updateCounts();
 
 initPlantModal({ gardens, observations, plants });
-initObsModal({ gardens, plants });
+initObsModal({ gardens, plants, showAllHref: '/beobachtungen/fotos' });
 initObsForm({ gardens, plants, observations });
 initAddPlant({
   onAdded(plant) {
