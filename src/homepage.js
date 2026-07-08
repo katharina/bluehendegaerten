@@ -39,12 +39,18 @@ const sticky = document.querySelector('.highlight-sticky');
 const bg     = document.getElementById('highlight-bg');
 const info   = document.getElementById('highlight-info');
 
-window.addEventListener('scroll', () => {
-  const bgBottom   = bg.getBoundingClientRect().bottom;
-  const headerRect = header.getBoundingClientRect();
-  const infoTop    = info.hidden ? Infinity : info.getBoundingClientRect().top;
+// Measure the natural (untransformed) bottom of the header once
+let naturalHeaderBottom = header.getBoundingClientRect().bottom;
+window.addEventListener('resize', () => {
+  header.style.transform = '';
+  naturalHeaderBottom = header.getBoundingClientRect().bottom;
+}, { passive: true });
 
-  const push = Math.max(0, headerRect.bottom - infoTop);
+window.addEventListener('scroll', () => {
+  const bgBottom = bg.getBoundingClientRect().bottom;
+  const infoTop  = info.hidden ? Infinity : info.getBoundingClientRect().top;
+
+  const push = Math.max(0, naturalHeaderBottom - infoTop);
   header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
 
   sticky.classList.toggle('is-visible', bgBottom <= 0);
