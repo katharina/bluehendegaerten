@@ -210,7 +210,6 @@ h1 {
   margin: 0;
   padding: 0;
   z-index: 10;
-  transition: top 0.25s ease, left 0.25s ease, right 0.25s ease, padding 0.25s ease, background 0.25s ease;
 }
 
 .highlight-header h1 {
@@ -226,6 +225,7 @@ h1 {
   right: 0;
   background: #000;
   padding: var(--hb-space-300) var(--page-pad);
+  transition: background 0.25s ease;
 }
 
 .highlight-header.is-sticky h1 {

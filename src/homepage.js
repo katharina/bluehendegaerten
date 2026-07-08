@@ -34,7 +34,7 @@ img.addEventListener('load', () => {
 img.src = fullUrl(obs.filename);
 
 const header = document.querySelector('.highlight-header');
-const bg     = document.getElementById('highlight-bg');
-window.addEventListener('scroll', () => {
-  header.classList.toggle('is-sticky', window.scrollY > bg.offsetHeight * 0.5);
-}, { passive: true });
+new IntersectionObserver(
+  ([entry]) => header.classList.toggle('is-sticky', !entry.isIntersecting),
+  { threshold: 0 }
+).observe(document.getElementById('highlight-bg'));
