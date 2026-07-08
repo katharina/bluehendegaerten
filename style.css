@@ -466,13 +466,14 @@ ul {
     background: var(--page-bg, #fff);
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
+    height: 100dvh;
     z-index: 10;
   }
   #plant-list {
     grid-template-columns: repeat(3, 1fr);
     flex: 1;
     overflow-y: auto;
+    min-height: 0;
   }
 }
 
