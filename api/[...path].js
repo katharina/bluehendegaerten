@@ -286,6 +286,12 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
     if (!id) {
       if (req.method === 'GET') {
         const { slug, garden } = req.query;
+
+        if (req.query.count === 'true') {
+          const { count } = await supabase.from('observations').select('*', { count: 'exact', head: true });
+          return res.json({ count: count ?? 0 });
+        }
+
         const limit  = parseInt(req.query.limit)  || null;
         const offset = parseInt(req.query.offset) || 0;
         let rows;

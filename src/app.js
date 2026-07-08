@@ -24,9 +24,15 @@ const plantMap  = new Map(plants.map(p => [p.slug, p.name]));
 
 const observations = []; // populated lazily as carousel loads
 
+fetch('/api/observations?count=true')
+  .then(r => r.json())
+  .then(({ count }) => {
+    const el = document.getElementById('obs-count');
+    if (el) el.textContent = count;
+  })
+  .catch(() => {});
+
 function updateCounts() {
-  const el = document.getElementById('obs-count');
-  if (el) el.textContent = observations.filter(o => o.filename).length;
   const pe = document.getElementById('plant-count');
   if (pe) pe.textContent = plants.length;
 }

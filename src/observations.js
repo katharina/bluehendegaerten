@@ -181,9 +181,11 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedLi
     if (batch.length < BATCH) { sentinel.remove(); observer.disconnect(); }
   }
 
+  sentinel.style.minWidth = '1px';
+
   const observer = new IntersectionObserver(
     entries => { if (entries[0].isIntersecting) loadMore(); },
-    { root: carousel, threshold: 0.1 }
+    { root: carousel, threshold: 0 }
   );
   observer.observe(sentinel);
   loadMore(); // always kick off the first batch immediately
