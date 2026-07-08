@@ -1,4 +1,4 @@
-import { fullUrl } from './utils.js';
+import { fullUrl, contrastColor } from './utils.js';
 import { supabase } from './auth.js';
 import { getCurrentUserId } from './observations.js';
 
@@ -262,10 +262,15 @@ function renderObs(obs, onReady) {
     .map(p => `<span class="obs-modal-plant-link botanical-name" data-slug="${p.slug}">${p.name}</span>`)
     .join('');
   plantsEl.querySelectorAll('.obs-modal-plant-link').forEach(el => {
+    const plant = _ctx.plantMap.get(el.dataset.slug);
+    if (plant?.color) {
+      el.style.background = plant.color;
+      el.style.color = contrastColor(plant.color);
+    }
     el.addEventListener('click', e => {
       e.stopPropagation();
       _dialog.close();
-      document.dispatchEvent(new CustomEvent('plant:open', { detail: _ctx.plantMap.get(el.dataset.slug) }));
+      document.dispatchEvent(new CustomEvent('plant:open', { detail: plant }));
     });
   });
 
