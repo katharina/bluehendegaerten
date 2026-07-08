@@ -44,7 +44,7 @@ const plantSentinel = document.querySelector('.plant-sticky-sentinel');
 const plantStickyHeader = document.querySelector('.plant-sticky-header');
 if (plantSentinel && plantStickyHeader) {
   const bgBox = document.querySelector('.highlight-sticky');
-  if (bgBox) {
+  if (bgBox && window.matchMedia('(max-width: 640px)').matches) {
     const offset = bgBox.offsetWidth + 8;
     plantStickyHeader.style.setProperty('--pflanzen-left', `calc(var(--page-pad) + ${offset}px)`);
   }
