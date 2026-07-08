@@ -54,11 +54,13 @@ if (plantSentinel && plantStickyHeader) {
   let stuck = false;
   function updateStuck() {
     const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
-    const sectionTop = document.getElementById('plants-section').getBoundingClientRect().top;
-    const diff = sectionTop - containerTop;
-    if (diff < 1) {
+    const headerTop = plantStickyHeader.getBoundingClientRect().top;
+    const diff = headerTop - containerTop;
+    if (diff < 0) {
+      // CSS sticky has pushed header 1px above container top — it's stuck
       stuck = true;
     } else if (diff > plantStickyHeader.offsetHeight) {
+      // Section is well below the top — not stuck
       stuck = false;
     }
     plantStickyHeader.classList.toggle('is-stuck', stuck);
