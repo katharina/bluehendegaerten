@@ -39,6 +39,14 @@ function updateCounts() {
 }
 
 renderGardenList(gardens, []);
+
+const plantSentinel = document.querySelector('.plant-sticky-sentinel');
+const plantStickyHeader = document.querySelector('.plant-sticky-header');
+if (plantSentinel && plantStickyHeader) {
+  new IntersectionObserver(([e]) => {
+    plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
+  }).observe(plantSentinel);
+}
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
 renderPlantList(plants, {});
 updateCounts();

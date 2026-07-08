@@ -463,11 +463,33 @@ ul {
   #plant-list {
     grid-template-columns: repeat(3, 1fr);
   }
+  .plant-sticky-sentinel {
+    height: 1px;
+  }
   .plant-sticky-header {
     position: sticky;
-    top: 0;
+    top: -1px;
     z-index: 10;
-    background: var(--page-bg, #fff);
+    background: #fff;
+  }
+  .plant-sticky-header.is-stuck .section-header {
+    display: inline-flex;
+    background: #000;
+    color: #fff;
+    padding: var(--hb-space-300);
+    margin: var(--hb-space-400) var(--page-pad);
+    border-top: none;
+  }
+  .plant-sticky-header.is-stuck .section-header h3 {
+    font-size: var(--hb-font-size-03);
+    font-weight: normal;
+    margin: 0;
+  }
+  .plant-sticky-header.is-stuck .section-header .action-btn-icon {
+    display: none;
+  }
+  .plant-sticky-header.is-stuck .section-content {
+    margin-top: 0;
   }
 }
 
