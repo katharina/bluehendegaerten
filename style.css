@@ -157,12 +157,14 @@ h1 {
 }
 
 .homepage-layout {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .highlight-bg {
   position: relative;
-  height: 100vh;
+  height: 100dvh;
+  flex-shrink: 0;
   overflow: hidden;
   opacity: 0;
   transition: opacity 0.4s;
@@ -171,7 +173,6 @@ h1 {
 .highlight-bg.is-loaded {
   opacity: 1;
 }
-
 
 .highlight-img {
   width: 100%;
@@ -182,18 +183,19 @@ h1 {
 }
 
 .homepage-sidebar {
-  display: none;
+  display: block;
 }
 
 @media (min-width: 900px) {
   .homepage-layout {
-    display: flex;
+    flex-direction: row;
+    height: 100vh;
   }
   .highlight-bg {
     flex: 1;
+    height: 100vh;
   }
   .homepage-sidebar {
-    display: block;
     flex: 1;
     height: 100vh;
     overflow-y: auto;
