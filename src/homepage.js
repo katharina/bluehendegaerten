@@ -40,10 +40,12 @@ const bg     = document.getElementById('highlight-bg');
 const info   = document.getElementById('highlight-info');
 
 window.addEventListener('scroll', () => {
-  const bgBottom     = bg.getBoundingClientRect().bottom;
-  const headerBottom = header.getBoundingClientRect().bottom;
-  const infoTop      = info.hidden ? Infinity : info.getBoundingClientRect().top;
+  const bgBottom   = bg.getBoundingClientRect().bottom;
+  const headerRect = header.getBoundingClientRect();
+  const infoTop    = info.hidden ? Infinity : info.getBoundingClientRect().top;
 
-  header.classList.toggle('is-hidden', infoTop < headerBottom + 24);
+  const push = Math.max(0, headerRect.bottom - infoTop);
+  header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
+
   sticky.classList.toggle('is-visible', bgBottom <= 0);
 }, { passive: true });
