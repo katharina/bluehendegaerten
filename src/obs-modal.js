@@ -22,6 +22,7 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
     _dialog.close();
   });
   _dialog.addEventListener('close', () => {
+    document.body.style.overflow = '';
     const img = _dialog.querySelector('.obs-modal-img img');
     img.onload = img.onerror = null;
     img.src = '';
@@ -55,7 +56,7 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
     }
 
     renderObs(_list[_index], () => {
-      if (!_dialog.open) { _dialog.showModal(); _dialog.focus(); }
+      if (!_dialog.open) { document.body.style.overflow = 'hidden'; _dialog.showModal(); _dialog.focus(); }
       updateNav();
     });
   });
