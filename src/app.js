@@ -50,9 +50,15 @@ if (plantSentinel && plantStickyHeader) {
   }
   const sidebar = plantStickyHeader.closest('.homepage-sidebar');
   const scrollRoot = sidebar && getComputedStyle(sidebar).overflowY === 'auto' ? sidebar : null;
-  new IntersectionObserver(([e]) => {
-    plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
-  }, { root: scrollRoot }).observe(plantSentinel);
+
+  function updateStuck() {
+    const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
+    const sectionTop = document.getElementById('plants-section').getBoundingClientRect().top;
+    plantStickyHeader.classList.toggle('is-stuck', sectionTop < containerTop);
+  }
+  (scrollRoot ?? window).addEventListener('scroll', updateStuck, { passive: true });
+  window.visualViewport?.addEventListener('resize', updateStuck);
+  updateStuck();
 
   plantStickyHeader.addEventListener('click', () => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
