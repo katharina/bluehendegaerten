@@ -43,6 +43,11 @@ renderGardenList(gardens, []);
 const plantSentinel = document.querySelector('.plant-sticky-sentinel');
 const plantStickyHeader = document.querySelector('.plant-sticky-header');
 if (plantSentinel && plantStickyHeader) {
+  const bgBox = document.querySelector('.highlight-sticky');
+  if (bgBox) {
+    const offset = bgBox.offsetWidth + 8;
+    plantStickyHeader.style.setProperty('--pflanzen-left', `calc(var(--page-pad) + ${offset}px)`);
+  }
   new IntersectionObserver(([e]) => {
     plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
   }).observe(plantSentinel);

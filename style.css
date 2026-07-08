@@ -485,7 +485,8 @@ ul {
     background: #000;
     color: #fff;
     padding: var(--hb-space-300);
-    margin: var(--hb-space-400) var(--page-pad);
+    margin-top: var(--hb-space-400);
+    margin-left: var(--pflanzen-left, calc(var(--page-pad) + 52px));
     border-top: none;
   }
   .plant-sticky-header.is-stuck .section-header h3 {
