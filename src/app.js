@@ -54,7 +54,7 @@ if (plantSentinel && plantStickyHeader) {
   function updateStuck() {
     const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
     const sectionTop = document.getElementById('plants-section').getBoundingClientRect().top;
-    plantStickyHeader.classList.toggle('is-stuck', sectionTop < containerTop);
+    plantStickyHeader.classList.toggle('is-stuck', sectionTop - containerTop < 1);
   }
   (scrollRoot ?? window).addEventListener('scroll', updateStuck, { passive: true });
   window.visualViewport?.addEventListener('resize', updateStuck);
