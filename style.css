@@ -473,6 +473,10 @@ ul {
   }
 }
 
+#plants-section {
+  min-height: 100vh;
+}
+
 .plant-sticky-sentinel {
   height: 1px;
 }
