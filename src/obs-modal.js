@@ -212,13 +212,13 @@ function renderObs(obs, onReady) {
   const img     = _dialog.querySelector('.obs-modal-img img');
   imgWrap.classList.remove('info-overlap');
   const plantColor = (obs.slugs ?? []).map(s => _ctx.plantMap.get(s)?.color).find(Boolean) ?? null;
-  imgWrap.style.background = plantColor ?? '';
   if (obs.filename) {
     img.style.opacity = '0';
+    img.style.background = plantColor ?? '';
     img.onload = () => {
       img.onload = null;
       img.style.opacity = '';
-      imgWrap.style.background = '';
+      img.style.background = '';
       if (isMobile()) {
         const infoEl = imgWrap.querySelector('.obs-modal-info');
         const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
@@ -226,7 +226,7 @@ function renderObs(obs, onReady) {
       }
       onReady?.();
     };
-    img.onerror = () => { img.onerror = null; img.style.opacity = ''; onReady?.(); };
+    img.onerror = () => { img.onerror = null; img.style.opacity = ''; img.style.background = ''; onReady?.(); };
     img.src = fullUrl(obs.filename);
     imgWrap.hidden = false;
   } else {
