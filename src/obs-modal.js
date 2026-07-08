@@ -218,6 +218,7 @@ function renderObs(obs, onReady) {
     img.onload = () => {
       img.onload = null;
       img.style.opacity = '';
+      imgWrap.style.background = '';
       if (isMobile()) {
         const infoEl = imgWrap.querySelector('.obs-modal-info');
         const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
