@@ -163,7 +163,7 @@ h1 {
 
 .highlight-bg {
   position: relative;
-  height: 100dvh;
+  height: 100svh;
   flex-shrink: 0;
   overflow: hidden;
   opacity: 0;
