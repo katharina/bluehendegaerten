@@ -51,10 +51,17 @@ if (plantSentinel && plantStickyHeader) {
   const sidebar = plantStickyHeader.closest('.homepage-sidebar');
   const scrollRoot = sidebar && getComputedStyle(sidebar).overflowY === 'auto' ? sidebar : null;
 
+  let stuck = false;
   function updateStuck() {
     const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
     const sectionTop = document.getElementById('plants-section').getBoundingClientRect().top;
-    plantStickyHeader.classList.toggle('is-stuck', sectionTop - containerTop < 1);
+    const diff = sectionTop - containerTop;
+    if (diff < 1) {
+      stuck = true;
+    } else if (diff > plantStickyHeader.offsetHeight) {
+      stuck = false;
+    }
+    plantStickyHeader.classList.toggle('is-stuck', stuck);
   }
   (scrollRoot ?? window).addEventListener('scroll', updateStuck, { passive: true });
   window.visualViewport?.addEventListener('resize', updateStuck);
