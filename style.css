@@ -223,7 +223,7 @@ h1 {
   position: fixed;
   top: var(--hb-space-400);
   left: var(--page-pad);
-  z-index: 10;
+  z-index: 20;
   background: #000;
   padding: var(--hb-space-300);
   opacity: 0;
