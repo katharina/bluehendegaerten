@@ -5,12 +5,13 @@ if (!highlights.length) return;
 
 const obs = highlights[Math.floor(Math.random() * highlights.length)];
 
+// Apply plant color immediately from the obs response
+if (obs.plant_color) document.getElementById('highlight-bg').style.background = obs.plant_color;
+
 // Populate info box
 if (obs.slugs?.length) {
   const plants = await fetch('/api/plants').then(r => r.json()).catch(() => []);
-  const plantMap   = new Map(plants.map(p => [p.slug, p.name]));
-  const plantColor = obs.slugs.map(s => plants.find(p => p.slug === s)?.color).find(Boolean);
-  if (plantColor) document.getElementById('highlight-bg').style.background = plantColor;
+  const plantMap = new Map(plants.map(p => [p.slug, p.name]));
   const container = document.getElementById('highlight-plants');
   container.innerHTML = obs.slugs.map(s =>
     `<span class="obs-modal-plant-link botanical-name" data-slug="${s}">${plantMap.get(s) ?? s}</span>`

@@ -59,15 +59,30 @@ async function withCreatorNames(rows) {
   return rows.map(r => ({ ...r, created_by_name: r.created_by ? (nameMap.get(r.created_by) ?? null) : null }));
 }
 
-async function withSlugs(rows) {
+async function withSlugs(rows, { includeColors = false } = {}) {
   if (!rows.length) return rows;
   const ids = rows.map(r => r.id);
   const { data: links } = await supabase
     .from('observation_plants').select('observation_id, slug').in('observation_id', ids);
-  return rows.map(r => ({
-    ...r,
-    slugs: (links ?? []).filter(l => l.observation_id === r.id).map(l => l.slug),
-  }));
+  if (!includeColors) {
+    return rows.map(r => ({
+      ...r,
+      slugs: (links ?? []).filter(l => l.observation_id === r.id).map(l => l.slug),
+    }));
+  }
+  const slugs = [...new Set((links ?? []).map(l => l.slug))];
+  const { data: plants } = slugs.length
+    ? await supabase.from('plants').select('slug, color').in('slug', slugs)
+    : { data: [] };
+  const colorMap = new Map((plants ?? []).map(p => [p.slug, p.color]));
+  return rows.map(r => {
+    const rowSlugs = (links ?? []).filter(l => l.observation_id === r.id).map(l => l.slug);
+    return {
+      ...r,
+      slugs: rowSlugs,
+      plant_color: rowSlugs.map(s => colorMap.get(s)).find(Boolean) ?? null,
+    };
+  });
 }
 
 export default async function handler(req, res) {
@@ -314,7 +329,8 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
           if (error) return res.status(500).json({ error: error.message });
           rows = data;
         }
-        return res.json(await withCreatorNames(await withSlugs(rows)));
+        const highlighted = req.query.highlighted === 'true';
+        return res.json(await withCreatorNames(await withSlugs(rows, { includeColors: highlighted })));
       }
       if (req.method === 'POST') {
         const user = await requireUser(req, res);
