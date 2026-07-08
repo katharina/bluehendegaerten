@@ -54,14 +54,10 @@ export function initObsModal({ gardens = [], plants = [] } = {}) {
       _index = 0;
     }
 
-    if (isMobile()) {
-      renderList(_list, _index);
-    } else {
-      renderObs(_list[_index], () => {
-        if (!_dialog.open) { _dialog.showModal(); _dialog.focus(); }
-        updateNav();
-      });
-    }
+    renderObs(_list[_index], () => {
+      if (!_dialog.open) { _dialog.showModal(); _dialog.focus(); }
+      updateNav();
+    });
   });
 }
 
