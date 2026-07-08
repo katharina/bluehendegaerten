@@ -19,8 +19,9 @@ const [[gardens, plants], { data: { session } }] = await Promise.all([
 
 setCurrentUser(session?.user?.id ?? null);
 
-const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
-const plantMap  = new Map(plants.map(p => [p.slug, p.name]));
+const gardenMap   = new Map(gardens.map(g => [g.id, g.name]));
+const plantMap    = new Map(plants.map(p => [p.slug, p.name]));
+const colorMap    = new Map(plants.filter(p => p.color).map(p => [p.slug, p.color]));
 
 const observations = []; // populated lazily as carousel loads
 
@@ -38,7 +39,7 @@ function updateCounts() {
 }
 
 renderGardenList(gardens, []);
-initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, sharedList: observations, onLoad: updateCounts });
+initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts });
 renderPlantList(plants, {});
 updateCounts();
 

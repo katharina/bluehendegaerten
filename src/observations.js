@@ -12,14 +12,15 @@ supabase.auth.onAuthStateChange((_, session) => { _loggedIn = !!session?.user; _
 export function setCurrentUser(userId) { _userId = userId; _loggedIn = !!userId; }
 export function getCurrentUserId() { return _userId; }
 
-function buildObsCard(o, gardenMap, plantMap, list) {
+function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
   const card  = document.createElement('div');
   card.className = 'carousel-card';
   if (o.id) card.dataset.obsId = o.id;
   const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
   const place = gardenMap.get(o.garden) || o.place || '';
+  const bgColor = o.slugs?.map(s => colorMap?.get(s)).find(Boolean) ?? null;
   card.innerHTML = `
-    <div class="carousel-card-img">
+    <div class="carousel-card-img"${bgColor ? ` style="background:${bgColor}"` : ''}>
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
     </div>
     <div class="carousel-card-meta">
@@ -37,6 +38,7 @@ function buildObsCard(o, gardenMap, plantMap, list) {
   const imgBox = card.querySelector('.carousel-card-img');
   imgEl.addEventListener('load', () => {
     if (imgEl.naturalWidth > imgEl.naturalHeight) imgBox.classList.add('is-landscape');
+    imgEl.classList.add('is-loaded');
   });
   if (o.filename && !o._localUrl) {
     imgEl.addEventListener('error', () => { imgEl.src = fullUrl(o.filename); }, { once: true });
@@ -153,7 +155,7 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
-export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedList, onLoad }) {
+export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap = null, sharedList, onLoad }) {
   const carousel = document.getElementById(containerId);
   if (!carousel) return;
   carousel.hidden = false;
@@ -173,7 +175,7 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, sharedLi
     const fotos = batch.filter(o => o.type === 'foto' && o.filename);
     fotos.forEach(o => {
       sharedList.push(o);
-      sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList));
+      sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList, colorMap));
     });
     offset += batch.length;
     loading = false;
