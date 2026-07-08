@@ -48,13 +48,13 @@ if (plantSentinel && plantStickyHeader) {
     const offset = bgBox.offsetWidth + 8;
     plantStickyHeader.style.setProperty('--pflanzen-left', `calc(var(--page-pad) + ${offset}px)`);
   }
+  const sidebar = plantStickyHeader.closest('.homepage-sidebar');
   new IntersectionObserver(([e]) => {
     plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
-  }).observe(plantSentinel);
+  }, { root: sidebar ?? null }).observe(plantSentinel);
 
   plantStickyHeader.addEventListener('click', () => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
-    const sidebar = plantStickyHeader.closest('.homepage-sidebar');
     if (sidebar) {
       sidebar.scrollTo({ top: 0, behavior: 'smooth' });
     } else {

@@ -26,6 +26,7 @@ export function initAddPlant({ onAdded } = {}) {
   const close = () => dialog.close();
 
   document.getElementById('add-plant-btn')?.addEventListener('click', open);
+  document.querySelectorAll('.add-plant-footer-btn').forEach(btn => btn.addEventListener('click', open));
   document.getElementById('add-plant-close').addEventListener('click', close);
   document.getElementById('apf-cancel').addEventListener('click', close);
   dialog.addEventListener('click', e => { if (e.target === dialog) close(); });
