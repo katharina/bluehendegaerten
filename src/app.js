@@ -55,13 +55,11 @@ if (plantSentinel && plantStickyHeader) {
 
   plantStickyHeader.addEventListener('click', () => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
-    const list = document.getElementById('plant-list');
-    const headerH = plantStickyHeader.offsetHeight;
     if (sidebar) {
-      const top = sidebar.scrollTop + list.getBoundingClientRect().top - sidebar.getBoundingClientRect().top - headerH;
+      const top = sidebar.scrollTop + plantSentinel.getBoundingClientRect().top - sidebar.getBoundingClientRect().top + 1;
       sidebar.scrollTo({ top, behavior: 'smooth' });
     } else {
-      const top = window.scrollY + list.getBoundingClientRect().top - headerH;
+      const top = window.scrollY + plantSentinel.getBoundingClientRect().top + 1;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
