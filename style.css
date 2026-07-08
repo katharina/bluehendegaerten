@@ -1060,7 +1060,7 @@ dialog#obs-modal::backdrop {
 }
 
 .obs-modal-plant-link {
-  font-size: var(--hb-font-size-02);
+  font-size: var(--hb-font-size-03);
   cursor: pointer;
 }
 
@@ -1079,6 +1079,11 @@ dialog#obs-modal::backdrop {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   white-space: nowrap;
+}
+
+.obs-modal-info .observation-place,
+.obs-modal-info .observation-date {
+  font-size: var(--hb-font-size-01);
 }
 
 .obs-modal-info .obs-modal-plant-link:hover {
