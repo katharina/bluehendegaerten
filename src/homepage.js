@@ -51,9 +51,16 @@ window.addEventListener('scroll', () => {
   const pastCover = window.scrollY >= bg.offsetHeight * 0.9;
 
   if (pastCover) {
-    header.style.transform = `translateY(-${naturalHeaderBottom + 20}px)`;
+    if (header.style.position !== 'absolute') {
+      header.style.position = 'absolute';
+      header.style.transform = '';
+    }
     sticky.classList.add('is-visible');
   } else {
+    if (header.style.position === 'absolute') {
+      header.style.position = '';
+      header.style.transform = '';
+    }
     const infoTop = info.hidden ? Infinity : info.getBoundingClientRect().top;
     const push = Math.max(0, naturalHeaderBottom - infoTop);
     header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
