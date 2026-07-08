@@ -471,35 +471,36 @@ ul {
   #plant-list .plant-card:nth-child(3n) {
     border-right: none;
   }
-  .plant-sticky-sentinel {
-    height: 1px;
-  }
-  .plant-sticky-header {
-    position: sticky;
-    top: -1px;
-    z-index: 10;
-    background: #fff;
-  }
-  .plant-sticky-header.is-stuck .section-header {
-    display: inline-flex;
-    background: #000;
-    color: #fff;
-    padding: var(--hb-space-300);
-    margin-top: var(--hb-space-400);
-    margin-left: var(--pflanzen-left, calc(var(--page-pad) + 52px));
-    border-top: none;
-  }
-  .plant-sticky-header.is-stuck .section-header h3 {
-    font-size: var(--hb-font-size-03);
-    font-weight: normal;
-    margin: 0;
-  }
-  .plant-sticky-header.is-stuck .section-header .action-btn-icon {
-    display: none;
-  }
-  .plant-sticky-header.is-stuck .section-content {
-    margin-top: 0;
-  }
+}
+
+.plant-sticky-sentinel {
+  height: 1px;
+}
+.plant-sticky-header {
+  position: sticky;
+  top: -1px;
+  z-index: 10;
+  background: #fff;
+}
+.plant-sticky-header.is-stuck .section-header {
+  display: inline-flex;
+  background: #000;
+  color: #fff;
+  padding: var(--hb-space-300);
+  margin-top: var(--hb-space-400);
+  margin-left: var(--pflanzen-left, calc(var(--page-pad) + 52px));
+  border-top: none;
+}
+.plant-sticky-header.is-stuck .section-header h3 {
+  font-size: var(--hb-font-size-03);
+  font-weight: normal;
+  margin: 0;
+}
+.plant-sticky-header.is-stuck .section-header .action-btn-icon {
+  display: none;
+}
+.plant-sticky-header.is-stuck .section-content {
+  margin-top: 0;
 }
 
 
