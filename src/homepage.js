@@ -35,7 +35,12 @@ img.addEventListener('load', () => {
 img.src = fullUrl(obs.filename);
 
 const header = document.querySelector('.highlight-header');
+const sticky = document.querySelector('.highlight-sticky');
 new IntersectionObserver(
-  ([entry]) => header.classList.toggle('is-sticky', !entry.isIntersecting),
+  ([entry]) => {
+    const gone = !entry.isIntersecting;
+    header.classList.toggle('is-hidden', gone);
+    sticky.classList.toggle('is-visible', gone);
+  },
   { threshold: 0 }
 ).observe(document.getElementById('highlight-bg'));
