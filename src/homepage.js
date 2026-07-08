@@ -10,13 +10,19 @@ if (obs.plant_color) document.getElementById('highlight-bg').style.background = 
 
 // Populate info box
 if (obs.slugs?.length) {
+  const { contrastColor } = await import('./utils.js');
   const plants = await fetch('/api/plants').then(r => r.json()).catch(() => []);
-  const plantMap = new Map(plants.map(p => [p.slug, p.name]));
+  const plantMap = new Map(plants.map(p => [p.slug, p]));
   const container = document.getElementById('highlight-plants');
   container.innerHTML = obs.slugs.map(s =>
-    `<span class="obs-modal-plant-link botanical-name" data-slug="${s}">${plantMap.get(s) ?? s}</span>`
+    `<span class="obs-modal-plant-link botanical-name" data-slug="${s}">${plantMap.get(s)?.name ?? s}</span>`
   ).join('');
   container.querySelectorAll('[data-slug]').forEach(el => {
+    const plant = plantMap.get(el.dataset.slug);
+    if (plant?.color) {
+      el.style.background = plant.color;
+      el.style.color = contrastColor(plant.color);
+    }
     el.addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('plant:open', { detail: { slug: el.dataset.slug } }));
     });
