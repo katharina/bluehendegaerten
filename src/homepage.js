@@ -36,11 +36,14 @@ img.src = fullUrl(obs.filename);
 
 const header = document.querySelector('.highlight-header');
 const sticky = document.querySelector('.highlight-sticky');
-new IntersectionObserver(
-  ([entry]) => {
-    const gone = !entry.isIntersecting;
-    header.classList.toggle('is-hidden', gone);
-    sticky.classList.toggle('is-visible', gone);
-  },
-  { threshold: 0 }
-).observe(document.getElementById('highlight-bg'));
+const bg     = document.getElementById('highlight-bg');
+const info   = document.getElementById('highlight-info');
+
+window.addEventListener('scroll', () => {
+  const bgBottom     = bg.getBoundingClientRect().bottom;
+  const headerBottom = header.getBoundingClientRect().bottom;
+  const infoTop      = info.hidden ? Infinity : info.getBoundingClientRect().top;
+
+  header.classList.toggle('is-hidden', infoTop < headerBottom + 24);
+  sticky.classList.toggle('is-visible', bgBottom <= 0);
+}, { passive: true });
