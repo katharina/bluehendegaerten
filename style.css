@@ -1027,15 +1027,22 @@ dialog#obs-modal::backdrop {
 }
 
 @media (max-width: 640px) {
+  dialog#obs-modal[open] {
+    align-items: flex-start;
+    padding-top: var(--hb-space-500);
+  }
   .obs-modal-img {
     display: block;
   }
   .obs-modal-img img {
     width: 100vw;
     max-width: 100vw;
-    max-height: 100dvh;
+    max-height: calc(100dvh - var(--hb-space-500));
     height: auto;
     filter: none;
+  }
+  .obs-modal-info {
+    bottom: var(--hb-space-200);
   }
 }
 
