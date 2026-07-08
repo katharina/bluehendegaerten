@@ -39,7 +39,7 @@ function updateCounts() {
 }
 
 renderGardenList(gardens, []);
-initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts });
+initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
 renderPlantList(plants, {});
 updateCounts();
 

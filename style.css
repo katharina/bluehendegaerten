@@ -291,6 +291,24 @@ ul {
 }
 
 
+.carousel-show-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  flex-shrink: 0;
+  background: var(--hb-black-100);
+  color: var(--hb-text);
+  text-decoration: none;
+  font-size: var(--hb-font-size-02);
+  padding: var(--hb-space-400);
+  text-align: center;
+}
+
+.carousel-show-all:hover {
+  background: var(--hb-black-200);
+}
+
 #obs-carousel .carousel-card:first-child,
 #herbar-carousel .carousel-card:first-child,
 #pflanzenlabel-carousel .carousel-card:first-child,
