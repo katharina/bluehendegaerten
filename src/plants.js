@@ -62,12 +62,21 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
       (p.name_de ?? '').toLowerCase().includes(q) ||
       (p.family  ?? '').toLowerCase().includes(q)
     );
-    list.replaceChildren(...filtered.map(p => buildPlantCard(p)));
+    const cards = filtered.map(p => buildPlantCard(p));
+    if (q && filtered.length <= 5) {
+      const addBtn = document.createElement('button');
+      addBtn.className = 'plant-card plant-card-add';
+      addBtn.textContent = '+ Hinzufügen';
+      addBtn.addEventListener('click', () => document.getElementById('add-plant-btn')?.click());
+      cards.push(addBtn);
+    }
+    list.replaceChildren(...cards);
     document.dispatchEvent(new CustomEvent('plant:filter', {
       detail: { slugs: new Set(filtered.map(p => p.slug)), active: !!(q || bedOnly) },
     }));
   }
 
+  filterInput.blur();
   render();
   filterInput.addEventListener('input', render);
   bedCheckbox?.addEventListener('change', render);

@@ -520,6 +520,20 @@ ul {
   cursor: pointer;
 }
 
+.plant-card-add {
+  justify-content: center;
+  align-items: center;
+  font-size: var(--hb-font-size-02);
+  color: var(--hb-black-400);
+  border-style: dashed;
+}
+
+.plant-card-add:hover {
+  background: #000;
+  color: #fff;
+  border-style: solid;
+}
+
 .plant-card:hover {
   background: var(--plant-color, #fff);
   color: var(--plant-fg, #000);
