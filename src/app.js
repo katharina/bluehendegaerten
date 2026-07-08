@@ -49,15 +49,16 @@ if (plantSentinel && plantStickyHeader) {
     plantStickyHeader.style.setProperty('--pflanzen-left', `calc(var(--page-pad) + ${offset}px)`);
   }
   const sidebar = plantStickyHeader.closest('.homepage-sidebar');
+  const scrollRoot = sidebar && getComputedStyle(sidebar).overflowY === 'auto' ? sidebar : null;
   new IntersectionObserver(([e]) => {
     plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
-  }, { root: sidebar ?? null }).observe(plantSentinel);
+  }, { root: scrollRoot }).observe(plantSentinel);
 
   plantStickyHeader.addEventListener('click', () => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
-    if (sidebar) {
-      const top = sidebar.scrollTop + plantSentinel.getBoundingClientRect().top - sidebar.getBoundingClientRect().top + 1;
-      sidebar.scrollTo({ top, behavior: 'smooth' });
+    if (scrollRoot) {
+      const top = scrollRoot.scrollTop + plantSentinel.getBoundingClientRect().top - scrollRoot.getBoundingClientRect().top + 1;
+      scrollRoot.scrollTo({ top, behavior: 'smooth' });
     } else {
       const top = window.scrollY + plantSentinel.getBoundingClientRect().top + 1;
       window.scrollTo({ top, behavior: 'smooth' });
