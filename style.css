@@ -1067,11 +1067,11 @@ dialog#obs-modal::backdrop {
 }
 
 @media (max-width: 640px) {
-  .obs-modal-info {
+  dialog#obs-modal .obs-modal-info {
     position: static;
     padding: var(--hb-space-200) var(--page-pad);
   }
-  .obs-modal-img.info-overlap .obs-modal-info {
+  dialog#obs-modal .obs-modal-img.info-overlap .obs-modal-info {
     position: absolute;
     bottom: var(--hb-space-200);
     left: var(--page-pad);
