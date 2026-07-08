@@ -48,9 +48,9 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 window.addEventListener('scroll', () => {
-  const bgBottom = bg.getBoundingClientRect().bottom;
+  const pastCover = window.scrollY >= bg.offsetHeight * 0.9;
 
-  if (bgBottom <= 0) {
+  if (pastCover) {
     header.style.transform = `translateY(-${naturalHeaderBottom + 20}px)`;
     sticky.classList.add('is-visible');
   } else {
