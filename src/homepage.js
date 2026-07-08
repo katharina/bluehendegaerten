@@ -30,3 +30,9 @@ img.addEventListener('load', () => {
   document.body.classList.add('has-highlight');
 }, { once: true });
 img.src = fullUrl(obs.filename);
+
+const header = document.querySelector('.highlight-header');
+new IntersectionObserver(
+  ([entry]) => header.classList.toggle('is-sticky', !entry.isIntersecting),
+  { threshold: 0 }
+).observe(document.getElementById('highlight-bg'));
