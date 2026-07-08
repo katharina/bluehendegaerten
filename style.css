@@ -468,6 +468,9 @@ ul {
   #plant-list {
     grid-template-columns: repeat(3, 1fr);
   }
+  #plant-list .plant-card:nth-child(3n) {
+    border-right: none;
+  }
   .plant-sticky-sentinel {
     height: 1px;
   }
