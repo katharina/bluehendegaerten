@@ -36,6 +36,7 @@ img.src = fullUrl(obs.filename);
 
 const header = document.querySelector('.highlight-header');
 const sticky = document.querySelector('.highlight-sticky');
+sticky.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 const bg     = document.getElementById('highlight-bg');
 const info   = document.getElementById('highlight-info');
 

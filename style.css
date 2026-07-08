@@ -230,6 +230,8 @@ h1 {
   transform: translateY(-8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
+  cursor: pointer;
+  border: none;
 }
 
 .highlight-sticky.is-visible {
