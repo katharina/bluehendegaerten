@@ -987,7 +987,7 @@ dialog#obs-modal[open] {
 dialog#obs-modal:focus { outline: none; }
 
 dialog#obs-modal::backdrop {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .obs-nav {
