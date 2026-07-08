@@ -51,6 +51,12 @@ if (plantSentinel && plantStickyHeader) {
   new IntersectionObserver(([e]) => {
     plantStickyHeader.classList.toggle('is-stuck', !e.isIntersecting);
   }).observe(plantSentinel);
+
+  plantStickyHeader.addEventListener('click', () => {
+    if (!plantStickyHeader.classList.contains('is-stuck')) return;
+    const first = document.querySelector('#plant-list .plant-card');
+    first?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
 renderPlantList(plants, {});
