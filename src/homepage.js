@@ -49,10 +49,14 @@ window.addEventListener('resize', () => {
 
 window.addEventListener('scroll', () => {
   const bgBottom = bg.getBoundingClientRect().bottom;
-  const infoTop  = info.hidden ? Infinity : info.getBoundingClientRect().top;
 
-  const push = Math.max(0, naturalHeaderBottom - infoTop);
-  header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
-
-  sticky.classList.toggle('is-visible', bgBottom <= 0);
+  if (bgBottom <= 0) {
+    header.style.transform = `translateY(-${naturalHeaderBottom + 20}px)`;
+    sticky.classList.add('is-visible');
+  } else {
+    const infoTop = info.hidden ? Infinity : info.getBoundingClientRect().top;
+    const push = Math.max(0, naturalHeaderBottom - infoTop);
+    header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
+    sticky.classList.remove('is-visible');
+  }
 }, { passive: true });
