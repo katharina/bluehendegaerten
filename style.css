@@ -1043,18 +1043,6 @@ dialog#obs-modal::backdrop {
     height: auto;
     filter: none;
   }
-  /* info flows below image */
-  .obs-modal-info {
-    position: static;
-    padding: var(--hb-space-200) var(--page-pad);
-  }
-  /* if image fills the screen, info overlaps the bottom */
-  .obs-modal-img.info-overlap .obs-modal-info {
-    position: absolute;
-    bottom: var(--hb-space-200);
-    left: var(--page-pad);
-    padding: 0;
-  }
   .obs-nav {
     position: fixed;
     top: 50%;
@@ -1076,6 +1064,19 @@ dialog#obs-modal::backdrop {
   flex-direction: column;
   gap: var(--hb-space-100);
   align-items: flex-start;
+}
+
+@media (max-width: 640px) {
+  .obs-modal-info {
+    position: static;
+    padding: var(--hb-space-200) var(--page-pad);
+  }
+  .obs-modal-img.info-overlap .obs-modal-info {
+    position: absolute;
+    bottom: var(--hb-space-200);
+    left: var(--page-pad);
+    padding: 0;
+  }
 }
 
 .obs-modal-plants {
