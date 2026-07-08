@@ -231,7 +231,9 @@ h1 {
   right: 0;
   z-index: 10;
   background: #000;
-  padding: var(--hb-space-300) var(--page-pad);
+  padding: var(--hb-space-400) var(--page-pad);
+  display: flex;
+  align-items: center;
   transform: translateY(-100%);
   transition: transform 0.25s ease;
 }
@@ -242,7 +244,7 @@ h1 {
 
 .highlight-sticky h2 {
   color: #fff;
-  font-size: var(--hb-font-size-05);
+  font-size: var(--hb-font-size-03);
   line-height: 1;
   margin: 0;
   font-weight: 600;
