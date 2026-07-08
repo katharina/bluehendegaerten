@@ -1041,6 +1041,14 @@ dialog#obs-modal::backdrop {
     height: auto;
     filter: none;
   }
+  .obs-nav {
+    position: fixed;
+    top: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    padding: var(--hb-space-600) var(--hb-space-300);
+  }
+  .obs-nav--prev { left: 0; }
+  .obs-nav--next { right: 0; }
 }
 
 .obs-modal-info {
