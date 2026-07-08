@@ -166,12 +166,7 @@ h1 {
   height: 100svh;
   flex-shrink: 0;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.highlight-bg.is-loaded {
-  opacity: 1;
+  background: var(--hb-black-800);
 }
 
 .highlight-img {
@@ -180,6 +175,12 @@ h1 {
   object-fit: cover;
   object-position: center;
   display: block;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.highlight-bg.is-loaded .highlight-img {
+  opacity: 1;
 }
 
 .homepage-sidebar {
