@@ -460,20 +460,14 @@ ul {
 }
 
 @media (max-width: 640px) {
-  #plants-section {
-    position: sticky;
-    top: 0;
-    background: var(--page-bg, #fff);
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-    z-index: 10;
-  }
   #plant-list {
     grid-template-columns: repeat(3, 1fr);
-    flex: 1;
-    overflow-y: auto;
-    min-height: 0;
+  }
+  .plant-sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--page-bg, #fff);
   }
 }
 
