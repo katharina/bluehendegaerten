@@ -101,7 +101,7 @@ function renderCarousel(items, gardenMap, plantMap, containerId) {
 
   const observer = new IntersectionObserver(
     entries => { if (entries[0].isIntersecting) loadMore(); },
-    { root: carousel, threshold: 0.1 }
+    { root: carousel, rootMargin: '0px 400px 0px 0px', threshold: 0 }
   );
 
   observer.observe(sentinel);
