@@ -70,6 +70,9 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
 
   filterInput.blur();
   render();
-  filterInput.addEventListener('input', render);
+  filterInput.addEventListener('input', () => {
+    render();
+    document.getElementById('plants-section').scrollIntoView({ block: 'start' });
+  });
   bedCheckbox?.addEventListener('change', render);
 }
