@@ -478,7 +478,7 @@ ul {
   width: 100%;
   border: none;
   border-bottom: 1px solid #000;
-  padding: var(--hb-space-200) 0;
+  padding: var(--hb-space-400) 0;
   font-family: var(--font-mono);
   font-size: var(--hb-font-size-02);
   background: transparent;
