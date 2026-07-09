@@ -1833,6 +1833,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .garden-cover {
   width: 100%;
   aspect-ratio: 3 / 4;
+  max-height: 75vh;
   position: relative;
   overflow: hidden;
   background: #000;

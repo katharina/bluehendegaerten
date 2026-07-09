@@ -32,12 +32,13 @@ const gardenNameBadge = document.getElementById('garden-name-sticky');
 gardenNameBadge.textContent = garden.name;
 const gardenColEl = document.querySelector('.garden-col--garden');
 const gardenTitleEl = document.getElementById('garden-name');
+const gardenIsScrollContainer = gardenColEl && getComputedStyle(gardenColEl).overflowY === 'auto';
+const gardenScrollEl = gardenIsScrollContainer ? gardenColEl : window;
 function updateGardenTitleBadge() {
-  const colTop = gardenColEl ? gardenColEl.getBoundingClientRect().top : 0;
+  const colTop = gardenIsScrollContainer ? gardenColEl.getBoundingClientRect().top : 0;
   const titleBottom = gardenTitleEl.getBoundingClientRect().bottom;
   gardenNameBadge.classList.toggle('is-visible', titleBottom < colTop + 1);
 }
-const gardenScrollEl = gardenColEl ?? window;
 gardenScrollEl.addEventListener('scroll', updateGardenTitleBadge, { passive: true });
 window.visualViewport?.addEventListener('resize', updateGardenTitleBadge);
 updateGardenTitleBadge();
