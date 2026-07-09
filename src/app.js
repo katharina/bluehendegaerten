@@ -52,21 +52,18 @@ if (plantSentinel && plantStickyHeader) {
   const sidebar = plantStickyHeader.closest('.homepage-sidebar');
   const scrollRoot = sidebar && getComputedStyle(sidebar).overflowY === 'auto' ? sidebar : null;
 
-  let stuck = false;
-  function updateStuck() {
-    const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
-    const sectionTop = document.getElementById('plants-section').getBoundingClientRect().top;
-    const diff = sectionTop - containerTop;
-    if (diff < 10) {
-      stuck = true;
-    } else if (diff > 300) {
-      stuck = false;
-    }
-    plantStickyHeader.classList.toggle('is-stuck', stuck);
-  }
-  (scrollRoot ?? window).addEventListener('scroll', updateStuck, { passive: true });
-  window.visualViewport?.addEventListener('resize', updateStuck);
-  updateStuck();
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const aboveRoot = entry.boundingClientRect.top <= (entry.rootBounds?.top ?? 0);
+      if (!entry.isIntersecting && aboveRoot) {
+        plantStickyHeader.classList.add('is-stuck');
+      } else if (entry.isIntersecting) {
+        plantStickyHeader.classList.remove('is-stuck');
+      }
+    },
+    { root: scrollRoot, threshold: 0 }
+  );
+  observer.observe(plantSentinel);
 
   plantStickyHeader.addEventListener('click', (e) => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
