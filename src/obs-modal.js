@@ -276,6 +276,13 @@ function renderObs(obs, onReady) {
     });
   });
 
+  const creatorEl = _dialog.querySelector('.obs-modal-creator');
+  const showCreator = obs.created_by && obs.created_by !== getCurrentUserId();
+  if (creatorEl) {
+    creatorEl.textContent = showCreator ? (obs.created_by_name || 'Blümchen') : '';
+    creatorEl.hidden = !showCreator;
+  }
+
   const noteEl = _dialog.querySelector('.obs-modal-note');
   noteEl.textContent = obs.text ?? '';
   noteEl.hidden = !obs.text;

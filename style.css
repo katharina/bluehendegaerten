@@ -394,6 +394,8 @@ ul {
   padding-top: var(--hb-space-100);
 }
 
+.carousel-card-meta .carousel-card-creator { display: none; }
+
 .carousel-card-img {
   height: 250px;
   aspect-ratio: 3 / 4;
