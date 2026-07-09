@@ -1833,7 +1833,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .garden-cover {
   width: 100%;
   aspect-ratio: 3 / 4;
-  max-height: 75vh;
+  max-height: 80vh;
   position: relative;
   overflow: hidden;
   background: #000;
@@ -1851,7 +1851,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .garden-cover-title {
   position: absolute;
-  top: var(--page-pad);
+  top: 100px;
   left: var(--page-pad);
   right: var(--page-pad);
   margin: 0;
@@ -1865,6 +1865,10 @@ dialog#plant-modal.authenticated .plant-color-picker {
 #herbar-carousel .observation-place,
 #pflanzenlabel-carousel .observation-place,
 #notiz-carousel .observation-place { display: none; }
+
+.garden-cover-meta {
+  padding: var(--hb-space-300) var(--page-pad);
+}
 
 .garden-header-fixed {
   position: fixed;

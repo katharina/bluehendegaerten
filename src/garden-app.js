@@ -84,9 +84,18 @@ const coverObs = gardenObs.filter(o => o.highlighted && o.filename);
 if (coverObs.length) {
   const { fullUrl } = await import('./utils.js');
   const img = document.getElementById('garden-cover-img');
+  const coverMeta = document.getElementById('garden-cover-meta');
   const pick = coverObs[Math.floor(Math.random() * coverObs.length)];
   img.src = fullUrl(pick.filename);
   img.hidden = false;
+  const coverPlantMap = new Map(allPlants.map(p => [p.slug, p.name]));
+  const name = pick.slugs?.map(s => coverPlantMap.get(s)).filter(Boolean).join(', ') ?? '';
+  const date = pick.date ? new Date(pick.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  if (name || date) {
+    coverMeta.innerHTML = (name ? `<div class="botanical-name">${name}</div>` : '') +
+                          (date ? `<div class="observation-date">${date}</div>` : '');
+    coverMeta.hidden = false;
+  }
 }
 
 const gardenPlants = [...relevantSlugs]
