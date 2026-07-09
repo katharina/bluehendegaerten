@@ -41,38 +41,7 @@ function updateCounts() {
 
 renderGardenList(gardens);
 
-const plantSentinel = document.querySelector('.plant-sticky-sentinel');
-const plantStickyHeader = document.querySelector('.plant-sticky-header');
-if (plantSentinel && plantStickyHeader) {
-  const bgBox = document.querySelector('.highlight-sticky');
-  if (bgBox && window.matchMedia('(max-width: 640px)').matches) {
-    const offset = bgBox.offsetWidth + 8;
-    plantStickyHeader.style.setProperty('--pflanzen-left', `calc(var(--page-pad) + ${offset}px)`);
-  }
-  const sidebar = plantStickyHeader.closest('.homepage-sidebar');
-  const scrollRoot = sidebar && getComputedStyle(sidebar).overflowY === 'auto' ? sidebar : null;
 
-  function checkStuck() {
-    const containerTop = scrollRoot ? scrollRoot.getBoundingClientRect().top : 0;
-    plantStickyHeader.classList.toggle('is-stuck', plantSentinel.getBoundingClientRect().top < containerTop);
-  }
-  (scrollRoot ?? window).addEventListener('scroll', checkStuck, { passive: true });
-  window.visualViewport?.addEventListener('scroll', checkStuck, { passive: true });
-  window.visualViewport?.addEventListener('resize', checkStuck, { passive: true });
-  checkStuck();
-
-  plantStickyHeader.addEventListener('click', (e) => {
-    if (!plantStickyHeader.classList.contains('is-stuck')) return;
-    if (e.target.closest('#plant-filter')) return;
-    if (scrollRoot) {
-      const top = scrollRoot.scrollTop + plantSentinel.getBoundingClientRect().top - scrollRoot.getBoundingClientRect().top + 1;
-      scrollRoot.scrollTo({ top, behavior: 'smooth' });
-    } else {
-      const top = window.scrollY + plantSentinel.getBoundingClientRect().top + 1;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-}
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
 renderPlantList(plants, {});
 updateCounts();
