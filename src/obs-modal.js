@@ -95,7 +95,8 @@ function showAllScreen() {
     end.addEventListener('click', e => e.stopPropagation());
     _dialog.insertBefore(end, _dialog.querySelector('.obs-modal-list'));
   }
-  const href = `${_showAllHref}?from=${_list.length}`;
+  const sep  = _showAllHref.includes('?') ? '&' : '?';
+  const href = `${_showAllHref}${sep}from=${_list.length}`;
   end.innerHTML = `<a class="obs-modal-end-link" href="${href}">Alle Beobachtungen →</a>`;
   end.hidden = false;
 }

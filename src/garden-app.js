@@ -385,7 +385,7 @@ rerenderBedPlan();
 
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
-initObsModal({ gardens, plants: allPlants });
+initObsModal({ gardens, plants: allPlants, showAllHref: `/beobachtungen/fotos?garden=${garden.id}` });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 
 ['herbar', 'pflanzenlabel', 'notiz'].forEach(type => {
