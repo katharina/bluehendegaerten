@@ -1867,7 +1867,17 @@ dialog#plant-modal.authenticated .plant-color-picker {
 #notiz-carousel .observation-place { display: none; }
 
 .garden-cover-meta {
-  padding: var(--hb-space-300) var(--page-pad);
+  position: absolute;
+  bottom: var(--page-pad);
+  left: var(--page-pad);
+  right: var(--page-pad);
+  z-index: 1;
+  color: #fff;
+}
+
+.garden-cover-meta .botanical-name,
+.garden-cover-meta .observation-date {
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
 .garden-header-fixed {
