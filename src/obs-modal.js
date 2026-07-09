@@ -214,11 +214,11 @@ function renderObs(obs, onReady) {
   const plantColor = (obs.slugs ?? []).map(s => _ctx.plantMap.get(s)?.color).find(Boolean) ?? null;
   if (obs.filename) {
     img.style.opacity = '0';
-    img.style.background = plantColor ?? '';
+    imgWrap.style.background = plantColor ?? '#444';
     img.onload = () => {
       img.onload = null;
       img.style.opacity = '';
-      img.style.background = '';
+      imgWrap.style.background = '';
       if (isMobile()) {
         const infoEl = imgWrap.querySelector('.obs-modal-info');
         const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
@@ -226,7 +226,7 @@ function renderObs(obs, onReady) {
       }
       onReady?.();
     };
-    img.onerror = () => { img.onerror = null; img.style.opacity = ''; img.style.background = ''; onReady?.(); };
+    img.onerror = () => { img.onerror = null; img.style.opacity = ''; imgWrap.style.background = ''; onReady?.(); };
     img.src = fullUrl(obs.filename);
     imgWrap.hidden = false;
   } else {
