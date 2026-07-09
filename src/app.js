@@ -59,6 +59,11 @@ initAddPlant({
   },
 });
 
+document.addEventListener('plant:filter', e => {
+  const pe = document.getElementById('plant-count');
+  if (pe) pe.textContent = e.detail.slugs.size;
+});
+
 document.addEventListener('obs:saved', e => {
   observations.push(e.detail);
   prependObsToCarousel(e.detail, gardenMap, plantMap);
