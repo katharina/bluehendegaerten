@@ -59,7 +59,7 @@ if (plantSentinel && plantStickyHeader) {
     const diff = sectionTop - containerTop;
     if (diff < 10) {
       stuck = true;
-    } else if (diff > plantStickyHeader.offsetHeight) {
+    } else if (diff > 300) {
       stuck = false;
     }
     plantStickyHeader.classList.toggle('is-stuck', stuck);
