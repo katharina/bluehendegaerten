@@ -1851,7 +1851,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .garden-cover-title {
   position: absolute;
-  bottom: var(--page-pad);
+  top: var(--page-pad);
   left: var(--page-pad);
   right: var(--page-pad);
   margin: 0;
@@ -1860,6 +1860,11 @@ dialog#plant-modal.authenticated .plant-color-picker {
   text-shadow: 0 1px 6px rgba(0,0,0,0.4);
   line-height: 1;
 }
+
+#obs-carousel .observation-place,
+#herbar-carousel .observation-place,
+#pflanzenlabel-carousel .observation-place,
+#notiz-carousel .observation-place { display: none; }
 
 .garden-header-fixed {
   position: fixed;
