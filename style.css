@@ -224,6 +224,21 @@ h1 {
   line-height: 1;
 }
 
+.highlight-header-fixed {
+  position: fixed;
+  top: var(--hb-space-400);
+  left: var(--page-pad);
+  z-index: 20;
+  display: flex;
+  gap: 2px;
+  align-items: stretch;
+}
+
+.highlight-header-fixed .highlight-sticky {
+  position: static;
+  z-index: auto;
+}
+
 .highlight-sticky {
   position: fixed;
   top: var(--hb-space-400);
@@ -231,12 +246,40 @@ h1 {
   z-index: 20;
   background: #000;
   padding: var(--hb-space-300);
+  display: flex;
+  align-items: center;
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
   cursor: pointer;
   border: none;
+}
+
+.plant-count-sticky {
+  background: #000;
+  color: #fff;
+  padding: var(--hb-space-300);
+  font-size: var(--hb-font-size-03);
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.plant-count-sticky.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 899px) {
+  .plant-sticky-header.is-stuck .section-header h3 {
+    visibility: hidden;
+  }
 }
 
 .highlight-sticky.is-visible {
@@ -493,30 +536,6 @@ ul {
   border-top: none;
 }
 
-@media (max-width: 899px) {
-  .plant-sticky-header.is-stuck {
-    position: fixed;
-    top: var(--hb-space-400);
-    width: auto;
-    z-index: 15;
-    background: #000;
-    padding: var(--hb-space-300);
-  }
-  .plant-sticky-header.is-stuck .section-header {
-    margin: 0;
-    padding: 0;
-  }
-  .plant-sticky-header.is-stuck .section-header h3 {
-    font-size: var(--hb-font-size-03);
-    line-height: 1;
-    margin: 0;
-    color: #fff;
-    font-weight: 600;
-  }
-  .plant-sticky-header.is-stuck .section-content {
-    display: none;
-  }
-}
 
 .plant-card {
   position: relative;

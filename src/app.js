@@ -43,6 +43,12 @@ function updateCounts() {
 
 renderGardenList(gardens);
 
+document.addEventListener('plant:filter', e => {
+  const pe = document.getElementById('plant-count');
+  if (pe) pe.textContent = e.detail.slugs.size;
+  const badge = document.getElementById('plant-count-sticky');
+  if (badge) badge.textContent = `${e.detail.slugs.size} Pflanzen`;
+});
 
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
 renderPlantList(plants, { obsSlugSet });
@@ -57,11 +63,6 @@ initAddPlant({
     addPlantToObsForm(plant);
     renderPlantList(plants, { obsSlugSet });
   },
-});
-
-document.addEventListener('plant:filter', e => {
-  const pe = document.getElementById('plant-count');
-  if (pe) pe.textContent = e.detail.slugs.size;
 });
 
 document.addEventListener('obs:saved', e => {
@@ -88,50 +89,32 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, { obsSlugSet }); }
 });
 
-// Plant sticky header: black rectangle when stuck, beside highlight-sticky on mobile
+// BG square: show when h1 scrolls out of view; click scrolls to top
 (function () {
-  const plantHeader = document.querySelector('.plant-sticky-header');
+  const h1 = document.querySelector('.highlight-header h1');
+  const bgSquare = document.querySelector('.highlight-sticky');
+  if (!h1 || !bgSquare) return;
+
+  new IntersectionObserver(([e]) => {
+    bgSquare.classList.toggle('is-visible', !e.isIntersecting);
+  }, { threshold: 0 }).observe(h1);
+
+  bgSquare.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+
+// Plant count badge: show beside BG square when filter header is stuck
+(function () {
   const plantsSection = document.getElementById('plants-section');
-  const highlightSticky = document.querySelector('.highlight-sticky');
-  if (!plantHeader || !plantsSection) return;
+  const plantHeader = document.querySelector('.plant-sticky-header');
+  const badge = document.getElementById('plant-count-sticky');
+  if (!plantsSection || !plantHeader || !badge) return;
 
   const sentinel = document.createElement('div');
   plantsSection.insertBefore(sentinel, plantHeader);
 
-  let spacer = null;
-  let isStuck = false;
-  let currentObs = null;
-
-  function setStuck(stuck) {
-    if (stuck === isStuck) return;
-    isStuck = stuck;
-
-    if (stuck) {
-      const h = plantHeader.offsetHeight;
-      plantHeader.classList.add('is-stuck');
-      if (!spacer) { spacer = document.createElement('div'); plantHeader.after(spacer); }
-      spacer.style.height = h + 'px';
-      spacer.hidden = false;
-      const hs = highlightSticky?.getBoundingClientRect();
-      plantHeader.style.left = `${(hs?.width > 0 ? hs.right : 16) + 12}px`;
-    } else {
-      plantHeader.classList.remove('is-stuck');
-      plantHeader.style.left = '';
-      if (spacer) spacer.hidden = true;
-    }
-  }
-
-  function setup() {
-    currentObs?.disconnect();
-    isStuck = false;
-    plantHeader.classList.remove('is-stuck');
-    plantHeader.style.left = '';
-    if (spacer) spacer.hidden = true;
-    if (window.innerWidth >= 900) return; // desktop: no stuck behavior
-    currentObs = new IntersectionObserver(([e]) => setStuck(!e.isIntersecting), { threshold: 0 });
-    currentObs.observe(sentinel);
-  }
-
-  setup();
-  window.addEventListener('resize', setup, { passive: true });
+  new IntersectionObserver(([e]) => {
+    const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
+    badge.classList.toggle('is-visible', stuck);
+    plantHeader.classList.toggle('is-stuck', stuck);
+  }, { threshold: 0 }).observe(sentinel);
 })();
