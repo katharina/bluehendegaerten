@@ -26,6 +26,9 @@ if (!garden) {
 
 document.getElementById('garden-name').textContent = garden.name;
 document.title = `${garden.name} — Blühende Gärten`;
+document.getElementById('garden-intro-title').textContent = garden.name;
+document.getElementById('garden-intro-text').textContent = garden.description
+  || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
 
 // ── Garden name sticky badge ───────────────────────────────────────────────────
 const gardenNameBadge = document.getElementById('garden-name-sticky');
