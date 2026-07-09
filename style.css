@@ -1835,7 +1835,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   height: 60vh;
   position: relative;
   overflow: hidden;
-  background: #fff;
+  background: #000;
 }
 
 .garden-cover-img {
@@ -1845,24 +1845,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.garden-cover-bg {
-  position: absolute;
-  top: var(--page-pad);
-  left: var(--page-pad);
-  background: #000;
-  color: #fff;
-  padding: var(--hb-space-200) var(--hb-space-300);
-  text-decoration: none;
-  z-index: 1;
-}
-
-.garden-cover-bg h2 {
-  font-size: var(--hb-font-size-04);
-  font-weight: 600;
-  margin: 0;
-  line-height: 1;
+  opacity: 0.85;
 }
 
 .garden-cover-title {
@@ -1872,6 +1855,30 @@ dialog#plant-modal.authenticated .plant-color-picker {
   right: var(--page-pad);
   margin: 0;
   z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  line-height: 1;
+}
+
+.garden-name-sticky {
+  position: fixed;
+  top: var(--hb-space-400);
+  left: calc(var(--page-pad) + 56px + var(--hb-space-200));
+  z-index: 20;
+  background: #000;
+  color: #fff;
+  padding: var(--hb-space-300);
+  font-size: var(--hb-font-size-03);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.garden-name-sticky.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
 
 @media (max-width: 640px) {

@@ -27,6 +27,21 @@ if (!garden) {
 document.getElementById('garden-name').textContent = garden.name;
 document.title = `${garden.name} — Blühende Gärten`;
 
+// ── Garden name sticky badge ───────────────────────────────────────────────────
+const gardenNameBadge = document.getElementById('garden-name-sticky');
+gardenNameBadge.textContent = garden.name;
+const gardenCol = document.querySelector('.garden-col--garden');
+const gardenTitleEl = document.getElementById('garden-name');
+function updateGardenTitleBadge() {
+  const colTop = gardenCol ? gardenCol.getBoundingClientRect().top : 0;
+  const titleBottom = gardenTitleEl.getBoundingClientRect().bottom;
+  gardenNameBadge.classList.toggle('is-visible', titleBottom < colTop + 1);
+}
+const gardenScrollEl = gardenCol ?? window;
+gardenScrollEl.addEventListener('scroll', updateGardenTitleBadge, { passive: true });
+window.visualViewport?.addEventListener('resize', updateGardenTitleBadge);
+updateGardenTitleBadge();
+
 const SECTION_LINK_TYPES = { foto: 'fotos', herbar: 'herbar', pflanzenlabel: 'pflanzenlabel', notiz: 'notiz' };
 Object.entries(SECTION_LINK_TYPES).forEach(([key, slug]) => {
   const el = document.getElementById(`section-link-${key}`);
