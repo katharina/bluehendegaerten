@@ -271,6 +271,10 @@ h1 {
   align-items: center;
 }
 
+@media (min-width: 900px) {
+  .plant-count-sticky { display: none; }
+}
+
 .plant-count-sticky.is-visible {
   opacity: 1;
   transform: none;
