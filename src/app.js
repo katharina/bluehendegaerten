@@ -88,3 +88,50 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, { obsSlugSet }); }
 });
 
+// Plant sticky header: black rectangle when stuck, beside highlight-sticky on mobile
+(function () {
+  const plantHeader = document.querySelector('.plant-sticky-header');
+  const plantsSection = document.getElementById('plants-section');
+  const highlightSticky = document.querySelector('.highlight-sticky');
+  if (!plantHeader || !plantsSection) return;
+
+  const sentinel = document.createElement('div');
+  plantsSection.insertBefore(sentinel, plantHeader);
+
+  let spacer = null;
+  let isStuck = false;
+  let currentObs = null;
+
+  function setStuck(stuck) {
+    if (stuck === isStuck) return;
+    isStuck = stuck;
+
+    if (stuck) {
+      const h = plantHeader.offsetHeight;
+      plantHeader.classList.add('is-stuck');
+      if (!spacer) { spacer = document.createElement('div'); plantHeader.after(spacer); }
+      spacer.style.height = h + 'px';
+      spacer.hidden = false;
+      const hs = highlightSticky?.getBoundingClientRect();
+      plantHeader.style.left = `${(hs?.width > 0 ? hs.right : 16) + 12}px`;
+    } else {
+      plantHeader.classList.remove('is-stuck');
+      plantHeader.style.left = '';
+      if (spacer) spacer.hidden = true;
+    }
+  }
+
+  function setup() {
+    currentObs?.disconnect();
+    isStuck = false;
+    plantHeader.classList.remove('is-stuck');
+    plantHeader.style.left = '';
+    if (spacer) spacer.hidden = true;
+    if (window.innerWidth >= 900) return; // desktop: no stuck behavior
+    currentObs = new IntersectionObserver(([e]) => setStuck(!e.isIntersecting), { threshold: 0 });
+    currentObs.observe(sentinel);
+  }
+
+  setup();
+  window.addEventListener('resize', setup, { passive: true });
+})();

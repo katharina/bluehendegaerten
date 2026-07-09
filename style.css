@@ -493,6 +493,31 @@ ul {
   border-top: none;
 }
 
+@media (max-width: 899px) {
+  .plant-sticky-header.is-stuck {
+    position: fixed;
+    top: var(--hb-space-400);
+    width: auto;
+    z-index: 15;
+    background: #000;
+    padding: var(--hb-space-300);
+  }
+  .plant-sticky-header.is-stuck .section-header {
+    margin: 0;
+    padding: 0;
+  }
+  .plant-sticky-header.is-stuck .section-header h3 {
+    font-size: var(--hb-font-size-03);
+    line-height: 1;
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+  }
+  .plant-sticky-header.is-stuck .section-content {
+    display: none;
+  }
+}
+
 .plant-card {
   position: relative;
   aspect-ratio: 1;
