@@ -1168,18 +1168,6 @@ dialog#obs-modal::backdrop {
   color: #fff;
 }
 
-/* obs modal overrides — plant color bg per name, translucent dark for meta */
-dialog#obs-modal .obs-modal-info .obs-modal-plant-link {
-  background: rgba(0, 0, 0, 0.45); /* overridden inline when plant color known */
-}
-dialog#obs-modal .obs-modal-info .observation-place,
-dialog#obs-modal .obs-modal-info .observation-date {
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-}
-dialog#obs-modal .obs-modal-info .obs-modal-plant-link:hover {
-  background: rgba(0, 0, 0, 0.7);
-}
 
 #highlight-info {
   bottom: var(--page-pad);
