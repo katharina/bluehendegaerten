@@ -210,7 +210,7 @@ h1 {
 
 .highlight-header {
   position: absolute;
-  top: calc(56px + var(--page-pad));
+  top: var(--page-pad);
   left: var(--page-pad);
   margin: 0;
   padding: 0;
