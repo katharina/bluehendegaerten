@@ -478,6 +478,13 @@ ul {
 
 
 
+.plant-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: red;
+}
+
 .plant-card {
   position: relative;
   aspect-ratio: 1;
