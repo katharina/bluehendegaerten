@@ -21,6 +21,7 @@
   <div class="garden-header-fixed">
     <a href="/" class="highlight-sticky is-visible"><h2><em>B</em>G</h2></a>
     <div class="garden-name-sticky" id="garden-name-sticky"></div>
+    <div class="plant-count-sticky" id="plant-count-sticky"></div>
   </div>
 
   <div class="garden-layout">
@@ -106,15 +107,17 @@
 
       <!-- Column 3: Pflanzen -->
       <div class="garden-col garden-col--plants">
-        <section>
-          <div class="section-header no-border">
-            <h3><span id="plant-count"></span> Pflanzen</h3>
-          </div>
-          <div class="section-content">
-            <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
-            <label id="plant-filter-bed-label" class="plant-filter-bed-label" hidden>
-              <input id="plant-filter-bed" type="checkbox"> <span id="bed-filter-text">im Beet</span>
-            </label>
+        <section id="plants-section">
+          <div class="plant-sticky-header">
+            <div class="section-header no-border">
+              <h3><span id="plant-count"></span> Pflanzen</h3>
+            </div>
+            <div class="section-content">
+              <input id="plant-filter" class="filter-input" type="text" placeholder="Filtern…" autocomplete="off" spellcheck="false">
+              <label id="plant-filter-bed-label" class="plant-filter-bed-label" hidden>
+                <input id="plant-filter-bed" type="checkbox"> <span id="bed-filter-text">im Beet</span>
+              </label>
+            </div>
           </div>
           <div id="plant-list"></div>
           <div class="plant-list-footer">

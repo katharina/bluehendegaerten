@@ -356,7 +356,11 @@ function updatePlantCount(n) {
   document.getElementById('plant-count').textContent = n ?? gardenPlants.filter(p => obsSlugSet.has(p.slug)).length;
 }
 
-document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.size));
+document.addEventListener('plant:filter', e => {
+  updatePlantCount(e.detail.slugs.size);
+  const badge = document.getElementById('plant-count-sticky');
+  if (badge) badge.textContent = `${e.detail.slugs.size} Pflanzen`;
+});
 
 const { data: { session } } = await supabase.auth.getSession();
 setCurrentUser(session?.user?.id ?? null);
@@ -444,6 +448,27 @@ document.addEventListener('plant:updated', e => {
   if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
 });
 
+
+// Plant count badge: show beside BG+garden name when filter header is stuck
+(function () {
+  const plantsSection = document.getElementById('plants-section');
+  const plantHeader = document.querySelector('.plant-sticky-header');
+  const badge = document.getElementById('plant-count-sticky');
+  if (!plantsSection || !plantHeader || !badge) return;
+
+  const plantsCol = document.querySelector('.garden-col--plants');
+  const isScrollContainer = plantsCol && getComputedStyle(plantsCol).overflowY === 'auto';
+  const root = isScrollContainer ? plantsCol : null;
+
+  const sentinel = document.createElement('div');
+  plantsSection.insertBefore(sentinel, plantHeader);
+
+  new IntersectionObserver(([e]) => {
+    const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
+    badge.classList.toggle('is-visible', stuck);
+    plantHeader.classList.toggle('is-stuck', stuck);
+  }, { threshold: 0, root }).observe(sentinel);
+})();
 
 // Lock panels open on click; release by clicking col 1
 const panels   = document.querySelector('.garden-panels');
