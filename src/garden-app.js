@@ -33,7 +33,11 @@ document.getElementById('garden-intro-text').textContent = garden.description
 
 // ── Garden name sticky badge ───────────────────────────────────────────────────
 const gardenNameBadge = document.getElementById('garden-name-sticky');
-const gardenNameInitials = garden.name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase();
+const gardenNameWords = garden.name.trim().split(/\s+/);
+const gardenNameInitials = (gardenNameWords.length > 1
+  ? gardenNameWords.map(w => w[0]).join('')
+  : gardenNameWords[0].slice(0, 3)
+).toUpperCase();
 gardenNameBadge.textContent = garden.name;
 const gardenColEl = document.querySelector('.garden-col--garden');
 const gardenTitleEl = document.getElementById('garden-name');
@@ -44,6 +48,7 @@ function updateGardenTitleBadge() {
   const titleBottom = gardenTitleEl.getBoundingClientRect().bottom;
   gardenNameBadge.classList.toggle('is-visible', titleBottom < colTop + gardenTitleEl.offsetHeight);
 }
+gardenNameBadge.addEventListener('click', () => gardenScrollEl.scrollTo({ top: 0, behavior: 'smooth' }));
 gardenScrollEl.addEventListener('scroll', updateGardenTitleBadge, { passive: true });
 window.visualViewport?.addEventListener('resize', updateGardenTitleBadge);
 updateGardenTitleBadge();

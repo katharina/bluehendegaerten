@@ -1969,6 +1969,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   transform: translateY(-8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
+  cursor: pointer;
 }
 
 .garden-name-sticky.is-visible {
