@@ -480,6 +480,10 @@ ul {
   min-height: 100svh;
 }
 
+#plants-section:has(.plant-sticky-header.is-stuck) {
+  padding-bottom: 1000px;
+}
+
 .plant-sticky-sentinel {
   height: 1px;
 }
