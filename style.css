@@ -487,6 +487,7 @@ ul {
 
 #plant-list {
   min-height: 100svh;
+  align-content: start;
   background: green;
 }
 
