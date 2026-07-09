@@ -1152,6 +1152,15 @@ dialog#obs-modal::backdrop {
   color: #fff;
 }
 
+.obs-modal-info .observation-place:has(.obs-modal-garden-link) {
+  padding: 0;
+}
+
+.obs-modal-info .observation-place .obs-modal-garden-link {
+  display: block;
+  padding: 1px 4px;
+}
+
 .obs-modal-info .obs-modal-plant-link,
 .obs-modal-info .observation-place,
 .obs-modal-info .observation-date {
