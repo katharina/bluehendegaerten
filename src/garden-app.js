@@ -33,6 +33,12 @@ document.getElementById('garden-intro-text').textContent = garden.description
 // ── Garden name sticky badge ───────────────────────────────────────────────────
 const gardenNameBadge = document.getElementById('garden-name-sticky');
 gardenNameBadge.textContent = garden.name;
+const bgSticky = document.querySelector('.highlight-sticky');
+if (bgSticky) {
+  const r = bgSticky.getBoundingClientRect();
+  gardenNameBadge.style.left = (r.right + 2) + 'px';
+  gardenNameBadge.style.top = r.top + 'px';
+}
 const gardenColEl = document.querySelector('.garden-col--garden');
 const gardenTitleEl = document.getElementById('garden-name');
 const gardenIsScrollContainer = gardenColEl && getComputedStyle(gardenColEl).overflowY === 'auto';
