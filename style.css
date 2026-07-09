@@ -395,7 +395,7 @@ ul {
 }
 
 .carousel-card-img {
-  height: 240px;
+  height: 250px;
   aspect-ratio: 3 / 4;
   background: var(--hb-black-100);
   overflow: hidden;
@@ -403,7 +403,7 @@ ul {
 
 .carousel-card-img.is-landscape {
   aspect-ratio: 4 / 3;
-  height: 240px;
+  height: 250px;
 }
 
 .carousel-card-img img {
