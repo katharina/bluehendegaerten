@@ -5,7 +5,7 @@ const [highlights, gardens] = await Promise.all([
   fetch('/api/gardens').then(r => r.json()).catch(() => []),
 ]);
 if (!highlights.length) return;
-const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
+const gardenMap = new Map(gardens.map(g => [g.id, g]));
 
 const obs = highlights[Math.floor(Math.random() * highlights.length)];
 
@@ -32,8 +32,17 @@ if (obs.slugs?.length) {
     });
   });
 }
-const place = gardenMap.get(obs.garden) || obs.place || '';
-if (place) document.getElementById('highlight-place').textContent = place;
+const garden = gardenMap.get(obs.garden);
+const place  = garden?.name || obs.place || '';
+const placeEl = document.getElementById('highlight-place');
+if (place) {
+  if (garden) {
+    placeEl.innerHTML = `<a class="obs-modal-garden-link" href="/${garden.path ?? garden.id}">${place}</a>`;
+    placeEl.querySelector('a').addEventListener('click', e => e.stopPropagation());
+  } else {
+    placeEl.textContent = place;
+  }
+}
 if (obs.date)  document.getElementById('highlight-date').textContent =
   new Date(obs.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 document.getElementById('highlight-info').hidden = false;
