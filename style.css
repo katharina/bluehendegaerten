@@ -1875,8 +1875,13 @@ dialog#plant-modal.authenticated .plant-color-picker {
   color: #fff;
 }
 
-.garden-cover-meta .botanical-name,
+.garden-cover-meta .botanical-name {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
 .garden-cover-meta .observation-date {
+  color: rgba(255,255,255,0.75);
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
