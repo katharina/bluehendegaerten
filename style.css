@@ -1861,11 +1861,22 @@ dialog#plant-modal.authenticated .plant-color-picker {
   line-height: 1;
 }
 
-.garden-name-sticky {
+.garden-header-fixed {
   position: fixed;
   top: var(--hb-space-400);
-  left: 0;
+  left: var(--page-pad);
   z-index: 20;
+  display: flex;
+  gap: 2px;
+  align-items: stretch;
+}
+
+.garden-header-fixed .highlight-sticky {
+  position: static;
+  z-index: auto;
+}
+
+.garden-name-sticky {
   background: #000;
   color: #fff;
   padding: var(--hb-space-300);
