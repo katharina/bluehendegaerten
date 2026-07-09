@@ -1786,6 +1786,13 @@ dialog#plant-modal.authenticated .plant-color-picker {
   visibility: visible;
 }
 
+.garden-col {
+  flex-shrink: 0;
+  height: 100%;
+  overflow-y: auto;
+  background: #fff;
+}
+
 @media (max-width: 640px) {
   .garden-layout {
     flex-direction: column;
@@ -1815,13 +1822,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
     transform: none !important;
     margin-left: 0 !important;
   }
-}
-
-.garden-col {
-  flex-shrink: 0;
-  height: 100%;
-  overflow-y: auto;
-  background: #fff;
 }
 
 .garden-col--garden {
