@@ -485,6 +485,11 @@ ul {
   background: red;
 }
 
+#plant-list {
+  min-height: 100svh;
+  background: green;
+}
+
 .plant-card {
   position: relative;
   aspect-ratio: 1;
