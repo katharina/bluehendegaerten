@@ -82,20 +82,29 @@ for (const o of gardenObs) {
 // ── Garden cover image(s) — highlighted obs with a photo ──────────────────────
 const coverObs = gardenObs.filter(o => o.highlighted && o.filename);
 if (coverObs.length) {
-  const { fullUrl } = await import('./utils.js');
+  const { fullUrl, contrastColor } = await import('./utils.js');
   const img = document.getElementById('garden-cover-img');
-  const coverMeta = document.getElementById('garden-cover-meta');
   const pick = coverObs[Math.floor(Math.random() * coverObs.length)];
   img.src = fullUrl(pick.filename);
   img.hidden = false;
-  const coverPlantMap = new Map(allPlants.map(p => [p.slug, p.name]));
-  const name = pick.slugs?.map(s => coverPlantMap.get(s)).filter(Boolean).join(', ') ?? '';
-  const date = pick.date ? new Date(pick.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-  if (name || date) {
-    coverMeta.innerHTML = (name ? `<div class="botanical-name">${name}</div>` : '') +
-                          (date ? `<div class="observation-date">${date}</div>` : '');
-    coverMeta.hidden = false;
+  if (pick.slugs?.length) {
+    const container = document.getElementById('garden-cover-plants');
+    container.innerHTML = pick.slugs.map(s =>
+      `<div class="obs-modal-plant-link botanical-name" data-slug="${s}">${plantBySlug.get(s)?.name ?? s}</div>`
+    ).join('');
+    container.querySelectorAll('[data-slug]').forEach(el => {
+      const plant = plantBySlug.get(el.dataset.slug);
+      if (plant?.color) {
+        el.style.background = plant.color;
+        el.style.color = contrastColor(plant.color);
+      }
+    });
   }
+  if (pick.date) {
+    document.getElementById('garden-cover-date').textContent =
+      new Date(pick.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  document.getElementById('garden-cover-meta').hidden = false;
 }
 
 const gardenPlants = [...relevantSlugs]

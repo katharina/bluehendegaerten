@@ -1866,9 +1866,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
 #pflanzenlabel-carousel .observation-place,
 #notiz-carousel .observation-place { display: none; }
 
-.garden-cover-meta {
-  padding: var(--hb-space-200) var(--page-pad);
-}
 
 .garden-header-fixed {
   position: fixed;
