@@ -1,5 +1,6 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
