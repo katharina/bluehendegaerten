@@ -179,6 +179,9 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
       .then(r => r.json()).catch(() => []);
     const items = batch.filter(o => o.filename || type === 'notiz');
     items.forEach(o => {
+      if (fotosLoaded === 0 && sectionId) {
+        document.getElementById(sectionId)?.removeAttribute('hidden');
+      }
       sharedList?.push(o);
       sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList ?? items, colorMap));
       fotosLoaded++;
