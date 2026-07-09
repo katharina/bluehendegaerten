@@ -51,6 +51,7 @@ As the user scrolls deeper into content, compact identity badges stack up in a f
 - `visibility: hidden` — never `display: none` — when hiding a stuck header's label text. This preserves layout height so nothing jumps.
 - The fixed container (`.highlight-header-fixed`, `.garden-header-fixed`) is a flex row with `gap: 2px`. Each badge is a sibling, not a child of the previous badge.
 - Each black rectangle uses the same base token values (`padding: var(--hb-space-300)`, `background: #000`, `color: #fff`).
+- Every badge must be the same height as `.hamburger`. Both share `padding: var(--hb-space-300)`, so text badges must set `line-height: var(--hb-badge-line-height)` (defined at `:root` in `style.css`) instead of `line-height: 1` — `1` at 16px font renders taller than the hamburger's icon content and breaks the alignment. Any new badge added to the bar reuses this same token; don't hardcode a px value.
 
 ## Rules — check before every commit
 
