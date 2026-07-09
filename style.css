@@ -1143,8 +1143,13 @@ dialog#obs-modal::backdrop {
 
 .obs-modal-garden-link {
   color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.obs-modal-garden-link:hover {
+  background: #000;
+  color: #fff;
 }
 
 .obs-modal-info .obs-modal-plant-link,
