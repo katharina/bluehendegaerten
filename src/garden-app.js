@@ -98,6 +98,9 @@ if (coverObs.length) {
         el.style.background = plant.color;
         el.style.color = contrastColor(plant.color);
       }
+      el.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('plant:open', { detail: { slug: el.dataset.slug } }));
+      });
     });
   }
   if (pick.date) {
