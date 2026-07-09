@@ -155,7 +155,7 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
-export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap = null, sharedList, onLoad, maxBatches = null, showAllHref = null, garden = null }) {
+export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap = null, sharedList, onLoad, maxBatches = null, showAllHref = null, garden = null, type = 'foto', sectionId = null }) {
   const carousel = document.getElementById(containerId);
   if (!carousel) return;
   carousel.hidden = false;
@@ -174,12 +174,13 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
     loading = true;
     const params = new URLSearchParams({ limit: BATCH, offset });
     if (garden) params.set('garden', garden);
+    params.set('type', type);
     const batch = await fetch(`/api/observations?${params}`)
       .then(r => r.json()).catch(() => []);
-    const fotos = batch.filter(o => o.type === 'foto' && o.filename);
-    fotos.forEach(o => {
-      sharedList.push(o);
-      sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList, colorMap));
+    const items = batch.filter(o => o.filename || type === 'notiz');
+    items.forEach(o => {
+      sharedList?.push(o);
+      sentinel.before(buildObsCard(o, gardenMap, plantMap, sharedList ?? items, colorMap));
       fotosLoaded++;
     });
     offset += batch.length;
@@ -190,6 +191,9 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
     if (done) {
       sentinel.remove();
       observer.disconnect();
+      if (fotosLoaded === 0 && sectionId) {
+        document.getElementById(sectionId)?.setAttribute('hidden', '');
+      }
       if (showAllHref) {
         const link = document.createElement('a');
         link.className = 'carousel-card carousel-show-all';

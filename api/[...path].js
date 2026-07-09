@@ -323,6 +323,7 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         } else {
           let query = supabase.from('observations').select('*').order('created_at', { ascending: false });
           if (garden) query = query.eq('garden', garden);
+          if (req.query.type) query = query.eq('type', req.query.type);
           if (req.query.highlighted === 'true') query = query.eq('highlighted', true);
           if (limit) query = query.range(offset, offset + limit - 1);
           const { data, error } = await query;

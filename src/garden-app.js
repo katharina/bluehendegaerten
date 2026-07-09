@@ -1,7 +1,7 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-import { initLazyObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
+import { initLazyObsCarousel, renderNotizCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -362,10 +362,10 @@ const { data: { session } } = await supabase.auth.getSession();
 setCurrentUser(session?.user?.id ?? null);
 
 const gardenFotos = [];
-initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: gardenFotos, garden: garden.id });
+initLazyObsCarousel('obs-carousel',          { gardenMap, plantMap, colorMap, sharedList: gardenFotos, garden: garden.id, type: 'foto' });
+initLazyObsCarousel('herbar-carousel',       { gardenMap, plantMap, colorMap, sharedList: [],           garden: garden.id, type: 'herbarbeleg', sectionId: 'herbar-section' });
+initLazyObsCarousel('pflanzenlabel-carousel',{ gardenMap, plantMap, colorMap, sharedList: [],           garden: garden.id, type: 'pflanzenlabel', sectionId: 'pflanzenlabel-section' });
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
-renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
-renderPflanzenlabelCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
 updateSectionCounts(gardenObs);
 let bedSlugs = null;
@@ -410,9 +410,6 @@ document.addEventListener('obs:saved', e => {
   if (e.detail.type === 'notiz') {
     renderNotizCarousel(gardenObs, gardenMap, plantMap);
     document.getElementById('notiz-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else if (e.detail.type === 'pflanzenlabel') {
-    renderPflanzenlabelCarousel(gardenObs, gardenMap, plantMap);
-    document.getElementById('pflanzenlabel-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else if (e.detail.type === 'foto') {
     prependObsToCarousel({ ...e.detail, place: garden.name }, gardenMap, plantMap);
     const carousel = document.getElementById('obs-carousel');
@@ -438,9 +435,7 @@ document.addEventListener('obs:deleted', e => {
   removeObsFromCarousel(e.detail.id);
   const gardenObs = allObservations.filter(o => o.garden === garden.id);
   updateSectionCounts(gardenObs);
-  if (e.detail.type === 'herbarbeleg') renderHerbarCarousel(gardenObs, gardenMap, plantMap);
-  else if (e.detail.type === 'notiz') renderNotizCarousel(gardenObs, gardenMap, plantMap);
-  else if (e.detail.type === 'pflanzenlabel') renderPflanzenlabelCarousel(gardenObs, gardenMap, plantMap);
+  if (e.detail.type === 'notiz') renderNotizCarousel(gardenObs, gardenMap, plantMap);
   renderPlantList(gardenPlants, { bedSlugs });
 });
 
