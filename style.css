@@ -1832,7 +1832,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .garden-cover {
   width: 100%;
-  height: 60vh;
+  aspect-ratio: 3 / 4;
   position: relative;
   overflow: hidden;
   background: #000;
@@ -1881,11 +1881,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
   pointer-events: auto;
 }
 
-@media (max-width: 640px) {
-  .garden-cover {
-    height: 60vw;
-  }
-}
 
 .garden-panels {
   display: flex;
