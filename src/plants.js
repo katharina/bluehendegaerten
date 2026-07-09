@@ -72,7 +72,10 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
   render();
   filterInput.addEventListener('input', () => {
     render();
-    document.getElementById('plants-section').scrollIntoView({ block: 'start' });
+    const header = document.querySelector('.plant-sticky-header');
+    if (!header?.classList.contains('is-stuck')) {
+      document.getElementById('plants-section').scrollIntoView({ block: 'start' });
+    }
   });
   bedCheckbox?.addEventListener('change', render);
 }
