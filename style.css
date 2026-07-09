@@ -1851,7 +1851,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .garden-cover-title {
   position: absolute;
-  top: 100px;
+  top: 60px;
   left: var(--page-pad);
   right: var(--page-pad);
   margin: 0;
