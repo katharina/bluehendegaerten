@@ -538,7 +538,24 @@ ul {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #fff;
+  background: yellow; /* DEBUG: remove after height issue is fixed */
+}
+
+.plant-sticky-header.is-stuck {
+  background: cyan; /* DEBUG: remove after height issue is fixed */
+}
+
+@media (min-width: 641px) {
+  .garden-col--plants .plant-sticky-header {
+    padding-top: var(--hb-space-800);
+    padding-bottom: var(--hb-space-500);
+  }
+  .garden-col--plants .plant-sticky-header .section-header {
+    margin-top: 0;
+  }
+  .garden-col--plants .plant-sticky-header .section-content {
+    margin-bottom: 0;
+  }
 }
 
 .plant-sticky-header.is-stuck .section-header {
