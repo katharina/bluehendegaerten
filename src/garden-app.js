@@ -63,11 +63,10 @@ for (const o of gardenObs) {
 const coverObs = gardenObs.filter(o => o.highlighted && o.filename);
 if (coverObs.length) {
   const { fullUrl } = await import('./utils.js');
-  const coverEl = document.getElementById('garden-cover');
-  const img = coverEl.querySelector('.garden-cover-img');
+  const img = document.getElementById('garden-cover-img');
   const pick = coverObs[Math.floor(Math.random() * coverObs.length)];
   img.src = fullUrl(pick.filename);
-  coverEl.hidden = false;
+  img.hidden = false;
 }
 
 const gardenPlants = [...relevantSlugs]
