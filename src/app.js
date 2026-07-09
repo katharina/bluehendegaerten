@@ -10,13 +10,15 @@ import { initObsForm, addPlantToObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
 import { supabase } from './auth.js';
 
-const [[gardens, plants], { data: { session } }] = await Promise.all([
+const [[gardens, plants, observedSlugs], { data: { session } }] = await Promise.all([
   Promise.all([
     fetch('/api/gardens').then(r => r.json()),
     fetch('/api/plants').then(r => r.json()),
+    fetch('/api/plants/observed').then(r => r.json()).catch(() => null),
   ]),
   supabase.auth.getSession(),
 ]);
+const obsSlugSet = Array.isArray(observedSlugs) && observedSlugs.length ? new Set(observedSlugs) : null;
 
 setCurrentUser(session?.user?.id ?? null);
 
@@ -36,14 +38,14 @@ fetch('/api/observations?count=true')
 
 function updateCounts() {
   const pe = document.getElementById('plant-count');
-  if (pe) pe.textContent = plants.length;
+  if (pe) pe.textContent = obsSlugSet ? plants.filter(p => obsSlugSet.has(p.slug)).length : plants.length;
 }
 
 renderGardenList(gardens);
 
 
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
-renderPlantList(plants, {});
+renderPlantList(plants, { obsSlugSet });
 updateCounts();
 
 initPlantModal({ gardens, observations, plants });
@@ -53,7 +55,7 @@ initAddPlant({
   onAdded(plant) {
     plants.push(plant);
     addPlantToObsForm(plant);
-    renderPlantList(plants, {});
+    renderPlantList(plants, { obsSlugSet });
   },
 });
 
@@ -78,6 +80,6 @@ document.addEventListener('obs:deleted', e => {
 
 document.addEventListener('plant:updated', e => {
   const idx = plants.findIndex(p => p.slug === e.detail.slug);
-  if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, {}); }
+  if (idx !== -1) { plants[idx] = { ...plants[idx], ...e.detail }; renderPlantList(plants, { obsSlugSet }); }
 });
 

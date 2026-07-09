@@ -468,6 +468,12 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         if (error) return res.status(500).json({ error: error.message });
         return res.json(data);
       }
+    } else if (id === 'observed') {
+      if (req.method === 'GET') {
+        const { data, error } = await supabase.from('observation_plants').select('slug');
+        if (error) return res.status(500).json({ error: error.message });
+        return res.json([...new Set((data ?? []).map(r => r.slug))]);
+      }
     } else {
       if (req.method === 'GET') {
         const { data, error } = await supabase.from('plants').select('*').eq('slug', id).maybeSingle();
