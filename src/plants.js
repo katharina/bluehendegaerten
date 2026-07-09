@@ -37,6 +37,15 @@ function buildPlantCard(p) {
   return card;
 }
 
+function getScrollParent(el) {
+  let node = el.parentElement;
+  while (node) {
+    if (/(auto|scroll)/.test(getComputedStyle(node).overflowY)) return node;
+    node = node.parentElement;
+  }
+  return document.scrollingElement || document.documentElement;
+}
+
 export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } = {}) {
   const visible = obsSlugSet ? plants.filter(p => obsSlugSet.has(p.slug)) : plants;
   const sorted = [...visible].sort((a, b) => {
@@ -73,8 +82,11 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
   filterInput.addEventListener('input', () => {
     render();
     const header = document.querySelector('.plant-sticky-header');
-    if (!header?.classList.contains('is-stuck')) {
-      document.getElementById('plants-section').scrollIntoView({ block: 'start' });
+    if (header) {
+      const scrollParent = getScrollParent(list);
+      const headerHeight  = header.getBoundingClientRect().height;
+      const delta = list.getBoundingClientRect().top - headerHeight + 1;
+      scrollParent.scrollTop += delta;
     }
   });
   bedCheckbox?.addEventListener('change', render);
