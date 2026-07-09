@@ -25,7 +25,7 @@ if (!garden) {
   throw new Error(`No garden found for path: ${path}`);
 }
 
-document.getElementById('garden-name').textContent = garden.name;
+document.getElementById('garden-name').innerHTML = garden.name.replace(/ /g, '<br>');
 document.title = `${garden.name} — Blühende Gärten`;
 document.getElementById('garden-intro-title').textContent = garden.name;
 document.getElementById('garden-intro-text').textContent = garden.description
