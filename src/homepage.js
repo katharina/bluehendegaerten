@@ -43,33 +43,10 @@ img.src = fullUrl(obs.filename);
 const header = document.querySelector('.highlight-header');
 const sticky = document.querySelector('.highlight-sticky');
 sticky.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-const bg     = document.getElementById('highlight-bg');
-const info   = document.getElementById('highlight-info');
 
-// Measure the natural (untransformed) bottom of the header once
-let naturalHeaderBottom = header.getBoundingClientRect().bottom;
-window.addEventListener('resize', () => {
-  header.style.transform = '';
-  naturalHeaderBottom = header.getBoundingClientRect().bottom;
-}, { passive: true });
-
-window.addEventListener('scroll', () => {
-  const pastCover = window.scrollY >= bg.offsetHeight * 0.9;
-
-  if (pastCover) {
-    if (header.style.position !== 'absolute') {
-      header.style.position = 'absolute';
-      header.style.transform = '';
-    }
-    sticky.classList.add('is-visible');
-  } else {
-    if (header.style.position === 'absolute') {
-      header.style.position = '';
-      header.style.transform = '';
-    }
-    const infoTop = info.hidden ? Infinity : info.getBoundingClientRect().top;
-    const push = Math.max(0, naturalHeaderBottom - infoTop);
-    header.style.transform = push > 0 ? `translateY(-${push}px)` : '';
-    sticky.classList.remove('is-visible');
-  }
-}, { passive: true });
+function updateSticky() {
+  sticky.classList.toggle('is-visible', header.getBoundingClientRect().bottom < 0);
+}
+window.addEventListener('scroll', updateSticky, { passive: true });
+window.visualViewport?.addEventListener('resize', updateSticky);
+updateSticky();
