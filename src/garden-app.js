@@ -59,6 +59,27 @@ for (const o of gardenObs) {
   for (const slug of (o.slugs ?? [])) relevantSlugs.add(slug);
 }
 
+// ── Garden cover image(s) — highlighted obs with a photo ──────────────────────
+const coverObs = gardenObs.filter(o => o.highlighted && o.filename);
+if (coverObs.length) {
+  const { fullUrl } = await import('./utils.js');
+  const coverEl = document.getElementById('garden-cover');
+  const img = coverEl.querySelector('.garden-cover-img');
+  coverEl.hidden = false;
+  img.src = fullUrl(coverObs[0].filename);
+  if (coverObs.length > 1) {
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % coverObs.length;
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = fullUrl(coverObs[idx].filename);
+        img.style.opacity = '';
+      }, 400);
+    }, 5000);
+  }
+}
+
 const gardenPlants = [...relevantSlugs]
   .map(slug => plantBySlug.get(slug))
   .filter(Boolean);
