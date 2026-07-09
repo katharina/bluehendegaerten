@@ -40,7 +40,7 @@ const gardenScrollEl = gardenIsScrollContainer ? gardenColEl : window;
 function updateGardenTitleBadge() {
   const colTop = gardenIsScrollContainer ? gardenColEl.getBoundingClientRect().top : 0;
   const titleBottom = gardenTitleEl.getBoundingClientRect().bottom;
-  gardenNameBadge.classList.toggle('is-visible', titleBottom < colTop + 1);
+  gardenNameBadge.classList.toggle('is-visible', titleBottom < colTop + gardenTitleEl.offsetHeight);
 }
 gardenScrollEl.addEventListener('scroll', updateGardenTitleBadge, { passive: true });
 window.visualViewport?.addEventListener('resize', updateGardenTitleBadge);
