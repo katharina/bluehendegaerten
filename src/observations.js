@@ -155,7 +155,7 @@ export function renderObsCarousel(observations, gardenMap, plantMap) {
   renderCarousel(fotos, gardenMap, plantMap, 'obs-carousel');
 }
 
-export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap = null, sharedList, onLoad, maxBatches = null, showAllHref = null }) {
+export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap = null, sharedList, onLoad, maxBatches = null, showAllHref = null, garden = null }) {
   const carousel = document.getElementById(containerId);
   if (!carousel) return;
   carousel.hidden = false;
@@ -172,7 +172,9 @@ export function initLazyObsCarousel(containerId, { gardenMap, plantMap, colorMap
   async function loadMore() {
     if (loading) return;
     loading = true;
-    const batch = await fetch(`/api/observations?limit=${BATCH}&offset=${offset}`)
+    const params = new URLSearchParams({ limit: BATCH, offset });
+    if (garden) params.set('garden', garden);
+    const batch = await fetch(`/api/observations?${params}`)
       .then(r => r.json()).catch(() => []);
     const fotos = batch.filter(o => o.type === 'foto' && o.filename);
     fotos.forEach(o => {

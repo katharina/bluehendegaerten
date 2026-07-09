@@ -1,7 +1,7 @@
 import { preventPageZoom } from './utils.js';
 preventPageZoom();
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-import { renderObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
+import { initLazyObsCarousel, renderHerbarCarousel, renderNotizCarousel, renderPflanzenlabelCarousel, prependObsToCarousel, updateObsInCarousel, removeObsFromCarousel, setCurrentUser } from './observations.js';
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
@@ -116,6 +116,7 @@ const gardenPlants = [...relevantSlugs]
 
 const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
 const plantMap  = new Map(allPlants.map(p => [p.slug, p.name]));
+const colorMap  = new Map(allPlants.filter(p => p.color).map(p => [p.slug, p.color]));
 const bedImageMap = Object.fromEntries(bedImages.map(b => [b.bed_index, b.filename]));
 
 const layout = document.querySelector('.garden-layout');
@@ -360,8 +361,9 @@ document.addEventListener('plant:filter', e => updatePlantCount(e.detail.slugs.s
 const { data: { session } } = await supabase.auth.getSession();
 setCurrentUser(session?.user?.id ?? null);
 
+const gardenFotos = [];
+initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: gardenFotos, garden: garden.id });
 const gardenObsLabelled = gardenObs.map(o => ({ ...o, place: garden.name }));
-renderObsCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderHerbarCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderPflanzenlabelCarousel(gardenObsLabelled, gardenMap, plantMap);
 renderNotizCarousel(gardenObsLabelled, gardenMap, plantMap);
