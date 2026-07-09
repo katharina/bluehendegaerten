@@ -39,7 +39,7 @@ function updateCounts() {
   if (pe) pe.textContent = plants.length;
 }
 
-renderGardenList(gardens, []);
+renderGardenList(gardens);
 
 const plantSentinel = document.querySelector('.plant-sticky-sentinel');
 const plantStickyHeader = document.querySelector('.plant-sticky-header');

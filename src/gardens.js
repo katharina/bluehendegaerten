@@ -1,12 +1,4 @@
-export function renderGardenList(gardens, observations = []) {
-  const plantsByGarden = new Map();
-
-  observations.forEach(o => {
-    if (!o.garden || !o.slugs?.length) return;
-    if (!plantsByGarden.has(o.garden)) plantsByGarden.set(o.garden, new Set());
-    o.slugs.forEach(s => plantsByGarden.get(o.garden).add(s));
-  });
-
+export function renderGardenList(gardens) {
   const list = document.getElementById('garden-list');
   if (!list) return;
   gardens.forEach(g => {
@@ -17,7 +9,7 @@ export function renderGardenList(gardens, observations = []) {
 
     const plantCount = document.createElement('span');
     plantCount.className = 'garden-count';
-    plantCount.textContent = ` [${plantsByGarden.get(g.id)?.size ?? 0} Pflanzen]`;
+    plantCount.textContent = ` [${g.plants?.length ?? 0} Pflanzen]`;
 
     li.appendChild(a);
     li.appendChild(plantCount);
