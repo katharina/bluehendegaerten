@@ -33,6 +33,7 @@ document.getElementById('garden-intro-text').textContent = garden.description
 
 // ── Garden name sticky badge ───────────────────────────────────────────────────
 const gardenNameBadge = document.getElementById('garden-name-sticky');
+const gardenNameInitials = garden.name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase();
 gardenNameBadge.textContent = garden.name;
 const gardenColEl = document.querySelector('.garden-col--garden');
 const gardenTitleEl = document.getElementById('garden-name');
@@ -467,6 +468,7 @@ document.addEventListener('plant:updated', e => {
     const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
     badge.classList.toggle('is-visible', stuck);
     plantHeader.classList.toggle('is-stuck', stuck);
+    gardenNameBadge.textContent = stuck ? gardenNameInitials : garden.name;
   }, { threshold: 0, root }).observe(sentinel);
 })();
 
