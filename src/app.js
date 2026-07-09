@@ -68,8 +68,9 @@ if (plantSentinel && plantStickyHeader) {
   window.visualViewport?.addEventListener('resize', updateStuck);
   updateStuck();
 
-  plantStickyHeader.addEventListener('click', () => {
+  plantStickyHeader.addEventListener('click', (e) => {
     if (!plantStickyHeader.classList.contains('is-stuck')) return;
+    if (e.target.closest('#plant-filter')) return;
     if (scrollRoot) {
       const top = scrollRoot.scrollTop + plantSentinel.getBoundingClientRect().top - scrollRoot.getBoundingClientRect().top + 1;
       scrollRoot.scrollTo({ top, behavior: 'smooth' });
