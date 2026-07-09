@@ -475,7 +475,7 @@ ul {
 }
 
 #plants-section {
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .plant-sticky-sentinel {
@@ -483,7 +483,7 @@ ul {
 }
 .plant-sticky-header {
   position: sticky;
-  top: -1px;
+  top: 0;
   z-index: 10;
   background: #fff;
 }
