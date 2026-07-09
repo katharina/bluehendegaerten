@@ -1,7 +1,11 @@
 import { fullUrl } from './utils.js';
 
-const highlights = await fetch('/api/observations?highlighted=true').then(r => r.json()).catch(() => []);
+const [highlights, gardens] = await Promise.all([
+  fetch('/api/observations?highlighted=true').then(r => r.json()).catch(() => []),
+  fetch('/api/gardens').then(r => r.json()).catch(() => []),
+]);
 if (!highlights.length) return;
+const gardenMap = new Map(gardens.map(g => [g.id, g.name]));
 
 const obs = highlights[Math.floor(Math.random() * highlights.length)];
 
@@ -28,7 +32,8 @@ if (obs.slugs?.length) {
     });
   });
 }
-if (obs.place) document.getElementById('highlight-place').textContent = obs.place;
+const place = gardenMap.get(obs.garden) || obs.place || '';
+if (place) document.getElementById('highlight-place').textContent = place;
 if (obs.date)  document.getElementById('highlight-date').textContent =
   new Date(obs.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 document.getElementById('highlight-info').hidden = false;
