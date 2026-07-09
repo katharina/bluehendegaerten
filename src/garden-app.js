@@ -469,11 +469,13 @@ document.addEventListener('plant:updated', e => {
   const sentinel = document.createElement('div');
   plantsSection.insertBefore(sentinel, plantHeader);
 
+  const isMobile = () => window.matchMedia('(max-width: 899px)').matches;
+
   new IntersectionObserver(([e]) => {
     const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
     badge.classList.toggle('is-visible', stuck);
     plantHeader.classList.toggle('is-stuck', stuck);
-    gardenNameBadge.textContent = stuck ? gardenNameInitials : garden.name;
+    gardenNameBadge.textContent = (stuck && isMobile()) ? gardenNameInitials : garden.name;
   }, { threshold: 0, root }).observe(sentinel);
 })();
 
