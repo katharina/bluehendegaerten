@@ -1516,7 +1516,7 @@ dialog#plant-modal .action-btn {
   }
   #plant-modal-obs-btn {
     order: 3;
-    flex-basis: 100%;
+    flex-basis: auto;
     margin-top: var(--hb-space-300);
   }
 }
