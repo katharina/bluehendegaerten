@@ -4,6 +4,8 @@ const [highlights, gardens] = await Promise.all([
   fetch('/api/observations?highlighted=true').then(r => r.json()).catch(() => []),
   fetch('/api/gardens').then(r => r.json()).catch(() => []),
 ]);
+
+await (async () => {
 if (!highlights.length) return;
 const gardenMap = new Map(gardens.map(g => [g.id, g]));
 
@@ -64,3 +66,4 @@ function updateSticky() {
 window.addEventListener('scroll', updateSticky, { passive: true });
 window.visualViewport?.addEventListener('resize', updateSticky);
 updateSticky();
+})();

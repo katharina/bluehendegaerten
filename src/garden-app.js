@@ -88,10 +88,12 @@ for (const o of gardenObs) {
 // ── Garden cover image(s) — highlighted obs with a photo ──────────────────────
 const coverObs = gardenObs.filter(o => o.highlighted && o.filename);
 if (coverObs.length) {
-  const { fullUrl, contrastColor } = await import('./utils.js');
+  const { coverUrl, contrastColor } = await import('./utils.js');
   const img = document.getElementById('garden-cover-img');
   const pick = coverObs[Math.floor(Math.random() * coverObs.length)];
-  img.src = fullUrl(pick.filename);
+  const coverColor = pick.slugs?.map(s => plantBySlug.get(s)?.color).find(Boolean) ?? null;
+  if (coverColor) document.getElementById('garden-cover').style.background = coverColor;
+  img.src = coverUrl(pick.filename);
   img.hidden = false;
   if (pick.slugs?.length) {
     const container = document.getElementById('garden-cover-plants');
