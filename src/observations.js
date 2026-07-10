@@ -14,13 +14,13 @@ export function getCurrentUserId() { return _userId; }
 
 function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
   const card  = document.createElement('div');
-  card.className = 'carousel-card';
+  card.className = 'carousel-card' + (o.highlighted ? ' is-highlighted' : '');
   if (o.id) card.dataset.obsId = o.id;
   const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
   const place = gardenMap.get(o.garden) || o.place || '';
-  const bgColor = o.slugs?.map(s => colorMap?.get(s)).find(Boolean) ?? null;
+  const bgColor = [...(o.slugs ?? [])].reverse().map(s => colorMap?.get(s)).find(Boolean) ?? '#444';
   card.innerHTML = `
-    <div class="carousel-card-img"${bgColor ? ` style="background:${bgColor}"` : ''}>
+    <div class="carousel-card-img" style="background:${bgColor}">
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
     </div>
     <div class="carousel-card-meta">
@@ -37,7 +37,10 @@ function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
   const imgEl = card.querySelector('.carousel-card-img img');
   const imgBox = card.querySelector('.carousel-card-img');
   imgEl.addEventListener('load', () => {
-    if (imgEl.naturalWidth > imgEl.naturalHeight) imgBox.classList.add('is-landscape');
+    if (imgEl.naturalWidth > imgEl.naturalHeight) {
+      imgBox.classList.add('is-landscape');
+      card.classList.add('is-landscape');
+    }
     imgEl.classList.add('is-loaded');
   });
   if (o.filename && !o._localUrl) {
@@ -244,7 +247,7 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }
 
-export function renderObsGrid(observations, gardenMap, plantMap, containerId) {
+export function renderObsGrid(observations, gardenMap, plantMap, containerId, colorMap = null) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = '';
@@ -252,5 +255,5 @@ export function renderObsGrid(observations, gardenMap, plantMap, containerId) {
     container.textContent = 'Keine Beobachtungen';
     return;
   }
-  observations.forEach(o => container.appendChild(buildObsCard(o, gardenMap, plantMap, observations)));
+  observations.forEach(o => container.appendChild(buildObsCard(o, gardenMap, plantMap, observations, colorMap)));
 }

@@ -162,8 +162,8 @@ h1 {
 }
 
 .page-header {
-  margin: var(--hb-space-900) var(--page-pad) var(--hb-space-800) var(--page-pad);
-  padding: var(--hb-space-300) 0 0 0;
+  margin: 0 var(--page-pad) var(--hb-space-800) var(--page-pad);
+  padding: calc(56px + var(--page-pad)) 0 0 0;
 }
 
 .homepage-layout {
@@ -278,11 +278,20 @@ h1 {
 
 @media (min-width: 900px) {
   .plant-count-sticky { display: none; }
+  #obs-title-sticky { display: flex; }
 }
 
 .plant-count-sticky.is-visible {
   opacity: 1;
   transform: none;
+}
+
+#obs-title-sticky {
+  cursor: pointer;
+}
+
+#obs-title-sticky.is-visible {
+  pointer-events: auto;
 }
 
 @media (max-width: 899px) {
@@ -1999,6 +2008,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .garden-name-sticky {
   background: #000;
   color: #fff;
+  text-decoration: none;
   padding: var(--hb-space-300);
   font-size: var(--hb-font-size-03);
   font-weight: 600;
@@ -2179,9 +2189,17 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .obs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-auto-flow: dense;
+  align-items: start;
   gap: var(--hb-space-300);
   margin: 0 var(--page-pad) var(--hb-space-800);
+}
+
+@media (max-width: 640px) {
+  .obs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .obs-grid .carousel-card {
@@ -2191,7 +2209,27 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .obs-grid .carousel-card-img {
   height: auto;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 2 / 3;
+}
+
+.obs-grid .carousel-card.is-landscape {
+  grid-column: span 2;
+}
+
+.obs-grid .carousel-card-img.is-landscape {
+  aspect-ratio: 4 / 3;
+}
+
+.obs-grid .carousel-card.is-highlighted {
+  grid-column: span 2;
+}
+
+.obs-grid .carousel-card.is-highlighted .carousel-card-img {
+  aspect-ratio: 3 / 2;
+}
+
+.obs-grid.is-garden-scoped .observation-place {
+  display: none;
 }
 
 .obs-grid .carousel-card-meta {

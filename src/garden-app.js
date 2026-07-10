@@ -56,7 +56,7 @@ updateGardenTitleBadge();
 const SECTION_LINK_TYPES = { foto: 'fotos', herbar: 'herbar', pflanzenlabel: 'pflanzenlabel', notiz: 'notiz' };
 Object.entries(SECTION_LINK_TYPES).forEach(([key, slug]) => {
   const el = document.getElementById(`section-link-${key}`);
-  if (el) el.href = `/beobachtungen/${slug}?garden=${garden.id}`;
+  if (el) el.href = `/beobachtungen/${slug}?garden=${garden.path ?? garden.id}`;
 });
 
 const plantBySlug = new Map(allPlants.map(p => [p.slug, p]));
@@ -397,7 +397,7 @@ rerenderBedPlan();
 
 
 initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId: garden.id });
-initObsModal({ gardens, plants: allPlants, showAllHref: `/beobachtungen/fotos?garden=${garden.id}` });
+initObsModal({ gardens, plants: allPlants, showAllHref: `/beobachtungen/fotos?garden=${garden.path ?? garden.id}` });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 
 ['herbar', 'pflanzenlabel', 'notiz'].forEach(type => {

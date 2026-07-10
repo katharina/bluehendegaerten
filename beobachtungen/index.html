@@ -17,14 +17,17 @@
   </button>
   <div class="topbar-dropdown" id="topbar-dropdown" hidden></div>
 
-  <section class="page-header chapeau">
-    <a href="/" id="back-link">Blühende Gärten</a>
+  <div class="garden-header-fixed">
+    <a href="/" class="highlight-sticky is-visible"><h2><em>B</em>G</h2></a>
+    <a class="garden-name-sticky" id="garden-name-sticky" hidden></a>
+    <div class="plant-count-sticky" id="obs-title-sticky">Beobachtungen</div>
+  </div>
+
+  <section class="page-header">
+    <h1 id="page-title">Beobachtungen</h1>
   </section>
 
   <section>
-    <div class="section-header">
-      <h3 id="page-title">Beobachtungen</h3>
-    </div>
     <nav class="obs-type-tabs">
       <a class="obs-type-tab" data-type="foto" href="/beobachtungen/fotos">Fotos</a>
       <a class="obs-type-tab" data-type="herbarbeleg" href="/beobachtungen/herbar">Herbarbelege</a>
