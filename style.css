@@ -2136,8 +2136,8 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .bed-tooltip {
   position: fixed;
   z-index: 200;
-  background: #fff;
-  border: 1px solid #000;
+  background: var(--hb-black-800);
+  color: #fff;
   padding: var(--hb-space-200) var(--hb-space-300);
   pointer-events: none;
 }
@@ -2150,7 +2150,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .bed-tooltip-de {
   font-size: var(--hb-font-size-01);
-  color: var(--hb-black-600);
+  color: var(--hb-white-600);
 }
 
 /* ── Beobachtungen page ──────────────────────────────────────────────────── */

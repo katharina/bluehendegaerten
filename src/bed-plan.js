@@ -29,6 +29,20 @@ function svgCoords(e, svgEl) {
 }
 
 let _tooltip = null;
+let _hoverEl = null;
+const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+
+function showTooltip(circle, x, y) {
+  _tooltip.innerHTML = `<div class="bed-tooltip-name">${circle.dataset.name}</div>` +
+    (circle.dataset.de ? `<div class="bed-tooltip-de">${circle.dataset.de}</div>` : '');
+  _tooltip.hidden = false;
+  const offset = 14;
+  const { offsetWidth: w, offsetHeight: h } = _tooltip;
+  const left = (x + offset + w > window.innerWidth)  ? x - offset - w : x + offset;
+  const top  = (y + offset + h > window.innerHeight) ? y - offset - h : y + offset;
+  _tooltip.style.left = Math.max(0, left) + 'px';
+  _tooltip.style.top  = Math.max(0, top) + 'px';
+}
 
 export function renderBedPlan(container, {
   plants = [], bedImages = {}, placements = [],
@@ -103,6 +117,13 @@ export function renderBedPlan(container, {
     _tooltip.className = 'bed-tooltip';
     _tooltip.hidden = true;
     document.body.appendChild(_tooltip);
+    document.addEventListener('click', e => {
+      if (!e.target.closest('svg.bed-plan-svg')) { _tooltip.hidden = true; _hoverEl = null; }
+    });
+    document.addEventListener('scroll', () => {
+      _tooltip.hidden = true;
+      _hoverEl = null;
+    }, true);
   }
 
   const svgEl = container.querySelector('svg');
@@ -110,11 +131,7 @@ export function renderBedPlan(container, {
   svgEl.addEventListener('mousemove', e => {
     const circle = e.target.closest('circle[data-slug]');
     if (circle) {
-      _tooltip.innerHTML = `<div class="bed-tooltip-name">${circle.dataset.name}</div>` +
-        (circle.dataset.de ? `<div class="bed-tooltip-de">${circle.dataset.de}</div>` : '');
-      _tooltip.hidden = false;
-      _tooltip.style.left = (e.clientX + 14) + 'px';
-      _tooltip.style.top  = (e.clientY + 14) + 'px';
+      showTooltip(circle, e.clientX, e.clientY);
     } else {
       _tooltip.hidden = true;
     }
@@ -137,7 +154,13 @@ export function renderBedPlan(container, {
       if (coords && inBed(coords.x, coords.z, bedL, beds)) onPlace?.(selectedSlug, coords.x, coords.z);
     } else {
       const circle = e.target.closest('circle[data-slug]');
-      if (!circle) return;
+      if (!circle) { _hoverEl = null; return; }
+      if (isTouchDevice() && _hoverEl !== circle) {
+        _hoverEl = circle;
+        showTooltip(circle, e.clientX, e.clientY);
+        return;
+      }
+      _hoverEl = null;
       const plant = plantBySlug[circle.dataset.slug];
       if (plant) document.dispatchEvent(new CustomEvent('plant:open', { detail: plant }));
     }
