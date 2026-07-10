@@ -52,6 +52,16 @@ export function initPlantModal({ gardens = [], observations = [], plants = [], g
 
   document.getElementById('plant-modal-close').addEventListener('click', () => _dialog.close());
   _dialog.addEventListener('click', e => { if (e.target === _dialog) _dialog.close(); });
+
+  const nameBadge = document.getElementById('plant-modal-name-sticky');
+  const nameTitleEl = _dialog.querySelector('.plant-modal-name');
+  const updateNameBadge = () => {
+    const dialogTop = _dialog.getBoundingClientRect().top;
+    const titleBottom = nameTitleEl.getBoundingClientRect().bottom;
+    nameBadge.classList.toggle('is-visible', titleBottom < dialogTop + nameTitleEl.offsetHeight);
+  };
+  nameBadge.addEventListener('click', () => _dialog.scrollTo({ top: 0, behavior: 'smooth' }));
+  _dialog.addEventListener('scroll', updateNameBadge, { passive: true });
   document.getElementById('plant-modal-obs-btn').addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:new', {
       detail: { plantSlug: _currentPlant?.slug ?? null, gardenId: _gardenId },
@@ -82,6 +92,9 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   setColor(plant.color ?? '#ffffff');
 
   dialog.querySelector('.plant-modal-name').textContent = plant.name ?? '';
+  const nameBadge = document.getElementById('plant-modal-name-sticky');
+  nameBadge.textContent = plant.name ?? '';
+  nameBadge.classList.remove('is-visible');
   const nameDeEl = dialog.querySelector('.plant-modal-de');
   nameDeEl.textContent = plant.name_de ?? '';
   nameDeEl.contentEditable = _loggedIn ? 'true' : 'false';
