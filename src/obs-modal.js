@@ -1,4 +1,4 @@
-import { fullUrl, contrastColor } from './utils.js';
+import { thumbUrl, coverUrl, contrastColor } from './utils.js';
 import { supabase } from './auth.js';
 import { getCurrentUserId } from './observations.js';
 
@@ -150,7 +150,7 @@ function renderList(list, startIndex) {
       .join('');
 
     item.innerHTML = `
-      ${obs.filename ? `<div class="obs-list-img-wrap"><img class="obs-list-img" src="${fullUrl(obs.filename)}" loading="lazy"></div>` : ''}
+      ${obs.filename ? `<div class="obs-list-img-wrap"><img class="obs-list-img" src="${thumbUrl(obs.filename)}" loading="lazy"></div>` : ''}
       <div class="obs-list-meta">
         ${plantLinks ? `<div class="obs-list-plants">${plantLinks}</div>` : ''}
         ${place ? `<div class="observation-place">${gardenPath ? `<a class="obs-modal-garden-link" href="${gardenPath}">${place}</a>` : place}</div>` : ''}
@@ -228,7 +228,7 @@ function renderObs(obs, onReady) {
       onReady?.();
     };
     img.onerror = () => { img.onerror = null; img.style.opacity = ''; imgWrap.style.background = ''; onReady?.(); };
-    img.src = fullUrl(obs.filename);
+    img.src = coverUrl(obs.filename);
     imgWrap.hidden = false;
   } else {
     imgWrap.hidden = true;

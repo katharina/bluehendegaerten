@@ -8,6 +8,10 @@ export function fullUrl(filename) {
   return `${R2_URL}/${filename}`;
 }
 
+export function coverUrl(filename) {
+  return `/api/cover/${encodeURIComponent(filename)}`;
+}
+
 export function parseCm(val) {
   if (!val) return null;
   const parts = String(val).split('-').map(s => parseFloat(s)).filter(n => !isNaN(n));

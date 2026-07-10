@@ -147,6 +147,41 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── Cover (generate on first request, cache in R2) ───────────────────────────
+  if (resource === 'cover') {
+    const key = decodeURIComponent(segments.slice(1).join('/'));
+    if (!key) return res.status(400).end();
+    const coverKey = key.replace(/\.[^.]+$/, '_cover.jpg');
+    const fetchR2 = async (k) => {
+      const r = await fetch(`${R2_PUBLIC_URL}/${k}`);
+      if (!r.ok) throw new Error(`R2 ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
+    };
+    if (!req.query.regen) {
+      try {
+        const cached = await fetchR2(coverKey);
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        return res.send(cached);
+      } catch {}
+    }
+    try {
+      const original = await fetchR2(key);
+      const { default: sharp } = await import('sharp');
+      const cover = await sharp(original)
+        .rotate()
+        .resize({ height: 2000, fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 88 })
+        .toBuffer();
+      r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: coverKey, Body: cover, ContentType: 'image/jpeg' })).catch(() => {});
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      return res.send(cover);
+    } catch {
+      return res.status(404).end();
+    }
+  }
+
   // ── PlantNet identification ──────────────────────────────────────────────────
   if (resource === 'plantnet') {
     if (req.method !== 'POST') return res.status(405).end();

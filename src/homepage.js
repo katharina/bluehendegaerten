@@ -1,4 +1,4 @@
-import { fullUrl } from './utils.js';
+import { coverUrl } from './utils.js';
 
 const [highlights, gardens] = await Promise.all([
   fetch('/api/observations?highlighted=true').then(r => r.json()).catch(() => []),
@@ -52,7 +52,7 @@ img.addEventListener('load', () => {
   document.getElementById('highlight-bg').classList.add('is-loaded');
   document.body.classList.add('has-highlight');
 }, { once: true });
-img.src = fullUrl(obs.filename);
+img.src = coverUrl(obs.filename);
 
 const header = document.querySelector('.highlight-header');
 const sticky = document.querySelector('.highlight-sticky');
