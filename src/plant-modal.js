@@ -85,7 +85,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   const nameDeEl = dialog.querySelector('.plant-modal-de');
   nameDeEl.textContent = plant.name_de ?? '';
   nameDeEl.contentEditable = _loggedIn ? 'true' : 'false';
-  dialog.querySelector('.plant-modal-data').open = !window.matchMedia('(max-width: 640px)').matches;
+  dialog.querySelector('.plant-modal-data').open = true;
   const familyInput = dialog.querySelector('.plant-modal-family');
   familyInput.value = plant.family ?? '';
   familyInput.readOnly = !_loggedIn;
@@ -119,10 +119,7 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   colA.innerHTML = colB.innerHTML = '';
   let i = 0;
 
-  const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
-
   function appendMasonry(card) {
-    if (isMobile()) { colA.appendChild(card); return; }
     (i++ % 2 === 0 ? colA : colB).appendChild(card);
   }
 
@@ -139,10 +136,13 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     document.dispatchEvent(new CustomEvent('obs:edit', { detail: obs }));
   } : null;
 
+  const obsCountEl = dialog.querySelector('.plant-modal-obs-count');
+
   function renderObsList(list) {
     colA.innerHTML = colB.innerHTML = '';
     i = 0;
     list.forEach(o => appendMasonry(buildObsCard(o, gardens, plantObs, onDelete, onEdit)));
+    if (obsCountEl) obsCountEl.textContent = list.length;
   }
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
@@ -343,19 +343,17 @@ function buildObsGroup(title, obs, gardens, list) {
 function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
   const card = document.createElement('div');
   card.className = 'modal-obs-card';
-  const place = o.place || gardens.find(g => g.id === o.garden)?.name || '';
+  const place = gardens.find(g => g.id === o.garden)?.name || o.place || '';
   const date  = o.date
     ? new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
     : '';
   const isOwner = o.created_by && o.created_by === getCurrentUserId();
   const showActions = isOwner && (onEdit || onDelete);
-  const showCreator = o.created_by && !isOwner;
   card.innerHTML = `
     ${o.filename ? `<div class="modal-obs-img"><img src="${thumbUrl(o.filename)}" loading="lazy" data-full="${fullUrl(o.filename)}"></div>` : ''}
     <div class="modal-obs-meta">
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
-      ${showCreator ? `<div class="carousel-card-creator">${o.created_by_name || 'Blümchen'}</div>` : ''}
     </div>
     ${showActions ? `<div class="modal-obs-actions">
       ${onEdit   ? `<button class="modal-obs-edit">Bearbeiten</button>` : ''}

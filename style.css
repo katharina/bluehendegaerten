@@ -1477,22 +1477,48 @@ dialog#plant-modal .action-btn {
   gap: var(--hb-space-200);
   font-size: var(--hb-font-size-01);
   color: var(--plant-fg, #000);
-  opacity: 0.6;
   cursor: pointer;
-  margin-left: auto;
+  flex-basis: 100%;
+  margin-left: 0;
   margin-bottom: var(--hb-space-500);
   user-select: none;
 }
 
 .obs-all-toggle input[type="checkbox"] {
-  accent-color: var(--plant-fg, #000);
-  width: 12px;
-  height: 12px;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--plant-fg, #000);
+  background: transparent;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
+.obs-all-toggle input[type="checkbox"]:checked {
+  background: var(--plant-fg, #000);
+}
+
+@media (max-width: 640px) {
+  .plant-modal-observations .plant-modal-obs-header .section-header {
+    flex-basis: auto;
+    order: 1;
+    margin-bottom: 0;
+  }
+  .obs-all-toggle {
+    flex-basis: auto;
+    order: 2;
+    margin-left: auto;
+    margin-bottom: 0;
+  }
+  #plant-modal-obs-btn {
+    order: 3;
+    flex-basis: 100%;
+    margin-top: var(--hb-space-300);
+  }
+}
+
 .plant-modal-obs-list {
-  padding: 0 var(--hb-space-800) var(--hb-space-800);
+  padding: var(--hb-space-200) var(--hb-space-800) var(--hb-space-800);
 }
 
 .plant-modal-header {
@@ -1504,18 +1530,18 @@ dialog#plant-modal .action-btn {
 
 .plant-modal-header .botanical-name {
   font-size: var(--hb-font-size-10);
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .plant-modal-header .german-name {
   font-size: var(--hb-font-size-03);
+  margin-top: var(--hb-space-300);
 }
 
 .plant-modal-meta {
   display: flex;
   align-items: center;
   gap: var(--hb-space-200);
-  margin-top: var(--hb-space-200);
 }
 
 .plant-modal-family {
@@ -1560,10 +1586,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 }
 
 .plant-modal-gardens {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--hb-space-200);
-  margin-bottom: var(--hb-space-500);
+  display: none;
 }
 
 .garden-badge {
@@ -1574,13 +1597,8 @@ dialog#plant-modal.authenticated .plant-color-picker {
   text-decoration: none;
 }
 
-@media (min-width: 768px) {
-  .plant-modal-data summary {
-    display: none;
-  }
-}
-
 .plant-modal-data summary {
+  display: none;
   font-size: var(--hb-font-size-01);
   cursor: pointer;
   padding: var(--hb-space-300) 0;
@@ -1746,7 +1764,6 @@ dialog#plant-modal.authenticated .plant-color-picker {
   break-inside: avoid;
   padding-bottom: var(--hb-space-300);
   margin-bottom: var(--hb-space-300);
-  border-bottom: 1px solid var(--plant-fg, #000);
   position: relative;
 }
 
@@ -1832,19 +1849,16 @@ dialog#plant-modal.authenticated .plant-color-picker {
     padding: var(--hb-space-500) var(--page-pad) 0;
   }
   .plant-modal-obs-list {
-    padding: 0 var(--page-pad) var(--hb-space-800);
-  }
-  .obs-col:last-child {
-    display: none;
-  }
-  .obs-col:first-child {
-    width: 100%;
+    padding: var(--hb-space-200) var(--page-pad) var(--hb-space-800);
   }
   #plant-modal-close {
     position: fixed;
     top: var(--hb-space-400);
     right: var(--hb-space-400);
     z-index: 10;
+  }
+  .plant-modal-changelog {
+    display: none;
   }
 }
 
