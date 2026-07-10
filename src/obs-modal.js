@@ -209,17 +209,18 @@ function renderObs(obs, onReady) {
   listEl.hidden  = true;
   inner.hidden   = false;
 
-  const imgWrap = _dialog.querySelector('.obs-modal-img');
-  const img     = _dialog.querySelector('.obs-modal-img img');
+  const imgWrap  = _dialog.querySelector('.obs-modal-img');
+  const photoEl  = _dialog.querySelector('.obs-modal-photo');
+  const img      = _dialog.querySelector('.obs-modal-photo img');
   imgWrap.classList.remove('info-overlap');
   const plantColor = (obs.slugs ?? []).map(s => _ctx.plantMap.get(s)?.color).find(Boolean) ?? null;
   if (obs.filename) {
     img.style.opacity = '0';
-    imgWrap.style.background = plantColor ?? '#444';
+    photoEl.style.background = plantColor ?? '#444';
     img.onload = () => {
       img.onload = null;
       img.style.opacity = '';
-      imgWrap.style.background = '';
+      photoEl.style.background = '';
       if (isMobile()) {
         const infoEl = imgWrap.querySelector('.obs-modal-info');
         const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
@@ -227,7 +228,7 @@ function renderObs(obs, onReady) {
       }
       onReady?.();
     };
-    img.onerror = () => { img.onerror = null; img.style.opacity = ''; imgWrap.style.background = ''; onReady?.(); };
+    img.onerror = () => { img.onerror = null; img.style.opacity = ''; photoEl.style.background = ''; onReady?.(); };
     img.src = coverUrl(obs.filename);
     imgWrap.hidden = false;
   } else {
