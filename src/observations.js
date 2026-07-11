@@ -1,4 +1,4 @@
-import { thumbUrl, fullUrl } from './utils.js';
+import { thumbUrl, fullUrl, contrastColor } from './utils.js';
 import { supabase, authedFetch } from './auth.js';
 
 const PAGE = 20;
@@ -16,7 +16,10 @@ function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
   const card  = document.createElement('div');
   card.className = 'carousel-card' + (o.highlighted ? ' is-highlighted' : '');
   if (o.id) card.dataset.obsId = o.id;
-  const name  = o.slugs?.map(s => plantMap.get(s)).filter(Boolean).join(', ') ?? '';
+  const plantTags = (o.slugs ?? [])
+    .map(s => ({ name: plantMap.get(s), color: colorMap?.get(s) }))
+    .filter(p => p.name)
+    .slice(0, 3);
   const place = gardenMap.get(o.garden) || o.place || '';
   const bgColor = [...(o.slugs ?? [])].reverse().map(s => colorMap?.get(s)).find(Boolean) ?? '#444';
   card.innerHTML = `
@@ -24,7 +27,7 @@ function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
     </div>
     <div class="carousel-card-meta">
-      ${name  ? `<div class="botanical-name">${name}</div>` : ''}
+      ${plantTags.map(p => `<div class="botanical-name"${p.color ? ` style="background:${p.color};color:${contrastColor(p.color)}"` : ''}>${p.name}</div>`).join('')}
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${o.date ? `<div class="observation-date">${new Date(o.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
       ${o.id && _loggedIn && _userId === o.created_by ? `<div class="carousel-card-actions">

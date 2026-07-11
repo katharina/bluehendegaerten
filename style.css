@@ -671,25 +671,30 @@ ul {
 .carousel-card-meta .botanical-name {
   font-size: var(--hb-font-size-02);
   color: var(--hb-black-1000);
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  padding: 1px 4px;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .carousel-card-meta .observation-place {
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-400);
+  padding: 1px 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-transform: uppercase;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .carousel-card-meta .observation-date {
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-400);
+  padding: 1px 4px;
+  width: fit-content;
 }
 
 .carousel-card--all {
