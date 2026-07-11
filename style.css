@@ -268,6 +268,7 @@ h1 {
   font-size: var(--hb-font-size-03);
   font-weight: 600;
   line-height: var(--hb-badge-line-height);
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -1884,6 +1885,10 @@ dialog#plant-modal.authenticated .plant-color-picker {
     padding: var(--hb-space-300);
     font-size: var(--hb-font-size-03);
     line-height: var(--hb-badge-line-height);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100vw - var(--hb-space-400) * 2 - 48px);
     opacity: 0;
     transform: translateY(-8px);
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -2013,6 +2018,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   font-size: var(--hb-font-size-03);
   font-weight: 600;
   line-height: var(--hb-badge-line-height);
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
