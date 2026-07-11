@@ -274,26 +274,42 @@ function renderObs(obs, onReady) {
   const photoEl  = _dialog.querySelector('.obs-modal-photo');
   const img      = _dialog.querySelector('.obs-modal-photo img');
   imgWrap.classList.remove('info-overlap');
+  imgWrap.hidden = false;
   const plantColor = (obs.slugs ?? []).map(s => _ctx.plantMap.get(s)?.color).find(Boolean) ?? null;
+
+  const checkOverlap = () => {
+    if (!isMobile()) return;
+    const infoEl = imgWrap.querySelector('.obs-modal-info');
+    const overflows = photoEl.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
+    imgWrap.classList.toggle('info-overlap', overflows);
+  };
+
   if (obs.filename) {
+    photoEl.classList.add('no-photo'); // placeholder size/color while loading
+    img.hidden = false;
     img.style.opacity = '0';
     photoEl.style.background = plantColor ?? '#444';
     img.onload = () => {
       img.onload = null;
       img.style.opacity = '';
       photoEl.style.background = '';
-      if (isMobile()) {
-        const infoEl = imgWrap.querySelector('.obs-modal-info');
-        const overflows = img.offsetHeight + (infoEl?.offsetHeight ?? 0) > window.innerHeight;
-        imgWrap.classList.toggle('info-overlap', overflows);
-      }
+      photoEl.classList.remove('no-photo');
+      checkOverlap();
       onReady?.();
     };
-    img.onerror = () => { img.onerror = null; img.style.opacity = ''; photoEl.style.background = ''; onReady?.(); };
+    img.onerror = () => {
+      img.onerror = null;
+      img.hidden = true;
+      photoEl.classList.add('no-photo');
+      checkOverlap();
+      onReady?.();
+    };
     img.src = coverUrl(obs.filename);
-    imgWrap.hidden = false;
   } else {
-    imgWrap.hidden = true;
+    img.hidden = true;
+    photoEl.classList.add('no-photo');
+    photoEl.style.background = plantColor ?? '#444';
+    checkOverlap();
     onReady?.();
   }
 

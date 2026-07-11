@@ -1172,6 +1172,19 @@ dialog#obs-modal::backdrop {
   filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6));
 }
 
+.obs-modal-photo.no-photo {
+  width: min(90vw, 480px);
+  height: 95dvh;
+}
+
+@media (max-width: 640px) {
+  .obs-modal-photo.no-photo {
+    width: 100vw;
+    aspect-ratio: auto;
+    height: calc(100dvh - 72px);
+  }
+}
+
 @media (max-width: 640px) {
   dialog#obs-modal[open] {
     flex-direction: column;

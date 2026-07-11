@@ -31,9 +31,8 @@
   <section>
     <nav class="obs-type-tabs">
       <a class="obs-type-tab" data-type="foto" href="/beobachtungen/fotos"><span class="obs-type-tab-count"></span> Fotos</a>
-      <a class="obs-type-tab" data-type="herbarbeleg" href="/beobachtungen/herbar"><span class="obs-type-tab-count"></span> Herbarbelege</a>
-      <a class="obs-type-tab" data-type="pflanzenlabel" href="/beobachtungen/pflanzenlabel"><span class="obs-type-tab-count"></span> Pflanzenlabels</a>
-      <a class="obs-type-tab" data-type="notiz" href="/beobachtungen/notiz"><span class="obs-type-tab-count"></span> Notizen</a>
+      <a class="obs-type-tab" data-type="herbarbeleg" href="/beobachtungen/herbar" hidden><span class="obs-type-tab-count"></span> Herbarbelege</a>
+      <a class="obs-type-tab" data-type="pflanzenlabel" href="/beobachtungen/pflanzenlabel" hidden><span class="obs-type-tab-count"></span> Pflanzenlabels</a>
     </nav>
     <div id="obs-grid" class="obs-grid"></div>
   </section>
@@ -72,7 +71,7 @@
             <option value="zeichnung">Zeichnung</option>
             <option value="herbarbeleg">Herbarbeleg</option>
             <option value="pflanzenlabel">Pflanzenlabel</option>
-            <option value="notiz">Notiz</option>
+            <option value="notiz" disabled>Notiz</option>
           </select>
         </div>
         <div class="obs-form-field">

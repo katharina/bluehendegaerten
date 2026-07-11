@@ -396,7 +396,7 @@ initPlantModal({ gardens, observations: allObservations, plants: allPlants, gard
 initObsModal({ gardens, plants: allPlants, showAllHref: `/beobachtungen/fotos?garden=${garden.path ?? garden.id}` });
 initObsForm({ gardens, plants: allPlants, gardenId: garden.id, observations: allObservations });
 
-['herbar', 'pflanzenlabel', 'notiz'].forEach(type => {
+['herbar', 'pflanzenlabel'].forEach(type => {
   document.getElementById(`quick-${type}-btn`)?.addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('obs:new', { detail: { type: type === 'herbar' ? 'herbarbeleg' : type } }));
   });
