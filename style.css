@@ -355,6 +355,12 @@ ul {
   margin-bottom: var(--hb-space-150);
 }
 
+#garden-list a:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
 
 .garden-count {
   color: #000;
@@ -2242,7 +2248,9 @@ dialog#plant-modal.authenticated .plant-color-picker {
 }
 
 .section-link:hover {
-  text-decoration: underline;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
 }
 
 .text-link {

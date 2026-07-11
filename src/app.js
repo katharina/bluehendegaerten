@@ -28,22 +28,6 @@ const colorMap    = new Map(plants.filter(p => p.color).map(p => [p.slug, p.colo
 
 const observations = []; // populated lazily as carousel loads
 
-fetch('/api/observations?count=true&type=foto')
-  .then(r => r.json())
-  .then(({ count }) => {
-    const el = document.getElementById('obs-count');
-    if (el) el.textContent = count;
-  })
-  .catch(() => {});
-
-fetch('/api/observations?count=true&type=herbarbeleg')
-  .then(r => r.json())
-  .then(({ count }) => {
-    const el = document.getElementById('herbar-count');
-    if (el) el.textContent = count;
-  })
-  .catch(() => {});
-
 function updateCounts() {
   const pe = document.getElementById('plant-count');
   if (pe) pe.textContent = obsSlugSet ? plants.filter(p => obsSlugSet.has(p.slug)).length : plants.length;
