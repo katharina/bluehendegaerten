@@ -46,7 +46,7 @@ function getScrollParent(el) {
   return document.scrollingElement || document.documentElement;
 }
 
-export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } = {}) {
+export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null, hasPlan = false } = {}) {
   const visible = obsSlugSet ? plants.filter(p => obsSlugSet.has(p.slug)) : plants;
   const sorted = [...visible].sort((a, b) => {
     const aN = isNew(a), bN = isNew(b);
@@ -60,7 +60,7 @@ export function renderPlantList(plants, { bedSlugs = null, obsSlugSet = null } =
   const bedLabel    = document.getElementById('plant-filter-bed-label');
   const bedCheckbox = document.getElementById('plant-filter-bed');
 
-  if (bedLabel && bedSlugs?.size) bedLabel.hidden = false;
+  if (bedLabel) bedLabel.hidden = !hasPlan;
 
   function render() {
     const q       = filterInput.value.toLowerCase();

@@ -128,11 +128,7 @@ const colorMap  = new Map(allPlants.filter(p => p.color).map(p => [p.slug, p.col
 const bedImageMap = Object.fromEntries(bedImages.map(b => [b.bed_index, b.filename]));
 
 const layout = document.querySelector('.garden-layout');
-if (placements.length || garden.has_plan) {
-  layout.classList.add('has-bed');
-} else {
-  layout.classList.add('no-bed');
-}
+layout.classList.add(garden.has_plan ? 'has-bed' : 'no-bed');
 layout.addEventListener('mousemove', () => layout.classList.add('is-interactive'), { once: true });
 
 // Bed name — editable when logged in
@@ -385,7 +381,7 @@ let bedSlugs = null;
 function refreshPlantListForVersion() {
   const active = getActivePlacements();
   bedSlugs = active.length ? new Set(active.map(p => p.slug)) : null;
-  renderPlantList(gardenPlants, { bedSlugs });
+  renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan });
   const store = getStore();
   const ver = getActiveVersion();
   const el = document.getElementById('bed-filter-text');
@@ -410,7 +406,7 @@ initAddPlant({
     allPlants.push(plant);
     gardenPlants.push(plant);
     addPlantToObsForm(plant);
-    renderPlantList(gardenPlants, { bedSlugs });
+    renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan });
   },
 });
 
@@ -427,7 +423,7 @@ document.addEventListener('obs:saved', e => {
     const carousel = document.getElementById('obs-carousel');
     if (carousel) carousel.scrollLeft = 0;
   }
-  renderPlantList(gardenPlants, { bedSlugs });
+  renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan });
 });
 
 document.addEventListener('obs:updated', e => {
@@ -436,7 +432,7 @@ document.addEventListener('obs:updated', e => {
   (e.detail.slugs ?? []).forEach(s => obsSlugSet.add(s));
   const merged = idx !== -1 ? allObservations[idx] : e.detail;
   updateObsInCarousel({ ...merged, place: merged.place || garden.name }, gardenMap, plantMap);
-  renderPlantList(gardenPlants, { bedSlugs });
+  renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan });
 });
 
 document.addEventListener('obs:deleted', e => {
@@ -448,12 +444,12 @@ document.addEventListener('obs:deleted', e => {
   const gardenObs = allObservations.filter(o => o.garden === garden.id);
   updateSectionCounts(gardenObs);
   if (e.detail.type === 'notiz') renderNotizCarousel(gardenObs, gardenMap, plantMap);
-  renderPlantList(gardenPlants, { bedSlugs });
+  renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan });
 });
 
 document.addEventListener('plant:updated', e => {
   const idx = allPlants.findIndex(p => p.slug === e.detail.slug);
-  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs }); }
+  if (idx !== -1) { allPlants[idx] = { ...allPlants[idx], ...e.detail }; renderPlantList(gardenPlants, { bedSlugs, hasPlan: garden.has_plan }); }
 });
 
 
