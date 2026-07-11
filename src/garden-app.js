@@ -26,7 +26,7 @@ if (!garden) {
 }
 
 document.getElementById('garden-name').innerHTML = garden.name.replace(/ /g, '<br>');
-document.title = `${garden.name} — Blühende Gärten`;
+document.title = `Blühende Gärten - ${garden.name}`;
 document.getElementById('garden-intro-title').textContent = garden.name;
 document.getElementById('garden-intro-text').textContent = garden.description
   || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';

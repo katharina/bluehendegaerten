@@ -41,6 +41,8 @@ const garden = gardenParam
 const gardenId   = garden?.id ?? null;
 const gardenSlug = garden ? (garden.path ?? garden.id) : null;
 
+document.title = `Blühende Gärten - ${TYPE_LABEL[activeType]}${garden ? ' - ' + garden.name : ''}`;
+
 // Garden name badge
 const gardenBadge = document.getElementById('garden-name-sticky');
 if (garden) {

@@ -6,7 +6,7 @@ import { initLazyObsCarousel, prependObsToCarousel, updateObsInCarousel, removeO
 import { renderPlantList } from './plants.js';
 import { initPlantModal } from './plant-modal.js';
 import { initObsModal } from './obs-modal.js';
-import { initObsForm, addPlantToObsForm } from './obs-form.js';
+import { initObsForm, addPlantToObsForm, openObsForm } from './obs-form.js';
 import { initAddPlant } from './add-plant.js';
 import { supabase } from './auth.js';
 
@@ -50,6 +50,11 @@ function updateCounts() {
 }
 
 renderGardenList(gardens);
+
+document.getElementById('join-cta')?.addEventListener('click', e => {
+  e.preventDefault();
+  openObsForm({});
+});
 
 document.addEventListener('plant:filter', e => {
   const pe = document.getElementById('plant-count');

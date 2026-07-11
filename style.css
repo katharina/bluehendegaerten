@@ -2257,6 +2257,18 @@ dialog#plant-modal.authenticated .plant-color-picker {
   text-decoration: underline;
 }
 
+.text-link {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
 /* ── Action button ───────────────────────────────────────────────────────── */
 
 .action-btn-icon {
