@@ -2,6 +2,36 @@ import { thumbUrl, coverUrl, contrastColor } from './utils.js';
 import { supabase } from './auth.js';
 import { getCurrentUserId } from './observations.js';
 
+// Single source of truth for the modal's DOM — was previously duplicated as
+// static markup across index.html/garden.html/beobachtungen/index.html, and
+// predictably drifted out of sync between them. Injected once on module load
+// (not inside initObsModal()) since plant-modal.js reaches across to this
+// dialog and needs it to already exist regardless of which module's init
+// function runs first.
+const OBS_MODAL_HTML = `
+  <dialog id="obs-modal" tabindex="-1">
+    <button class="obs-nav obs-nav--prev">&#8249;</button>
+    <div class="obs-modal-inner">
+      <div class="obs-modal-img">
+        <div class="obs-modal-photo"><img src="" alt=""></div>
+        <div class="obs-modal-info">
+          <div class="obs-modal-plants"></div>
+          <div class="obs-modal-place observation-place"></div>
+          <div class="obs-modal-date observation-date"></div>
+          <div class="obs-modal-creator carousel-card-creator" hidden></div>
+          <div class="obs-modal-note"></div>
+        </div>
+      </div>
+    </div>
+    <button class="obs-nav obs-nav--next">&#8250;</button>
+    <div class="obs-modal-list" hidden></div>
+  </dialog>
+`;
+
+if (!document.getElementById('obs-modal')) {
+  document.body.insertAdjacentHTML('beforeend', OBS_MODAL_HTML);
+}
+
 let _dialog, _ctx, _list = [], _index = 0, _showAllHref = null;
 let _loggedIn = false;
 let _closeAtEnd = false;
@@ -309,7 +339,7 @@ function renderObs(obs, onReady) {
   });
 
   const creatorEl = _dialog.querySelector('.obs-modal-creator');
-  const showCreator = obs.created_by && obs.created_by !== getCurrentUserId();
+  const showCreator = !!obs.created_by;
   if (creatorEl) {
     creatorEl.textContent = showCreator ? (obs.created_by_name || 'Blümchen') : '';
     creatorEl.hidden = !showCreator;

@@ -82,14 +82,17 @@ document.getElementById('obs-grid')?.classList.toggle('is-garden-scoped', !!gard
 
 // Tab links — preserve garden param, hide types with no observations
 const gardenScopedObs = gardenId ? allObservations.filter(o => o.garden === gardenId) : allObservations;
-const existingTypes = new Set(gardenScopedObs.map(o => o.type));
+const typeCounts = new Map();
+gardenScopedObs.forEach(o => typeCounts.set(o.type, (typeCounts.get(o.type) ?? 0) + 1));
 
 document.querySelectorAll('.obs-type-tab').forEach(a => {
   const type = a.dataset.type;
   const typeSlug = type === 'herbarbeleg' ? 'herbar' : type;
   a.href = `/beobachtungen/${typeSlug}${gardenSlug ? `?garden=${gardenSlug}` : ''}`;
   if (type === activeType) a.classList.add('is-active');
-  a.hidden = !existingTypes.has(type);
+  a.hidden = !typeCounts.has(type);
+  const countEl = a.querySelector('.obs-type-tab-count');
+  if (countEl) countEl.textContent = typeCounts.get(type) ?? '';
 });
 
 // Filter obs

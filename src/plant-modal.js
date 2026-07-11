@@ -24,6 +24,63 @@ const FIELD_LABEL = {
   color: 'Farbe', bloom_months: 'Blütemonate', family: 'Familie', world_w: 'Breite (m)',
 };
 
+// Single source of truth for the modal's DOM — was previously duplicated as
+// static markup across index.html/garden.html/beobachtungen/index.html, and
+// predictably drifted out of sync between them. Injected once on module load
+// (see bottom of file) rather than inside initPlantModal(), since obs-modal.js
+// reaches across to this dialog and needs it to already exist regardless of
+// which module's init function runs first.
+const PLANT_MODAL_HTML = `
+  <dialog id="plant-modal" tabindex="-1">
+    <div class="plant-modal-inner">
+      <div class="botanical-name plant-modal-name-sticky" id="plant-modal-name-sticky"></div>
+      <div class="plant-modal-layout">
+
+        <div class="plant-modal-info">
+          <div class="plant-modal-header">
+            <div class="botanical-name plant-modal-name" spellcheck="false"></div>
+            <div class="german-name plant-modal-de" spellcheck="false"></div>
+            <div class="plant-modal-meta">
+              <input class="plant-modal-family" type="text" placeholder="Familie" spellcheck="false" autocomplete="off">
+              <label class="plant-color-swatch" for="plant-color-input"></label>
+              <input class="plant-color-picker" id="plant-color-input" type="color">
+            </div>
+          </div>
+          <div class="plant-modal-gardens"></div>
+          <details class="plant-modal-data" open>
+            <summary>Pflanzendaten</summary>
+            <div class="plant-modal-bloom-bar"></div>
+            <div class="plant-modal-info-rows"></div>
+          </details>
+          <details class="plant-modal-changelog" hidden>
+            <summary>Änderungsprotokoll</summary>
+            <div class="plant-modal-changelog-rows"></div>
+          </details>
+        </div>
+
+        <div class="plant-modal-observations">
+          <div class="plant-modal-obs-header">
+            <div class="section-header">
+              <h3><span class="plant-modal-obs-count"></span> Beobachtungen</h3>
+              <button class="action-btn-icon" id="plant-modal-close">×</button>
+            </div>
+            <button class="action-btn-outline" id="plant-modal-obs-btn">+ Neue Beobachtung</button>
+          </div>
+          <div class="plant-modal-obs-list">
+            <div class="obs-col"></div>
+            <div class="obs-col"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+`;
+
+if (!document.getElementById('plant-modal')) {
+  document.body.insertAdjacentHTML('beforeend', PLANT_MODAL_HTML);
+}
+
 let _dialog, _ctx, _loggedIn = false, _gardenId = null, _currentPlant = null;
 
 // Only one native <dialog> can be the true top-layer modal at a time — z-index
