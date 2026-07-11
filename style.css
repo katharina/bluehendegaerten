@@ -1151,18 +1151,24 @@ dialog#obs-modal::backdrop {
   height: auto;
   display: block;
   filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6));
+  transition: opacity 0.3s;
 }
 
 .obs-modal-photo.no-photo {
-  width: min(90vw, 480px);
-  height: 95dvh;
+  aspect-ratio: var(--obs-w, 3) / var(--obs-h, 4);
+  width: auto;
+  height: auto;
+  max-width: 95vw;
+  max-height: 95dvh;
 }
 
 @media (max-width: 640px) {
   .obs-modal-photo.no-photo {
     width: 100vw;
-    aspect-ratio: auto;
-    height: calc(100dvh - 72px);
+    aspect-ratio: var(--obs-w, 3) / var(--obs-h, 4);
+    height: auto;
+    max-width: 100vw;
+    max-height: calc(100dvh - 72px);
   }
 }
 
@@ -1817,14 +1823,23 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .modal-obs-img {
   width: 100%;
+  aspect-ratio: var(--obs-w, 2) / var(--obs-h, 3);
+  overflow: hidden;
   margin-bottom: var(--hb-space-200);
 }
 
 .modal-obs-img img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   cursor: zoom-in;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.modal-obs-img img.is-loaded {
+  opacity: 1;
 }
 
 .modal-obs-meta {
@@ -2223,12 +2238,14 @@ dialog#plant-modal.authenticated .plant-color-picker {
 .obs-grid .carousel-card-img {
   width: 100%;
   height: auto;
-  aspect-ratio: auto;
+  aspect-ratio: var(--obs-w, 2) / var(--obs-h, 3);
+  overflow: hidden;
 }
 
 .obs-grid .carousel-card-img img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 

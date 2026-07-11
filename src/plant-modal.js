@@ -453,8 +453,10 @@ function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
     : '';
   const isOwner = o.created_by && o.created_by === getCurrentUserId();
   const showActions = isOwner && (onEdit || onDelete);
+  const bgColor = _currentPlant?.color ?? '#444';
+  const dims = o.width && o.height ? `--obs-w:${o.width};--obs-h:${o.height};` : '';
   card.innerHTML = `
-    ${o.filename ? `<div class="modal-obs-img"><img src="${thumbUrl(o.filename)}" loading="lazy" data-full="${fullUrl(o.filename)}"></div>` : ''}
+    ${o.filename ? `<div class="modal-obs-img" style="background:${bgColor};${dims}"><img src="${thumbUrl(o.filename)}" loading="lazy" data-full="${fullUrl(o.filename)}"></div>` : ''}
     <div class="modal-obs-meta">
       ${place ? `<div class="observation-place">${place}</div>` : ''}
       ${date  ? `<div class="observation-date">${date}</div>`  : ''}
@@ -464,6 +466,8 @@ function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
       ${onDelete ? `<button class="modal-obs-delete">Löschen</button>` : ''}
     </div>` : ''}
   `;
+  const imgEl = card.querySelector('.modal-obs-img img');
+  imgEl?.addEventListener('load', () => imgEl.classList.add('is-loaded'));
   card.addEventListener('click', () => {
     stepBack();
     document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list, closeAtEnd: true } }));

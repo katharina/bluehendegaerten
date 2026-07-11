@@ -22,8 +22,12 @@ function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
     .slice(0, 3);
   const place = gardenMap.get(o.garden) || o.place || '';
   const bgColor = [...(o.slugs ?? [])].reverse().map(s => colorMap?.get(s)).find(Boolean) ?? '#444';
+  // --obs-w/--obs-h let contexts that want it (the grid) reserve the photo's
+  // real aspect ratio before it loads, without affecting the fixed-height
+  // horizontal carousels, which don't reference these properties.
+  const dims = o.width && o.height ? `--obs-w:${o.width};--obs-h:${o.height};` : '';
   card.innerHTML = `
-    <div class="carousel-card-img" style="background:${bgColor}">
+    <div class="carousel-card-img" style="background:${bgColor};${dims}">
       <img src="${o._localUrl ?? thumbUrl(o.filename)}" loading="lazy">
     </div>
     <div class="carousel-card-meta">
@@ -272,6 +276,7 @@ export function initLazyObsGrid(containerId, { gardenMap, plantMap, colorMap = n
   let loading = false;
   let done = false;
   let colIndex = 0;
+  let inFlight = null;
   const list = [];
 
   const numCols = window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
@@ -303,31 +308,47 @@ export function initLazyObsGrid(containerId, { gardenMap, plantMap, colorMap = n
     emptyMsg.hidden = true;
   }
 
-  async function loadMore() {
-    if (loading || done) return null;
+  function loadMore() {
+    // If a load is already in flight, hand back its promise instead of a
+    // resolved-to-null no-op — callers that await in a loop (scrollToIndex)
+    // would otherwise busy-spin on the guard without ever actually waiting
+    // for the fetch to land, starving the event loop.
+    if (done) return Promise.resolve(null);
+    if (loading) return inFlight;
     loading = true;
-    const params = new URLSearchParams({ limit: BATCH, offset, type });
-    if (garden) params.set('garden', garden);
-    const batch = await fetch(`/api/observations?${params}`).then(r => r.json()).catch(() => []);
-    if (myGeneration !== _gridGeneration) return null; // a newer grid replaced this one while we were fetching
-    batch.forEach(o => { list.push(o); addCard(o); });
-    offset += batch.length;
-    loading = false;
-    if (batch.length < BATCH) {
-      done = true;
-      sentinel.remove();
-      _gridObserver?.disconnect();
-      if (list.length === 0) emptyMsg.hidden = false;
-    }
-    return batch;
+    inFlight = (async () => {
+      const params = new URLSearchParams({ limit: BATCH, offset, type });
+      if (garden) params.set('garden', garden);
+      const batch = await fetch(`/api/observations?${params}`).then(r => r.json()).catch(() => []);
+      if (myGeneration !== _gridGeneration) return null; // a newer grid replaced this one while we were fetching
+      batch.forEach(o => { list.push(o); addCard(o); });
+      offset += batch.length;
+      loading = false;
+      if (batch.length < BATCH) {
+        done = true;
+        sentinel.remove();
+        _gridObserver?.disconnect();
+        if (list.length === 0) emptyMsg.hidden = false;
+      }
+      return batch;
+    })();
+    return inFlight;
   }
 
+  // A generous look-ahead margin so the next batch is already loading well
+  // before the sentinel actually reaches the viewport — 800px wasn't enough
+  // of a buffer: fast scrolling could reach the bottom of the loaded content
+  // before the next fetch had time to land, leaving a dead stretch where the
+  // page can't be scrolled further until it catches up.
   _gridObserver = new IntersectionObserver(
     entries => { if (entries[0].isIntersecting) loadMore(); },
-    { root: null, rootMargin: '0px 0px 800px 0px', threshold: 0 }
+    { root: null, rootMargin: '0px 0px 2400px 0px', threshold: 0 }
   );
   _gridObserver.observe(sentinel);
-  loadMore();
+  // Load two batches up front so there's already a real scroll buffer in
+  // place immediately on landing, instead of just enough content to trigger
+  // the observer once the user starts scrolling.
+  loadMore().then(() => { if (!done) loadMore(); });
 
   return {
     list,

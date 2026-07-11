@@ -277,6 +277,16 @@ function renderObs(obs, onReady) {
   imgWrap.hidden = false;
   const plantColor = (obs.slugs ?? []).map(s => _ctx.plantMap.get(s)?.color).find(Boolean) ?? null;
 
+  // When we know the real dimensions, the loading placeholder can match the
+  // photo's exact shape instead of guessing — no jump once it loads.
+  if (obs.width && obs.height) {
+    photoEl.style.setProperty('--obs-w', obs.width);
+    photoEl.style.setProperty('--obs-h', obs.height);
+  } else {
+    photoEl.style.removeProperty('--obs-w');
+    photoEl.style.removeProperty('--obs-h');
+  }
+
   const checkOverlap = () => {
     if (!isMobile()) return;
     const infoEl = imgWrap.querySelector('.obs-modal-info');

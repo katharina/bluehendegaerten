@@ -600,6 +600,15 @@ async function _onSubmit() {
     const upload = _rotatedBlob ? new File([_rotatedBlob], 'photo.jpg', { type: 'image/jpeg' }) : file;
     if (upload) filename = await _uploadToR2(upload);
 
+    // The preview <img> always reflects exactly what's about to be uploaded
+    // (original file or the manually-rotated blob), and browsers auto-apply
+    // EXIF orientation when decoding it for display — so naturalWidth/Height
+    // here already match the final as-displayed dimensions.
+    const previewImg = _dialog.querySelector('#obs-form-preview-img');
+    const dims = (upload && previewImg?.naturalWidth)
+      ? { width: previewImg.naturalWidth, height: previewImg.naturalHeight }
+      : {};
+
     const body = {
       date:   _dialog.querySelector('#obs-form-date').value || null,
       type:   _dialog.querySelector('#obs-form-type').value,
@@ -609,6 +618,7 @@ async function _onSubmit() {
       ...(_lat != null && { lat: _lat, lon: _lon }),
       ...(_place && { place: _place }),
       ...(filename && { filename }),
+      ...dims,
     };
 
     if (_editId) {

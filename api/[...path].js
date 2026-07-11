@@ -421,13 +421,13 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
       if (req.method === 'POST') {
         const user = await requireUser(req, res);
         if (!user) return;
-        const { date, type = 'foto', text, filename, lat, lon, place: clientPlace, slugs = [] } = req.body ?? {};
+        const { date, type = 'foto', text, filename, lat, lon, place: clientPlace, slugs = [], width, height } = req.body ?? {};
         const _g = req.body?.garden;
         const garden = 'garden' in (req.body ?? {}) ? (_g || null) : null;
         const place = clientPlace || (lat != null ? await reverseGeocode(lat, lon) : null);
         const { data: obs, error } = await supabase
           .from('observations')
-          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place, created_by: user.id })
+          .insert({ garden, date: date || null, type, text: text || null, filename: filename || null, lat: lat ?? null, lon: lon ?? null, place, width: width ?? null, height: height ?? null, created_by: user.id })
           .select().single();
         if (error) return res.status(500).json({ error: error.message });
         if (slugs.length)
@@ -442,8 +442,8 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const isSiteOwner = !!process.env.SITE_OWNER_ID && user.id === process.env.SITE_OWNER_ID;
         const { data: obsCheck } = await supabase.from('observations').select('created_by').eq('id', id).maybeSingle();
         const isCreator = !obsCheck?.created_by || obsCheck.created_by === user.id;
-        const { highlighted, date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden } = req.body ?? {};
-        const hasRegularFields = [date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden].some(v => v !== undefined);
+        const { highlighted, date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden, width, height } = req.body ?? {};
+        const hasRegularFields = [date, type, text, filename, lat, lon, place, plantnet_suggestions, slugs, garden, width, height].some(v => v !== undefined);
         if (hasRegularFields && !isCreator) return res.status(403).json({ error: 'forbidden' });
         if (highlighted !== undefined && !isSiteOwner) return res.status(403).json({ error: 'forbidden' });
         const fields = {};
@@ -457,6 +457,8 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         if (lon                   !== undefined) fields.lon                   = lon ?? null;
         if (place                 !== undefined) fields.place                 = place || null;
         if (plantnet_suggestions  !== undefined) fields.plantnet_suggestions  = plantnet_suggestions ?? null;
+        if (width                 !== undefined) fields.width                 = width ?? null;
+        if (height                !== undefined) fields.height                = height ?? null;
         if (Object.keys(fields).length) {
           const { error } = await supabase.from('observations').update(fields).eq('id', id);
           if (error) return res.status(500).json({ error: error.message });
