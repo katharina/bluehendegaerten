@@ -1984,10 +1984,10 @@ dialog#plant-modal.authenticated .plant-color-picker {
   line-height: 1;
 }
 
-#obs-carousel .observation-place,
-#herbar-carousel .observation-place,
-#pflanzenlabel-carousel .observation-place,
-#notiz-carousel .observation-place { display: none; }
+.garden-layout #obs-carousel .observation-place,
+.garden-layout #herbar-carousel .observation-place,
+.garden-layout #pflanzenlabel-carousel .observation-place,
+.garden-layout #notiz-carousel .observation-place { display: none; }
 
 
 .garden-header-fixed {
