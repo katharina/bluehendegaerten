@@ -28,10 +28,18 @@ const colorMap    = new Map(plants.filter(p => p.color).map(p => [p.slug, p.colo
 
 const observations = []; // populated lazily as carousel loads
 
-fetch('/api/observations?count=true')
+fetch('/api/observations?count=true&type=foto')
   .then(r => r.json())
   .then(({ count }) => {
     const el = document.getElementById('obs-count');
+    if (el) el.textContent = count;
+  })
+  .catch(() => {});
+
+fetch('/api/observations?count=true&type=herbarbeleg')
+  .then(r => r.json())
+  .then(({ count }) => {
+    const el = document.getElementById('herbar-count');
     if (el) el.textContent = count;
   })
   .catch(() => {});
@@ -51,12 +59,17 @@ document.addEventListener('plant:filter', e => {
 });
 
 initLazyObsCarousel('obs-carousel', { gardenMap, plantMap, colorMap, sharedList: observations, onLoad: updateCounts, maxBatches: 3, showAllHref: '/beobachtungen/fotos' });
+initLazyObsCarousel('herbar-carousel', { gardenMap, plantMap, colorMap, sharedList: [], type: 'herbarbeleg', sectionId: 'herbar-section', showAllHref: '/beobachtungen/herbar' });
 renderPlantList(plants, { obsSlugSet });
 updateCounts();
 
 initPlantModal({ gardens, observations, plants });
 initObsModal({ gardens, plants, showAllHref: '/beobachtungen/fotos' });
 initObsForm({ gardens, plants, observations });
+
+document.getElementById('quick-herbar-btn')?.addEventListener('click', () => {
+  document.dispatchEvent(new CustomEvent('obs:new', { detail: { type: 'herbarbeleg' } }));
+});
 initAddPlant({
   onAdded(plant) {
     plants.push(plant);

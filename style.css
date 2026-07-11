@@ -2210,22 +2210,31 @@ dialog#plant-modal.authenticated .plant-color-picker {
   height: auto;
   width: 100%;
   aspect-ratio: 2 / 3;
+  position: relative;
+  overflow: hidden;
 }
 
-.obs-grid .carousel-card.is-landscape {
-  grid-column: span 2;
+.obs-grid .carousel-card-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.obs-grid .carousel-card-img.is-landscape {
-  aspect-ratio: 4 / 3;
-}
-
+.obs-grid .carousel-card.is-landscape,
 .obs-grid .carousel-card.is-highlighted {
   grid-column: span 2;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
+.obs-grid .carousel-card.is-landscape .carousel-card-img,
 .obs-grid .carousel-card.is-highlighted .carousel-card-img {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .obs-grid.is-garden-scoped .observation-place {

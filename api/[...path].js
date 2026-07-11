@@ -338,7 +338,10 @@ Antworte ausschließlich mit dem JSON-Objekt, ohne Erklärungen.`;
         const { slug, garden } = req.query;
 
         if (req.query.count === 'true') {
-          const { count } = await supabase.from('observations').select('*', { count: 'exact', head: true });
+          let countQuery = supabase.from('observations').select('*', { count: 'exact', head: true });
+          if (garden) countQuery = countQuery.eq('garden', garden);
+          if (req.query.type) countQuery = countQuery.eq('type', req.query.type);
+          const { count } = await countQuery;
           return res.json({ count: count ?? 0 });
         }
 
