@@ -250,21 +250,103 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
   renderCarousel(belege, gardenMap, plantMap, 'herbar-carousel');
 }
 
-export function renderObsGrid(observations, gardenMap, plantMap, containerId, colorMap = null) {
+let _gridObserver = null;
+let _gridGeneration = 0;
+
+// Paginated masonry grid (2 cols mobile / 6 desktop) for the Beobachtungen
+// page — the type tabs each have hundreds of observations, so this fetches
+// in batches as the user scrolls instead of loading everything up front.
+// Call again (with a new type) to switch tabs; disconnects the previous
+// observer and rebuilds the columns. Returns a controller for prepending/
+// updating/removing cards in place, and jumping to a known index.
+export function initLazyObsGrid(containerId, { gardenMap, plantMap, colorMap = null, garden = null, type = 'foto' }) {
   const container = document.getElementById(containerId);
-  if (!container) return;
-  const numCols = window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
+  if (!container) return { list: [], prepend() {}, update() {}, remove() {}, scrollToIndex() {} };
+
+  _gridObserver?.disconnect();
   container.innerHTML = '';
+  const myGeneration = ++_gridGeneration;
+
+  const BATCH = 24;
+  let offset = 0;
+  let loading = false;
+  let done = false;
+  let colIndex = 0;
+  const list = [];
+
+  const numCols = window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
   const cols = Array.from({ length: numCols }, () => {
     const col = document.createElement('div');
     col.className = 'obs-col';
     container.appendChild(col);
     return col;
   });
-  if (!observations.length) {
-    cols[0].textContent = 'Keine Beobachtungen';
-    return;
+
+  // Siblings *after* the grid, not children of it — .obs-grid's flex:1
+  // columns assume exactly numCols children, and nesting these inside a
+  // column would mean later-appended cards land after them, burying the
+  // sentinel mid-content instead of keeping it at the true end.
+  const emptyMsg = document.createElement('div');
+  emptyMsg.hidden = true;
+  emptyMsg.textContent = 'Keine Beobachtungen';
+  container.insertAdjacentElement('afterend', emptyMsg);
+
+  const sentinel = document.createElement('div');
+  sentinel.style.minHeight = '1px';
+  emptyMsg.insertAdjacentElement('afterend', sentinel);
+
+  function addCard(o, toStart = false) {
+    const card = buildObsCard(o, gardenMap, plantMap, list, colorMap);
+    const col = cols[colIndex % cols.length];
+    toStart ? col.prepend(card) : col.appendChild(card);
+    colIndex++;
+    emptyMsg.hidden = true;
   }
-  observations.forEach((o, i) =>
-    cols[i % cols.length].appendChild(buildObsCard(o, gardenMap, plantMap, observations, colorMap)));
+
+  async function loadMore() {
+    if (loading || done) return null;
+    loading = true;
+    const params = new URLSearchParams({ limit: BATCH, offset, type });
+    if (garden) params.set('garden', garden);
+    const batch = await fetch(`/api/observations?${params}`).then(r => r.json()).catch(() => []);
+    if (myGeneration !== _gridGeneration) return null; // a newer grid replaced this one while we were fetching
+    batch.forEach(o => { list.push(o); addCard(o); });
+    offset += batch.length;
+    loading = false;
+    if (batch.length < BATCH) {
+      done = true;
+      sentinel.remove();
+      _gridObserver?.disconnect();
+      if (list.length === 0) emptyMsg.hidden = false;
+    }
+    return batch;
+  }
+
+  _gridObserver = new IntersectionObserver(
+    entries => { if (entries[0].isIntersecting) loadMore(); },
+    { root: null, rootMargin: '0px 0px 800px 0px', threshold: 0 }
+  );
+  _gridObserver.observe(sentinel);
+  loadMore();
+
+  return {
+    list,
+    prepend(o) { list.unshift(o); addCard(o, true); },
+    update(o) {
+      const idx = list.findIndex(x => x.id === o.id);
+      if (idx !== -1) list[idx] = o;
+      container.querySelector(`[data-obs-id="${o.id}"]`)?.replaceWith(buildObsCard(o, gardenMap, plantMap, list, colorMap));
+    },
+    remove(id) {
+      const idx = list.findIndex(x => x.id === id);
+      if (idx !== -1) list.splice(idx, 1);
+      container.querySelectorAll(`[data-obs-id="${id}"]`).forEach(el => el.remove());
+    },
+    // Keep loading batches until we've reached the target index (or run out).
+    async scrollToIndex(index) {
+      while (list.length <= index && !done) await loadMore();
+      const el = container.querySelector(`[data-obs-id="${list[index]?.id}"]`);
+      el?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    },
+  };
 }

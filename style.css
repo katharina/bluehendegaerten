@@ -120,25 +120,6 @@ a.topbar-dd-item { text-decoration: none; }
   margin: var(--hb-space-200) 0;
 }
 
-.topbar-dd-login {
-  display: flex;
-  flex-direction: column;
-  gap: var(--hb-space-200);
-}
-
-.topbar-dd-input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.4);
-  color: #fff;
-  font-size: var(--hb-font-size-02);
-  font-family: inherit;
-  padding: var(--hb-space-100) 0;
-  outline: none;
-}
-
-.topbar-dd-input::placeholder { opacity: 0.4; }
-
 a {
   color: black;
 }

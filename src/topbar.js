@@ -1,4 +1,5 @@
 import { supabase } from './auth.js';
+import { openObsForm } from './obs-form.js';
 
 const btn      = document.getElementById('topbar-btn');
 const dropdown = document.getElementById('topbar-dropdown');
@@ -52,22 +53,11 @@ function renderDropdown() {
     dropdown.innerHTML = `
       ${navLinks}
       <div class="topbar-dd-divider"></div>
-      <form id="dd-login-form" class="topbar-dd-login">
-        <input class="topbar-dd-input" type="email" placeholder="Email" required autocomplete="email">
-        <button class="topbar-dd-item" type="submit">Magic Link senden</button>
-      </form>
+      <button class="topbar-dd-item" id="dd-login-btn">Anmelden</button>
     `;
-    dropdown.querySelector('#dd-login-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const email = e.target.querySelector('input').value;
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.origin },
-      });
-      if (error) console.error('signInWithOtp error:', error);
-      dropdown.innerHTML = error
-        ? `<div class="topbar-dd-info">Fehler: ${error.message || error.error_description || JSON.stringify(error)}</div>`
-        : `<div class="topbar-dd-info">Link an ${email} verschickt.</div>`;
+    dropdown.querySelector('#dd-login-btn').addEventListener('click', () => {
+      dropdown.hidden = true;
+      openObsForm({});
     });
   }
 }
