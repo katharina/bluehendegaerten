@@ -182,6 +182,53 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── OG image (1200x630, cached per garden) ────────────────────────────────────
+  if (resource === 'og-image') {
+    const gardenParam = req.query.garden;
+    let sourceKey = null;
+    if (gardenParam) {
+      const { data: garden } = await supabase.from('gardens').select('id')
+        .or(`id.eq.${gardenParam},path.eq.${gardenParam}`).maybeSingle();
+      if (garden) {
+        const { data: obs } = await supabase.from('observations')
+          .select('filename').eq('garden', garden.id).eq('highlighted', true)
+          .not('filename', 'is', null).order('created_at', { ascending: false }).limit(1);
+        sourceKey = obs?.[0]?.filename ?? null;
+      }
+    }
+    if (!sourceKey) return res.redirect(302, '/og-image.jpg');
+
+    const ogKey = sourceKey.replace(/\.[^.]+$/, '_og.jpg');
+    const fetchR2 = async (k) => {
+      const r = await fetch(`${R2_PUBLIC_URL}/${k}`);
+      if (!r.ok) throw new Error(`R2 ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
+    };
+    if (!req.query.regen) {
+      try {
+        const cached = await fetchR2(ogKey);
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        return res.send(cached);
+      } catch {}
+    }
+    try {
+      const original = await fetchR2(sourceKey);
+      const { default: sharp } = await import('sharp');
+      const og = await sharp(original)
+        .rotate()
+        .resize({ width: 1200, height: 630, fit: 'cover', position: 'centre' })
+        .jpeg({ quality: 85 })
+        .toBuffer();
+      r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: ogKey, Body: og, ContentType: 'image/jpeg' })).catch(() => {});
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.send(og);
+    } catch {
+      return res.redirect(302, '/og-image.jpg');
+    }
+  }
+
   // ── PlantNet identification ──────────────────────────────────────────────────
   if (resource === 'plantnet') {
     if (req.method !== 'POST') return res.status(405).end();

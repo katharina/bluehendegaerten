@@ -2,7 +2,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/[...path].js": { "maxDuration": 60 }
+    "api/[...path].js": { "maxDuration": 60 },
+    "api/garden.js": { "maxDuration": 10 }
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/[...path].js" },
@@ -10,6 +11,6 @@
     { "src": "/", "dest": "/index.html" },
     { "src": "/plants/all", "dest": "/plants/all.html" },
     { "src": "/beobachtungen(.*)", "dest": "/beobachtungen/index.html" },
-    { "src": "/(.*)", "dest": "/garden.html" }
+    { "src": "/(.*)", "dest": "/api/garden.js" }
   ]
 }
