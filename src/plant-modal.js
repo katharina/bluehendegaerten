@@ -26,6 +26,29 @@ const FIELD_LABEL = {
 
 let _dialog, _ctx, _loggedIn = false, _gardenId = null, _currentPlant = null;
 
+// Only one native <dialog> can be the true top-layer modal at a time — z-index
+// has no effect on top-layer ordering, only showModal() call order does. So
+// when another modal needs to sit in front, step this one down to plain
+// show() (still visible, normal stacking, always drawn below the top layer).
+let _skipCloseNotify = false;
+function bringToFront() {
+  if (_dialog.matches(':modal')) return;
+  if (_dialog.open) {
+    _skipCloseNotify = true;
+    _dialog.close();
+    requestAnimationFrame(() => { _dialog.showModal(); _dialog.focus(); });
+    return;
+  }
+  _dialog.showModal();
+  _dialog.focus();
+}
+function stepBack() {
+  if (!_dialog.matches(':modal')) return;
+  _skipCloseNotify = true;
+  _dialog.close();
+  _dialog.show();
+}
+
 export function initPlantModal({ gardens = [], observations = [], plants = [], gardenId = null } = {}) {
   _ctx = { gardens, observations, plants };
   _gardenId = gardenId;
@@ -71,12 +94,29 @@ export function initPlantModal({ gardens = [], observations = [], plants = [], g
 
 
   document.addEventListener('plant:open', e => openPlantModal(e.detail, { gardenId: _gardenId }));
+
+  _dialog.addEventListener('close', () => {
+    if (_skipCloseNotify) { _skipCloseNotify = false; return; }
+    document.dispatchEvent(new CustomEvent('plant-modal:closed'));
+  });
+
+  document.addEventListener('obs-modal:closed', () => {
+    if (_dialog.open) bringToFront();
+  });
 }
 
 export async function openPlantModal(plant, { gardenId = null } = {}) {
   _currentPlant = plant;
   const { gardens, observations, plants } = _ctx;
   const dialog = _dialog;
+
+  // Show immediately — the observations/plant-info fetches below are async,
+  // and stacking with another modal depends on this happening in the same
+  // tick as that modal stepping back, not after a network round-trip.
+  bringToFront();
+  dialog.scrollTop = 0;
+  dialog.querySelector('.plant-modal-info').scrollTop = 0;
+  dialog.querySelector('.plant-modal-observations').scrollTop = 0;
 
   // Merge with cached plant data so color is available immediately
   const cached = plants?.find(p => p.slug === plant.slug);
@@ -338,12 +378,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
         </div>`;
       }).join('');
     });
-
-  dialog.showModal();
-  dialog.scrollTop = 0;
-  dialog.querySelector('.plant-modal-info').scrollTop = 0;
-  dialog.querySelector('.plant-modal-observations').scrollTop = 0;
-  dialog.focus();
 }
 
 function buildObsGroup(title, obs, gardens, list) {
@@ -374,7 +408,8 @@ function buildObsCard(o, gardens, list = [o], onDelete = null, onEdit = null) {
     </div>` : ''}
   `;
   card.addEventListener('click', () => {
-    document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list } }));
+    stepBack();
+    document.dispatchEvent(new CustomEvent('obs:open', { detail: { obs: o, list, closeAtEnd: true } }));
   });
   if (showActions && onEdit) {
     card.querySelector('.modal-obs-edit').addEventListener('click', e => {

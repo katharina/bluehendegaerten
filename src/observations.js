@@ -250,10 +250,18 @@ export function renderHerbarCarousel(observations, gardenMap, plantMap) {
 export function renderObsGrid(observations, gardenMap, plantMap, containerId, colorMap = null) {
   const container = document.getElementById(containerId);
   if (!container) return;
+  const numCols = window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
   container.innerHTML = '';
+  const cols = Array.from({ length: numCols }, () => {
+    const col = document.createElement('div');
+    col.className = 'obs-col';
+    container.appendChild(col);
+    return col;
+  });
   if (!observations.length) {
-    container.textContent = 'Keine Beobachtungen';
+    cols[0].textContent = 'Keine Beobachtungen';
     return;
   }
-  observations.forEach(o => container.appendChild(buildObsCard(o, gardenMap, plantMap, observations, colorMap)));
+  observations.forEach((o, i) =>
+    cols[i % cols.length].appendChild(buildObsCard(o, gardenMap, plantMap, observations, colorMap)));
 }

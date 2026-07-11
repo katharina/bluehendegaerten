@@ -3,6 +3,7 @@ preventPageZoom();
 import { renderObsGrid } from './observations.js';
 import { initObsModal } from './obs-modal.js';
 import { initObsForm } from './obs-form.js';
+import { initPlantModal } from './plant-modal.js';
 
 const TYPE_MAP = {
   fotos:          'foto',
@@ -110,6 +111,7 @@ if (from > 0) {
 
 initObsModal({ gardens, plants: allPlants });
 initObsForm({ gardens, plants: allPlants, observations: allObservations });
+initPlantModal({ gardens, observations: allObservations, plants: allPlants, gardenId });
 
 document.addEventListener('obs:saved', e => {
   allObservations.push(e.detail);

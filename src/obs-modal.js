@@ -4,7 +4,32 @@ import { getCurrentUserId } from './observations.js';
 
 let _dialog, _ctx, _list = [], _index = 0, _showAllHref = null;
 let _loggedIn = false;
+let _closeAtEnd = false;
+let _skipCleanup = false;
 const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
+// Only one native <dialog> can be the true top-layer modal at a time — z-index
+// has no effect on top-layer ordering, only showModal() call order does. So
+// when another modal needs to sit in front, step this one down to plain
+// show() (still visible, normal stacking, always drawn below the top layer).
+function bringToFront() {
+  if (_dialog.matches(':modal')) return;
+  document.body.style.overflow = 'hidden';
+  if (_dialog.open) {
+    _skipCleanup = true;
+    _dialog.close();
+    requestAnimationFrame(() => { _dialog.showModal(); _dialog.focus(); });
+    return;
+  }
+  _dialog.showModal();
+  _dialog.focus();
+}
+function stepBack() {
+  if (!_dialog.matches(':modal')) return;
+  _skipCleanup = true;
+  _dialog.close();
+  _dialog.show();
+}
 
 export function initObsModal({ gardens = [], plants = [], showAllHref = null } = {}) {
   _showAllHref = showAllHref;
@@ -23,12 +48,18 @@ export function initObsModal({ gardens = [], plants = [], showAllHref = null } =
     _dialog.close();
   });
   _dialog.addEventListener('close', () => {
+    if (_skipCleanup) { _skipCleanup = false; return; }
     document.body.style.overflow = '';
     const img = _dialog.querySelector('.obs-modal-img img');
     img.onload = img.onerror = null;
     img.src = '';
     _dialog.querySelector('.obs-modal-list').innerHTML = '';
     hideAllScreen();
+    document.dispatchEvent(new CustomEvent('obs-modal:closed'));
+  });
+
+  document.addEventListener('plant-modal:closed', () => {
+    if (_dialog.open) bringToFront();
   });
 
   _dialog.querySelector('.obs-nav--prev').addEventListener('click', e => {
@@ -48,6 +79,7 @@ export function initObsModal({ gardens = [], plants = [], showAllHref = null } =
 
   document.addEventListener('obs:open', e => {
     const detail = e.detail;
+    _closeAtEnd = detail.closeAtEnd ?? false;
     if (detail.list) {
       _list  = detail.list;
       _index = _list.indexOf(detail.obs);
@@ -57,10 +89,8 @@ export function initObsModal({ gardens = [], plants = [], showAllHref = null } =
       _index = 0;
     }
 
-    renderObs(_list[_index], () => {
-      if (!_dialog.open) { document.body.style.overflow = 'hidden'; _dialog.showModal(); _dialog.focus(); }
-      updateNav();
-    });
+    bringToFront();
+    renderObs(_list[_index], updateNav);
   });
 }
 
@@ -68,6 +98,7 @@ function navigate(dir) {
   const next = _index + dir;
   if (next < 0) return;
   if (next >= _list.length) {
+    if (_closeAtEnd) { _dialog.close(); return; }
     if (_showAllHref) showAllScreen();
     return;
   }
@@ -272,7 +303,7 @@ function renderObs(obs, onReady) {
     }
     el.addEventListener('click', e => {
       e.stopPropagation();
-      _dialog.close();
+      stepBack();
       document.dispatchEvent(new CustomEvent('plant:open', { detail: plant }));
     });
   });

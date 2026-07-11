@@ -728,7 +728,7 @@ dialog#obs-form-dialog:focus { outline: none; }
 }
 
 dialog#obs-form-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 dialog#add-plant-dialog {
@@ -744,7 +744,7 @@ dialog#add-plant-dialog[open] { display: flex; margin: auto; }
 dialog#add-plant-dialog:focus { outline: none; }
 
 dialog#add-plant-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .obs-form-inner {
@@ -1109,6 +1109,7 @@ dialog#obs-modal {
   border: none;
   background: none;
   overflow: visible;
+  z-index: 1000;
 }
 
 dialog#obs-modal[open] {
@@ -1384,7 +1385,7 @@ dialog#lightbox:focus {
 }
 
 dialog#lightbox::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 #lightbox-img {
@@ -1400,6 +1401,8 @@ dialog#plant-modal:focus {
 }
 
 dialog#plant-modal {
+  position: fixed;
+  inset: 0;
   width: 90%;
   height: 90%;
   max-width: 90%;
@@ -1409,10 +1412,11 @@ dialog#plant-modal {
   border: none;
   background: var(--plant-color, #fff);
   color: var(--plant-fg, #000);
+  z-index: 999;
 }
 
 dialog#plant-modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .plant-modal-inner {
@@ -2194,62 +2198,35 @@ dialog#plant-modal.authenticated .plant-color-picker {
 }
 
 .obs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  grid-auto-flow: dense;
-  align-items: start;
+  display: flex;
   gap: var(--hb-space-300);
   margin: 0 var(--page-pad) var(--hb-space-800);
 }
 
-@media (max-width: 640px) {
-  .obs-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.obs-grid .obs-col {
+  flex: 1;
+  min-width: 0;
 }
 
 .obs-grid .carousel-card {
   width: 100%;
+  margin-bottom: var(--hb-space-300);
 }
 
 .obs-grid .carousel-card-img {
-  height: auto;
   width: 100%;
-  aspect-ratio: 2 / 3;
-  position: relative;
-  overflow: hidden;
+  height: auto;
+  aspect-ratio: auto;
 }
 
 .obs-grid .carousel-card-img img {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.obs-grid .carousel-card.is-landscape,
-.obs-grid .carousel-card.is-highlighted {
-  grid-column: span 2;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-}
-
-.obs-grid .carousel-card.is-landscape .carousel-card-img,
-.obs-grid .carousel-card.is-highlighted .carousel-card-img {
-  aspect-ratio: auto;
-  flex: 1;
-  min-height: 0;
+  height: auto;
+  display: block;
 }
 
 .obs-grid.is-garden-scoped .observation-place {
   display: none;
-}
-
-.obs-grid .carousel-card-meta {
-  width: 100%;
-  min-width: unset;
 }
 
 /* ── Section header links ────────────────────────────────────────────────── */
