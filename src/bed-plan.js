@@ -57,17 +57,10 @@ export function renderBedPlan(container, {
   const bedWidths = bedConfig?.bedWidths ?? DEFAULT_BED_WIDTHS;
   const { totalZ, beds } = buildLayout(bedL, bedWidths);
 
-  const PAD = 0.4;
-  const vbX = -bedL / 2 - PAD;
-  const vbY = -totalZ / 2 - PAD;
-  const vbW = bedL + PAD * 2;
-  const vbH = totalZ + PAD * 2;
-
-  // Scale strokes and text proportionally so they look the same regardless of bed size
-  const strokeW  = (vbW * 0.001).toFixed(4);
-  const fontSize = (vbW * 0.022).toFixed(4);
-  const numOffX  = vbW * 0.01;
-  const numOffY  = vbW * 0.028;
+  const vbX = -bedL / 2;
+  const vbY = -totalZ / 2;
+  const vbW = bedL;
+  const vbH = totalZ;
 
   let svg = `<svg class="bed-plan-svg" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg">`;
 
@@ -75,31 +68,35 @@ export function renderBedPlan(container, {
   for (const bed of beds) {
     const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
-    svg += `<rect x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" fill="none" stroke="#000" stroke-width="${strokeW}"/>`;
+    // vector-effect="non-scaling-stroke" + a plain "1" keeps this a crisp
+    // 1 screen-pixel line regardless of the viewBox scale — the previous
+    // viewBox-unit stroke width scaled up into a blurry sub/fractional-pixel
+    // line once rendered.
+    svg += `<rect x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" fill="none" stroke="#ccc" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
     if (bedImages[bed.i]) {
       svg += `<image href="${fullUrl(bedImages[bed.i])}" x="${x0}" y="${z0}" width="${bedL}" height="${bed.w}" preserveAspectRatio="xMidYMid slice" opacity="0.45"/>`;
     }
   }
 
-  // Plant circles
+  // Plant circles. The viewBox above is derived purely from bed geometry
+  // (bedL/bedWidths), never from placements, so a plant landing outside a
+  // bed's rect — even at negative coordinates — just renders past the SVG's
+  // edge (overflow: visible in CSS) without shifting where the beds appear.
   for (const p of placements) {
     const plant = plantBySlug[p.slug];
     const r = (plant?.world_w ?? 0.2) / 2;
     const color = colorBySlug[p.slug] ?? '#ccc';
     const isSelected = editMode && p.slug === selectedSlug;
-    svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r}" fill="${color}" opacity="0.85"` +
+    svg += `<circle cx="${p.x.toFixed(3)}" cy="${p.z.toFixed(3)}" r="${r}" fill="${color}" opacity="0.95"` +
       ` stroke="${isSelected ? '#000' : 'none'}" stroke-width="${(vbW * 0.005).toFixed(4)}"` +
       ` data-slug="${p.slug}" data-id="${p.id ?? ''}"` +
       ` data-name="${(plant?.name ?? '').replace(/"/g, '&quot;')}" data-de="${(plant?.name_de ?? '').replace(/"/g, '&quot;')}"/>`;
   }
 
-  // Foreground layer: bed numbers + edit buttons (always on top)
+  // Foreground layer: edit buttons (always on top)
   for (const bed of beds) {
     const x0 = -bedL / 2;
     const z0 = bed.z - bed.w / 2;
-    if (beds.length > 1) {
-      svg += `<text class="bed-number" font-size="${fontSize}" x="${x0 + numOffX}" y="${z0 + numOffY}">${bed.i + 1}</text>`;
-    }
     if (editMode) {
       const btnW = vbW * 0.062, btnH = vbW * 0.027;
       const btnX = x0 + bedL - btnW - vbW * 0.01, btnY = z0 + vbW * 0.008;

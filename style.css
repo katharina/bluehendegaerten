@@ -17,6 +17,19 @@
 input, textarea, select {
   -webkit-appearance: none;
   border-radius: 0;
+  /* Without an explicit color, mobile Safari renders form control text in
+     its default system tint (blue) instead of inheriting the page's black. */
+  color: inherit;
+}
+
+select {
+  /* -webkit-appearance: none above strips the native dropdown arrow along
+     with the rest of the OS chrome, so we draw a minimal one back in. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 11px 7px;
+  padding-right: var(--hb-space-400);
 }
 
 [hidden] { display: none !important; }
@@ -483,7 +496,7 @@ ul {
 .filter-input {
   width: 100%;
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ccc;
   padding: var(--hb-space-400) 0;
   font-family: var(--font-mono);
   font-size: var(--hb-font-size-02);
@@ -821,9 +834,25 @@ dialog#add-plant-dialog::backdrop {
   font-size: var(--hb-font-size-02);
   border: none;
   border-bottom: 1px solid #ccc;
-  background: transparent;
+  background-color: transparent;
   padding: var(--hb-space-100) 0;
   width: 100%;
+}
+
+.obs-select {
+  padding-right: var(--hb-space-400); /* room for the chevron drawn by the base `select` rule */
+}
+
+@media (min-width: 641px) {
+  /* Align the version select's row with the plant filter input beside it —
+     .filter-input has more generous top/bottom padding (--hb-space-400 vs.
+     this select's --hb-space-100), so match the gap with margin/padding
+     instead of touching the shared .obs-select padding everywhere else. */
+  #bed-version-bar .obs-select {
+    margin-top: var(--hb-space-300);
+    padding-bottom: var(--hb-space-400);
+    margin-bottom: 0;
+  }
 }
 
 .obs-textarea {
@@ -1966,9 +1995,23 @@ dialog#plant-modal.authenticated .plant-color-picker {
   .garden-col--plants {
     margin-left: 0 !important;
     transition: none !important;
+    box-shadow: none !important;
   }
   .garden-col--bed {
     transition: none !important;
+    box-shadow: none !important;
+  }
+  /* The desktop side-by-side separator is a box-shadow on the whole column
+     (see .garden-col--bed/.garden-col--plants above); once columns stack on
+     mobile that reads as an odd diffuse edge instead of a clean divider. The
+     section headers inside opt out of their own border-top (.no-border)
+     specifically because the column shadow already served that purpose — so
+     on mobile we drop the shadow and let this border-top take over instead,
+     matching the width/spacing every other .section-header divider uses.
+  */
+  .garden-col--bed > section > .section-header,
+  .garden-col--plants .plant-sticky-header .section-header {
+    border-top: 1px solid var(--hb-black-1000);
   }
   .garden-panels:hover .garden-col--bed,
   .garden-panels.is-expanded .garden-col--bed,
@@ -2126,12 +2169,16 @@ dialog#plant-modal.authenticated .plant-color-picker {
 /* ── Bed plan SVG ────────────────────────────────────────────────────────── */
 
 #bed-plan {
-  padding: 0 var(--hb-space-600) var(--hb-space-600);
+  padding: 0 var(--page-pad) var(--hb-space-600);
 }
 
-@media (max-width: 700px) {
+@media (min-width: 641px) {
+  /* The plant column's filter row has an extra "im Beet" checkbox line (and
+     the sticky header's own bottom padding) below its border that the bed
+     column doesn't have an equivalent for — push the beds down to start
+     level with #plant-list instead of right after the version select. */
   #bed-plan {
-    padding: 0 0 var(--hb-space-600);
+    margin-top: calc(var(--hb-space-800) + var(--hb-space-300));
   }
 }
 
@@ -2139,16 +2186,16 @@ dialog#plant-modal.authenticated .plant-color-picker {
   width: 100%;
   height: auto;
   display: block;
+  /* The viewBox is sized purely from bed geometry (bedL/bedWidths), never
+     from plant positions, so the bed outlines always render at a fixed,
+     consistent size/place. Without this, SVG's default overflow:hidden
+     clips any plant placed further than the small fixed PAD outside a bed
+     — visible lets those plants keep showing past the edge instead. */
+  overflow: visible;
 }
 
 .bed-plan-svg circle[data-slug] {
   cursor: pointer;
-}
-
-.bed-plan-svg .bed-number {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  fill: #000;
 }
 
 #bed-plan.is-editable .bed-plan-svg {
