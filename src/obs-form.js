@@ -146,16 +146,24 @@ function _showLoginForm() {
   _loginPane.innerHTML = `
     <div class="section-header obs-form-inner-header">
       <h2 class="obs-form-title">Anmelden</h2>
+      <button type="button" class="action-btn-icon" id="obs-login-close">×</button>
     </div>
-    <div class="obs-form-field">
+    <div class="obs-form-field obs-form-field--shrink">
       <label class="obs-form-label">E-Mail</label>
       <input id="obs-login-email" class="obs-input" type="email" autocomplete="email" placeholder="email@beispiel.de">
     </div>
     <div id="obs-login-msg" class="obs-form-msg"></div>
-    <div class="obs-form-actions">
+    <div id="obs-login-actions" class="obs-form-actions">
       <button id="obs-login-submit" class="action-btn">Magic Link senden</button>
       <button id="obs-login-cancel" class="action-btn-ghost">Abbrechen</button>
+    </div>
+    <div class="section-header has-divider">
+      <h3>Über Blühende Gärten</h3>
+    </div>
+    <div class="section-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>`;
+  _loginPane.querySelector('#obs-login-close').addEventListener('click', _close);
   _loginPane.querySelector('#obs-login-cancel').addEventListener('click', _close);
   _loginPane.querySelector('#obs-login-submit').addEventListener('click', async () => {
     const email = _loginPane.querySelector('#obs-login-email').value.trim();

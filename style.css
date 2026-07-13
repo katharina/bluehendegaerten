@@ -790,7 +790,7 @@ dialog#add-plant-dialog::backdrop {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: var(--hb-space-800);
+  padding: var(--page-pad);
   display: flex;
   flex-direction: column;
   gap: var(--hb-space-400);
@@ -813,6 +813,15 @@ dialog#add-plant-dialog::backdrop {
 .obs-form-inner .section-header {
   border-top: none;
   padding: 0;
+  margin: 0;
+}
+
+.obs-form-inner .section-header.has-divider {
+  border-top: 1px solid var(--hb-black-1000);
+  padding-top: var(--hb-space-500);
+}
+
+.obs-form-inner .section-content {
   margin: 0;
 }
 
@@ -1141,9 +1150,15 @@ dialog#add-plant-dialog::backdrop {
   margin-top: var(--hb-space-n200);
 }
 
+#obs-login-actions {
+  margin-bottom: var(--hb-space-500);
+}
+
 .action-btn-ghost {
   background: none;
   border: none;
+  font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-02);
   color: #888;
   cursor: pointer;
@@ -1293,6 +1308,11 @@ dialog#obs-modal::backdrop {
   dialog#obs-modal .obs-modal-info {
     position: static;
     padding: var(--hb-space-200) var(--page-pad);
+    /* .obs-modal-img's align-items:center (needed to center the photo
+       placeholder) would otherwise also center this sibling when it's back
+       in normal flow — stretch it full-width so the left padding above
+       actually puts it at the left edge instead of the flex-centered box. */
+    align-self: stretch;
   }
   dialog#obs-modal .obs-modal-img.info-overlap .obs-modal-info {
     position: absolute;
