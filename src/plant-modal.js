@@ -175,6 +175,24 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   dialog.querySelector('.plant-modal-info').scrollTop = 0;
   dialog.querySelector('.plant-modal-observations').scrollTop = 0;
 
+  // Clear everything that's otherwise only cleared after its own async
+  // fetch resolves — without this, the previous plant's obs cards/bloom
+  // bar/info rows stay on screen until the new data lands instead of the
+  // modal starting empty.
+  const obsList = dialog.querySelector('.plant-modal-obs-list');
+  const [colA, colB] = obsList.querySelectorAll('.obs-col');
+  colA.innerHTML = colB.innerHTML = '';
+  const obsCountEl = dialog.querySelector('.plant-modal-obs-count');
+  if (obsCountEl) obsCountEl.textContent = '';
+  dialog.querySelector('.plant-modal-obs-header').querySelector('.obs-all-toggle')?.remove();
+
+  const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
+  const infoRows = dialog.querySelector('.plant-modal-info-rows');
+  bloomBar.innerHTML = infoRows.innerHTML = '';
+  dialog.querySelector('.plant-info-save')?.remove();
+  dialog.querySelector('.plant-info-autofill')?.remove();
+  dialog.querySelector('.plant-info-actions')?.remove();
+
   // Merge with cached plant data so color is available immediately
   const cached = plants?.find(p => p.slug === plant.slug);
   if (cached) plant = { ...cached, ...plant };
@@ -224,9 +242,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     .then(r => r.ok ? r.json() : [])
     .catch(() => observations.filter(o => o.slugs?.includes(plant.slug)))
     .then(list => list.sort((a, b) => new Date(b.date ?? b.created_at) - new Date(a.date ?? a.created_at)));
-  const obsList = dialog.querySelector('.plant-modal-obs-list');
-  const [colA, colB] = obsList.querySelectorAll('.obs-col');
-  colA.innerHTML = colB.innerHTML = '';
   let i = 0;
 
   function appendMasonry(card) {
@@ -246,8 +261,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
     document.dispatchEvent(new CustomEvent('obs:edit', { detail: obs }));
   } : null;
 
-  const obsCountEl = dialog.querySelector('.plant-modal-obs-count');
-
   function renderObsList(list) {
     colA.innerHTML = colB.innerHTML = '';
     i = 0;
@@ -256,7 +269,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   }
 
   const obsHeader = dialog.querySelector('.plant-modal-obs-header');
-  obsHeader.querySelector('.obs-all-toggle')?.remove();
 
   if (gardenId) {
     const here  = plantObs.filter(o => o.garden === gardenId);
@@ -274,13 +286,6 @@ export async function openPlantModal(plant, { gardenId = null } = {}) {
   } else {
     renderObsList(plantObs);
   }
-
-  const bloomBar = dialog.querySelector('.plant-modal-bloom-bar');
-  const infoRows = dialog.querySelector('.plant-modal-info-rows');
-  bloomBar.innerHTML = infoRows.innerHTML = '';
-  dialog.querySelector('.plant-info-save')?.remove();
-  dialog.querySelector('.plant-info-autofill')?.remove();
-  dialog.querySelector('.plant-info-actions')?.remove();
 
   fetch(`/api/plants/${plant.slug}`)
     .then(r => r.ok ? r.json() : null)

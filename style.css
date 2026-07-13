@@ -1225,7 +1225,15 @@ dialog#obs-modal::backdrop {
 
 .obs-modal-photo.no-photo {
   aspect-ratio: var(--obs-w, 3) / var(--obs-h, 4);
-  width: auto;
+  /* .obs-modal-photo sits inside a chain of flex/inline-flex ancestors
+     (.obs-modal-img, and the dialog itself). With width/height both auto,
+     resolving this box's intrinsic size from just an aspect-ratio is
+     ambiguous inside a flex max-content computation and can collapse to
+     0x0 — so instead of auto, compute the "contain"-fit width directly:
+     the largest width that keeps both the width (95vw) and the derived
+     height (95dvh) within bounds. That makes width a definite value, so
+     there's nothing left for flex sizing to get ambiguous about. */
+  width: min(95vw, calc(95dvh * var(--obs-w, 3) / var(--obs-h, 4)));
   height: auto;
   max-width: 95vw;
   max-height: 95dvh;
