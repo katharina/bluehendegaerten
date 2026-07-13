@@ -1638,6 +1638,14 @@ dialog#plant-modal .action-btn {
     order: 1;
     margin-bottom: 0;
   }
+  /* Without the "alle Gärten" toggle (garden-only — see openPlantModal in
+     plant-modal.js), nothing else fills the rest of this row, so the
+     title alone doesn't force the button below it to wrap onto its own
+     line the way it does on desktop. Reclaim the full row for the title
+     in that case, same as desktop, instead of stretching the button. */
+  .plant-modal-observations .plant-modal-obs-header:not(:has(.obs-all-toggle)) .section-header {
+    flex-basis: 100%;
+  }
   .obs-all-toggle {
     flex-basis: auto;
     order: 2;
@@ -1646,7 +1654,7 @@ dialog#plant-modal .action-btn {
   }
   #plant-modal-obs-btn {
     order: 3;
-    flex-basis: 100%;
+    flex-basis: auto;
     margin-top: var(--hb-space-300);
   }
 }
