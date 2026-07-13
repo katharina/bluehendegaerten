@@ -1205,6 +1205,12 @@ dialog#obs-modal::backdrop {
 .obs-modal-img {
   position: relative;
   display: inline-flex;
+  /* Without this, the flex item's default align-items:stretch fights the
+     aspect-ratio + max-width/max-height "contain" sizing on .obs-modal-photo
+     (both width and height are auto there) — the box can't resolve a size
+     and collapses to 0x0 while .no-photo is showing (i.e. before the real
+     photo has loaded), which is most visible on a cold image cache. */
+  align-items: center;
 }
 
 .obs-modal-img img {
