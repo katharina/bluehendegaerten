@@ -19,7 +19,7 @@ function buildObsCard(o, gardenMap, plantMap, list, colorMap = null) {
   const plantTags = (o.slugs ?? [])
     .map(s => ({ name: plantMap.get(s), color: colorMap?.get(s) }))
     .filter(p => p.name)
-    .slice(0, 3);
+    .slice(0, 2);
   const place = gardenMap.get(o.garden) || o.place || '';
   const bgColor = [...(o.slugs ?? [])].reverse().map(s => colorMap?.get(s)).find(Boolean) ?? '#444';
   // --obs-w/--obs-h let contexts that want it (the grid) reserve the photo's

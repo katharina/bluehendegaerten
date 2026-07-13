@@ -1,6 +1,16 @@
+@font-face {
+  font-family: "Maison Neue Mono";
+  src: url("/fonts/MaisonNeue-Mono.woff2") format("woff2"),
+       url("/fonts/MaisonNeue-Mono.woff") format("woff"),
+       url("/fonts/MaisonNeue-Mono.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
 :root {
   --font-serif: "Bitter", serif;
-  --font-mono: "Source Code Pro", monospace;
+  --font-mono: "Maison Neue Mono", monospace;
   /* Content-box height of .hamburger's icon (3 spans + 2 gaps). Every black
      breadcrumb badge (.highlight-sticky h2, .garden-name-sticky, .plant-count-sticky,
      and any future one) uses this as line-height so all badges + hamburger
@@ -56,6 +66,7 @@ body:has(dialog[open]) {
 
 body {
   font-family: var(--font-mono);
+  line-height: 1.5;
 }
 
 /* ── Chapeau + hamburger ───────────────────────────────────────────────────── */
@@ -140,6 +151,15 @@ a {
 .botanical-name {
   font-family: var(--font-serif);
   font-style: italic;
+}
+
+.observation-place,
+.observation-date {
+  line-height: 1;
+}
+
+.observation-place {
+  margin-top: 2px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -329,6 +349,7 @@ h1 {
 .section-content.no-horizontal-padding {
   margin-left: 0;
   margin-right: 0;
+  margin-bottom: 0;
 }
 
 .no-border {
@@ -451,6 +472,7 @@ ul {
 
 .carousel-card-creator {
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-600);
   padding-top: var(--hb-space-100);
@@ -499,6 +521,7 @@ ul {
   border-bottom: 1px solid #ccc;
   padding: var(--hb-space-400) 0;
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-02);
   background: transparent;
   outline: none;
@@ -621,6 +644,11 @@ ul {
   color: var(--plant-fg, #000);
 }
 
+.plant-card:hover .plant-family {
+  color: var(--plant-fg, #000);
+  opacity: 0.4;
+}
+
 .plant-card .plant-dot {
   position: absolute;
   bottom: 10px;
@@ -641,16 +669,19 @@ ul {
 
 .plant-card .botanical-name {
   font-size: var(--hb-font-size-03);
-  line-height: 1.3;
+  line-height: 1;
+  margin-bottom: var(--hb-space-100);
 }
 
 .plant-card .german-name {
   font-size: var(--hb-font-size-01);
+  line-height: normal; /* plant data — excluded from the 1.5em body default */
 }
 
 .plant-card .plant-family {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--hb-black-400);
+  line-height: normal; /* plant data — excluded from the 1.5em body default */
 }
 
 .plant-new {
@@ -658,6 +689,7 @@ ul {
   bottom: var(--hb-space-400);
   left: var(--hb-space-400);
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-style: normal;
   font-size: 9px;
   font-weight: 600;
@@ -670,6 +702,7 @@ ul {
 
 .carousel-card-meta .botanical-name {
   font-size: var(--hb-font-size-02);
+  line-height: 1.1;
   color: var(--hb-black-1000);
   padding: 1px 4px;
   white-space: nowrap;
@@ -681,7 +714,7 @@ ul {
 
 .carousel-card-meta .observation-place {
   font-size: var(--hb-font-size-01);
-  color: var(--hb-black-400);
+  color: var(--hb-black-1000);
   padding: 1px 4px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -849,9 +882,9 @@ dialog#add-plant-dialog::backdrop {
      this select's --hb-space-100), so match the gap with margin/padding
      instead of touching the shared .obs-select padding everywhere else. */
   #bed-version-bar .obs-select {
-    margin-top: var(--hb-space-300);
+    margin-top: calc(var(--hb-space-300) + 6px);
     padding-bottom: var(--hb-space-400);
-    margin-bottom: 0;
+    margin-bottom: 2px;
   }
 }
 
@@ -1070,6 +1103,7 @@ dialog#add-plant-dialog::backdrop {
   margin-left: auto;
   font-size: var(--hb-font-size-00);
   font-family: var(--font-mono);
+  line-height: 1.5;
   opacity: 0.4;
   letter-spacing: 0.05em;
 }
@@ -1263,6 +1297,7 @@ dialog#obs-modal::backdrop {
 
 .obs-modal-plant-link {
   font-size: var(--hb-font-size-03);
+  line-height: normal; /* plant data — excluded from the 1.5em body default */
   cursor: pointer;
 }
 
@@ -1296,6 +1331,10 @@ dialog#obs-modal::backdrop {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   white-space: nowrap;
+}
+
+.obs-modal-info .observation-date {
+  color: var(--hb-black-400);
 }
 
 .obs-modal-info .observation-place,
@@ -1481,6 +1520,7 @@ dialog#plant-modal::backdrop {
   height: 32px;
   border-radius: 16px;
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-01);
   cursor: pointer;
   white-space: nowrap;
@@ -1596,6 +1636,7 @@ dialog#plant-modal .action-btn {
 .plant-modal-header .german-name {
   font-size: var(--hb-font-size-03);
   margin-top: var(--hb-space-300);
+  line-height: normal; /* plant data — excluded from the 1.5em body default */
 }
 
 .plant-modal-meta {
@@ -1609,6 +1650,7 @@ dialog#plant-modal .action-btn {
   background: transparent;
   color: var(--plant-fg, #000);
   font-family: var(--font-mono);
+  line-height: normal; /* plant data — excluded from the 1.5em body default */
   font-size: var(--hb-font-size-01);
   outline: none;
   padding: var(--hb-space-100) 0;
@@ -1747,6 +1789,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
   height: 32px;
   border-radius: 16px;
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-01);
   cursor: pointer;
   white-space: nowrap;
@@ -2253,6 +2296,7 @@ dialog#plant-modal.authenticated .plant-color-picker {
 
 .obs-type-tab {
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: var(--hb-font-size-01);
   color: var(--hb-black-600);
   text-decoration: none;
