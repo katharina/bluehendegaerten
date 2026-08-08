@@ -161,7 +161,7 @@ function _showLoginForm() {
       <h3>Über Blühende Gärten</h3>
     </div>
     <div class="section-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Bei Blühende Gärten kann jeder mitmachen. Bilder von Pflanzen sammeln, diese identifizieren und über sie lernen. Es sind viele weitere Funktionen in Planung. Einfach deine E-Mail-Adresse eingeben, wir schicken dir dann einen Link, den du zum Anmelden nutzen kannst.</p>
     </div>`;
   _loginPane.querySelector('#obs-login-close').addEventListener('click', _close);
   _loginPane.querySelector('#obs-login-cancel').addEventListener('click', _close);
