@@ -293,7 +293,7 @@ h1 {
 
 @media (min-width: 900px) {
   .plant-count-sticky { display: none; }
-  #obs-title-sticky { display: flex; }
+  .title-sticky { display: flex; }
 }
 
 .plant-count-sticky.is-visible {
@@ -301,11 +301,11 @@ h1 {
   transform: none;
 }
 
-#obs-title-sticky {
+.title-sticky {
   cursor: pointer;
 }
 
-#obs-title-sticky.is-visible {
+.title-sticky.is-visible {
   pointer-events: auto;
 }
 
@@ -329,12 +329,7 @@ h1 {
   font-weight: 600;
 }
 
-.page-header.chapeau {
-  padding-top: 0;
-  margin-top: 0;
-  }
-
-  .section-header {
+.section-header {
   margin: var(--hb-space-800) var(--page-pad) var(--hb-space-500) var(--page-pad);
   padding: var(--hb-space-500) 0 0 0;
   border-top: 1px solid var(--hb-black-1000);
@@ -610,6 +605,19 @@ ul {
   .garden-col--plants .plant-sticky-header .section-header {
     margin-top: 0;
   }
+}
+
+.plants-all-page .plant-sticky-header {
+  padding-top: var(--hb-space-300);
+}
+
+.plants-all-page .plant-sticky-header.is-stuck {
+  padding-top: var(--hb-space-1600);
+}
+
+.plants-all-page .plant-sticky-header .section-header {
+  margin-top: 0;
+  border-top: none;
 }
 
 .plant-sticky-header.is-stuck .section-header {

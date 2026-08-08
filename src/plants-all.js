@@ -25,3 +25,35 @@ document.addEventListener('plant:filter', e => {
 initPlantModal({ gardens, observations, plants });
 initObsModal({ gardens, plants });
 initObsForm({ gardens, plants, observations });
+
+// "Alle Pflanzen" sticky badge: show beside BG once the h1 scrolls away
+(function () {
+  const h1 = document.getElementById('page-title');
+  const badge = document.getElementById('plants-all-title-sticky');
+  if (!h1 || !badge) return;
+
+  const sentinel = document.createElement('div');
+  h1.parentNode.insertBefore(sentinel, h1);
+
+  badge.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  new IntersectionObserver(([e]) => {
+    const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
+    badge.classList.toggle('is-visible', stuck);
+  }, { threshold: 0 }).observe(sentinel);
+})();
+
+// Drop the sticky filter header's top border once it's pinned to the top
+(function () {
+  const plantsSection = document.getElementById('plants-section');
+  const plantHeader = document.querySelector('.plant-sticky-header');
+  if (!plantsSection || !plantHeader) return;
+
+  const sentinel = document.createElement('div');
+  plantsSection.insertBefore(sentinel, plantHeader);
+
+  new IntersectionObserver(([e]) => {
+    const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
+    plantHeader.classList.toggle('is-stuck', stuck);
+  }, { threshold: 0 }).observe(sentinel);
+})();
